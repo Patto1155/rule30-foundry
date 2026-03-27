@@ -4,7 +4,7 @@ GPU-accelerated Rule 30 simulation using CuPy bit-packing.
 Rule 30: new[i] = left[i] XOR (center[i] OR right[i])
 Stores tape as array of uint64, each holding 64 cells.
 
-Center column extraction is batched on-GPU to avoid per-step sync.
+Center column extraction stores one byte per step on GPU (simple, no atomics).
 """
 import sys
 import time
@@ -14,8 +14,8 @@ import cupy as cp
 import numpy as np
 from tqdm import tqdm
 
-# Rule 30 step + center bit extraction in one kernel launch
-# Thread 0 also extracts the center bit into the output buffer
+# Rule 30 step + center bit extraction
+# Thread handling the center word also writes the center bit to output buffer
 rule30_with_center_kernel = cp.RawKernel(r'''
 extern "C" __global__
 void rule30_step_center(
@@ -24,23 +24,17 @@ void rule30_step_center(
     int n_words,
     int center_word_idx,
     int center_bit_idx,
-    unsigned char* center_out,  // packed bit output buffer
-    int step                    // current step number
+    unsigned char* center_out,  // one byte per step (0 or 1)
+    long long step              // current step number (long long for >2B steps)
 ) {
     int idx = blockDim.x * blockIdx.x + threadIdx.x;
     if (idx >= n_words) return;
 
     unsigned long long center = tape[idx];
 
-    // Extract center bit (only thread handling the center word)
+    // Extract center bit
     if (idx == center_word_idx) {
-        unsigned char bit = (center >> center_bit_idx) & 1ULL;
-        int byte_idx = step / 8;
-        int bit_idx = step % 8;
-        if (bit) {
-            atomicOr((unsigned int*)&center_out[byte_idx & ~3],
-                     ((unsigned int)bit) << (8 * (byte_idx & 3) + bit_idx));
-        }
+        center_out[step] = (unsigned char)((center >> center_bit_idx) & 1ULL);
     }
 
     unsigned long long prev_word = (idx > 0) ? tape[idx - 1] : 0ULL;
@@ -73,10 +67,7 @@ void rule30_step(const unsigned long long* tape, unsigned long long* out, int n_
 
 
 def simulate(n_cells, n_steps, extract_center=False, center_out_path=None):
-    """Run Rule 30 simulation on GPU with tqdm progress bar.
-
-    Center column extraction now happens entirely on GPU — no per-step sync.
-    """
+    """Run Rule 30 simulation on GPU with tqdm progress bar."""
     n_words = (n_cells + 63) // 64
     n_cells = n_words * 64
     center_word_idx = n_words // 2
@@ -90,13 +81,11 @@ def simulate(n_cells, n_steps, extract_center=False, center_out_path=None):
     tape_b = cp.zeros(n_words, dtype=cp.uint64)
     tape_a[center_word_idx] = cp.uint64(1 << center_bit_idx)
 
-    # GPU-side center column buffer (packed bits)
+    # GPU-side center column buffer: 1 byte per step
     if extract_center:
-        n_center_bytes = (n_steps + 7) // 8
-        # Round up to multiple of 4 for atomicOr alignment
-        n_center_bytes_aligned = ((n_center_bytes + 3) // 4) * 4
-        center_buf = cp.zeros(n_center_bytes_aligned, dtype=cp.uint8)
-        print(f"Center column buffer: {n_center_bytes_aligned:,} bytes on GPU")
+        center_gpu = cp.zeros(n_steps, dtype=cp.uint8)
+        gpu_mem = n_steps / 1024 / 1024
+        print(f"Center column buffer: {gpu_mem:.1f} MB on GPU ({n_steps:,} bytes)")
 
     block_size = 256
     grid_size = (n_words + block_size - 1) // block_size
@@ -109,7 +98,6 @@ def simulate(n_cells, n_steps, extract_center=False, center_out_path=None):
     current = tape_a
     next_buf = tape_b
 
-    # Use batched tqdm updates (every 10000 steps) to minimize overhead
     update_interval = max(1, n_steps // 1000)
     pbar = tqdm(total=n_steps, desc="Rule 30", unit="step", unit_scale=True,
                 bar_format="{l_bar}{bar}| {n_fmt}/{total_fmt} [{elapsed}<{remaining}, {rate_fmt}]",
@@ -121,7 +109,7 @@ def simulate(n_cells, n_steps, extract_center=False, center_out_path=None):
                 (grid_size,), (block_size,),
                 (current, next_buf, n_words,
                  center_word_idx, center_bit_idx,
-                 center_buf, step)
+                 center_gpu, np.int64(step))
             )
             current, next_buf = next_buf, current
             if step % update_interval == 0:
@@ -160,23 +148,30 @@ def simulate(n_cells, n_steps, extract_center=False, center_out_path=None):
     print(f"VRAM used:   {vram_after:.1f} MB")
 
     if extract_center and center_out_path:
-        # Transfer center column from GPU to CPU
-        center_bytes = cp.asnumpy(center_buf[:n_center_bytes])
+        # Transfer from GPU, pack bits, save
+        print("Transferring center column from GPU...")
+        center_bits = cp.asnumpy(center_gpu)  # array of 0/1 bytes
+        print(f"  Fraction of 1s: {np.mean(center_bits):.6f} (expect ~0.5)")
+
+        # Pack into bits: bit i of byte j = center_bits[j*8 + i]
+        center_packed = np.packbits(center_bits, bitorder='little')
+
         os.makedirs(os.path.dirname(center_out_path), exist_ok=True)
         with open(center_out_path, 'wb') as f:
-            f.write(center_bytes)
-        print(f"Center column saved: {center_out_path} ({len(center_bytes):,} bytes = {n_steps:,} bits)")
+            f.write(center_packed)
+        print(f"Center column saved: {center_out_path} ({len(center_packed):,} bytes = {n_steps:,} bits)")
         results["center_col_file"] = center_out_path
         results["center_col_bits"] = n_steps
 
         # Verify first 20 bits against CPU reference
         expected = [1,1,0,1,1,1,0,0,1,1,0,0,0,1,0,1,1,0,0,1]
-        actual = [(int(center_bytes[i // 8]) >> (i % 8)) & 1 for i in range(min(20, n_steps))]
-        match = list(actual) == expected[:len(actual)]
-        print(f"First 20 bits: {list(actual)}")
+        actual = center_bits[:20].tolist()
+        match = actual == expected[:len(actual)]
+        print(f"First 20 bits: {actual}")
         print(f"Expected:      {expected}")
         print(f"Verification:  {'PASS' if match else 'FAIL'}")
         results["verification_passed"] = match
+        results["fraction_ones"] = float(np.mean(center_bits))
 
     return results
 
