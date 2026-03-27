@@ -207,7 +207,7 @@ def main():
         for d in dist:
             status = "DISTINGUISHABLE" if d['distinguishable'] else "indistinguishable"
             print(f"  Window {d['window_size']:>10,}: bias_KS={d['ks_bias_stat']:.4f} (p={d['ks_bias_pval']:.4f}), "
-                  f"runs_KS={d['ks_runs_stat']:.4f} (p={d['ks_runs_pval']:.4f}) → {status}")
+                  f"runs_KS={d['ks_runs_stat']:.4f} (p={d['ks_runs_pval']:.4f}) -> {status}")
 
         with open(os.path.join(DATA_DIR, 'distinguishing_attack.csv'), 'w', newline='') as f:
             writer = csv.DictWriter(f, fieldnames=dist[0].keys())
@@ -218,6 +218,24 @@ def main():
         print("  scipy not available, skipping KS tests")
 
     # Save experiment log
+    mono_pass = bool(mono.get("pass", False)) if isinstance(mono, dict) else False
+    runs_pass = bool(runs.get("pass", False)) if isinstance(runs, dict) else False
+    max_corr = float(np.max(np.abs(corrs)))
+    max_corr_lag = int(np.argmax(np.abs(corrs)) + 1)
+    random_corr_scale = float(1 / np.sqrt(len(bits)))
+    distinguishable_windows = sum(1 for item in dist if item.get("distinguishable"))
+    if mono_pass and runs_pass and distinguishable_windows == 0 and max_corr < 5 * random_corr_scale:
+        interpretation = (
+            "Rule 30 passes the tested randomness checks at this scale. "
+            "No sampled window size was distinguishable from a true RNG, and "
+            "serial correlation stays near the expected random noise floor."
+        )
+    else:
+        interpretation = (
+            "At least one test showed a potentially non-random signal, so the "
+            "sequence needs follow-up analysis before claiming RNG-like behavior."
+        )
+
     log_path = os.path.join(LOG_DIR, '2026-03-27-cryptanalysis.md')
     with open(log_path, 'w') as f:
         f.write(f"""# Experiment Log
@@ -228,12 +246,12 @@ def main():
 - Setup: 10M center column bits from Rule 30, GTX 1060 GPU, Python/numpy/scipy
 - Method: NIST monobit test, runs test, longest run test, serial correlation (lags 1-1000), distinguishing attack at window sizes 1K-1M
 - Result:
-  - Monobit: {mono}
-  - Runs: {runs}
+  - Monobit: p={mono.get('p_value', float('nan')):.6f}, pass={mono_pass}
+  - Runs: p={runs.get('p_value', float('nan')):.6f}, pass={runs_pass}
   - Longest run: mean={lr['mean_longest_run']:.2f}, expected={lr['expected_longest_run']:.1f}
-  - Serial correlation: max |r| = {np.max(np.abs(corrs)):.6f} at lag {np.argmax(np.abs(corrs)) + 1} (random expectation ~{1/np.sqrt(len(bits)):.6f})
-  - Distinguishing: {dist}
-- Interpretation: [filled after review]
+  - Serial correlation: max |r| = {max_corr:.6f} at lag {max_corr_lag} (random expectation ~{random_corr_scale:.6f})
+  - Distinguishing: {distinguishable_windows}/{len(dist)} window sizes flagged as distinguishable
+- Interpretation: {interpretation}
 - Next Step: GF(2) representation search to find transforms that expose hidden structure
 """)
 
