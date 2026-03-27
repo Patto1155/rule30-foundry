@@ -52,10 +52,10 @@ Nobody knows. Wolfram is offering **$30,000 per problem** to find out.
 | I | LSTM predictor (hidden 32–256) | BPT=1.000001 at all sizes — no non-linear memory | No LSTM shortcut ✓ |
 | J | CNN non-stationarity probe | 10.15% accuracy (chance=10%) — mode collapse | Stationary sequence ✓ |
 | K | Transformer (context 64–1024) | BPT flat at ~1.000 across all context lengths | No long-range structure ✓ |
-| L | ML scaling laws (running…) | d_model=32–256, n_data=500K–7M | — |
+| L | ML scaling laws (model+data) | BPT range <0.001 across d_model=32–256 and n_data=500K–7M | No scaling improvement ✓ |
 
-**All 11 completed experiments are consistent with Rule 30 being computationally irreducible.**
-No architecture (Markov, LSTM, CNN, Transformer) at any tested scale finds exploitable structure.
+**All 12 experiments are consistent with Rule 30 being computationally irreducible.**
+No architecture (Markov, LSTM, CNN, Transformer) at any scale — of model size, context length, or training data — finds exploitable structure in 10 million bits.
 
 ---
 
