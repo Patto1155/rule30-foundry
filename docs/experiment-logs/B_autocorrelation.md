@@ -6,26 +6,26 @@
 - Setup: 10M-bit center column mapped to +/-1; FFT-based autocorrelation; NumPy CPU
 - Method: Compute normalised autocorrelation r(lag) = E[x_t * x_(t+lag)] / Var(x) via FFT for lags 1..100,000; rank by |r|
 - Result: Top-20 lags by |autocorrelation|:
-    lag=    284  r=+0.81973400
-    lag=     14  r=+0.81970220
-    lag=   1485  r=+0.81965030
-    lag=    794  r=+0.81964920
-    lag=    204  r=+0.81964900
-    lag=    209  r=+0.81964470
-    lag=    867  r=+0.81964450
-    lag=    415  r=+0.81963550
-    lag=    176  r=+0.81962680
-    lag=    446  r=+0.81962500
-    lag=    533  r=+0.81960270
-    lag=    329  r=+0.81959950
-    lag=    892  r=+0.81959480
-    lag=    766  r=+0.81958720
-    lag=    409  r=+0.81958130
-    lag=    375  r=+0.81957430
-    lag=    348  r=+0.81957360
-    lag=    231  r=+0.81957230
-    lag=     77  r=+0.81956930
-    lag=   1250  r=+0.81955480
-    Max |r| = 0.81973400; 2-sigma noise floor = 0.00063246
-- Interpretation: Some autocorrelations EXCEED noise floor — potential linear structure detected!
+    lag=  70013  r=-0.00138490
+    lag=  66314  r=-0.00132660
+    lag=  19123  r=-0.00128490
+    lag=  88922  r=-0.00128340
+    lag=  54754  r=+0.00127860
+    lag=  72458  r=+0.00126820
+    lag=  73349  r=+0.00125390
+    lag=  39384  r=-0.00125160
+    lag=  39815  r=-0.00125030
+    lag=  18250  r=-0.00123580
+    lag=   7952  r=-0.00122620
+    lag=  50902  r=-0.00122560
+    lag=   9024  r=-0.00122200
+    lag=  53464  r=+0.00121880
+    lag=  81323  r=-0.00121090
+    lag=  51397  r=-0.00120890
+    lag=  24844  r=-0.00120300
+    lag=  68241  r=-0.00120030
+    lag=   3161  r=-0.00119670
+    lag=  34139  r=-0.00119630
+    Max |r| = 0.00138490; 2-sigma noise floor = 0.00063246
+- Interpretation: All autocorrelations are within noise floor — no detectable linear structure.
 - Next Step: If any lag is significant, investigate block patterns around that lag; otherwise proceed to block frequency analysis
