@@ -1,0 +1,34 @@
+# Experiment Log
+
+- Date: 2026-03-27
+- Title: Compute-Bounded Prediction Scaling Laws
+- Goal: Determine if Markov prediction accuracy plateaus with increasing context length (evidence for/against computational irreducibility)
+- Setup: 10M center column bits, 5M train / 5M test split, Markov models order 1-18
+- Method: For each order k, train order-k Markov model on first half, predict second half. Measure accuracy, information gain, and compute time vs model order.
+- Result:
+  - Best accuracy: 50.029% at order 1
+  - Baseline: 50.000%
+  - Max improvement: 0.029 pp
+  - Accuracy plateau: Yes
+  - Late/early improvement ratio: inf
+  - Full results:
+    - order=1: 50.029% (info_gain=0.000000 bits, coverage=100.0%)
+    - order=2: 49.986% (info_gain=0.000000 bits, coverage=100.0%)
+    - order=3: 49.974% (info_gain=0.000000 bits, coverage=100.0%)
+    - order=4: 49.969% (info_gain=0.000000 bits, coverage=100.0%)
+    - order=5: 49.981% (info_gain=0.000000 bits, coverage=100.0%)
+    - order=6: 49.972% (info_gain=0.000000 bits, coverage=100.0%)
+    - order=7: 49.971% (info_gain=0.000000 bits, coverage=100.0%)
+    - order=8: 49.958% (info_gain=0.000001 bits, coverage=100.0%)
+    - order=9: 49.996% (info_gain=0.000000 bits, coverage=100.0%)
+    - order=10: 50.001% (info_gain=0.000000 bits, coverage=100.0%)
+    - order=11: 49.992% (info_gain=0.000000 bits, coverage=100.0%)
+    - order=12: 49.980% (info_gain=0.000000 bits, coverage=100.0%)
+    - order=13: 49.995% (info_gain=0.000000 bits, coverage=100.0%)
+    - order=14: 50.001% (info_gain=0.000000 bits, coverage=100.0%)
+    - order=15: 49.994% (info_gain=0.000000 bits, coverage=100.0%)
+    - order=16: 50.022% (info_gain=0.000000 bits, coverage=100.0%)
+    - order=17: 49.974% (info_gain=0.000000 bits, coverage=100.0%)
+    - order=18: 49.984% (info_gain=0.000000 bits, coverage=100.0%)
+- Interpretation: Accuracy plateaus quickly — strong evidence that no context-based shortcut exists (computational irreducibility)
+- Next Step: Try non-Markov models (LSTMs, transformers) to check if the plateau holds for richer model families
