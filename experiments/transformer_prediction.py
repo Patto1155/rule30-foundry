@@ -21,13 +21,15 @@ RESULTS_FILE = REPO / "data" / "transformer_results.json"
 
 TRAIN_BITS = 7_000_000
 TEST_BITS = 3_000_000
-BATCH_SIZE = 256
 EPOCHS = 3
 CONTEXT_LENGTHS = [64, 128, 256, 512, 1024]
 D_MODEL = 64
 N_HEADS = 4
 N_LAYERS = 2
 FFN_DIM = 128
+
+# Adaptive batch sizes: O(L^2) attention — halve batch for each doubling of context
+BATCH_SIZES = {64: 256, 128: 128, 256: 64, 512: 32, 1024: 16}
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print(f"Device: {device}")
@@ -82,10 +84,16 @@ def run_context_length(context_len, train_bits, test_bits):
     print(f"\n--- context_len={context_len} ---")
     t0 = time.time()
 
+    BATCH_SIZE = BATCH_SIZES.get(context_len, 16)
+
     # Build dataset: stride=context_len//4 for reasonable dataset size
     stride = max(1, context_len // 4)
     n_train = (len(train_bits) - context_len) // stride
     n_test = (len(test_bits) - context_len)  # stride 1 for full eval
+
+    # Clear GPU cache before each context length
+    if torch.cuda.is_available():
+        torch.cuda.empty_cache()
 
     model = CausalTransformer(D_MODEL, N_HEADS, N_LAYERS, FFN_DIM, context_len + 1).to(device)
     n_params = sum(p.numel() for p in model.parameters())
@@ -144,6 +152,12 @@ def run_context_length(context_len, train_bits, test_bits):
     bpt = avg_loss / math.log(2)
     elapsed = time.time() - t0
     print(f"  Accuracy: {accuracy*100:.4f}%  |  BPT: {bpt:.6f}  |  Time: {elapsed:.0f}s")
+
+    # Free GPU memory before next context length
+    del model, optimizer
+    if torch.cuda.is_available():
+        torch.cuda.empty_cache()
+
     return {
         "context_len": context_len,
         "n_params": n_params,
@@ -166,8 +180,24 @@ def main():
     train_bits, test_bits = load_bits()
     print(f"  Train: {len(train_bits):,}  Test: {len(test_bits):,}")
 
-    results = []
+    # Resume from prior partial results if they exist
+    prior_results = []
+    completed_ctxs = set()
+    if RESULTS_FILE.exists():
+        try:
+            with open(RESULTS_FILE) as f:
+                saved = json.load(f)
+                prior_results = saved.get("results", [])
+                completed_ctxs = {r["context_len"] for r in prior_results}
+                print(f"  Resuming: already completed contexts {sorted(completed_ctxs)}")
+        except Exception:
+            pass
+
+    results = list(prior_results)
     for ctx in CONTEXT_LENGTHS:
+        if ctx in completed_ctxs:
+            print(f"\n  Skipping context_len={ctx} (already done)")
+            continue
         r = run_context_length(ctx, train_bits, test_bits)
         results.append(r)
 
