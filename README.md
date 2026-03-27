@@ -48,10 +48,14 @@ Nobody knows. Wolfram is offering **$30,000 per problem** to find out.
 | E | Period search (p=1..1,000,000) | Best z = 4.66 < 5.61 (Bonferroni) | No period found ✓ |
 | F | Cryptanalysis (NIST suite) | Passes monobit, runs, distinguishing attack | Indistinguishable from RNG ✓ |
 | G | GF(2) linear transform search | No significant entropy reduction | No algebraic shortcut ✓ |
-| H | Markov scaling laws (order 1–19) | Accuracy flat at ~50% across all orders | Computationally irreducible ✓ |
+| H | Markov scaling laws (order 1–18) | Accuracy flat at ~50% across all orders | Computationally irreducible ✓ |
+| I | LSTM predictor (hidden 32–256) | BPT=1.000001 at all sizes — no non-linear memory | No LSTM shortcut ✓ |
+| J | CNN non-stationarity probe | 10.15% accuracy (chance=10%) — mode collapse | Stationary sequence ✓ |
+| K | Transformer (context 64–1024) | BPT flat at ~1.000 across all context lengths | No long-range structure ✓ |
+| L | ML scaling laws (running…) | d_model=32–256, n_data=500K–7M | — |
 
-**All 8 experiments are consistent with Rule 30 being computationally irreducible.**
-No test has found exploitable structure in 10 million bits.
+**All 11 completed experiments are consistent with Rule 30 being computationally irreducible.**
+No architecture (Markov, LSTM, CNN, Transformer) at any tested scale finds exploitable structure.
 
 ---
 
