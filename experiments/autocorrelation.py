@@ -28,8 +28,10 @@ MAX_LAG = 100_000
 # ---------------------------------------------------------------------------
 try:
     import cupy as cp
+    # Verify cuFFT is available (needed for FFT operations)
+    from cupy.cuda import cufft  # noqa: F401
     GPU = True
-except ImportError:
+except (ImportError, Exception):
     cp = None
     GPU = False
 
