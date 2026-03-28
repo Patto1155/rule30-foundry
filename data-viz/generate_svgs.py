@@ -66,23 +66,38 @@ def local_entropy(history: list[list[int]], radius: int = 4) -> list[list[float]
 
 
 def entropy_color(v: float) -> str:
-    """Map entropy in [0, 1] to a perceptually ordered warm palette."""
+    """Map entropy to a display scale that preserves detail near 1.0."""
+    # Most local 9x9 entropies for Rule 30 sit very close to 1 bit, so a
+    # naive linear 0..1 mapping collapses the interesting structure into a
+    # near-white plateau. Clip to the visually informative upper band and use
+    # a non-linear expansion so 0.90..1.00 spreads across the palette.
+    lo = 0.82
+    hi = 1.0
+    if v <= lo:
+        x = 0.0
+    elif v >= hi:
+        x = 1.0
+    else:
+        x = (v - lo) / (hi - lo)
+    x = x ** 2.8
+
     stops = [
-        (0.0, (17, 24, 39)),
-        (0.25, (30, 58, 138)),
-        (0.5, (8, 145, 178)),
-        (0.75, (245, 158, 11)),
-        (1.0, (255, 244, 204)),
+        (0.0, (5, 8, 20)),
+        (0.18, (23, 37, 84)),
+        (0.40, (22, 119, 158)),
+        (0.62, (72, 187, 120)),
+        (0.82, (247, 168, 43)),
+        (1.0, (255, 214, 64)),
     ]
-    if v <= stops[0][0]:
+    if x <= stops[0][0]:
         r, g, b = stops[0][1]
         return f"#{r:02x}{g:02x}{b:02x}"
-    if v >= stops[-1][0]:
+    if x >= stops[-1][0]:
         r, g, b = stops[-1][1]
         return f"#{r:02x}{g:02x}{b:02x}"
     for (a_t, a_rgb), (b_t, b_rgb) in zip(stops, stops[1:]):
-        if a_t <= v <= b_t:
-            t = (v - a_t) / (b_t - a_t)
+        if a_t <= x <= b_t:
+            t = (x - a_t) / (b_t - a_t)
             r = round(a_rgb[0] + t * (b_rgb[0] - a_rgb[0]))
             g = round(a_rgb[1] + t * (b_rgb[1] - a_rgb[1]))
             b = round(a_rgb[2] + t * (b_rgb[2] - a_rgb[2]))
