@@ -10,11 +10,12 @@ ROWS = 80
 COLS = 81
 CELL = 7
 PANEL_PAD = 18
+BOTTOM_GUTTER = 8
 TITLE_H = 34
 SUBTITLE_H = 18
 LEGEND_H = 34
 PANEL_W = COLS * CELL
-PANEL_H = ROWS * CELL
+PANEL_H = ROWS * CELL + BOTTOM_GUTTER
 LOOP_SECONDS = 17.6
 HOLD_PCT = 88.0
 
@@ -108,7 +109,7 @@ def entropy_color(v: float) -> str:
 def row_styles(prefix: str, rows: int = ROWS) -> str:
     parts = []
     for r in range(rows):
-        start = (HOLD_PCT * r) / max(1, rows - 1)
+        start = (HOLD_PCT * r) / max(1, rows)
         parts.append(
             f".{prefix}r{r}" "{"
             f"animation:{prefix}r{r}a {LOOP_SECONDS:.2f}s step-end infinite"
@@ -153,7 +154,7 @@ def sequential_scene_styles(prefix: str, n_scenes: int, rows: int = ROWS) -> str
             "}"
         )
         for r in range(rows):
-            row_start = start + (active_span * r) / max(1, rows - 1)
+            row_start = start + (active_span * r) / max(1, rows)
             parts.append(
                 f".{prefix}s{s}r{r}" "{"
                 f"animation:{prefix}s{s}r{r}a {LOOP_SECONDS:.2f}s step-start infinite"
@@ -175,7 +176,7 @@ def svg_header(width: int, height: int, bg: str, extra_style: str = "") -> str:
         f'<rect width="{width}" height="{height}" fill="{bg}"/>'
         "<defs><style>"
         "text{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}"
-        ".title{font-size:18px;font-weight:700;letter-spacing:0.6px}"
+        ".title{font-size:20px;font-weight:800;letter-spacing:0.4px}"
         ".sub{font-size:11px;letter-spacing:0.3px}"
         ".legend{font-size:10px;letter-spacing:0.2px}"
         ".panel{fill:#111827;stroke:#334155;stroke-width:1.2}"
@@ -322,7 +323,7 @@ def write_showcase() -> None:
         parts.append(
             f'<g class="seqbg{idx}" opacity="0">'
             f'<rect x="{content_x}" y="{content_y}" width="{frame_w}" height="{frame_h}" rx="16" fill="#111827" stroke="#334155" stroke-width="1.2"/>'
-            f'<text class="title" x="{content_x + PANEL_PAD}" y="{content_y + 24}" fill="{fg or "#f8fafc"}">{title}</text>'
+            f'<text class="title" x="{content_x + PANEL_PAD}" y="{content_y + 25}" fill="#f8fafc">{title}</text>'
             f'<text class="sub" x="{content_x + PANEL_PAD}" y="{content_y + 42}" fill="#94a3b8">{subtitle}</text>'
             f'</g>'
         )
