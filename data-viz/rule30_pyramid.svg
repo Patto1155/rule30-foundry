@@ -334,10 +334,10 @@
 <rect class="bg1" opacity="0" width="808" height="640" fill="#070f1a"/>
 <rect class="bg2" opacity="0" width="808" height="640" fill="#110718"/>
 <rect class="bg3" opacity="0" width="808" height="640" fill="#120800"/>
-<text class="lb0" opacity="0" x="8" y="632" fill="#39d353">Rule 30  — Chaotic / Prize Problem</text>
-<text class="lb1" opacity="0" x="8" y="632" fill="#38bdf8">Rule 110 — Turing Complete</text>
-<text class="lb2" opacity="0" x="8" y="632" fill="#c084fc">Rule 90  — Sierpinski Triangle</text>
-<text class="lb3" opacity="0" x="8" y="632" fill="#fb923c">Rule 54  — Gliders & Complex Dynamics</text>
+<text class="lb0" opacity="0" x="8" y="632" fill="#39d353">Rule 30  -- Chaotic / Prize Problem</text>
+<text class="lb1" opacity="0" x="8" y="632" fill="#38bdf8">Rule 110 -- Turing Complete</text>
+<text class="lb2" opacity="0" x="8" y="632" fill="#c084fc">Rule 90  -- Sierpinski Triangle</text>
+<text class="lb3" opacity="0" x="8" y="632" fill="#fb923c">Rule 54  -- Gliders + Complex Dynamics</text>
 <g class="c0r0" opacity="0">
 <rect x="0" y="0" width="808" height="7" fill="#0c1f10"/>
 <rect x="400" y="0" width="7" height="7" fill="#39d353"/>
