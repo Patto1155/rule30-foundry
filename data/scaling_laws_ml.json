@@ -1,0 +1,77 @@
+{
+  "model_sweep": [
+    {
+      "d_model": 32,
+      "n_params": 17185,
+      "bpt": 1.0000645722069368,
+      "accuracy": 0.4992079324102323,
+      "time_s": 141.7
+    },
+    {
+      "d_model": 64,
+      "n_params": 67137,
+      "bpt": 1.0000403780647416,
+      "accuracy": 0.5008307375562715,
+      "time_s": 249.3
+    },
+    {
+      "d_model": 128,
+      "n_params": 265345,
+      "bpt": 1.0003038463365228,
+      "accuracy": 0.5007240617866058,
+      "time_s": 375.2
+    },
+    {
+      "d_model": 256,
+      "n_params": 1054977,
+      "bpt": 1.0001145096286048,
+      "accuracy": 0.4998346525570182,
+      "time_s": 685.8
+    }
+  ],
+  "data_sweep": [
+    {
+      "d_model": 64,
+      "n_params": 67137,
+      "bpt": 1.0005767669063024,
+      "accuracy": 0.5007240617866058,
+      "time_s": 150.3,
+      "n_data": 500000
+    },
+    {
+      "d_model": 64,
+      "n_params": 67137,
+      "bpt": 1.0000380639567346,
+      "accuracy": 0.49930394060293143,
+      "time_s": 162.8,
+      "n_data": 1000000
+    },
+    {
+      "d_model": 64,
+      "n_params": 67137,
+      "bpt": 1.0000880649706307,
+      "accuracy": 0.49927860510763583,
+      "time_s": 187.8,
+      "n_data": 2000000
+    },
+    {
+      "d_model": 64,
+      "n_params": 67137,
+      "bpt": 1.0000697970124237,
+      "accuracy": 0.5001653474429818,
+      "time_s": 262.9,
+      "n_data": 5000000
+    },
+    {
+      "d_model": 64,
+      "n_params": 67137,
+      "bpt": 1.000041350635787,
+      "accuracy": 0.4992932730259649,
+      "time_s": 313.1,
+      "n_data": 7000000
+    }
+  ],
+  "conclusion": "Flat scaling: BPT range = 0.000263 (model), 0.000539 (data). No improvement with scale \u2014 computational irreducibility is robust",
+  "model_bpt_range": 0.0002634682717812531,
+  "data_bpt_range": 0.0005387029495678153
+}

@@ -1,0 +1,13 @@
+{
+  "n_cells": 93000000,
+  "n_steps": 46000000,
+  "elapsed_seconds": 7106.15,
+  "steps_per_second": 6473.3,
+  "cells_per_second": 602013900594.8,
+  "gcells_per_second": 602.014,
+  "vram_mb": 66.0,
+  "center_col_file": "data/center_col_46M.bin",
+  "center_col_bits": 46000000,
+  "verification_passed": true,
+  "fraction_ones": 0.5001584130434783
+}

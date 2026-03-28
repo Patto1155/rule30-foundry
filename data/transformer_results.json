@@ -1,0 +1,43 @@
+{
+  "results": [
+    {
+      "context_len": 64,
+      "n_params": 67137,
+      "accuracy": 0.499705,
+      "bpt": 1.00009,
+      "time_s": 142.0
+    },
+    {
+      "context_len": 128,
+      "n_params": 67137,
+      "accuracy": 0.49927863588846455,
+      "bpt": 1.0001167899659578,
+      "time_s": 186.7
+    },
+    {
+      "context_len": 256,
+      "n_params": 67137,
+      "accuracy": 0.4992759382133942,
+      "bpt": 1.0001287157584575,
+      "time_s": 313.0
+    },
+    {
+      "context_len": 512,
+      "n_params": 67137,
+      "accuracy": 0.4992798770990249,
+      "bpt": 1.0001856226501036,
+      "time_s": 685.5
+    },
+    {
+      "context_len": 1024,
+      "n_params": 67137,
+      "accuracy": 0.5001613884205809,
+      "bpt": 1.0000268341187122,
+      "time_s": 2077.0
+    }
+  ],
+  "conclusion": "No improvement over random \u2014 computational irreducibility holds for transformer too",
+  "best_bpt": 1.0000268341187122,
+  "improvement": -2.683411871218233e-05,
+  "still_decreasing": false
+}

@@ -1,0 +1,40 @@
+{
+  "results": [
+    {
+      "hidden_size": 32,
+      "n_params": 12961,
+      "accuracy": 0.5002906074395504,
+      "bpt": 1.0000100112121921,
+      "avg_loss_nats": 0.6931541198034503,
+      "time_s": 93.3
+    },
+    {
+      "hidden_size": 64,
+      "n_params": 50497,
+      "accuracy": 0.4996105900311048,
+      "bpt": 1.0000008618795804,
+      "avg_loss_nats": 0.6931477779693465,
+      "time_s": 210.1
+    },
+    {
+      "hidden_size": 128,
+      "n_params": 199297,
+      "accuracy": 0.5002906074395504,
+      "bpt": 1.0000264329719666,
+      "avg_loss_nats": 0.6931655024999377,
+      "time_s": 1423.0
+    },
+    {
+      "hidden_size": 256,
+      "n_params": 791809,
+      "accuracy": 0.5002906074395504,
+      "bpt": 1.000002301651727,
+      "avg_loss_nats": 0.6931487759433504,
+      "time_s": 1394.1
+    }
+  ],
+  "conclusion": "No significant improvement over random \u2014 supports computational irreducibility",
+  "best_bpt": 1.0000008618795804,
+  "baseline_bpt": 1.0,
+  "improvement": -8.618795803716495e-07
+}
