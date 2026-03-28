@@ -2,7 +2,7 @@
 
 GPU-powered empirical research into **Wolfram's Rule 30 Prize Problems** — $30,000 each.
 
-![Rule 30 — 55 steps from a single live cell, animated](rule30_animated.svg)
+![Rule 30 — 80 steps from a single live cell, animated](data-viz/rule30_pyramid.svg)
 
 **The question:** Is this sequence random? Does it repeat? Can it be predicted without simulating it?
 
