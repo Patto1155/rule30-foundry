@@ -2,7 +2,7 @@
 
 GPU-powered empirical research into **Wolfram's Rule 30 Prize Problems** — $30,000 each.
 
-![Rule 30 — 80 steps from a single live cell, animated](data-viz/rule30_pyramid.svg)
+![Cellular automata showcase](data-viz/ca_showcase.svg)
 
 **The question:** Is this sequence random? Does it repeat? Can it be predicted without simulating it?
 
@@ -46,7 +46,7 @@ No architecture (Markov, LSTM, CNN, Transformer) at any scale — of model size,
 
 **Hardware:** GTX 1060 6GB (SM 6.1) · i5-7600K · 16 GB RAM
 
-```
+```text
   Rule 30 Simulation  (CuPy CUDA, bit-packed uint64 tape)
   ╔══════════════════════════════════════════╗
   ║  Tape width:   21,000,000 cells          ║
@@ -70,16 +70,17 @@ Full benchmark report: [`docs/gpu-benchmark.md`](docs/gpu-benchmark.md)
 
 ## Repo Layout
 
-```
+```text
 rule30-foundry/
+├── data-viz/                  README SVG animations and visualizations
 ├── gpu/rule30_sim.py          CuPy CUDA kernel — Rule 30 simulation
-├── experiments/               A–H: one script per experiment
+├── experiments/               A–L: one script per experiment
 ├── docs/
 │   ├── gpu-benchmark.md       Hardware performance report
-│   ├── experiment-logs/       Dated result logs (A–H)
+│   ├── experiment-logs/       Dated result logs
 │   ├── problem-statements/    Formal writeups per prize problem
 │   └── idea-bank/             Future experiment candidates
-└── data/                      Binary + CSV outputs (gitignored, kept local)
+└── data/                      Binary + CSV outputs
 ```
 
 ---
