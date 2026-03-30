@@ -6,7 +6,7 @@ GPU-powered empirical research into **Wolfram's Rule 30 Prize Problems** — $30
 
 **The question:** Is this sequence random? Does it repeat? Can it be predicted without simulating it?
 
-Nobody knows. Wolfram is offering **$30,000 per problem** to find out.
+Nobody knows. Wolfram is offering **$30,000 in prizes for 3 problems** to find out.
 
 ---
 
