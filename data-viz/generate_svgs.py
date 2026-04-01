@@ -18,12 +18,23 @@ PANEL_W = COLS * CELL
 PANEL_H = ROWS * CELL + BOTTOM_GUTTER
 LOOP_SECONDS = 17.6
 HOLD_PCT = 88.0
+RULE110_ETHER = [0, 0, 0, 1, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1]
 
 
-def evolve(rule: int, rows: int = ROWS, cols: int = COLS) -> list[list[int]]:
-    """Elementary cellular automaton from a single live center cell."""
-    state = [0] * cols
-    state[cols // 2] = 1
+def evolve(
+    rule: int,
+    rows: int = ROWS,
+    cols: int = COLS,
+    seed: list[int] | None = None,
+) -> list[list[int]]:
+    """Elementary cellular automaton from a seed state."""
+    if seed is None:
+        state = [0] * cols
+        state[cols // 2] = 1
+    else:
+        if len(seed) != cols:
+            raise ValueError(f"seed length must match cols ({cols})")
+        state = seed[:]
     history = [state[:]]
     for _ in range(rows - 1):
         nxt = [0] * cols
@@ -36,6 +47,17 @@ def evolve(rule: int, rows: int = ROWS, cols: int = COLS) -> list[list[int]]:
         state = nxt
         history.append(state[:])
     return history
+
+
+def rule110_seed(cols: int = COLS) -> list[int]:
+    """Use the Rule 110 ether background with a localized defect."""
+    state = [RULE110_ETHER[i % len(RULE110_ETHER)] for i in range(cols)]
+    center = cols // 2
+    defect = [1, 0, 1, 1, 0, 1, 0]
+    start = center - len(defect) // 2
+    for offset, bit in enumerate(defect):
+        state[start + offset] = bit
+    return state
 
 
 def binary_entropy(p: float) -> float:
@@ -300,11 +322,11 @@ def write_rule30_entropy() -> None:
 
 def write_showcase() -> None:
     scenes = [
-        ("Rule 30", "Chaotic asymmetric growth", evolve(30), "#39d353", "#081109", "binary"),
-        ("Rule 110", "Complex localized structures", evolve(110), "#38bdf8", "#07131c", "binary"),
-        ("Rule 90", "Additive XOR / Sierpinski triangle", evolve(90), "#c084fc", "#140a1f", "binary"),
-        ("Rule 54", "Particles and collisions", evolve(54), "#fb923c", "#1a0d02", "binary"),
-        ("Rule 30 Local Entropy", "Binary Shannon entropy over each cell's 9x9 neighborhood", local_entropy(evolve(30), radius=4), None, "#09090b", "entropy"),
+        ("Rule 30", "Chaotic asymmetric growth", evolve(30), "#39d353", "#081109", "binary", "single centered seed · fixed-zero boundary · 80 steps"),
+        ("Rule 110", "Complex localized structures", evolve(110, seed=rule110_seed()), "#38bdf8", "#07131c", "binary", "ether background with localized defect · 80 steps"),
+        ("Rule 90", "Additive XOR / Sierpinski triangle", evolve(90), "#c084fc", "#140a1f", "binary", "single centered seed · fixed-zero boundary · 80 steps"),
+        ("Rule 54", "Particles and collisions", evolve(54), "#fb923c", "#1a0d02", "binary", "single centered seed · fixed-zero boundary · 80 steps"),
+        ("Rule 30 Local Entropy", "Binary Shannon entropy over each cell's 9x9 neighborhood", local_entropy(evolve(30), radius=4), None, "#09090b", "entropy", "single centered seed · fixed-zero boundary · 80 steps"),
     ]
 
     width = PANEL_W + PANEL_PAD * 2 + 16
@@ -319,7 +341,7 @@ def write_showcase() -> None:
     grid_x = content_x + PANEL_PAD
     grid_y = content_y + 10
 
-    for idx, (title, subtitle, values, fg, bg, mode) in enumerate(scenes):
+    for idx, (title, subtitle, values, fg, bg, mode, note) in enumerate(scenes):
         parts.append(
             f'<g class="seqbg{idx}" opacity="0">'
             f'<rect x="{content_x}" y="{content_y}" width="{frame_w}" height="{frame_h}" rx="16" fill="#111827" stroke="#334155" stroke-width="1.2"/>'
@@ -339,7 +361,7 @@ def write_showcase() -> None:
         else:
             parts.append(
                 f'<text class="legend" x="{grid_x}" y="{grid_y + 44 + PANEL_H + 20}" fill="#64748b">'
-                "single centered seed · fixed-zero boundary · 80 steps"
+                f"{note}"
                 "</text>"
             )
         parts.append("</g>")
