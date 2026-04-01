@@ -176,87 +176,131 @@
   "sliding_window": [
     {
       "start_byte": 0,
-      "gzip": 1.000376
+      "gzip_rule30": 1.00037565,
+      "gzip_random": 1.00037565,
+      "delta": 0.0
     },
     {
       "start_byte": 287500,
-      "gzip": 1.000376
+      "gzip_rule30": 1.00037565,
+      "gzip_random": 1.00037565,
+      "delta": 0.0
     },
     {
       "start_byte": 575000,
-      "gzip": 1.000376
+      "gzip_rule30": 1.00037565,
+      "gzip_random": 1.00037565,
+      "delta": 0.0
     },
     {
       "start_byte": 862500,
-      "gzip": 1.000376
+      "gzip_rule30": 1.00037565,
+      "gzip_random": 1.00037565,
+      "delta": 0.0
     },
     {
       "start_byte": 1150000,
-      "gzip": 1.000376
+      "gzip_rule30": 1.00037565,
+      "gzip_random": 1.00037565,
+      "delta": 0.0
     },
     {
       "start_byte": 1437500,
-      "gzip": 1.000376
+      "gzip_rule30": 1.00037565,
+      "gzip_random": 1.00037565,
+      "delta": 0.0
     },
     {
       "start_byte": 1725000,
-      "gzip": 1.000376
+      "gzip_rule30": 1.00037565,
+      "gzip_random": 1.00037565,
+      "delta": 0.0
     },
     {
       "start_byte": 2012500,
-      "gzip": 1.000376
+      "gzip_rule30": 1.00037565,
+      "gzip_random": 1.00037565,
+      "delta": 0.0
     },
     {
       "start_byte": 2300000,
-      "gzip": 1.000376
+      "gzip_rule30": 1.00037565,
+      "gzip_random": 1.00037565,
+      "delta": 0.0
     },
     {
       "start_byte": 2587500,
-      "gzip": 1.000376
+      "gzip_rule30": 1.00037565,
+      "gzip_random": 1.00037565,
+      "delta": 0.0
     },
     {
       "start_byte": 2875000,
-      "gzip": 1.000376
+      "gzip_rule30": 1.00037565,
+      "gzip_random": 1.00037565,
+      "delta": 0.0
     },
     {
       "start_byte": 3162500,
-      "gzip": 1.000376
+      "gzip_rule30": 1.00037565,
+      "gzip_random": 1.00037565,
+      "delta": 0.0
     },
     {
       "start_byte": 3450000,
-      "gzip": 1.000376
+      "gzip_rule30": 1.00037565,
+      "gzip_random": 1.00037565,
+      "delta": 0.0
     },
     {
       "start_byte": 3737500,
-      "gzip": 1.000376
+      "gzip_rule30": 1.00037565,
+      "gzip_random": 1.00037565,
+      "delta": 0.0
     },
     {
       "start_byte": 4025000,
-      "gzip": 1.000376
+      "gzip_rule30": 1.00037565,
+      "gzip_random": 1.00037565,
+      "delta": 0.0
     },
     {
       "start_byte": 4312500,
-      "gzip": 1.000376
+      "gzip_rule30": 1.00037565,
+      "gzip_random": 1.00037565,
+      "delta": 0.0
     },
     {
       "start_byte": 4600000,
-      "gzip": 1.000376
+      "gzip_rule30": 1.00037565,
+      "gzip_random": 1.00037565,
+      "delta": 0.0
     },
     {
       "start_byte": 4887500,
-      "gzip": 1.000376
+      "gzip_rule30": 1.00037565,
+      "gzip_random": 1.00037565,
+      "delta": 0.0
     },
     {
       "start_byte": 5175000,
-      "gzip": 1.000376
+      "gzip_rule30": 1.00037565,
+      "gzip_random": 1.00037565,
+      "delta": 0.0
     },
     {
       "start_byte": 5462500,
-      "gzip": 1.000376
+      "gzip_rule30": 1.00037565,
+      "gzip_random": 1.00037565,
+      "delta": 0.0
     }
   ],
-  "window_gzip_mean": 1.000376,
+  "window_gzip_mean": 1.00037565,
   "window_gzip_std": 0.0,
+  "window_random_gzip_mean": 1.00037565,
+  "window_random_gzip_std": 0.0,
+  "window_delta_mean": 0.0,
+  "window_delta_std": 0.0,
   "run_length_mean": 1.99967,
   "run_length_median": 1.0,
   "run_length_hist": {
@@ -277,5 +321,6 @@
     "6": 78138,
     "7+": 78138
   },
-  "elapsed_s": 5.9
+  "run_length_chi2_geometric": 1.587631,
+  "elapsed_s": 8.6
 }

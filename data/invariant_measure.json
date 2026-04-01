@@ -1,0 +1,192 @@
+{
+  "n_cells": 65536,
+  "burn_in": 512,
+  "sample_rows": 256,
+  "sample_stride": 8,
+  "sample_density": 0.50002831,
+  "k_stats": [
+    {
+      "k": 1,
+      "n_windows": 16777216,
+      "block_entropy": 1.0,
+      "block_entropy_mm": 1.00000004,
+      "conditional_entropy": 1.0,
+      "conditional_entropy_mm": 1.00000004,
+      "kl_to_uniform": 0.0,
+      "kl_to_uniform_mm": -4e-08
+    },
+    {
+      "k": 2,
+      "n_windows": 16776960,
+      "block_entropy": 1.99999995,
+      "block_entropy_mm": 2.00000008,
+      "conditional_entropy": 0.99999995,
+      "conditional_entropy_mm": 1.00000004,
+      "kl_to_uniform": 5e-08,
+      "kl_to_uniform_mm": -8e-08
+    },
+    {
+      "k": 3,
+      "n_windows": 16776704,
+      "block_entropy": 2.99999981,
+      "block_entropy_mm": 3.00000011,
+      "conditional_entropy": 0.99999986,
+      "conditional_entropy_mm": 1.00000003,
+      "kl_to_uniform": 1.9e-07,
+      "kl_to_uniform_mm": -1.1e-07
+    },
+    {
+      "k": 4,
+      "n_windows": 16776448,
+      "block_entropy": 3.99999953,
+      "block_entropy_mm": 4.00000018,
+      "conditional_entropy": 0.99999972,
+      "conditional_entropy_mm": 1.00000006,
+      "kl_to_uniform": 4.7e-07,
+      "kl_to_uniform_mm": -1.8e-07
+    },
+    {
+      "k": 5,
+      "n_windows": 16776192,
+      "block_entropy": 4.99999902,
+      "block_entropy_mm": 5.00000035,
+      "conditional_entropy": 0.99999949,
+      "conditional_entropy_mm": 1.00000017,
+      "kl_to_uniform": 9.8e-07,
+      "kl_to_uniform_mm": -3.5e-07
+    },
+    {
+      "k": 6,
+      "n_windows": 16775936,
+      "block_entropy": 5.9999978,
+      "block_entropy_mm": 6.00000051,
+      "conditional_entropy": 0.99999878,
+      "conditional_entropy_mm": 1.00000016,
+      "kl_to_uniform": 2.2e-06,
+      "kl_to_uniform_mm": -5.1e-07
+    },
+    {
+      "k": 7,
+      "n_windows": 16775680,
+      "block_entropy": 6.99999581,
+      "block_entropy_mm": 7.00000127,
+      "conditional_entropy": 0.99999802,
+      "conditional_entropy_mm": 1.00000077,
+      "kl_to_uniform": 4.19e-06,
+      "kl_to_uniform_mm": -1.27e-06
+    },
+    {
+      "k": 8,
+      "n_windows": 16775424,
+      "block_entropy": 7.99999135,
+      "block_entropy_mm": 8.00000231,
+      "conditional_entropy": 0.99999553,
+      "conditional_entropy_mm": 1.00000104,
+      "kl_to_uniform": 8.65e-06,
+      "kl_to_uniform_mm": -2.31e-06
+    },
+    {
+      "k": 9,
+      "n_windows": 16775168,
+      "block_entropy": 8.99998051,
+      "block_entropy_mm": 9.00000248,
+      "conditional_entropy": 0.99998916,
+      "conditional_entropy_mm": 1.00000017,
+      "kl_to_uniform": 1.949e-05,
+      "kl_to_uniform_mm": -2.48e-06
+    },
+    {
+      "k": 10,
+      "n_windows": 16774912,
+      "block_entropy": 9.99995837,
+      "block_entropy_mm": 10.00000236,
+      "conditional_entropy": 0.99997786,
+      "conditional_entropy_mm": 0.99999988,
+      "kl_to_uniform": 4.163e-05,
+      "kl_to_uniform_mm": -2.36e-06
+    },
+    {
+      "k": 11,
+      "n_windows": 16774656,
+      "block_entropy": 10.99991344,
+      "block_entropy_mm": 11.00000147,
+      "conditional_entropy": 0.99995508,
+      "conditional_entropy_mm": 0.99999911,
+      "kl_to_uniform": 8.656e-05,
+      "kl_to_uniform_mm": -1.47e-06
+    },
+    {
+      "k": 12,
+      "n_windows": 16774400,
+      "block_entropy": 11.99982331,
+      "block_entropy_mm": 11.99999941,
+      "conditional_entropy": 0.99990987,
+      "conditional_entropy_mm": 0.99999794,
+      "kl_to_uniform": 0.00017669,
+      "kl_to_uniform_mm": 5.9e-07
+    },
+    {
+      "k": 13,
+      "n_windows": 16774144,
+      "block_entropy": 12.999644,
+      "block_entropy_mm": 12.99999624,
+      "conditional_entropy": 0.99982069,
+      "conditional_entropy_mm": 0.99999683,
+      "kl_to_uniform": 0.000356,
+      "kl_to_uniform_mm": 3.76e-06
+    },
+    {
+      "k": 14,
+      "n_windows": 16773888,
+      "block_entropy": 13.99929272,
+      "block_entropy_mm": 13.99999726,
+      "conditional_entropy": 0.99964872,
+      "conditional_entropy_mm": 1.00000102,
+      "kl_to_uniform": 0.00070728,
+      "kl_to_uniform_mm": 2.74e-06
+    },
+    {
+      "k": 15,
+      "n_windows": 16773632,
+      "block_entropy": 14.9985943,
+      "block_entropy_mm": 15.00000344,
+      "conditional_entropy": 0.99930158,
+      "conditional_entropy_mm": 1.00000619,
+      "kl_to_uniform": 0.0014057,
+      "kl_to_uniform_mm": -3.44e-06
+    },
+    {
+      "k": 16,
+      "n_windows": 16773376,
+      "block_entropy": 15.99718546,
+      "block_entropy_mm": 16.00000383,
+      "conditional_entropy": 0.99859116,
+      "conditional_entropy_mm": 1.00000039,
+      "kl_to_uniform": 0.00281454,
+      "kl_to_uniform_mm": -3.83e-06
+    },
+    {
+      "k": 17,
+      "n_windows": 16773120,
+      "block_entropy": 16.9943624,
+      "block_entropy_mm": 16.99999926,
+      "conditional_entropy": 0.99717693,
+      "conditional_entropy_mm": 0.99999543,
+      "kl_to_uniform": 0.0056376,
+      "kl_to_uniform_mm": 7.4e-07
+    },
+    {
+      "k": 18,
+      "n_windows": 16772864,
+      "block_entropy": 17.98872379,
+      "block_entropy_mm": 17.99999773,
+      "conditional_entropy": 0.9943614,
+      "conditional_entropy_mm": 0.99999847,
+      "kl_to_uniform": 0.01127621,
+      "kl_to_uniform_mm": 2.27e-06
+    }
+  ],
+  "compression_proxy_rule30": 1.000344,
+  "compression_proxy_random": 1.000344,
+  "elapsed_s": 5.27
+}

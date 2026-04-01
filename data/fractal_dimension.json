@@ -1,0 +1,103 @@
+{
+  "n_steps": 8192,
+  "n_cells": 16385,
+  "active_density": 0.50060087,
+  "box_counting": [
+    {
+      "box_size": 1,
+      "rule30": 33594756,
+      "random": 33596547
+    },
+    {
+      "box_size": 2,
+      "rule30": 15732654,
+      "random": 15736004
+    },
+    {
+      "box_size": 4,
+      "rule30": 4190826,
+      "random": 4196263
+    },
+    {
+      "box_size": 8,
+      "rule30": 1049568,
+      "random": 1049600
+    },
+    {
+      "box_size": 16,
+      "rule30": 262656,
+      "random": 262656
+    },
+    {
+      "box_size": 32,
+      "rule30": 65792,
+      "random": 65792
+    },
+    {
+      "box_size": 64,
+      "rule30": 16512,
+      "random": 16512
+    },
+    {
+      "box_size": 128,
+      "rule30": 4160,
+      "random": 4160
+    },
+    {
+      "box_size": 256,
+      "rule30": 1056,
+      "random": 1056
+    },
+    {
+      "box_size": 512,
+      "rule30": 272,
+      "random": 272
+    }
+  ],
+  "fractal_dimension_rule30": 1.93405,
+  "fractal_dimension_random": 1.934125,
+  "diag_lags": [
+    1,
+    2,
+    4,
+    8,
+    16,
+    32,
+    64,
+    128,
+    256
+  ],
+  "diag_corr_pos": [
+    -0.50164426,
+    0.25093267,
+    0.15313685,
+    0.07154232,
+    0.00516696,
+    0.00435794,
+    0.00243606,
+    0.00322194,
+    0.00398777
+  ],
+  "diag_corr_neg": [
+    -0.00114842,
+    -0.00464343,
+    0.00573654,
+    0.04554186,
+    0.37918128,
+    0.37912783,
+    0.37896126,
+    0.37930338,
+    0.37932466
+  ],
+  "neighbor_anisotropy": {
+    "horizontal": -0.00149647,
+    "vertical": -0.00029801,
+    "diag_pos": -0.50164426,
+    "diag_neg": -0.00114842
+  },
+  "zlib_ratio_rule30": 0.08077782,
+  "zlib_ratio_random": 0.08074725,
+  "png_bytes_rule30": 11310554,
+  "png_bytes_random": 14174271,
+  "elapsed_s": 564.21
+}

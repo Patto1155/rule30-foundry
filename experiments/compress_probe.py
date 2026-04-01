@@ -1,8 +1,9 @@
 #!/usr/bin/env python
-"""Experiment N — Compression-Based Irreducibility Probe.
+"""Compression probe against matched random baselines.
 
-Directly attacks Prize Problem 2: if no compressor finds structure at any scale,
-no algorithm can compute the sequence faster than step-by-step simulation.
+This is a practical control experiment, not a proof of irreducibility.
+It asks whether common dictionary-based compressors and simple run statistics
+distinguish the center-column data from matched random baselines.
 
 Three angles:
   1. Multi-scale sweep: gzip/bz2 vs random baseline at scales 1K–46M bits
@@ -59,6 +60,12 @@ def ratio(data: bytes, comp: str) -> float:
     return len(c) / orig
 
 
+def geometric_expected_hist(total_runs: int) -> dict[str, float]:
+    out = {str(k): (0.5 ** k) * total_runs for k in range(1, 7)}
+    out["7+"] = (0.5 ** 6) * total_runs
+    return out
+
+
 def main():
     PROG_LOG.parent.mkdir(parents=True, exist_ok=True)
     open(PROG_LOG, "w").close()
@@ -96,21 +103,41 @@ def main():
     # ── Part 2: Sliding window non-stationarity ──────────────────────────
     log(f"\n--- Part 2: Sliding window ({N_WINDOWS} x {WINDOW_BYTES:,} bytes) ---")
     window_results = []
+    window_rand_raw = []
     for i in range(N_WINDOWS):
         start = i * WINDOW_BYTES
         end   = start + WINDOW_BYTES
         if end > TOTAL_BYTES:
             break
         chunk = raw_all[start:end]
+        rand_chunk = rng.integers(0, 256, size=len(chunk), dtype=np.uint8).tobytes()
         r = ratio(chunk, "gzip")
-        window_results.append({"start_byte": start, "gzip": round(r, 6)})
-        log(f"  Window {i+1:>2}/{N_WINDOWS}  byte [{start:>9,}–{end:>9,}]: gzip={r:.6f}")
+        rr = ratio(rand_chunk, "gzip")
+        window_results.append({
+            "start_byte": start,
+            "gzip_rule30": round(r, 8),
+            "gzip_random": round(rr, 8),
+            "delta": round(r - rr, 8),
+        })
+        window_rand_raw.append(rr)
+        log(
+            f"  Window {i+1:>2}/{N_WINDOWS}  byte [{start:>9,}–{end:>9,}]: "
+            f"rule30={r:.6f} random={rr:.6f} delta={r-rr:+.6f}"
+        )
 
-    w_ratios = [w["gzip"] for w in window_results]
-    w_mean   = float(np.mean(w_ratios))
-    w_std    = float(np.std(w_ratios))
-    log(f"  Window gzip: mean={w_mean:.6f}, std={w_std:.6f}  "
-        f"({'stationary' if w_std < 0.001 else 'NON-STATIONARY signal'})")
+    w_ratios = [w["gzip_rule30"] for w in window_results]
+    w_deltas = [w["delta"] for w in window_results]
+    w_mean = float(np.mean(w_ratios))
+    w_std = float(np.std(w_ratios))
+    w_rand_mean = float(np.mean(window_rand_raw))
+    w_rand_std = float(np.std(window_rand_raw))
+    w_delta_mean = float(np.mean(w_deltas))
+    w_delta_std = float(np.std(w_deltas))
+    log(
+        f"  Window gzip: rule30 mean={w_mean:.8f}, std={w_std:.8f}; "
+        f"random mean={w_rand_mean:.8f}, std={w_rand_std:.8f}; "
+        f"delta mean={w_delta_mean:+.8f}, std={w_delta_std:.8f}"
+    )
 
     # ── Part 3: Run-length distribution ─────────────────────────────────
     log(f"\n--- Part 3: Run-length distribution ({RL_SAMPLE_BYTES*8:,} bits) ---")
@@ -129,12 +156,18 @@ def main():
     rl_hist = {str(k): int(np.sum(run_lengths == k)) for k in range(1, 7)}
     rl_hist["7+"] = int(np.sum(run_lengths >= 7))
     # Expected counts under geometric(0.5): P(run=k) = (0.5)^k
-    exp_hist = {str(k): int(round(0.5**k * total_runs)) for k in range(1, 7)}
-    exp_hist["7+"] = int(round(0.5**6 * total_runs))   # ≈ P(run≥7)xtotal (approx)
+    exp_hist_float = geometric_expected_hist(total_runs)
+    exp_hist = {k: int(round(v)) for k, v in exp_hist_float.items()}
+    chi2 = 0.0
+    for key, exp in exp_hist_float.items():
+        obs = rl_hist[key]
+        if exp > 0:
+            chi2 += (obs - exp) ** 2 / exp
 
     log(f"  Runs: {total_runs:,}  mean_length={mean_rl:.4f}  (geometric(0.5) expects 2.0)")
     log(f"  Obs:  {rl_hist}")
     log(f"  Exp:  {exp_hist}")
+    log(f"  Chi-square vs geometric(0.5): {chi2:.3f} on 7 bins")
 
     elapsed = time.perf_counter() - t0
     log(f"\nDone in {elapsed:.1f}s")
@@ -146,12 +179,17 @@ def main():
         "test_mode": TEST,
         "scale_sweep": scale_results,
         "sliding_window": window_results,
-        "window_gzip_mean": round(w_mean, 6),
-        "window_gzip_std":  round(w_std,  6),
+        "window_gzip_mean": round(w_mean, 8),
+        "window_gzip_std": round(w_std, 8),
+        "window_random_gzip_mean": round(w_rand_mean, 8),
+        "window_random_gzip_std": round(w_rand_std, 8),
+        "window_delta_mean": round(w_delta_mean, 8),
+        "window_delta_std": round(w_delta_std, 8),
         "run_length_mean":   round(mean_rl, 6),
         "run_length_median": round(median_rl, 1),
         "run_length_hist":   rl_hist,
         "run_length_expected_geometric": exp_hist,
+        "run_length_chi2_geometric": round(chi2, 6),
         "elapsed_s": round(elapsed, 1),
     }
     OUT_JSON.parent.mkdir(parents=True, exist_ok=True)
@@ -186,13 +224,14 @@ def main():
         ax = axes[1]
         w_starts = [w["start_byte"] * 8 / 1e6 for w in window_results]
         ax.plot(w_starts, w_ratios, "g-o", ms=5)
-        ax.axhline(w_mean, color="gray", ls="--", lw=1, label=f"mean={w_mean:.4f}")
+        ax.plot(w_starts, window_rand_raw, "r--s", ms=4, label="Random window baseline")
+        ax.axhline(w_mean, color="gray", ls="--", lw=1, label=f"R30 mean={w_mean:.6f}")
         ax.fill_between(w_starts,
                         [w_mean - 2*w_std]*len(w_starts),
                         [w_mean + 2*w_std]*len(w_starts),
-                        alpha=0.15, color="green", label="+-2sigma")
+                        alpha=0.15, color="green", label="R30 +-2sigma")
         ax.set_xlabel("Window start (Mbit)"); ax.set_ylabel("gzip ratio")
-        ax.set_title(f"Sliding window ({WINDOW_BYTES*8//1000}K-bit windows)\nstd={w_std:.6f}")
+        ax.set_title(f"Sliding window ({WINDOW_BYTES*8//1000}K-bit windows)\ndelta mean={w_delta_mean:+.6f}")
         ax.legend(); ax.grid(True, alpha=0.3)
 
         # 3: run-length distribution
@@ -224,21 +263,23 @@ def main():
 
 - Date: {datetime.date.today().isoformat()}
 - Title: Multi-scale gzip/bz2 compression vs random baseline + sliding window + run-length analysis
-- Goal: Attack Prize Problem 2 — if incompressible at all scales, no faster algorithm exists
+- Goal: Test whether simple compressors and run statistics distinguish the center column from matched random baselines
 - Data: center_col_46M.bin ({TOTAL_BYTES:,} bytes = 46M bits)
 - Method:
   1. Compress raw bytes at scales 128B–{TOTAL_BYTES//1000}KB; compare to random baseline
-  2. Sliding window: {N_WINDOWS} windows x {WINDOW_BYTES:,} bytes, measure gzip variation
+  2. Sliding window: {N_WINDOWS} windows x {WINDOW_BYTES:,} bytes, compare Rule 30 and fresh random windows
   3. Run-length histogram vs geometric(0.5) expected from Bernoulli process
 - Results (at full {TOTAL_BYTES:,} bytes):
   - gzip: r30={last.get('r30_gzip','?')}, random={last.get('rand_gzip','?')}, ratio={last.get('vs_random_gzip','?')}
   - bz2:  r30={last.get('r30_bz2','?')}, random={last.get('rand_bz2','?')}, ratio={last.get('vs_random_bz2','?')}
-  - Window gzip std: {w_std:.6f}
+  - Window gzip: rule30 mean={w_mean:.8f}, random mean={w_rand_mean:.8f}, delta mean={w_delta_mean:+.8f}
   - Run-length mean: {mean_rl:.4f} (geometric(0.5) expects 2.0)
+  - Run-length chi-square vs geometric(0.5): {chi2:.3f}
 - Interpretation:
-  {"Rule 30 compresses at roughly same ratio as random -> no structure detectable by dictionary-based compression -> supports Prize Problem 2 irreducibility." if abs(last.get('vs_random_gzip',1.0) - 1.0) < 0.01 else "Rule 30 compresses DIFFERENTLY from random — structure detected."}
-  {"Window std < 0.001 -> compression ratio is stationary across the full sequence." if w_std < 0.001 else f"Window std = {w_std:.4f} -> possible non-stationarity."}
-  {"Run-length mean ≈ 2.0 -> consistent with Bernoulli(0.5) at local scale." if abs(mean_rl - 2.0) < 0.1 else f"Run-length mean = {mean_rl:.3f} deviates from 2.0."}
+  {"Tested dictionary compressors do not distinguish Rule 30 from matched bytewise-random baselines at the tested scales." if abs(last.get('vs_random_gzip',1.0) - 1.0) < 0.01 else "Rule 30 compresses differently from the matched random baseline at the tested scales."}
+  {"Window deltas stay near zero, so there is no obvious non-stationarity by this compression metric." if abs(w_delta_mean) < 0.001 and w_delta_std < 0.001 else "Window-level compression differs enough from the matched random baseline to justify a closer look."}
+  {"Run-length statistics are locally consistent with Bernoulli(0.5)." if abs(mean_rl - 2.0) < 0.1 else f"Run-length mean = {mean_rl:.3f} deviates from 2.0."}
+  This is evidence about the tested compressors and statistics only; it is not a proof about irreducibility.
 - Elapsed: {elapsed:.0f}s
 """)
     log(f"Log   -> {LOG_FILE}")

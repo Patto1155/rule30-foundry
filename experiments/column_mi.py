@@ -14,6 +14,11 @@ Rule 30 is NOT left-right symmetric:
 These are different operations -> information should flow asymmetrically.
 If TE asymmetry is measured, this is the first empirical quantification
 of Rule 30's directional information geometry.
+
+Important caveat:
+  A large one-step TE at d=1 can be a direct consequence of the local update rule.
+  This script therefore computes surrogate baselines by time-shifting the source
+  column so the reported excess over baseline is explicit.
 """
 import sys, json, time, datetime
 import numpy as np
@@ -33,6 +38,7 @@ STRIP_WIDTH = 64       if TEST else 512
 CHUNK_SIZE  = 5_000    if TEST else 10_000
 BURN_IN     = STRIP_WIDTH + 500    # skip startup phase (pattern hasn't filled strip)
 DISTANCES   = [1,2,4,8,16,32,64]  if TEST else [1,2,4,8,16,32,64,128,256,512]
+SURROGATE_SHIFT = 257 if TEST else 9973
 
 OUT_JSON  = Path(r"D:\APATPROJECTS\rule30-research\data\column_mi.json")
 LOG_FILE  = Path(r"D:\APATPROJECTS\rule30-research\docs\experiment-logs\O_column_mi.md")
@@ -174,8 +180,12 @@ def main():
     n_d = len(DISTANCES)
     mi_right_c  = np.zeros((n_d, 4), dtype=np.int64)  # MI(center, right+d)
     mi_left_c   = np.zeros((n_d, 4), dtype=np.int64)  # MI(center, left-d)
+    mi_right_s  = np.zeros((n_d, 4), dtype=np.int64)  # surrogate MI
+    mi_left_s   = np.zeros((n_d, 4), dtype=np.int64)
     te_right_c  = np.zeros((n_d, 8), dtype=np.int64)  # TE(right+d -> center)
     te_left_c   = np.zeros((n_d, 8), dtype=np.int64)  # TE(left-d  -> center)
+    te_right_s  = np.zeros((n_d, 8), dtype=np.int64)  # surrogate TE
+    te_left_s   = np.zeros((n_d, 8), dtype=np.int64)
     n_samples   = 0
 
     # ── GPU simulation ────────────────────────────────────────────────────
@@ -202,11 +212,6 @@ def main():
     n_chunks = (N_SIM_STEPS + CHUNK_SIZE - 1) // CHUNK_SIZE
     log(f"\nRunning {N_SIM_STEPS:,} steps in {n_chunks} chunks of {CHUNK_SIZE:,} ...")
     log(f"Burn-in: first {BURN_IN} steps excluded from MI/TE accumulation")
-
-    # prev_center_col carries the last row of the previous chunk for TE overlap
-    prev_center = None
-    prev_right  = [None] * n_d
-    prev_left   = [None] * n_d
 
     t_sim_start = time.perf_counter()
 
@@ -262,12 +267,21 @@ def main():
                 continue
             cr = bits_active[:, center_idx + d]   # right column
             cl = bits_active[:, center_idx - d]   # left column
+            shift = SURROGATE_SHIFT % len(bits_active)
+            if shift == 0 and len(bits_active) > 1:
+                shift = 1
+            cr_s = np.roll(cr, shift)
+            cl_s = np.roll(cl, shift)
 
             # MI(center, right+d): joint index = c0*2 + cr
             j_r = c0.astype(np.int32) * 2 + cr
             mi_right_c[i] += np.bincount(j_r, minlength=4)
             j_l = c0.astype(np.int32) * 2 + cl
             mi_left_c[i]  += np.bincount(j_l, minlength=4)
+            j_r_s = c0.astype(np.int32) * 2 + cr_s
+            j_l_s = c0.astype(np.int32) * 2 + cl_s
+            mi_right_s[i] += np.bincount(j_r_s, minlength=4)
+            mi_left_s[i]  += np.bincount(j_l_s, minlength=4)
 
             # TE: need consecutive pairs (t, t+1)
             if len(bits_active) > 1:
@@ -275,10 +289,16 @@ def main():
                 yt   = bits_active[:-1, center_idx]
                 xtr  = bits_active[:-1, center_idx + d]
                 xtl  = bits_active[:-1, center_idx - d]
+                xtr_s = np.roll(xtr, shift)
+                xtl_s = np.roll(xtl, shift)
                 te_r = (yt1.astype(np.int32) + 2 * yt + 4 * xtr).astype(np.intp)
                 te_l = (yt1.astype(np.int32) + 2 * yt + 4 * xtl).astype(np.intp)
+                te_r_s = (yt1.astype(np.int32) + 2 * yt + 4 * xtr_s).astype(np.intp)
+                te_l_s = (yt1.astype(np.int32) + 2 * yt + 4 * xtl_s).astype(np.intp)
                 te_right_c[i] += np.bincount(te_r, minlength=8)
                 te_left_c[i]  += np.bincount(te_l, minlength=8)
+                te_right_s[i] += np.bincount(te_r_s, minlength=8)
+                te_left_s[i]  += np.bincount(te_l_s, minlength=8)
 
         n_samples += len(bits_active)
 
@@ -301,18 +321,37 @@ def main():
     # ── Compute MI and TE ─────────────────────────────────────────────────
     log("\nComputing MI and TE ...")
     mi_right, mi_left, te_right, te_left, asym = [], [], [], [], []
+    mi_right_base, mi_left_base = [], []
+    te_right_base, te_left_base = [], []
+    te_right_excess, te_left_excess = [], []
     for i, d in enumerate(DISTANCES):
         mir = mi_from_counts(mi_right_c[i])
         mil = mi_from_counts(mi_left_c[i])
+        mir_s = mi_from_counts(mi_right_s[i])
+        mil_s = mi_from_counts(mi_left_s[i])
         ter = te_from_counts(te_right_c[i])
         tel = te_from_counts(te_left_c[i])
+        ter_s = te_from_counts(te_right_s[i])
+        tel_s = te_from_counts(te_left_s[i])
         mi_right.append(round(mir, 8))
         mi_left.append(round(mil, 8))
+        mi_right_base.append(round(mir_s, 8))
+        mi_left_base.append(round(mil_s, 8))
         te_right.append(round(ter, 8))
         te_left.append(round(tel, 8))
+        te_right_base.append(round(ter_s, 8))
+        te_left_base.append(round(tel_s, 8))
+        te_right_excess.append(round(ter - ter_s, 8))
+        te_left_excess.append(round(tel - tel_s, 8))
         asym.append(round(ter - tel, 8))
-        log(f"  d={d:>4}: MI_right={mir:.6f}  MI_left={mil:.6f}  "
-            f"TE_right={ter:.6f}  TE_left={tel:.6f}  asym={ter-tel:+.6f}")
+        log(
+            f"  d={d:>4}: "
+            f"MI_right={mir:.6f} (base {mir_s:.6f})  "
+            f"MI_left={mil:.6f} (base {mil_s:.6f})  "
+            f"TE_right={ter:.6f} (base {ter_s:.6f})  "
+            f"TE_left={tel:.6f} (base {tel_s:.6f})  "
+            f"asym={ter-tel:+.6f}"
+        )
 
     max_asym    = max(abs(a) for a in asym)
     asym_nonzero = sum(1 for a in asym if abs(a) > 1e-6)
@@ -331,10 +370,17 @@ def main():
         "distances":     DISTANCES,
         "mi_right":      mi_right,
         "mi_left":       mi_left,
+        "mi_right_surrogate": mi_right_base,
+        "mi_left_surrogate": mi_left_base,
         "te_right":      te_right,
         "te_left":       te_left,
+        "te_right_surrogate": te_right_base,
+        "te_left_surrogate": te_left_base,
+        "te_right_excess": te_right_excess,
+        "te_left_excess": te_left_excess,
         "te_asymmetry":  asym,
         "max_te_asymmetry": round(max_asym, 10),
+        "surrogate_shift": SURROGATE_SHIFT,
         "verification_passed": verified,
         "elapsed_s":     round(elapsed, 1),
     }
@@ -361,16 +407,20 @@ def main():
         ax = axes[0]
         ax.semilogx(ds, mi_right, "b-o", ms=6, lw=1.5, label="MI(center, right+d)")
         ax.semilogx(ds, mi_left,  "r--s", ms=6, lw=1.5, label="MI(center, left-d)")
+        ax.semilogx(ds, mi_right_base, "b:", lw=1.2, label="MI right surrogate")
+        ax.semilogx(ds, mi_left_base,  "r:", lw=1.2, label="MI left surrogate")
         ax.set_xlabel("Column separation d"); ax.set_ylabel("MI (bits)")
-        ax.set_title("Mutual information vs distance\n(exponential decay = mixing)")
+        ax.set_title("Mutual information vs distance\nwith time-shifted surrogate baselines")
         ax.legend(); ax.grid(True, alpha=0.3)
 
         # 2: Transfer entropy
         ax = axes[1]
         ax.semilogx(ds, te_right, "b-o",  ms=6, lw=1.5, label="TE(right+d -> center)")
         ax.semilogx(ds, te_left,  "r--s", ms=6, lw=1.5, label="TE(left-d -> center)")
+        ax.semilogx(ds, te_right_base, "b:", lw=1.2, label="TE right surrogate")
+        ax.semilogx(ds, te_left_base,  "r:", lw=1.2, label="TE left surrogate")
         ax.set_xlabel("Column separation d"); ax.set_ylabel("TE (bits)")
-        ax.set_title("Transfer entropy vs distance\n(asymmetry = directional info flow)")
+        ax.set_title("Transfer entropy vs distance\nraw vs surrogate baseline")
         ax.legend(); ax.grid(True, alpha=0.3)
 
         # 3: TE asymmetry
@@ -404,17 +454,18 @@ def main():
 - Method:
   - MI(center, right+d) and MI(center, left-d) for d in {DISTANCES}
   - TE(right+d->center) and TE(left-d->center): H(Y_{{t+1}}|Y_t) - H(Y_{{t+1}}|Y_t,X_t)
-  - Key test: TE asymmetry (TE_right - TE_left) — Rule 30 is NOT left-right symmetric
+  - Surrogate control: time-shift the source column by {SURROGATE_SHIFT} samples to estimate a same-marginal noise floor
 - Results:
   - n_samples (post burn-in): {n_samples:,}
   - Verification: {'PASS' if verified else 'FAIL'}
   - Max |TE asymmetry|: {max_asym:.8f} bits
   - Distances with nonzero asymmetry: {asym_nonzero}/{len(DISTANCES)}
-  - MI at d=1: right={mi_right[0]:.6f}, left={mi_left[0]:.6f}
-  - TE at d=1: right={te_right[0]:.6f}, left={te_left[0]:.6f}, asym={asym[0]:+.6f}
+  - MI at d=1: right={mi_right[0]:.6f} (surrogate {mi_right_base[0]:.6f}), left={mi_left[0]:.6f} (surrogate {mi_left_base[0]:.6f})
+  - TE at d=1: right={te_right[0]:.6f} (surrogate {te_right_base[0]:.6f}), left={te_left[0]:.6f} (surrogate {te_left_base[0]:.6f}), asym={asym[0]:+.6f}
 - Interpretation:
-  {"TE asymmetry detected at multiple distances — direct empirical measurement of Rule 30's broken left-right symmetry in information propagation." if asym_nonzero > 0 else "No TE asymmetry detected — Rule 30 appears symmetric in information flow at this scale."}
-  {"MI decays with distance — consistent with mixing (exponential decay expected for ergodic system)." if mi_right[-1] < mi_right[0] else "MI does not decay — unexpected long-range spatial correlations."}
+  {"The dominant d=1 TE signal survives the surrogate control and is therefore not just a finite-sample artifact." if max(te_left_excess[0], te_right_excess[0]) > 0.1 else "The d=1 TE signal does not clearly exceed the surrogate control."}
+  {"Beyond d=1, MI and TE mostly sit near the surrogate baseline, so this experiment does not show strong long-range cross-column dependence at the tested distances." if max([abs(te_right_excess[i]) for i in range(1, len(te_right_excess))] + [abs(te_left_excess[i]) for i in range(1, len(te_left_excess))]) < 0.01 else "Some nontrivial above-surrogate dependence persists beyond d=1 and deserves follow-up."}
+  A large one-step TE at d=1 is still partly a local-rule fact, not automatically a deep global-structure result.
 - Elapsed: {elapsed:.0f}s
 """)
     log(f"Log   -> {LOG_FILE}")
