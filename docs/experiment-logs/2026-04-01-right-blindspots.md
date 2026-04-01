@@ -1,0 +1,26 @@
+# Experiment Log - Right-Side Blind-Spot Structure
+
+- Date: 2026-04-01
+- Goal: Describe the arithmetic or geometric structure, if any, of the right-side distances in `data/causal_sensitivity.json` that had not reached the center within 10,000 steps.
+- Setup: Analyse the existing single-seed causal-sensitivity output only. No new simulation in this step.
+- Commands or method:
+  - Run `python experiments/right_blindspots.py`
+  - Extract right-side distances with `first_div_right == sim_length`
+  - Measure contiguous runs, gap distribution, residue counts mod small integers, distance-to-nearest-power-of-two, and binary-prefix occupancy
+  - Compare power-of-two proximity against 1,000 matched random samples of the same size from `1..10000`
+- Observations:
+  - There are `6212` censored right-side distances out of `10001`.
+  - The censored set is not an arithmetic lattice. Residue counts mod `2,4,8,16` are very close to uniform.
+  - The dominant structure is interval clustering, not modular structure:
+    - isolated run `1..2`
+    - sparse short runs beginning near `3602`
+    - one dominant terminal run `3880..10000` of length `6121`
+  - Power-of-two clustering is absent. In fact the set is anti-clustered relative to a matched random sample:
+    - within radius `4` of a power of two: observed `20`, random baseline mean `62.666`, z-score `-8.788`
+    - within radius `16` of a power of two: observed `68`, random baseline mean `193.175`, z-score `-14.741`
+  - The binary-prefix heatmap shows a thresholded tail rather than obvious self-similar prefix recursion.
+- Conclusion:
+  - The 10,000-step right-side non-arrivals do not look like a clean modular or power-of-two arithmetic set.
+  - The visually important feature is a late contiguous tail, which is exactly the pattern most vulnerable to right-censoring.
+- Next Step:
+  - Extend the horizon for those censored distances before claiming genuine blind spots. That is the only way to tell a structural non-arrival set from a slow-arrival tail.

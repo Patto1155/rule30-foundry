@@ -1,0 +1,26 @@
+# Experiment Log - Persistence of Right-Side Non-Arrivals
+
+- Date: 2026-04-01
+- Goal: Determine which right-side distances that failed to reach the center by 10,000 steps are genuinely long-lived at a much larger horizon, versus merely slow arrivals.
+- Setup: Single-seed spike initial condition, corrected packed-bit open-boundary simulation, targeted rerun of only the `6212` right-side distances censored in `data/causal_sensitivity.json`.
+- Commands or method:
+  - Run `python experiments/right_nonarrival_persistence.py`
+  - Horizon extended from `10,000` to `50,000` steps
+  - Use tape width `110001` with the center placed `50000` cells from the left boundary so the full `50,000`-step backward light cone remains inside the tape
+  - Verification:
+    - packed open-boundary center-column evolution checked against a naive implementation
+    - perturbation checks include cross-word distances and both geometric sides
+    - hard failure condition: any `first_divergence < distance`
+- Observations:
+  - No causality violations occurred.
+  - `6210 / 6212` prior non-arrivals do reach the center by `50,000` steps.
+  - Only distances `1` and `2` remain censored at `50,000` steps.
+  - The newly recovered arrivals start immediately above the old horizon:
+    - earliest arrivals include `(3602, 10009)`, `(3641, 10009)`, `(3644, 10009)`, `(3776, 10009)`
+  - The slowest arrivals found in this rerun are:
+    - `(9893, 26402)`, `(9969, 26777)`, `(9973, 26777)`, `(9990, 27457)`
+- Conclusion:
+  - The large 10,000-step right-side blind-spot tail was mostly a censoring artifact.
+  - At the `50,000`-step horizon, only `d=1` and `d=2` remain as long-lived right-side non-arrivals, and even those are still right-censored rather than proven permanent.
+- Next Step:
+  - If the persistence of `d=1,2` matters, rerun only those two distances to an even longer horizon or derive them analytically. Do not describe the `3880..10000` tail as a blind-spot set anymore.

@@ -1,0 +1,32 @@
+# Experiment Log - Multi-Seed Causal Sensitivity
+
+- Date: 2026-04-01
+- Goal: Test whether the left-right asymmetry in causal sensitivity is specific to the single-seed spike or persists across random initial conditions.
+- Setup: `8` independent Bernoulli(0.5) initial rows, open boundaries, `4096`-step horizon, maximum tested distance `4096`, corrected packed-bit implementation.
+- Commands or method:
+  - Run `python experiments/causal_sensitivity_multiseed.py`
+  - For each seed:
+    - simulate the unflipped reference row
+    - flip one initial bit at each distance on the left and right
+    - record the first center divergence or right-censor at `4097`
+  - Verification:
+    - packed open-boundary simulator checked against naive single-spike and random-row cases
+    - both geometric sides checked explicitly
+    - hard failure condition: any `first_divergence < distance`
+- Observations:
+  - No causality violations occurred.
+  - Across all `8` seeds:
+    - left-side censored count: always `0`
+    - left-side boundary-speed arrivals: always `4097 / 4097`
+    - right-side censored counts: between `3041` and `3166`
+  - Aggregate summary:
+    - mean right-side censored count: `3108.75`
+    - standard deviation: `39.98`
+    - mean signed asymmetry on common hits: `-1527.07` steps for `left arrival - right arrival`
+- Conclusion:
+  - The asymmetry is not a quirk of the single-seed spike. In this finite-horizon random-row sample it is qualitatively universal:
+    - left perturbations always reach on the light-cone boundary
+    - a large fraction of right perturbations still fail to reach by the same horizon
+  - The exact censored count is seed-dependent, but only mildly relative to the overall effect size.
+- Next Step:
+  - The main unresolved question is no longer whether the asymmetry is real; it is how that right-side delay distribution scales with horizon under random initial conditions.

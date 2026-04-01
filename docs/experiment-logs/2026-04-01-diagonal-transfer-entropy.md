@@ -1,0 +1,29 @@
+# Experiment Log - Diagonal Transfer Entropy
+
+- Date: 2026-04-01
+- Goal: Measure information flow along the two causal-diagonal directions rather than only along vertical columns.
+- Setup: Single-seed spike initial condition, `400000` simulated steps, strip width `512`, distances `1,2,4,8,16,32,64,128,256,512`, time-shift surrogate control with shift `9973`.
+- Commands or method:
+  - Run `python experiments/diagonal_te.py`
+  - For each distance `d`, define source cells on the causal boundary at `(t-d, x-d)` and `(t-d, x+d)` for a target at `(t, x=center)`
+  - Estimate `TE(source -> center_t | center_{t-1})`
+  - Verification:
+    - packed strip extraction checked against naive Rule 30 spacetime
+    - full-row indexing bug checked by confirming the expected strong `d=1` left-parent signal in test mode before the production run
+  - Control:
+    - time-shifted surrogate source series with identical marginals
+- Observations:
+  - Left diagonal TE is strong at short distances and decays rapidly:
+    - `d=1`: `0.501169` bits, surrogate `0.000003`
+    - `d=2`: `0.095280` bits, surrogate `0.000001`
+    - `d=4`: `0.028638` bits, surrogate `0.000000`
+    - `d=8`: `0.005789` bits, surrogate `0.000001`
+  - By `d=16`, the left-diagonal excess is only `0.000045` bits.
+  - The right diagonal stays at or near surrogate level across the full tested range.
+  - Tiny raw values at `d>=32` are comparable to the surrogate floor and should be treated as noise-level.
+- Conclusion:
+  - Rule 30 has a strongly asymmetric short-range diagonal information geometry: the left causal diagonal carries real predictive information to the center, while the right causal diagonal does not at comparable strength.
+  - The `d=1` effect is still partly a restatement of the local rule, but the surviving left-diagonal excess through `d=2,4,8` is a real higher-range continuation of that asymmetry.
+  - There is no strong evidence here for long-range diagonal TE beyond about `d=8`.
+- Next Step:
+  - If this is pushed further, use a stricter multivariate conditioning scheme to separate pure local-rule inheritance from longer-range directional dependence.

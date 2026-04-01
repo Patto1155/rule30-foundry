@@ -1,0 +1,30 @@
+# Experiment Log - 2D Anisotropy Spectrum
+
+- Date: 2026-04-01
+- Goal: Extend the earlier directionality check to a richer set of slopes and make the 2D anisotropy visually and quantitatively explicit.
+- Setup: Single-seed spike initial condition, `4096` simulated steps, slopes sampled from `-1.0` to `1.0` on a 33-point grid, temporal lags `8,16,32,64,128,256`, matched Bernoulli baseline inside the same causal cone.
+- Commands or method:
+  - Run `python experiments/anisotropy_spectrum.py`
+  - Simulate the full spacetime diagram with the corrected packed-bit open-boundary code
+  - Verify that simulation against a naive spacetime on a small case
+  - For each `(dt, dx)` implied by the slope grid, measure centered correlation between `state(t, x)` and `state(t+dt, x+dx)`
+  - Compare each offset against the same calculation on a matched-random field with identical density inside the causal cone
+- Observations:
+  - The dominant excess-correlation ridge is concentrated on slope `-1`.
+  - Maximum absolute excess correlation:
+    - `0.383836` at lag `32`, slope `-1`, offset `dx=-32`
+  - Along slope `-1`, excess correlation is large and stable across longer lags:
+    - `dt=16`: `0.383316`
+    - `dt=32`: `0.383836`
+    - `dt=64`: `0.382745`
+    - `dt=128`: `0.382984`
+    - `dt=256`: `0.383681`
+  - The opposite diagonal family is much weaker:
+    - slope `+1` peaks only around `0.069514` and otherwise stays near `0.004..0.009`
+  - Most other slopes remain near zero or only a few `1e-3`.
+- Conclusion:
+  - The 2D anisotropy is real and extreme. It is not a generic “diagonal structure” claim; it is sharply concentrated in one diagonal family.
+  - This survives a matched-random baseline and is large enough that it is not a noise-floor effect.
+  - The strongest geometric statement currently supported is directional anisotropy, not a nontrivial box-counting dimension.
+- Next Step:
+  - If this is extended, move from correlation to conditional information measures along selected slopes, especially the dominant `-1` ridge and its immediate neighbors.
