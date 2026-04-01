@@ -29,10 +29,10 @@ EXPS    = REPO / "experiments"
 TEST    = "--test" in sys.argv
 
 EXPERIMENTS = [
-    ("fft_autocorr",        "FFT Autocorrelation — closes period-42795 question"),
-    ("compress_probe",      "Compression Probe   — attacks Prize Problem 2"),
-    ("causal_sensitivity",  "Causal Sensitivity  — dynamical geometry (GPU)"),
-    ("column_mi",           "Column MI + TE      — first 2D analysis (GPU)"),
+    ("fft_autocorr",        "FFT Autocorrelation — closes period-42795 question", "data/fft_autocorr.progress.log"),
+    ("compress_probe",      "Compression Probe   — attacks Prize Problem 2", "data/N_progress.log"),
+    ("causal_sensitivity",  "Causal Sensitivity  — dynamical geometry (GPU)", "data/M_progress.log"),
+    ("column_mi",           "Column MI + TE      — first 2D analysis (GPU)", "data/O_progress.log"),
 ]
 
 
@@ -42,7 +42,7 @@ def banner(title, char="=", width=65):
     print(char * width, flush=True)
 
 
-def run_experiment(name: str, label: str) -> int:
+def run_experiment(name: str, label: str, progress_log: str) -> int:
     script = EXPS / f"{name}.py"
     if not script.exists():
         print(f"  [SKIP] {script} not found", flush=True)
@@ -50,7 +50,7 @@ def run_experiment(name: str, label: str) -> int:
 
     banner(label, char="-")
     print(f"  Script:   {script}")
-    print(f"  Progress: data/{name}.progress.log  (or  data/M_progress.log etc.)")
+    print(f"  Progress: {progress_log}")
     print(f"  Start:    {datetime.datetime.now().strftime('%H:%M:%S')}")
     print(flush=True)
 
@@ -84,14 +84,14 @@ def main():
     results = {}
     total_t0 = time.perf_counter()
 
-    for name, label in EXPERIMENTS:
-        rc = run_experiment(name, label)
+    for name, label, progress_log in EXPERIMENTS:
+        rc = run_experiment(name, label, progress_log)
         results[name] = rc
         print()
 
     total_elapsed = time.perf_counter() - total_t0
     banner("Summary")
-    for name, label in EXPERIMENTS:
+    for name, label, _ in EXPERIMENTS:
         rc  = results.get(name, -1)
         sym = "PASS" if rc == 0 else ("?" if rc == -1 else "FAIL")
         print(f"  {sym}  {label}")

@@ -52,8 +52,8 @@ void rule30_step(
     unsigned long long c    = tape[idx];
     unsigned long long prev = (idx > 0)          ? tape[idx - 1] : 0ULL;
     unsigned long long next = (idx < n_words - 1) ? tape[idx + 1] : 0ULL;
-    unsigned long long L    = (c >> 1) | (prev << 63);
-    unsigned long long R    = (c << 1) | (next >> 63);
+    unsigned long long L    = (c << 1) | (prev >> 63);
+    unsigned long long R    = (c >> 1) | (next << 63);
     out[idx] = L ^ (c | R);
 }
 """
@@ -112,6 +112,24 @@ def te_from_counts(counts8: np.ndarray) -> float:
     H_yt1_given_xt_yt = H_full - H_xt_yt  # = H(Y_{t+1} | X_t, Y_t)
 
     return max(0.0, H_yt1_given_yt - H_yt1_given_xt_yt)
+
+
+def naive_center_bits(n_steps: int) -> list[int]:
+    n_cells = 2 * n_steps + 1
+    center = n_cells // 2
+    row = np.zeros(n_cells, dtype=np.uint8)
+    row[center] = 1
+    out = []
+    for _ in range(n_steps):
+        out.append(int(row[center]))
+        nxt = np.zeros_like(row)
+        for i in range(n_cells):
+            left = row[i - 1] if i > 0 else 0
+            center_bit = row[i]
+            right = row[i + 1] if i + 1 < n_cells else 0
+            nxt[i] = left ^ (center_bit | right)
+        row = nxt
+    return out
 
 
 # ── Main ──────────────────────────────────────────────────────────────────────
@@ -177,7 +195,8 @@ def main():
         strip_buf_cpu = np.zeros((CHUNK_SIZE, n_sw), dtype=np.uint64)
 
     # Verify first 20 center bits after quick pre-run
-    EXPECTED_20 = [1,1,0,1,1,1,0,0,1,1,0,0,0,1,0,1,1,0,0,1]
+    verify_len = 96
+    EXPECTED = naive_center_bits(verify_len)
     verify_buf  = []
 
     n_chunks = (N_SIM_STEPS + CHUNK_SIZE - 1) // CHUNK_SIZE
@@ -208,10 +227,10 @@ def main():
         else:
             # CPU fallback (slow)
             def cpu_step(t):
-                L = (t >> np.uint64(1))
-                L[1:] |= (t[:-1] << np.uint64(63))
-                R = (t << np.uint64(1))
-                R[:-1] |= (t[1:] >> np.uint64(63))
+                L = (t << np.uint64(1))
+                L[1:] |= (t[:-1] >> np.uint64(63))
+                R = (t >> np.uint64(1))
+                R[:-1] |= (t[1:] << np.uint64(63))
                 return L ^ (t | R)
             cur = tape_a
             for s in range(chunk_len):
@@ -225,8 +244,9 @@ def main():
         bits = ((strip_data[:, col_word_local] >> col_bit_shift) & 1).astype(np.uint8)
 
         # Verify first 20 center bits (steps 0-19)
-        if chunk_idx == 0 and len(verify_buf) < 20:
-            verify_buf.extend(bits[:20, center_idx].tolist())
+        if len(verify_buf) < verify_len:
+            need = verify_len - len(verify_buf)
+            verify_buf.extend(bits[:need, center_idx].tolist())
 
         # Skip burn-in steps
         global_steps = np.arange(step_start, step_end)
@@ -273,10 +293,9 @@ def main():
                 f"n_samples={n_samples:,}")
 
     # Verify
-    actual_20 = verify_buf[:20]
-    verified  = actual_20 == EXPECTED_20
-    log(f"\nVerification: first 20 center bits = {actual_20}")
-    log(f"  Expected:    {EXPECTED_20}")
+    actual_verify = verify_buf[:verify_len]
+    verified  = actual_verify == EXPECTED
+    log(f"\nVerification: first {verify_len} center bits match naive Rule 30 = {verified}")
     log(f"  {'PASS PASS' if verified else 'FAIL FAIL — strip extraction may be wrong!'}")
 
     # ── Compute MI and TE ─────────────────────────────────────────────────

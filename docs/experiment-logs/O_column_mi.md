@@ -13,9 +13,9 @@
   - Verification: PASS
   - Max |TE asymmetry|: 0.50072854 bits
   - Distances with nonzero asymmetry: 4/10
-  - MI at d=1: right=0.000000, left=0.000001
-  - TE at d=1: right=0.500731, left=0.000003, asym=+0.500729
+  - MI at d=1: right=0.000001, left=0.000000
+  - TE at d=1: right=0.000003, left=0.500731, asym=-0.500729
 - Interpretation:
   TE asymmetry detected at multiple distances — direct empirical measurement of Rule 30's broken left-right symmetry in information propagation.
   MI decays with distance — consistent with mixing (exponential decay expected for ergodic system).
-- Elapsed: 45s
+- Elapsed: 56s

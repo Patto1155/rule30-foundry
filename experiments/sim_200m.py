@@ -65,8 +65,8 @@ void rule30_center(
     if (idx == center_word)
         center_col[step] = (unsigned char)((c >> center_bit) & 1ULL);
 
-    unsigned long long L = (c >> 1) | (prev << 63);
-    unsigned long long R = (c << 1) | (next >> 63);
+    unsigned long long L = (c << 1) | (prev >> 63);
+    unsigned long long R = (c >> 1) | (next << 63);
     out[idx] = L ^ (c | R);
 }
 """

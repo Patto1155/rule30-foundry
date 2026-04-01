@@ -73,8 +73,8 @@ void rule30_batch_step(
     unsigned long long prev_w   = (idx > 0)          ? tapes[base + idx - 1] : 0ULL;
     unsigned long long next_w   = (idx < n_words - 1) ? tapes[base + idx + 1] : 0ULL;
 
-    unsigned long long left_w   = (center >> 1) | (prev_w << 63);
-    unsigned long long right_w  = (center << 1) | (next_w >> 63);
+    unsigned long long left_w   = (center << 1) | (prev_w >> 63);
+    unsigned long long right_w  = (center >> 1) | (next_w << 63);
     out[base + idx] = left_w ^ (center | right_w);
 }
 """
@@ -114,15 +114,10 @@ def extract_center_bit(tape_words: np.ndarray, n_cells: int) -> int:
 # ---------------------------------------------------------------------------
 
 def rule30_step_cpu(tape: np.ndarray, n_words: int) -> np.ndarray:
-    left  = np.zeros(n_words, dtype=np.uint64)
-    right = np.zeros(n_words, dtype=np.uint64)
-    left[1:]  = (tape[:-1] << np.uint64(63)) | (tape[1:]  >> np.uint64(1))
-    right[:-1]= (tape[1:]  << np.uint64(1))  | (tape[:-1] >> np.uint64(63))
-    # left of center word: (tape >> 1) | (prev << 63) — done above
-    left  = (tape >> np.uint64(1))
-    left[1:] |= (tape[:-1] << np.uint64(63))
-    right = (tape << np.uint64(1))
-    right[:-1] |= (tape[1:] >> np.uint64(63))
+    left  = (tape << np.uint64(1))
+    left[1:] |= (tape[:-1] >> np.uint64(63))
+    right = (tape >> np.uint64(1))
+    right[:-1] |= (tape[1:] << np.uint64(63))
     return left ^ (tape | right)
 
 
@@ -135,6 +130,61 @@ def simulate_cpu(tape0: np.ndarray, n_steps: int, n_cells: int) -> np.ndarray:
         center_col[t] = extract_center_bit(tape, n_cells)
         tape = rule30_step_cpu(tape, n_words)
     return center_col
+
+
+def step_naive(row: np.ndarray) -> np.ndarray:
+    out = np.zeros_like(row)
+    for i in range(len(row)):
+        left = row[i - 1] if i > 0 else 0
+        center = row[i]
+        right = row[i + 1] if i + 1 < len(row) else 0
+        out[i] = left ^ (center | right)
+    return out
+
+
+def verify_small_case() -> None:
+    """Cheap preflight against a naive implementation on both sides of the center."""
+    n_steps = 96
+    n_cells = 2 * n_steps + 1
+    center = n_cells // 2
+    base = make_initial_tape(n_cells)
+    ref = simulate_cpu(base, n_steps + 1, n_cells)
+
+    naive_row = np.zeros(n_cells, dtype=np.uint8)
+    naive_row[center] = 1
+    naive_ref = np.empty(n_steps + 1, dtype=np.uint8)
+    for t in range(n_steps + 1):
+        naive_ref[t] = naive_row[center]
+        naive_row = step_naive(naive_row)
+
+    if not np.array_equal(ref, naive_ref):
+        raise RuntimeError("Packed CPU kernel failed center-column verification against naive Rule 30.")
+
+    for side_name, side_idx in [("LEFT", -1), ("RIGHT", +1)]:
+        for dist in [1, 2, 3, 8, 9, 17, 31]:
+            alt = flip_bit(base, center + side_idx * dist)
+            col = simulate_cpu(alt, n_steps + 1, n_cells)
+            diff = np.where(col != ref)[0]
+            packed_first = int(diff[0]) if len(diff) else n_steps + 1
+
+            row_a = np.zeros(n_cells, dtype=np.uint8)
+            row_b = row_a.copy()
+            row_a[center] = 1
+            row_b[center] = 1
+            row_b[center + side_idx * dist] ^= 1
+            naive_first = n_steps + 1
+            for t in range(n_steps + 1):
+                if row_a[center] != row_b[center]:
+                    naive_first = t
+                    break
+                row_a = step_naive(row_a)
+                row_b = step_naive(row_b)
+
+            if packed_first != naive_first:
+                raise RuntimeError(
+                    f"Packed CPU kernel failed perturbation check for {side_name} d={dist}: "
+                    f"packed={packed_first}, naive={naive_first}."
+                )
 
 
 # ---------------------------------------------------------------------------
@@ -202,6 +252,8 @@ def main():
     print()
 
     t0 = time.perf_counter()
+    verify_small_case()
+    _log("Preflight verification passed against naive Rule 30.")
 
     # Set up kernel
     if GPU:
@@ -212,20 +264,22 @@ def main():
     base_tape = make_initial_tape(N_CELLS)
     center_cell = N_CELLS // 2
 
+    sim_len = N_STEPS + 1  # include time t = N_STEPS so distance N_STEPS is not censored
+
     # Simulate original (unflipped) run
     _log("Simulating unflipped reference run …")
     if GPU:
         orig_col = simulate_batch_gpu(
-            base_tape.reshape(1, -1), N_STEPS, N_CELLS, kernel
+            base_tape.reshape(1, -1), sim_len, N_CELLS, kernel
         )[0]
     else:
-        orig_col = simulate_cpu(base_tape, N_STEPS, N_CELLS)
+        orig_col = simulate_cpu(base_tape, sim_len, N_CELLS)
     _log(f"  Reference done. fraction_ones={orig_col.mean():.4f}")
 
     # first_divergence[d, side] where side 0=left, 1=right
-    # Value = first step where center column differs, or N_STEPS if never
-    first_div_left  = np.full(MAX_DIST + 1, N_STEPS, dtype=np.int32)
-    first_div_right = np.full(MAX_DIST + 1, N_STEPS, dtype=np.int32)
+    # Value = first step where center column differs, or N_STEPS+1 if never within horizon
+    first_div_left  = np.full(MAX_DIST + 1, sim_len, dtype=np.int32)
+    first_div_right = np.full(MAX_DIST + 1, sim_len, dtype=np.int32)
 
     # Distances to test: 0 (flip center itself) up to MAX_DIST
     distances = list(range(MAX_DIST + 1))
@@ -250,9 +304,9 @@ def main():
                 tapes_batch[i] = flip_bit(base_tape, flip_cell)
 
             if GPU:
-                cols = simulate_batch_gpu(tapes_batch, N_STEPS, N_CELLS, kernel)
+                cols = simulate_batch_gpu(tapes_batch, sim_len, N_CELLS, kernel)
             else:
-                cols = np.stack([simulate_cpu(tapes_batch[i], N_STEPS, N_CELLS)
+                cols = np.stack([simulate_cpu(tapes_batch[i], sim_len, N_CELLS)
                                  for i in range(n_var)])
 
             for i, d in enumerate(batch_dists):
@@ -261,7 +315,7 @@ def main():
                 if len(first_steps) > 0:
                     results_arr[d] = int(first_steps[0])
                 else:
-                    results_arr[d] = N_STEPS  # never diverged in N_STEPS
+                    results_arr[d] = sim_len  # never diverged in horizon 0..N_STEPS
 
             batch_num += 1
             if batch_num % 10 == 0:
@@ -277,36 +331,38 @@ def main():
     # ---------------------------------------------------------------------------
     dists = np.arange(MAX_DIST + 1)
 
-    # Light-cone boundary: first_div should be <= D for all D (if deterministic chaos)
-    never_diverged_left  = int(np.sum(first_div_left  == N_STEPS))
-    never_diverged_right = int(np.sum(first_div_right == N_STEPS))
+    never_diverged_left  = int(np.sum(first_div_left  == sim_len))
+    never_diverged_right = int(np.sum(first_div_right == sim_len))
+    boundary_speed_left  = int(np.sum(first_div_left  == dists))
+    boundary_speed_right = int(np.sum(first_div_right == dists))
+    causal_viol_left     = int(np.sum(first_div_left  < dists))
+    causal_viol_right    = int(np.sum(first_div_right < dists))
 
-    # How many hit the light cone exactly (first_div[d] <= d)?
-    on_cone_left  = int(np.sum(first_div_left  <= dists))
-    on_cone_right = int(np.sum(first_div_right <= dists))
-
-    # Asymmetry: mean |left_step - right_step| for same distance
-    asym = np.abs(first_div_left.astype(float) - first_div_right.astype(float))
-    mean_asym = float(asym.mean())
+    common_hit = (first_div_left <= N_STEPS) & (first_div_right <= N_STEPS)
+    mean_asym = float(np.mean(np.abs(first_div_left[common_hit] - first_div_right[common_hit]))) if np.any(common_hit) else float("nan")
 
     print(f"\nResults:")
     print(f"  Never-diverged flips (left):  {never_diverged_left}/{MAX_DIST+1}")
     print(f"  Never-diverged flips (right): {never_diverged_right}/{MAX_DIST+1}")
-    print(f"  Flips on/within light cone (left):  {on_cone_left}/{MAX_DIST+1}")
-    print(f"  Flips on/within light cone (right): {on_cone_right}/{MAX_DIST+1}")
-    print(f"  Mean left-right asymmetry: {mean_asym:.2f} steps")
+    print(f"  Boundary-speed arrivals (left):  {boundary_speed_left}/{MAX_DIST+1}")
+    print(f"  Boundary-speed arrivals (right): {boundary_speed_right}/{MAX_DIST+1}")
+    print(f"  Causality violations (left/right): {causal_viol_left}/{causal_viol_right}")
+    print(f"  Mean left-right asymmetry on common hits: {mean_asym:.2f} steps")
 
     # ---------------------------------------------------------------------------
     # Save JSON
     # ---------------------------------------------------------------------------
     result = {
         "n_steps":              N_STEPS,
+        "sim_length":           sim_len,
         "max_dist":             MAX_DIST,
         "n_cells":              N_CELLS,
         "never_diverged_left":  never_diverged_left,
         "never_diverged_right": never_diverged_right,
-        "on_cone_left":         on_cone_left,
-        "on_cone_right":        on_cone_right,
+        "boundary_speed_left":  boundary_speed_left,
+        "boundary_speed_right": boundary_speed_right,
+        "causal_violations_left": causal_viol_left,
+        "causal_violations_right": causal_viol_right,
         "mean_asymmetry_steps": round(mean_asym, 3),
         "first_div_left":       first_div_left.tolist(),
         "first_div_right":      first_div_right.tolist(),
@@ -402,11 +458,12 @@ def main():
 - Result:
   - Never-diverged (left):  {never_diverged_left}/{MAX_DIST+1}
   - Never-diverged (right): {never_diverged_right}/{MAX_DIST+1}
-  - Flips within light cone (T<=D), left:  {on_cone_left}/{MAX_DIST+1}
-  - Flips within light cone (T<=D), right: {on_cone_right}/{MAX_DIST+1}
-  - Mean left-right asymmetry: {mean_asym:.2f} steps
-- Interpretation: {"All flips eventually reached center — full sensitivity. Light cone boundary T=D holds." if never_diverged_left + never_diverged_right == 0 else f"Some flips did NOT affect center in {N_STEPS} steps — potential insensitive directions."}
-  {"Symmetric propagation: left/right asymmetry is small." if mean_asym < 50 else "Asymmetric propagation detected — Rule 30 favors one direction."}
+  - Boundary-speed arrivals T=D (left):  {boundary_speed_left}/{MAX_DIST+1}
+  - Boundary-speed arrivals T=D (right): {boundary_speed_right}/{MAX_DIST+1}
+  - Causality violations T<D (left/right): {causal_viol_left}/{causal_viol_right}
+  - Mean left-right asymmetry on common hits: {mean_asym:.2f} steps
+- Interpretation: {"No causality violations detected after packed-bit fix." if (causal_viol_left + causal_viol_right) == 0 else "Causality violations remain — implementation still needs inspection."}
+  {"Both sides reach the center equally quickly." if mean_asym < 50 else "Strong left-right asymmetry remains after the implementation fix."}
 - Verification: Plot saved to docs/plots/. Three panels: (1) first-divergence scatter vs light cone, (2) causal cone heatmap, (3) left vs right symmetry.
 - Elapsed: {elapsed:.0f}s
 """)
