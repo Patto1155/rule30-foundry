@@ -40,15 +40,17 @@ except ImportError:
 # ---------------------------------------------------------------------------
 # Configuration
 # ---------------------------------------------------------------------------
-N_STEPS   = 3000     # simulate this many steps per variant
-MAX_DIST  = 2000     # flip distances 0 .. MAX_DIST from center
+TEST     = "--test" in sys.argv
+N_STEPS  = 300    if TEST else 10_000
+MAX_DIST = 300    if TEST else 10_000
 # Tape must be at least 2*N_STEPS + 1 wide to prevent edge effects
-N_CELLS   = 2 * N_STEPS + 1   # = 6001 — minimal safe width
-BATCH     = 100      # process this many flip distances at once on GPU
+N_CELLS  = 2 * N_STEPS + 1
+BATCH    = 1000   # process this many flip distances at once on GPU
 
 OUT_JSON  = Path(r"D:\APATPROJECTS\rule30-research\data\causal_sensitivity.json")
 PLOT_FILE = Path(r"D:\APATPROJECTS\rule30-research\docs\plots\causal_sensitivity.png")
 LOG_FILE  = Path(r"D:\APATPROJECTS\rule30-research\docs\experiment-logs\M_causal_sensitivity.md")
+PROG_LOG  = Path(r"D:\APATPROJECTS\rule30-research\data\M_progress.log")
 
 # ---------------------------------------------------------------------------
 # CUDA kernel — runs Rule 30 for multiple tapes simultaneously (batch mode)
@@ -144,48 +146,59 @@ def simulate_batch_gpu(tapes_cpu: np.ndarray, n_steps: int, n_cells: int,
     """
     tapes_cpu: [n_variants, n_words] uint64
     Returns center_cols: [n_variants, n_steps] uint8
+
+    Optimised: accumulate center bits on GPU -> single CPU sync per batch.
     """
     n_variants, n_words = tapes_cpu.shape
     center_word = (n_cells // 2) // 64
     center_bit  = (n_cells // 2) %  64
 
-    tapes_a = cp.asarray(tapes_cpu)   # ping
-    tapes_b = cp.zeros_like(tapes_a)  # pong
+    tapes_a = cp.asarray(tapes_cpu)
+    tapes_b = cp.zeros_like(tapes_a)
+    # Accumulate center bits entirely on GPU (avoids n_steps CPU–GPU syncs)
+    center_cols_gpu = cp.empty((n_variants, n_steps), dtype=cp.uint8)
 
-    center_cols = np.empty((n_variants, n_steps), dtype=np.uint8)
-
-    threads = 128
-    blocks_x = (n_words     + threads - 1) // threads
+    threads  = 128
+    blocks_x = (n_words  + threads - 1) // threads
     blocks_y = n_variants
 
     for step in range(n_steps):
-        # Extract center bits for all variants
-        col_words = cp.asnumpy(tapes_a[:, center_word])
-        for v in range(n_variants):
-            center_cols[v, step] = int((int(col_words[v]) >> center_bit) & 1)
-
+        center_cols_gpu[:, step] = (
+            (tapes_a[:, center_word] >> cp.uint64(center_bit)) & cp.uint64(1)
+        ).astype(cp.uint8)
         kernel(
             (blocks_x, blocks_y), (threads,),
             (tapes_a, tapes_b, np.int32(n_variants), np.int32(n_words))
         )
         tapes_a, tapes_b = tapes_b, tapes_a
 
-    return center_cols
+    return cp.asnumpy(center_cols_gpu)   # single sync
 
 
 # ---------------------------------------------------------------------------
 # Main
 # ---------------------------------------------------------------------------
 
+def _log(msg):
+    ts   = datetime.datetime.now().strftime("%H:%M:%S")
+    line = f"[{ts}] {msg}"
+    print(line, flush=True)
+    PROG_LOG.parent.mkdir(parents=True, exist_ok=True)
+    with open(PROG_LOG, "a", encoding="utf-8") as f:
+        f.write(line + "\n")
+
+
 def main():
-    print("=" * 65)
-    print("Experiment M — Causal Sensitivity Mapping")
-    print("=" * 65)
-    print(f"N_STEPS  = {N_STEPS:,}")
-    print(f"MAX_DIST = {MAX_DIST:,}  (flip distances 0..{MAX_DIST})")
-    print(f"N_CELLS  = {N_CELLS:,}  (tape width)")
-    print(f"BATCH    = {BATCH}")
-    print(f"GPU      = {GPU}")
+    open(PROG_LOG, "w").close()   # clear progress log
+    _log("=" * 65)
+    _log(f"Experiment M — Causal Sensitivity Mapping  (TEST={TEST})")
+    _log("=" * 65)
+    _log(f"N_STEPS  = {N_STEPS:,}")
+    _log(f"MAX_DIST = {MAX_DIST:,}  (flip distances 0..{MAX_DIST})")
+    _log(f"N_CELLS  = {N_CELLS:,}  (tape width)")
+    _log(f"BATCH    = {BATCH}")
+    _log(f"GPU      = {GPU}")
+    _log(f"Progress -> {PROG_LOG}")
     print()
 
     t0 = time.perf_counter()
@@ -200,14 +213,14 @@ def main():
     center_cell = N_CELLS // 2
 
     # Simulate original (unflipped) run
-    print("Simulating unflipped reference run …")
+    _log("Simulating unflipped reference run …")
     if GPU:
         orig_col = simulate_batch_gpu(
             base_tape.reshape(1, -1), N_STEPS, N_CELLS, kernel
         )[0]
     else:
         orig_col = simulate_cpu(base_tape, N_STEPS, N_CELLS)
-    print(f"  Reference done. fraction_ones={orig_col.mean():.4f}")
+    _log(f"  Reference done. fraction_ones={orig_col.mean():.4f}")
 
     # first_divergence[d, side] where side 0=left, 1=right
     # Value = first step where center column differs, or N_STEPS if never
@@ -218,12 +231,14 @@ def main():
     distances = list(range(MAX_DIST + 1))
 
     # Process in batches
-    print(f"\nRunning {2 * (MAX_DIST + 1):,} variants in batches of {BATCH} …")
+    n_batches_total = 2 * ((MAX_DIST + BATCH) // BATCH)
+    _log(f"\nRunning {2*(MAX_DIST+1):,} variants in {n_batches_total} batches of {BATCH} …")
+    batch_num = 0
     for side_name, side_idx, results_arr in [
         ("LEFT",  -1, first_div_left),
         ("RIGHT", +1, first_div_right),
     ]:
-        print(f"  Side: {side_name}")
+        _log(f"  Side: {side_name}")
         for batch_start in tqdm(range(0, MAX_DIST + 1, BATCH), desc=f"  {side_name}"):
             batch_dists = distances[batch_start : batch_start + BATCH]
             n_var = len(batch_dists)
@@ -248,8 +263,14 @@ def main():
                 else:
                     results_arr[d] = N_STEPS  # never diverged in N_STEPS
 
+            batch_num += 1
+            if batch_num % 10 == 0:
+                pct = 100.0 * batch_num / n_batches_total
+                _log(f"    {pct:5.1f}%  batch {batch_num}/{n_batches_total}  "
+                     f"dist {batch_start}–{min(batch_start+BATCH-1, MAX_DIST)}")
+
     elapsed = time.perf_counter() - t0
-    print(f"\nSimulation complete in {elapsed:.1f}s")
+    _log(f"\nSimulation complete in {elapsed:.1f}s")
 
     # ---------------------------------------------------------------------------
     # Analysis
@@ -294,7 +315,7 @@ def main():
     OUT_JSON.parent.mkdir(parents=True, exist_ok=True)
     with open(str(OUT_JSON), "w") as f:
         json.dump(result, f, indent=2)
-    print(f"\nJSON → {OUT_JSON}")
+    print(f"\nJSON -> {OUT_JSON}")
 
     # ---------------------------------------------------------------------------
     # Plots
@@ -362,7 +383,7 @@ def main():
         PLOT_FILE.parent.mkdir(parents=True, exist_ok=True)
         plt.savefig(str(PLOT_FILE), dpi=150, bbox_inches="tight")
         plt.close()
-        print(f"Plot → {PLOT_FILE}")
+        print(f"Plot -> {PLOT_FILE}")
     except Exception as e:
         print(f"Plot skipped: {e}")
 
@@ -389,7 +410,7 @@ def main():
 - Verification: Plot saved to docs/plots/. Three panels: (1) first-divergence scatter vs light cone, (2) causal cone heatmap, (3) left vs right symmetry.
 - Elapsed: {elapsed:.0f}s
 """)
-    print(f"Log  → {LOG_FILE}")
+    print(f"Log  -> {LOG_FILE}")
     print(f"\nDone. Total: {elapsed:.1f}s")
 
 
