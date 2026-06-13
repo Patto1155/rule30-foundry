@@ -77,6 +77,29 @@ b=2 it shows no *approximate* one beyond what any chaotic rule trivially exhibit
 
 **Verdict: the b=2 coarse-grain route to a Rule 30 shortcut is closed.**
 
+## Follow-up: 10-rule ladder (via `ca_lab.py sweep`, 800×800, 8.4 s)
+
+With the GPU-vectorized enumerator (`coarse_grain_fast.enumerate_b2_fast`, 61×),
+a 10-rule sweep is interactive. Best excess / closure (best shear was σ=0 for all):
+
+| rule | closure | class |
+|---|---|---|
+| 90, 150, 60, 105 | **1.0000** | additive / linear (XOR) |
+| 18 | 0.984 | additive subdynamics |
+| 146 | 0.980 | additive-like |
+| 22 | 0.889 | chaotic |
+| 110 | 0.857 | class-4 |
+| **45** | **0.719** | chaotic |
+| **30** | **0.724** | chaotic (irreducible) |
+| i.i.d. | 0.517 | noise floor |
+
+The metric stratifies the rule space cleanly: linear (1.0) > additive-ish (0.98)
+> complex/class-4 (0.86–0.89) > the chaotic-irreducible pair 30/45 (~0.72) >
+noise (0.52). **Rule 30 sits at the bottom of the reducibility ladder**, tied
+with rule 45 and only ~0.2 above pure noise — exactly the signature of an
+irreducible rule. This strengthens the b=2 verdict beyond the single 30-vs-45
+comparison.
+
 ## Next step
 
 - The open question moves to **b ≥ 3**, where enumeration (2^512 projections) is
