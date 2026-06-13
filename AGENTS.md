@@ -78,6 +78,16 @@ If the run depended on GPU code or packed-bit kernels, also record:
 - what sanity checks were used to reject impossible outputs
 - whether the result is a direct consequence of the local rule or a higher-level empirical finding
 
+## GPU Kernels
+
+Simulation runs on two kernels: a trusted per-step reference (`rule30_batch_step`
+in `experiments/rule30_open_utils.py`) and a fused multi-step fast path
+(`rule30_multistep` in `gpu/rule30_fast.py`, ~K-fold fewer launches, three output
+modes). The fast path is wired in transparently and falls back to the reference
+on any error. **Before touching `K`, `T`, or the halo logic, read
+`docs/GPU_KERNELS.md`** — it has the `K < 64·m` correctness argument and the
+verification/benchmark recipe.
+
 ## Implementation Guardrails
 
 For bit-packed Rule 30 code, treat these as mandatory:
