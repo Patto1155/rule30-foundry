@@ -2,9 +2,10 @@
 
 Use this workspace as a disciplined scratchpad, not as an ad hoc notebook dump.
 
-**New here? Read `docs/WORKFLOW.md` first** — the operating manual for this
-GPU-accelerated, verification-first workflow (the loop, `ca_lab.py`, the compute
-stack, the validity-gate+null discipline, and env gotchas).
+**New here? Read `docs/AGENT_QUICKSTART.md` first**, then
+`docs/WORKFLOW.md`. The quickstart gives agents the tool map and prize-facing
+triage rules; the workflow file is the operating manual for the GPU-accelerated,
+verification-first loop.
 
 ## Before Proposing Experiments
 
