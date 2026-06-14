@@ -188,6 +188,94 @@ def closure_enumerate_b2(prep, h_min):
 
 
 # --------------------------------------------------------------------------- #
+# b>=3 population search (GPU-resident)
+# --------------------------------------------------------------------------- #
+
+def seed_projections(b, xp):
+    """Structured starting projections: each single block cell, and block parity.
+
+    These are strong priors for additive/linear rules (so the validity gate fires
+    fast) and harmless for chaotic ones.
+    """
+    n_pat = 1 << (b * b)
+    codes = np.arange(n_pat, dtype=np.int64)
+    seeds = [((codes >> c) & 1) for c in range(b * b)]          # single-cell reads
+    pc = np.zeros(n_pat, dtype=np.int64)                        # parity (popcount&1)
+    for c in range(b * b):
+        pc ^= (codes >> c) & 1
+    seeds.append(pc)
+    return xp.asarray(np.stack(seeds).astype(np.int64))
+
+
+def search_projection(prep, budget, pop=256, elite=24, p_flip=None,
+                      restart_frac=0.15, seed=0, h_min=0.85, b=None,
+                      chunk=64, log_every=0):
+    """(mu+lambda) evolutionary search for the closure-maximizing projection.
+
+    Population resident on the GPU; only NEW candidates are scored each generation
+    (elite scores carried), so `budget` (total scored projections) is spent well.
+    Returns {best_excess, best_closure, best_pi, evals, generations, history}.
+    """
+    xp = prep["xp"]
+    n_pat = prep["n_pat"]
+    if b is None:
+        b = int(round(np.log2(n_pat) ** 0.5))
+    if p_flip is None:
+        p_flip = max(1, n_pat // 64) / n_pat        # ~ flip a handful of bits
+    rng = np.random.default_rng(seed)
+
+    def rand_pop(n):
+        return xp.asarray(rng.integers(0, 2, size=(n, n_pat), dtype=np.int64))
+
+    # initial population: structured seeds + random fill
+    seeds = seed_projections(b, xp)
+    init = xp.concatenate([seeds, rand_pop(max(0, pop - seeds.shape[0]))], axis=0)[:pop]
+    res = closure_batch(prep, init, h_min, chunk=chunk)
+    P, exc, clo = init, res["excess"], res["closure"]
+    evals = int(P.shape[0])
+
+    def _best(exc, clo, P):
+        i = int(xp.argmax(exc))
+        return float(exc[i]), float(clo[i]), xp.asnumpy(P[i]) if xp is cp else np.asarray(P[i])
+    bx, bc, bpi = _best(exc, clo, P)
+    history = [(evals, bx, bc)]
+
+    gen = 0
+    while evals < budget:
+        gen += 1
+        order = xp.argsort(exc)[::-1]
+        elites = P[order[:elite]]
+        ex_el = exc[order[:elite]]
+        cl_el = clo[order[:elite]]
+        n_new = pop - elite
+        n_restart = int(n_new * restart_frac)
+        n_child = n_new - n_restart
+        # children: pick random elite parents, flip bits
+        pidx = rng.integers(0, elite, size=n_child)
+        parents = elites[xp.asarray(pidx)]
+        mut = (xp.asarray(rng.random((n_child, n_pat))) < p_flip).astype(xp.int64)
+        children = parents ^ mut
+        newcomers = xp.concatenate([children, rand_pop(n_restart)], axis=0)
+        r2 = closure_batch(prep, newcomers, h_min, chunk=chunk)
+        evals += int(newcomers.shape[0])
+        # combine elites (carried) + newcomers, keep top `pop`
+        P = xp.concatenate([elites, newcomers], axis=0)
+        exc = xp.concatenate([ex_el, r2["excess"]], axis=0)
+        clo = xp.concatenate([cl_el, r2["closure"]], axis=0)
+        keep = xp.argsort(exc)[::-1][:pop]
+        P, exc, clo = P[keep], exc[keep], clo[keep]
+        cbx, cbc, cbpi = _best(exc, clo, P)
+        if cbx > bx:
+            bx, bc, bpi = cbx, cbc, cbpi
+        if log_every and gen % log_every == 0:
+            print(f"    gen {gen:4d} evals {evals:7d} best_excess {bx:+.5f} best_clo {bc:.5f}")
+        history.append((evals, bx, bc))
+
+    return {"best_excess": bx, "best_closure": bc, "best_pi": bpi.tolist(),
+            "evals": evals, "generations": gen, "history": history}
+
+
+# --------------------------------------------------------------------------- #
 # verification
 # --------------------------------------------------------------------------- #
 
