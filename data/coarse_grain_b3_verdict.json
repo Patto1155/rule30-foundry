@@ -1,0 +1,173 @@
+{
+  "experiment": "U_b3_coarse_grain_verdict",
+  "params": {
+    "b": 3,
+    "steps": 1500,
+    "width": 1500,
+    "budget": 300000,
+    "msearch": 80000,
+    "shears": [
+      0.0,
+      0.25,
+      1.0
+    ],
+    "r": 1,
+    "hmin": 0.85,
+    "seed": 7,
+    "sseed": 1,
+    "gpu": true,
+    "test": false
+  },
+  "results": {
+    "control_shift_170": {
+      "rule": 170,
+      "best": {
+        "full_closure": 1.0,
+        "full_excess": 0.49856,
+        "shear": 0.0
+      },
+      "per_shear": {
+        "0.0": {
+          "full_closure": 1.0,
+          "full_excess": 0.49856,
+          "search_closure": 1.0,
+          "evals": 300000
+        },
+        "0.25": {
+          "full_closure": 0.8782,
+          "full_excess": 0.37685,
+          "search_closure": 0.87904,
+          "evals": 300000
+        },
+        "1.0": {
+          "full_closure": 0.75316,
+          "full_excess": 0.25255,
+          "search_closure": 0.75326,
+          "evals": 300000
+        }
+      }
+    },
+    "iid": {
+      "rule": "iid",
+      "best": {
+        "full_closure": 0.5258,
+        "full_excess": 8e-05,
+        "shear": 0.0
+      },
+      "per_shear": {
+        "0.0": {
+          "full_closure": 0.5258,
+          "full_excess": 8e-05,
+          "search_closure": 0.54416,
+          "evals": 300000
+        },
+        "0.25": {
+          "full_closure": 0.52079,
+          "full_excess": -6e-05,
+          "search_closure": 0.53719,
+          "evals": 300000
+        },
+        "1.0": {
+          "full_closure": 0.51763,
+          "full_excess": 3e-05,
+          "search_closure": 0.53679,
+          "evals": 300000
+        }
+      }
+    },
+    "rule_30": {
+      "rule": 30,
+      "best": {
+        "full_closure": 0.73951,
+        "full_excess": 0.23915,
+        "shear": 1.0
+      },
+      "per_shear": {
+        "0.0": {
+          "full_closure": 0.67308,
+          "full_excess": 0.17212,
+          "search_closure": 0.67104,
+          "evals": 300000
+        },
+        "0.25": {
+          "full_closure": 0.60901,
+          "full_excess": 0.10873,
+          "search_closure": 0.60794,
+          "evals": 300000
+        },
+        "1.0": {
+          "full_closure": 0.73951,
+          "full_excess": 0.23915,
+          "search_closure": 0.74167,
+          "evals": 300000
+        }
+      }
+    },
+    "rule_45": {
+      "rule": 45,
+      "best": {
+        "full_closure": 0.7865,
+        "full_excess": 0.28601,
+        "shear": 0.0
+      },
+      "per_shear": {
+        "0.0": {
+          "full_closure": 0.7865,
+          "full_excess": 0.28601,
+          "search_closure": 0.78599,
+          "evals": 300000
+        },
+        "0.25": {
+          "full_closure": 0.6837,
+          "full_excess": 0.1833,
+          "search_closure": 0.6855,
+          "evals": 300000
+        },
+        "1.0": {
+          "full_closure": 0.76233,
+          "full_excess": 0.26222,
+          "search_closure": 0.76339,
+          "evals": 300000
+        }
+      }
+    },
+    "rule_110": {
+      "rule": 110,
+      "best": {
+        "full_closure": 0.95189,
+        "full_excess": 0.45168,
+        "shear": 0.0
+      },
+      "per_shear": {
+        "0.0": {
+          "full_closure": 0.95189,
+          "full_excess": 0.45168,
+          "search_closure": 0.95169,
+          "evals": 300000
+        },
+        "0.25": {
+          "full_closure": 0.78106,
+          "full_excess": 0.27824,
+          "search_closure": 0.78266,
+          "evals": 300000
+        },
+        "1.0": {
+          "full_closure": 0.8918,
+          "full_excess": 0.39157,
+          "search_closure": 0.89124,
+          "evals": 300000
+        }
+      }
+    }
+  },
+  "summary": {
+    "gate_shift": 1.0,
+    "gate_ok": true,
+    "iid_floor": 0.5258,
+    "closure_30": 0.7395,
+    "closure_45": 0.7865,
+    "gap_30_minus_45": -0.047
+  },
+  "verdict": "Rule 30 (0.740) <= rule 45 (0.786) (gap -0.047); gate OK (1.000), i.i.d. floor 0.526. Rule 30 is NOT above the chaotic null -- any excess is generic chaotic structure, not 30-specific. b=3 coarse-grain route CLOSED.",
+  "elapsed_s": 1106.7
+}

@@ -124,17 +124,22 @@ def main():
     gate_ok = gate >= 0.99
     gap_30_45 = c30 - c45
 
+    # Only a POSITIVE gap (rule 30 ABOVE the chaotic null) is evidence for
+    # 30-specific reducibility. A gap <= +0.02 -- including negative, i.e. rule 30
+    # at/below the null -- means no special reducibility (route closed).
     if not gate_ok:
         verdict = (f"GATE FAILED (shift control only {gate:.3f} < 0.99): the search is "
                    "too weak to trust any negative. Increase budget/operators.")
-    elif abs(gap_30_45) <= 0.02:
-        verdict = (f"Rule 30 ({c30:.3f}) ~= rule 45 ({c45:.3f}); gate OK ({gate:.3f}), "
-                   f"i.i.d. floor {floor:.3f}. Any excess is generic chaotic structure, "
-                   "not 30-specific. b=3 coarse-grain route CLOSED.")
-    else:
-        verdict = (f"Rule 30 ({c30:.3f}) separates from rule 45 ({c45:.3f}) by "
+    elif gap_30_45 > 0.02:
+        verdict = (f"Rule 30 ({c30:.3f}) closes ABOVE rule 45 ({c45:.3f}) by "
                    f"{gap_30_45:+.3f} with gate OK ({gate:.3f}): candidate b=3 "
                    "reducibility -- investigate.")
+    else:
+        rel = "~=" if abs(gap_30_45) <= 0.02 else "<="
+        verdict = (f"Rule 30 ({c30:.3f}) {rel} rule 45 ({c45:.3f}) (gap {gap_30_45:+.3f}); "
+                   f"gate OK ({gate:.3f}), i.i.d. floor {floor:.3f}. Rule 30 is NOT above the "
+                   "chaotic null -- any excess is generic chaotic structure, not 30-specific. "
+                   "b=3 coarse-grain route CLOSED.")
 
     payload = {"experiment": "U_b3_coarse_grain_verdict",
                "params": {"b": args.b, "steps": args.steps, "width": args.width,
