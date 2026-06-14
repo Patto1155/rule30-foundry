@@ -24,7 +24,7 @@ import sys, subprocess, time, datetime
 from pathlib import Path
 
 PYTHON  = r"C:\Python313\python.exe"
-REPO    = Path(r"D:\APATPROJECTS\rule30-research")
+REPO    = Path(__file__).resolve().parent
 EXPS    = REPO / "experiments"
 TEST    = "--test" in sys.argv
 
