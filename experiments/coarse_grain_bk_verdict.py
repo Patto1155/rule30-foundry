@@ -38,7 +38,9 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from eca_sim import simulate_spacetime_rule, GPU_AVAILABLE  # noqa: E402
 from coarse_grain_bk import prep_blocks, search_projection, closure_batch  # noqa: E402
 
-OUT_JSON = Path(__file__).resolve().parents[1] / "data" / "coarse_grain_b3_verdict.json"
+DATA_DIR = Path(__file__).resolve().parents[1] / "data"
+OUT_JSON = DATA_DIR / "coarse_grain_b3_verdict.json"
+TEST_OUT_JSON = DATA_DIR / "coarse_grain_b3_verdict_test.json"
 
 
 def _to_np(a):
@@ -90,11 +92,14 @@ def main():
     ap.add_argument("--shears", default="0,0.25,1")
     ap.add_argument("--seed", type=int, default=7)
     ap.add_argument("--sseed", type=int, default=1)
+    ap.add_argument("--out", type=Path,
+                    help="JSON output path. Defaults to the full verdict path; --test uses a test path.")
     args = ap.parse_args()
     if args.test:
         args.steps = args.width = 600
         args.budget = 15000
         args.msearch = 40000
+    out_json = args.out or (TEST_OUT_JSON if args.test else OUT_JSON)
 
     shears = [float(x) for x in args.shears.split(",")]
     r = 1
@@ -151,12 +156,12 @@ def main():
                            "iid_floor": round(floor, 4), "closure_30": round(c30, 4),
                            "closure_45": round(c45, 4), "gap_30_minus_45": round(gap_30_45, 4)},
                "verdict": verdict, "elapsed_s": round(time.perf_counter() - t0, 1)}
-    OUT_JSON.parent.mkdir(parents=True, exist_ok=True)
-    OUT_JSON.write_text(json.dumps(payload, indent=2))
+    out_json.parent.mkdir(parents=True, exist_ok=True)
+    out_json.write_text(json.dumps(payload, indent=2))
     print(f"\n  gate={gate:.4f} (ok={gate_ok})  floor={floor:.4f}  "
           f"30={c30:.4f}  45={c45:.4f}  gap={gap_30_45:+.4f}")
     print(f"  Verdict: {verdict}")
-    print(f"\nJSON -> {OUT_JSON}\nDone in {payload['elapsed_s']}s")
+    print(f"\nJSON -> {out_json}\nDone in {payload['elapsed_s']}s")
 
 
 if __name__ == "__main__":
