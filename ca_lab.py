@@ -113,6 +113,43 @@ def cmd_closure(args) -> dict:
             "pi": g.get("pi"), "elapsed_s": round(time.perf_counter() - t0, 2)}
 
 
+def _to_np(a):
+    try:
+        import cupy as cp
+        if isinstance(a, cp.ndarray):
+            return cp.asnumpy(a)
+    except Exception:
+        pass
+    return np.asarray(a)
+
+
+def cmd_search(args) -> dict:
+    from coarse_grain_bk import prep_blocks, search_projection, closure_batch
+    t0 = time.perf_counter()
+    field = _rule_field(args.rule, args.steps, args.width, args.seed)
+    prep = prep_blocks(field, args.b, args.shear, args.r, gpu=GPU_AVAILABLE,
+                       m_max=args.msearch, seed=0)
+    res = search_projection(prep, budget=args.budget, pop=args.pop, elite=args.elite,
+                            seed=args.sseed, h_min=args.hmin, b=args.b)
+    # re-evaluate the best projection on the FULL transition set (no subsample)
+    prep_full = prep_blocks(field, args.b, args.shear, args.r, gpu=GPU_AVAILABLE)
+    cb = closure_batch(prep_full, np.array(res["best_pi"], dtype=np.int64)[None, :], h_min=0.0)
+    full_clo = float(_to_np(cb["closure"])[0])
+    full_exc = float(_to_np(cb["excess"])[0])
+    return {"cmd": "search",
+            "params": {"rule": args.rule, "b": args.b, "shear": args.shear, "r": args.r,
+                       "hmin": args.hmin, "steps": args.steps, "width": args.width,
+                       "budget": args.budget, "msearch": args.msearch,
+                       "seed": args.seed, "sseed": args.sseed, "gpu": GPU_AVAILABLE},
+            "search_closure": round(res["best_closure"], 5),
+            "search_excess": round(res["best_excess"], 5),
+            "full_closure": round(full_clo, 5),
+            "full_excess": round(full_exc, 5),
+            "M_search": prep["M"], "M_full": prep_full["M"],
+            "evals": res["evals"], "generations": res["generations"],
+            "elapsed_s": round(time.perf_counter() - t0, 2)}
+
+
 def cmd_sim(args) -> dict:
     t0 = time.perf_counter()
     field = _rule_field(args.rule, args.steps, args.width, args.seed)
@@ -151,6 +188,12 @@ def _pretty(out: dict):
         print(f"closure rule={out['params']['rule']} shear={out['params']['shear']}: "
               f"excess {out['excess']:+.4f}  closure {out['closure']:.4f}  "
               f"({out['elapsed_s']}s)", file=sys.stderr)
+    elif c == "search":
+        print(f"search rule={out['params']['rule']} b={out['params']['b']} "
+              f"shear={out['params']['shear']}: search_clo {out['search_closure']:.4f} "
+              f"-> full_clo {out['full_closure']:.4f} (excess {out['full_excess']:+.4f})  "
+              f"evals={out['evals']} M {out['M_search']}->{out['M_full']}  "
+              f"({out['elapsed_s']}s)", file=sys.stderr)
     elif c == "sim":
         print(f"sim rule={out['params']['rule']} {out['shape']}  "
               f"density={out['density']}  col_entropy={out['mean_col_entropy']}  "
@@ -186,6 +229,23 @@ def build_parser() -> argparse.ArgumentParser:
     c.add_argument("--hmin", type=float, default=0.85)
     c.add_argument("--seed", type=int, default=7)
     c.set_defaults(func=cmd_closure)
+
+    sr = sub.add_parser("search", parents=[common],
+                        help="search for the closure-maximizing projection at given b (b>=3)")
+    sr.add_argument("--rule", type=int, required=True)
+    sr.add_argument("--b", type=int, default=3)
+    sr.add_argument("--shear", type=float, default=0.0)
+    sr.add_argument("--r", type=int, default=1)
+    sr.add_argument("--hmin", type=float, default=0.85)
+    sr.add_argument("--steps", type=int, default=1200)
+    sr.add_argument("--width", type=int, default=1200)
+    sr.add_argument("--budget", type=int, default=50000, help="total projections scored")
+    sr.add_argument("--msearch", type=int, default=60000, help="transitions used during search")
+    sr.add_argument("--pop", type=int, default=256)
+    sr.add_argument("--elite", type=int, default=24)
+    sr.add_argument("--seed", type=int, default=7, help="field IC seed")
+    sr.add_argument("--sseed", type=int, default=1, help="search RNG seed")
+    sr.set_defaults(func=cmd_search)
 
     m = sub.add_parser("sim", parents=[common], help="simulate a rule, report field statistics")
     m.add_argument("--rule", type=int, required=True)
