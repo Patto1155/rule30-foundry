@@ -2,6 +2,10 @@
 
 Use this workspace as a disciplined scratchpad, not as an ad hoc notebook dump.
 
+**New here? Read `docs/WORKFLOW.md` first** — the operating manual for this
+GPU-accelerated, verification-first workflow (the loop, `ca_lab.py`, the compute
+stack, the validity-gate+null discipline, and env gotchas).
+
 ## Before Proposing Experiments
 
 Read these first, in order:

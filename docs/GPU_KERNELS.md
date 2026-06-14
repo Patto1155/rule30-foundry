@@ -133,3 +133,26 @@ across the edge within ~2 steps — corrupting the edge cells. The kernels pin t
 explicitly (`B[j] = (g<0||g>=n_words) ? 0 : ...`). This was caught only by a
 **random-IC** space-time test; a centered-spike test leaves the edges 0 and hides
 it. Lesson encoded in `verify()`: always exercise a random IC, not just a spike.
+
+## Coarse-grain closure compute
+
+Separate from the simulators, the closure metric (accuracy of the optimal local
+predictor of a coarse field) has three GPU implementations, each verified to agree:
+
+| Path | Module | When |
+|---|---|---|
+| reference loop | `coarse_grain_search.enumerate_b2` | ground truth; per-projection Python loop |
+| b=2 exhaustive | `coarse_grain_fast.enumerate_b2_fast` | all 2^16 projections; 16^4 histogram + GPU einsum contraction; **61×**, bit-exact vs reference |
+| general-b | `coarse_grain_bk.closure_batch` / `closure_enumerate_b2` | any b; `closure_batch` (apply-projection + bincount, O(M·P)) drives the b≥3 search |
+
+Two design points:
+
+- **The code-histogram trick (b=2 only).** Build the 16^4 block-code transition
+  histogram once; scoring a projection is then a contraction independent of M.
+  This is what removes the per-projection M cost — and why the `m_max` subsample
+  cap is obsolete for b=2 (uncapping is nearly free, and cuts excess-estimate
+  noise). It does **not** scale to b=3 (512^4 won't fit), hence `closure_batch`.
+- **Search overfits; null must be searched.** At b≥3 enumeration is impossible
+  (2^512), so closure is *maximized by search*, which inflates finite-sample
+  closure. Validity then requires a shift-rule positive control (must hit ~1.0)
+  and a null **searched at equal budget/M** as the floor. See `docs/WORKFLOW.md`.
