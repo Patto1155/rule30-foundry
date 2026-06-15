@@ -68,6 +68,13 @@ def unpack_rows(packed_rows: np.ndarray, n_cells: int) -> np.ndarray:
     return np.unpackbits(bytes_view, bitorder="little", axis=1)[:, :n_cells].astype(np.uint8)
 
 
+def _last_word_mask(n_cells: int) -> np.uint64:
+    used_bits = n_cells % 64
+    if used_bits == 0:
+        return np.uint64((1 << 64) - 1)
+    return np.uint64((1 << used_bits) - 1)
+
+
 def step_naive_open(row: np.ndarray) -> np.ndarray:
     out = np.zeros_like(row)
     for i in range(len(row)):
@@ -78,13 +85,16 @@ def step_naive_open(row: np.ndarray) -> np.ndarray:
     return out
 
 
-def step_packed_cpu_open(packed_row: np.ndarray) -> np.ndarray:
+def step_packed_cpu_open(packed_row: np.ndarray, n_cells: int | None = None) -> np.ndarray:
     cur = np.asarray(packed_row, dtype=np.uint64)
     left = cur << np.uint64(1)
     left[1:] |= cur[:-1] >> np.uint64(63)
     right = cur >> np.uint64(1)
     right[:-1] |= cur[1:] << np.uint64(63)
-    return left ^ (cur | right)
+    out = left ^ (cur | right)
+    if n_cells is not None:
+        out[-1] &= _last_word_mask(n_cells)
+    return out
 
 
 def simulate_naive_center_columns(initial_rows: np.ndarray, n_steps: int, center_cell: int) -> np.ndarray:
@@ -107,8 +117,10 @@ def simulate_center_columns_batch(
     center_cell: int,
     gpu: bool = True,
 ) -> np.ndarray:
-    packed = pack_rows(initial_rows)
-    return simulate_center_columns_batch_from_packed(packed, n_steps, center_cell, gpu=gpu)
+    rows = np.asarray(initial_rows, dtype=np.uint8)
+    n_cells = rows.shape[-1]
+    packed = pack_rows(rows)
+    return simulate_center_columns_batch_from_packed(packed, n_steps, center_cell, gpu=gpu, n_cells=n_cells)
 
 
 def simulate_center_columns_batch_from_packed(
@@ -116,11 +128,15 @@ def simulate_center_columns_batch_from_packed(
     n_steps: int,
     center_cell: int,
     gpu: bool = True,
+    n_cells: int | None = None,
 ) -> np.ndarray:
     rows = np.asarray(packed_rows, dtype=np.uint64)
     if rows.ndim == 1:
         rows = rows[None, :]
     n_variants, n_words = rows.shape
+    if n_cells is None:
+        n_cells = n_words * 64
+    last_mask = _last_word_mask(n_cells)
     center_word = center_cell // 64
     center_bit = center_cell % 64
     out_steps = n_steps + 1
@@ -128,6 +144,7 @@ def simulate_center_columns_batch_from_packed(
     if gpu and GPU_AVAILABLE:
         kernel = cp.RawKernel(BATCH_KERNEL_SRC, "rule30_batch_step")
         cur = cp.asarray(rows)
+        cur[:, -1] &= cp.uint64(last_mask)
         nxt = cp.zeros_like(cur)
         center_cols = cp.empty((n_variants, out_steps), dtype=cp.uint8)
         threads = 128
@@ -143,17 +160,19 @@ def simulate_center_columns_batch_from_packed(
                     (threads,),
                     (cur, nxt, np.int32(n_variants), np.int32(n_words)),
                 )
+                nxt[:, -1] &= cp.uint64(last_mask)
                 cur, nxt = nxt, cur
         return cp.asnumpy(center_cols)
 
     cur = rows.copy()
+    cur[:, -1] &= last_mask
     nxt = np.zeros_like(cur)
     center_cols = np.empty((n_variants, out_steps), dtype=np.uint8)
     for step in range(out_steps):
         center_cols[:, step] = ((cur[:, center_word] >> np.uint64(center_bit)) & np.uint64(1)).astype(np.uint8)
         if step < n_steps:
             for idx in range(n_variants):
-                nxt[idx] = step_packed_cpu_open(cur[idx])
+                nxt[idx] = step_packed_cpu_open(cur[idx], n_cells)
             cur, nxt = nxt, cur
     return center_cols
 
@@ -167,6 +186,7 @@ def simulate_spacetime(initial_row: np.ndarray, n_steps: int, gpu: bool = True) 
     if gpu and GPU_AVAILABLE:
         kernel = cp.RawKernel(BATCH_KERNEL_SRC, "rule30_batch_step")
         cur = cp.asarray(packed.reshape(1, -1))
+        cur[:, -1] &= cp.uint64(_last_word_mask(n_cells))
         nxt = cp.zeros_like(cur)
         packed_rows = cp.empty((n_steps, n_words), dtype=cp.uint64)
         threads = 128
@@ -174,14 +194,16 @@ def simulate_spacetime(initial_row: np.ndarray, n_steps: int, gpu: bool = True) 
         for step in range(n_steps):
             packed_rows[step] = cur[0]
             kernel((blocks_x, 1), (threads,), (cur, nxt, np.int32(1), np.int32(n_words)))
+            nxt[:, -1] &= cp.uint64(_last_word_mask(n_cells))
             cur, nxt = nxt, cur
         return unpack_rows(cp.asnumpy(packed_rows), n_cells)
 
     cur = packed.copy()
+    cur[-1] &= _last_word_mask(n_cells)
     packed_rows = np.empty((n_steps, n_words), dtype=np.uint64)
     for step in range(n_steps):
         packed_rows[step] = cur
-        cur = step_packed_cpu_open(cur)
+        cur = step_packed_cpu_open(cur, n_cells)
     return unpack_rows(packed_rows, n_cells)
 
 
@@ -230,6 +252,25 @@ def verify_random_batch_against_naive(seed: int = 7) -> None:
     naive = simulate_naive_center_columns(rows, 64, center)
     if not np.array_equal(packed, naive):
         raise RuntimeError("Packed open-boundary kernel failed random-row verification.")
+    verify_padding_boundary_against_naive()
+
+
+def verify_padding_boundary_against_naive() -> None:
+    row = np.array([1, 0], dtype=np.uint8)
+    center = 1
+    packed = simulate_center_columns_batch(row, 4, center, gpu=False)[0]
+    naive = simulate_naive_center_columns(row, 4, center)[0]
+    if not np.array_equal(packed, naive):
+        raise RuntimeError("Packed open-boundary kernel leaked padded cells into the real boundary.")
+
+    spacetime = simulate_spacetime(row, 5, gpu=False)
+    naive_rows = np.empty((5, len(row)), dtype=np.uint8)
+    cur = row.copy()
+    for step in range(5):
+        naive_rows[step] = cur
+        cur = step_naive_open(cur)
+    if not np.array_equal(spacetime, naive_rows):
+        raise RuntimeError("Packed spacetime simulation leaked padded cells into the real boundary.")
 
 
 def verify_spacetime_against_naive() -> None:
@@ -245,3 +286,4 @@ def verify_spacetime_against_naive() -> None:
         cur = step_naive_open(cur)
     if not np.array_equal(packed, naive_rows):
         raise RuntimeError("Packed spacetime simulation failed naive verification.")
+    verify_padding_boundary_against_naive()
