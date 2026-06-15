@@ -13,15 +13,14 @@ import subprocess
 import sys
 from pathlib import Path
 
-SIM_OUTPUT = Path(r"D:\APATPROJECTS\rule30-research\data\center_col_46M.bin")
-EXPECTED_BYTES = 46_000_000
+REPO_ROOT = Path(__file__).resolve().parent
+TOTAL_BITS = 46_000_000
+EXPECTED_BYTES = (TOTAL_BITS + 7) // 8
+SIM_OUTPUT = REPO_ROOT / "data" / "center_col_46M.bin"
 SCRIPTS = [
-    (r"D:\APATPROJECTS\rule30-research\experiments\period_search_extended.py",
-     "Extended Period Search"),
-    (r"D:\APATPROJECTS\rule30-research\experiments\causal_sensitivity.py",
-     "Causal Sensitivity Mapping"),
-    (r"D:\APATPROJECTS\rule30-research\experiments\motif_mining.py",
-     "Motif Mining & Grammar Compression"),
+    (REPO_ROOT / "experiments" / "period_search_extended.py", "Extended Period Search"),
+    (REPO_ROOT / "experiments" / "causal_sensitivity.py", "Causal Sensitivity Mapping"),
+    (REPO_ROOT / "experiments" / "motif_mining.py", "Motif Mining & Grammar Compression"),
 ]
 
 def wait_for_sim():
@@ -39,12 +38,12 @@ def wait_for_sim():
         time.sleep(60)
 
 
-def run_script(script_path: str, name: str):
+def run_script(script_path: Path, name: str):
     print(f"\n{'='*65}")
     print(f"Running: {name}")
     print(f"{'='*65}")
     t0 = time.perf_counter()
-    result = subprocess.run([sys.executable, script_path], check=False)
+    result = subprocess.run([sys.executable, str(script_path)], cwd=REPO_ROOT, check=False)
     elapsed = time.perf_counter() - t0
     status = "OK" if result.returncode == 0 else f"FAILED (code {result.returncode})"
     print(f"\n  {name}: {status}  ({elapsed:.0f}s)")

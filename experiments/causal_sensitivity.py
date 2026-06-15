@@ -47,10 +47,11 @@ MAX_DIST = 300    if TEST else 10_000
 N_CELLS  = 2 * N_STEPS + 1
 BATCH    = 1000   # process this many flip distances at once on GPU
 
-OUT_JSON  = Path(r"D:\APATPROJECTS\rule30-research\data\causal_sensitivity.json")
-PLOT_FILE = Path(r"D:\APATPROJECTS\rule30-research\docs\plots\causal_sensitivity.png")
-LOG_FILE  = Path(r"D:\APATPROJECTS\rule30-research\docs\experiment-logs\M_causal_sensitivity.md")
-PROG_LOG  = Path(r"D:\APATPROJECTS\rule30-research\data\M_progress.log")
+REPO_ROOT = Path(__file__).resolve().parents[1]
+OUT_JSON  = REPO_ROOT / "data" / "causal_sensitivity.json"
+PLOT_FILE = REPO_ROOT / "docs" / "plots" / "causal_sensitivity.png"
+LOG_FILE  = REPO_ROOT / "docs" / "experiment-logs" / "M_causal_sensitivity.md"
+PROG_LOG  = REPO_ROOT / "data" / "M_progress.log"
 
 # ---------------------------------------------------------------------------
 # CUDA kernel — runs Rule 30 for multiple tapes simultaneously (batch mode)
