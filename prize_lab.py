@@ -130,6 +130,65 @@ def write_json(path: Path, out: dict) -> None:
     path.write_text(json.dumps(out, indent=2, sort_keys=True) + "\n", encoding="utf-8")
 
 
+def format_duration(seconds: float | None) -> str:
+    if seconds is None or seconds < 0:
+        return "?:??"
+    seconds_i = int(seconds)
+    minutes, sec = divmod(seconds_i, 60)
+    hours, minutes = divmod(minutes, 60)
+    if hours:
+        return f"{hours:d}:{minutes:02d}:{sec:02d}"
+    return f"{minutes:d}:{sec:02d}"
+
+
+class ProgressBar:
+    """Small stderr-only progress bar that preserves JSON stdout."""
+
+    def __init__(self, label: str, total: int, *, enabled: bool = True, width: int = 28) -> None:
+        self.label = label
+        self.total = max(0, int(total))
+        self.enabled = enabled and self.total > 0
+        self.width = width
+        self.start = time.perf_counter()
+        self.last_print = 0.0
+        self.current = 0
+        if self.enabled:
+            self.update(0, force=True)
+
+    def update(self, current: int, *, force: bool = False) -> None:
+        if not self.enabled:
+            return
+        self.current = max(0, min(int(current), self.total))
+        now = time.perf_counter()
+        if not force and self.current < self.total and now - self.last_print < 0.25:
+            return
+        self.last_print = now
+        frac = self.current / self.total if self.total else 1.0
+        filled = min(self.width, int(round(frac * self.width)))
+        bar = "#" * filled + "-" * (self.width - filled)
+        elapsed = now - self.start
+        rate = self.current / elapsed if elapsed > 0 else 0.0
+        eta = (self.total - self.current) / rate if rate > 0 else None
+        line = (
+            f"\r{self.label} [{bar}] "
+            f"{self.current}/{self.total} {frac * 100:5.1f}% "
+            f"{rate:,.0f}/s ETA {format_duration(eta)}"
+        )
+        sys.stderr.write(line)
+        sys.stderr.flush()
+
+    def advance(self, amount: int = 1, *, force: bool = False) -> None:
+        self.update(self.current + amount, force=force)
+
+    def finish(self, *, message: str = "done", complete: bool = True) -> None:
+        if not self.enabled:
+            return
+        self.update(self.total if complete else self.current, force=True)
+        elapsed = format_duration(time.perf_counter() - self.start)
+        sys.stderr.write(f" {message} in {elapsed}\n")
+        sys.stderr.flush()
+
+
 def _rule30_step_int(state: int, mask: int) -> int:
     """One open-boundary Rule 30 step on an integer bitset."""
     return ((state << 1) ^ (state | (state >> 1))) & mask
@@ -537,6 +596,8 @@ def exhaustive_dfao_search(
     base: int,
     direction: str,
     max_transitions: int,
+    progress: bool = False,
+    progress_label: str = "dfao-search",
 ) -> dict:
     """Exhaustively search small DFAO transition tables for a finite prefix fit."""
     words = [digits_for(n, base, direction) for n in range(len(bits))]
@@ -561,11 +622,19 @@ def exhaustive_dfao_search(
                 "candidate": None,
             }
         tested = 0
+        bar = ProgressBar(
+            f"{progress_label} s={states}",
+            transition_count,
+            enabled=progress,
+        )
         for flat in itertools.product(range(states), repeat=states * base):
             tested += 1
+            if tested == 1 or tested % 4096 == 0:
+                bar.update(tested)
             transitions = transition_table(flat, states, base)
             outputs = dfao_outputs_if_fit(bits, words, transitions, states)
             if outputs is not None:
+                bar.finish(message="found", complete=False)
                 candidate = {
                     "artifact_type": "rule30.dfao_candidate",
                     "artifact_version": ARTIFACT_VERSION,
@@ -600,6 +669,7 @@ def exhaustive_dfao_search(
                 "fit_found": False,
             }
         )
+        bar.finish(message="no fit")
     return {
         "found": False,
         "complete": True,
@@ -619,6 +689,8 @@ def cmd_dfao_search(args: argparse.Namespace) -> dict:
         base=args.base,
         direction=args.direction,
         max_transitions=args.max_transitions,
+        progress=args.progress,
+        progress_label=f"dfao-search {args.sequence} b{args.base} {args.direction} n{args.bits}",
     )
     out = {
         "artifact_type": "rule30.dfao_exhaustive_search",
@@ -845,7 +917,8 @@ def cmd_dfao_frontier(args: argparse.Namespace) -> dict:
     manifest = load_or_create_manifest(manifest_path, "dfao-frontier", run_id, out_dir, utc_now_iso())
     completed = 0
     skipped = 0
-    for task in tasks:
+    task_bar = ProgressBar("dfao-frontier tasks", len(tasks), enabled=args.progress)
+    for task_index, task in enumerate(tasks, start=1):
         artifact_path = out_dir / dfao_frontier_filename(
             task["sequence"],
             task["bits"],
@@ -870,16 +943,23 @@ def cmd_dfao_frontier(args: argparse.Namespace) -> dict:
                 }
             )
             write_manifest(manifest_path, manifest)
+            task_bar.update(task_index)
             continue
 
         t0 = time.perf_counter()
         bits = sequence_bits(task["sequence"], task["bits"], margin=task["margin"], seed=task["seed"])
+        progress_label = (
+            f"dfao-frontier {task['sequence']} b{task['base']} "
+            f"{task['direction']} n{task['bits']}"
+        )
         search = exhaustive_dfao_search(
             bits,
             max_states=task["states"],
             base=task["base"],
             direction=task["direction"],
             max_transitions=task["max_transitions"],
+            progress=args.progress,
+            progress_label=progress_label,
         )
         candidate_check = None
         if search.get("candidate"):
@@ -928,8 +1008,10 @@ def cmd_dfao_frontier(args: argparse.Namespace) -> dict:
             }
         )
         write_manifest(manifest_path, manifest)
+        task_bar.update(task_index)
 
     write_manifest(manifest_path, manifest)
+    task_bar.finish()
     return manifest
 
 
@@ -1057,7 +1139,8 @@ def cmd_dfao_sat_frontier(args: argparse.Namespace) -> dict:
     manifest = load_or_create_manifest(manifest_path, "dfao-sat-frontier", run_id, out_dir, utc_now_iso())
     completed = 0
     skipped = 0
-    for task in tasks:
+    task_bar = ProgressBar("dfao-sat-frontier tasks", len(tasks), enabled=args.progress)
+    for task_index, task in enumerate(tasks, start=1):
         stem = sat_frontier_stem(
             task["sequence"],
             task["bits"],
@@ -1089,9 +1172,16 @@ def cmd_dfao_sat_frontier(args: argparse.Namespace) -> dict:
                 }
             )
             write_manifest(manifest_path, manifest)
+            task_bar.update(task_index)
             continue
 
         t0 = time.perf_counter()
+        if args.progress:
+            sys.stderr.write(
+                f"\nwriting CNF {stem} "
+                f"(sequence={task['sequence']} bits={task['bits']} states={task['states']})\n"
+            )
+            sys.stderr.flush()
         bits = sequence_bits(task["sequence"], task["bits"], margin=task["margin"], seed=task["seed"])
         dimacs, cnf_metadata = dfao_sat_cnf(
             bits,
@@ -1158,8 +1248,10 @@ def cmd_dfao_sat_frontier(args: argparse.Namespace) -> dict:
             }
         )
         write_manifest(manifest_path, manifest)
+        task_bar.update(task_index)
 
     write_manifest(manifest_path, manifest)
+    task_bar.finish()
     return manifest
 
 
@@ -1213,7 +1305,7 @@ def cone_summary_map(
     return tuple(out)
 
 
-def cone_summary_stats(rule: int, depth: int, summary_width: int) -> dict:
+def cone_summary_stats(rule: int, depth: int, summary_width: int, *, progress: bool = False) -> dict:
     base_width = 2 * depth + 1
     core_width = base_width - 2 * summary_width
     if core_width < 0:
@@ -1227,7 +1319,15 @@ def cone_summary_stats(rule: int, depth: int, summary_width: int) -> dict:
     summary_ids: dict[tuple[int, ...], int] = {}
     first_core: dict[tuple[int, ...], str] = {}
     collision_example = None
-    for core_value in range(1 << core_width):
+    core_count = 1 << core_width
+    core_bar = ProgressBar(
+        f"cone rule={rule} d={depth} w={summary_width} summaries",
+        core_count,
+        enabled=progress,
+    )
+    for core_value in range(core_count):
+        if core_value == 0 or core_value % 1024 == 0:
+            core_bar.update(core_value)
         core = bits_tuple(core_value, core_width)
         summary = cone_summary_map(rule=rule, depth=depth, summary_width=summary_width, core_bits=core)
         if summary not in summary_ids:
@@ -1238,9 +1338,9 @@ def cone_summary_stats(rule: int, depth: int, summary_width: int) -> dict:
                 "core_a": first_core[summary],
                 "core_b": tuple_bits_ascii(core),
             }
+    core_bar.finish()
 
-    composition = cone_composition_check(rule, depth, summary_width)
-    core_count = 1 << core_width
+    composition = cone_composition_check(rule, depth, summary_width, progress=progress)
     return {
         "rule": rule,
         "depth": depth,
@@ -1258,7 +1358,7 @@ def cone_summary_stats(rule: int, depth: int, summary_width: int) -> dict:
     }
 
 
-def cone_composition_check(rule: int, depth: int, summary_width: int) -> dict:
+def cone_composition_check(rule: int, depth: int, summary_width: int, *, progress: bool = False) -> dict:
     child_depth = depth - 1
     if child_depth < 1:
         return {"checked": False, "reason": "depth_too_small"}
@@ -1284,7 +1384,15 @@ def cone_composition_check(rule: int, depth: int, summary_width: int) -> dict:
     collision_count = 0
     first_collision = None
     base_width = 2 * depth + 1
-    for row_value in range(1 << base_width):
+    row_count = 1 << base_width
+    composition_bar = ProgressBar(
+        f"cone rule={rule} d={depth} w={summary_width} compose",
+        row_count,
+        enabled=progress,
+    )
+    for row_value in range(row_count):
+        if row_value == 0 or row_value % 1024 == 0:
+            composition_bar.update(row_value)
         row = bits_tuple(row_value, base_width)
         key = (
             summary_id(row[:-2]),
@@ -1306,6 +1414,7 @@ def cone_composition_check(rule: int, depth: int, summary_width: int) -> dict:
                     "output_a": prior[0],
                     "output_b": parent_output,
                 }
+    composition_bar.finish()
 
     return {
         "checked": True,
@@ -1330,7 +1439,9 @@ def cmd_cone_summary(args: argparse.Namespace) -> dict:
 
     run_id = args.run_id or f"cone-summary-{today_slug()}-{uuid.uuid4().hex[:8]}"
     results = []
-    for rule, depth, width in itertools.product(rules, depths, widths):
+    cases = list(itertools.product(rules, depths, widths))
+    case_bar = ProgressBar("cone-summary cases", len(cases), enabled=args.progress)
+    for case_index, (rule, depth, width) in enumerate(cases, start=1):
         if width <= 0:
             raise ValueError("summary widths must be positive")
         if width > depth + 1:
@@ -1342,8 +1453,11 @@ def cmd_cone_summary(args: argparse.Namespace) -> dict:
                     "skipped": "summary_width_exceeds_output_times",
                 }
             )
+            case_bar.update(case_index)
             continue
-        results.append(cone_summary_stats(rule, depth, width))
+        results.append(cone_summary_stats(rule, depth, width, progress=args.progress))
+        case_bar.update(case_index)
+    case_bar.finish()
 
     out = {
         "artifact_type": "rule30.cone_summary",
@@ -1542,6 +1656,7 @@ def build_parser() -> argparse.ArgumentParser:
     f.add_argument("--run-id")
     f.add_argument("--dry-run", action="store_true")
     f.add_argument("--force", action="store_true")
+    f.add_argument("--progress", action=argparse.BooleanOptionalAction, default=True)
     f.set_defaults(func=cmd_dfao_frontier)
 
     sf = sub.add_parser("dfao-sat-frontier", help="batch DFAO SAT CNF + sidecar generation")
@@ -1559,6 +1674,7 @@ def build_parser() -> argparse.ArgumentParser:
     sf.add_argument("--run-id")
     sf.add_argument("--dry-run", action="store_true")
     sf.add_argument("--force", action="store_true")
+    sf.add_argument("--progress", action=argparse.BooleanOptionalAction, default=True)
     sf.set_defaults(func=cmd_dfao_sat_frontier)
 
     x = sub.add_parser("dfao-search", parents=[common], help="exhaustively search small finite-prefix DFAO")
@@ -1570,6 +1686,7 @@ def build_parser() -> argparse.ArgumentParser:
     x.add_argument("--margin", type=int, default=0)
     x.add_argument("--seed", type=int, default=0)
     x.add_argument("--max-transitions", type=int, default=2_000_000)
+    x.add_argument("--progress", action=argparse.BooleanOptionalAction, default=True)
     x.set_defaults(func=cmd_dfao_search)
 
     d = sub.add_parser("check-dfao", parents=[common], help="verify a DFAO candidate JSON")
@@ -1587,6 +1704,7 @@ def build_parser() -> argparse.ArgumentParser:
     cs.add_argument("--include-random-rule", action=argparse.BooleanOptionalAction, default=True)
     cs.add_argument("--random-rule-seed", type=int, default=30)
     cs.add_argument("--run-id")
+    cs.add_argument("--progress", action=argparse.BooleanOptionalAction, default=True)
     cs.set_defaults(func=cmd_cone_summary)
 
     v = sub.add_parser("verify-artifacts", parents=[common], help="verify saved frontier artifacts or manifest")

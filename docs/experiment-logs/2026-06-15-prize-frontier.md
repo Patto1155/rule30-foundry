@@ -82,3 +82,38 @@ Run `dfao-sat-frontier` with a SAT solver via `--solver-cmd`, archive SAT/UNSAT
 statuses in the sidecars, and only promote UNSAT cases to DFAO lower-bound
 certificates. For discovery, test richer summaries only if they define a precise
 composition law before scaling depth.
+
+## Continuation: Progress Bars and Prefix Scaling
+
+Added stderr-only progress bars to long-running `prize_lab.py` experiment
+commands. Stdout remains JSON; progress is visible in an interactive shell and
+can be disabled with `--no-progress`.
+
+Commands run:
+
+```bash
+python prize_lab.py dfao-frontier --run-id dfao-frontier-2026-06-15-s5 --progress
+python prize_lab.py dfao-frontier --sequences center,random,thue-morse --bits 32,64,96,128 --max-states 4 --directions msd,lsd --run-id dfao-frontier-2026-06-15-prefix-scaling-s4 --progress
+python prize_lab.py verify-artifacts data/prize/2026-06-15-frontier/manifest.json
+```
+
+Result:
+
+- Exhaustive 5-state DFAO frontier finished for 128-bit prefixes, base 2,
+  MSD/LSD.
+- Rule 30 center: no 1-5 state DFAO fit for either digit direction.
+- Seeded random baseline (`seed=30`): no 1-5 state DFAO fit for either digit
+  direction.
+- Thue-Morse control: 2-state DFAO recovered in both MSD and LSD directions.
+- Prefix scaling through 4 states at 32/64/96/128 bits found no fits for Rule 30
+  or the seeded random baseline in either digit direction.
+- Thue-Morse recovered a 2-state DFAO at every tested prefix and direction.
+- No local `kissat`, `cadical`, `minisat`, or `glucose` executable was found.
+- `verify-artifacts` checked 64 manifest entries and returned `ok: true`.
+
+Interpretation:
+
+The 5-state result promotes the 128-bit center-column DFAO obstruction from
+states 1-4 to states 1-5 by direct exhaustive search. Random matching the Rule
+30 obstruction is expected and keeps the result framed as a finite certificate,
+not a special randomness claim.
