@@ -40,8 +40,8 @@ void rule30_step_center(
     unsigned long long prev_word = (idx > 0) ? tape[idx - 1] : 0ULL;
     unsigned long long next_word = (idx < n_words - 1) ? tape[idx + 1] : 0ULL;
 
-    unsigned long long left_word = (center >> 1) | (prev_word << 63);
-    unsigned long long right_word = (center << 1) | (next_word >> 63);
+    unsigned long long left_word = (center << 1) | (prev_word >> 63);
+    unsigned long long right_word = (center >> 1) | (next_word << 63);
 
     out[idx] = left_word ^ (center | right_word);
 }
@@ -58,16 +58,82 @@ void rule30_step(const unsigned long long* tape, unsigned long long* out, int n_
     unsigned long long prev_word = (idx > 0) ? tape[idx - 1] : 0ULL;
     unsigned long long next_word = (idx < n_words - 1) ? tape[idx + 1] : 0ULL;
 
-    unsigned long long left_word = (center >> 1) | (prev_word << 63);
-    unsigned long long right_word = (center << 1) | (next_word >> 63);
+    unsigned long long left_word = (center << 1) | (prev_word >> 63);
+    unsigned long long right_word = (center >> 1) | (next_word << 63);
 
     out[idx] = left_word ^ (center | right_word);
 }
 ''', 'rule30_step')
 
 
+def _pack_row(row):
+    words = np.zeros((len(row) + 63) // 64, dtype=np.uint64)
+    for i, bit in enumerate(row):
+        if bit:
+            words[i // 64] |= np.uint64(1) << np.uint64(i % 64)
+    return words
+
+
+def _unpack_words(words, n_cells):
+    row = np.zeros(n_cells, dtype=np.uint8)
+    for i in range(n_cells):
+        row[i] = (int(words[i // 64]) >> (i % 64)) & 1
+    return row
+
+
+def _naive_step(row):
+    out = np.zeros_like(row)
+    for i in range(len(row)):
+        left = row[i - 1] if i > 0 else 0
+        center = row[i]
+        right = row[i + 1] if i + 1 < len(row) else 0
+        out[i] = left ^ (center | right)
+    return out
+
+
+def verify_gpu_kernel():
+    """Check packed GPU kernels against naive Rule 30 across word boundaries."""
+    n_words = 3
+    n_cells = n_words * 64
+    center_word_idx = 1
+    center_bit_idx = 0
+    row = np.zeros(n_cells, dtype=np.uint8)
+
+    for pos in (63, 64, 65, 95):
+        row[pos] = 1
+
+    expected = _naive_step(row)
+    tape = cp.asarray(_pack_row(row))
+    out = cp.zeros_like(tape)
+    out_with_center = cp.zeros_like(tape)
+    center_out = cp.zeros(1, dtype=cp.uint8)
+
+    rule30_kernel((1,), (256,), (tape, out, n_words))
+    rule30_with_center_kernel(
+        (1,), (256,),
+        (tape, out_with_center, n_words, center_word_idx, center_bit_idx,
+         center_out, np.int64(0))
+    )
+    cp.cuda.Stream.null.synchronize()
+
+    actual = _unpack_words(cp.asnumpy(out), n_cells)
+    actual_with_center = _unpack_words(cp.asnumpy(out_with_center), n_cells)
+    if not np.array_equal(actual, expected) or not np.array_equal(actual_with_center, expected):
+        diffs = np.where((actual != expected) | (actual_with_center != expected))[0][:10].tolist()
+        raise RuntimeError(
+            "Packed GPU Rule 30 kernels failed naive word-boundary check; "
+            f"first differing cells: {diffs}"
+        )
+
+    expected_center = int(row[center_word_idx * 64 + center_bit_idx])
+    if int(cp.asnumpy(center_out)[0]) != expected_center:
+        raise RuntimeError("GPU center extraction failed pre-step verification.")
+
+
 def simulate(n_cells, n_steps, extract_center=False, center_out_path=None):
     """Run Rule 30 simulation on GPU with tqdm progress bar."""
+    verify_gpu_kernel()
+
     n_words = (n_cells + 63) // 64
     n_cells = n_words * 64
     center_word_idx = n_words // 2
