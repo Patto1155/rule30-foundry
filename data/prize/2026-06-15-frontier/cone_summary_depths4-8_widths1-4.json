@@ -1,0 +1,2073 @@
+{
+  "artifact_type": "rule30.cone_summary",
+  "artifact_version": 1,
+  "claim_level": "Observation",
+  "command": "python prize_lab.py cone-summary --depths 4,5,6,7,8 --summary-widths 1,2,3,4 --out data/prize/2026-06-15-frontier/cone_summary_depths4-8_widths1-4.json --run-id cone-summary-2026-06-15",
+  "complete": true,
+  "created_at": "2026-06-15T00:32:45Z",
+  "depths": [
+    4,
+    5,
+    6,
+    7,
+    8
+  ],
+  "elapsed_s": 69.298884,
+  "found": null,
+  "git_branch": "feat/prize-center-column-lab",
+  "git_head": "b536f265138b605096eb0125b934dc1d7af02a67",
+  "hypothesis": "Small exact cone summaries might compose into a shortcut for n -> center_bit(n).",
+  "interpretation": "Finite obstruction/observation only; composition collisions rule out this exact summary width, not all possible shortcuts.",
+  "lower_bound_states": null,
+  "method": "Enumerate exact maps from boundary bits to final center output windows for finite triangular ECA cones.",
+  "next_promotion_step": "Promote only if a summary family has low growth and no composition collisions across larger depths.",
+  "null_controls": {
+    "random_rule": 148,
+    "random_rule_seed": 30,
+    "rules": [
+      45,
+      148
+    ]
+  },
+  "positive_controls": "Rule 90/shift-like rules can be added via --rules; this default run keeps Rule 30 against chaotic/null controls.",
+  "prediction": "If useful summaries exist, distinct-summary growth and composition collisions should stay controlled as depth grows.",
+  "results": [
+    {
+      "boundary_bits": 2,
+      "composition": {
+        "checked": true,
+        "child_distinct_summaries": 4,
+        "collision_example": {
+          "child_summary_key": [
+            0,
+            0,
+            0
+          ],
+          "output_a": 0,
+          "output_b": 1,
+          "row_a": "000000000",
+          "row_b": "000000001"
+        },
+        "composition_collisions": 256,
+        "composition_keys": 27,
+        "success": false
+      },
+      "cone_base_bits": 9,
+      "core_bits": 7,
+      "core_count": 128,
+      "depth": 4,
+      "distinct_summaries": 4,
+      "map_domain_size": 4,
+      "output_window_bits": 1,
+      "rule": 30,
+      "summary_collision_example": {
+        "core_a": "0000010",
+        "core_b": "0000011"
+      },
+      "summary_collisions": 124,
+      "summary_width": 1
+    },
+    {
+      "boundary_bits": 4,
+      "composition": {
+        "checked": true,
+        "child_distinct_summaries": 7,
+        "collision_example": {
+          "child_summary_key": [
+            0,
+            0,
+            0
+          ],
+          "output_a": 0,
+          "output_b": 1,
+          "row_a": "000000000",
+          "row_b": "000000001"
+        },
+        "composition_collisions": 384,
+        "composition_keys": 32,
+        "success": false
+      },
+      "cone_base_bits": 9,
+      "core_bits": 5,
+      "core_count": 32,
+      "depth": 4,
+      "distinct_summaries": 14,
+      "map_domain_size": 16,
+      "output_window_bits": 2,
+      "rule": 30,
+      "summary_collision_example": {
+        "core_a": "01010",
+        "core_b": "01011"
+      },
+      "summary_collisions": 18,
+      "summary_width": 2
+    },
+    {
+      "boundary_bits": 6,
+      "composition": {
+        "checked": true,
+        "child_distinct_summaries": 2,
+        "collision_example": {
+          "child_summary_key": [
+            0,
+            0,
+            0
+          ],
+          "output_a": 0,
+          "output_b": 1,
+          "row_a": "000000000",
+          "row_b": "000000001"
+        },
+        "composition_collisions": 448,
+        "composition_keys": 8,
+        "success": false
+      },
+      "cone_base_bits": 9,
+      "core_bits": 3,
+      "core_count": 8,
+      "depth": 4,
+      "distinct_summaries": 8,
+      "map_domain_size": 64,
+      "output_window_bits": 3,
+      "rule": 30,
+      "summary_collision_example": null,
+      "summary_collisions": 0,
+      "summary_width": 3
+    },
+    {
+      "boundary_bits": 8,
+      "composition": {
+        "checked": false,
+        "reason": "summary_width_exceeds_child_cone_base"
+      },
+      "cone_base_bits": 9,
+      "core_bits": 1,
+      "core_count": 2,
+      "depth": 4,
+      "distinct_summaries": 2,
+      "map_domain_size": 256,
+      "output_window_bits": 4,
+      "rule": 30,
+      "summary_collision_example": null,
+      "summary_collisions": 0,
+      "summary_width": 4
+    },
+    {
+      "boundary_bits": 2,
+      "composition": {
+        "checked": true,
+        "child_distinct_summaries": 4,
+        "collision_example": {
+          "child_summary_key": [
+            0,
+            0,
+            0
+          ],
+          "output_a": 0,
+          "output_b": 1,
+          "row_a": "00000000000",
+          "row_b": "00000000001"
+        },
+        "composition_collisions": 1024,
+        "composition_keys": 29,
+        "success": false
+      },
+      "cone_base_bits": 11,
+      "core_bits": 9,
+      "core_count": 512,
+      "depth": 5,
+      "distinct_summaries": 4,
+      "map_domain_size": 4,
+      "output_window_bits": 1,
+      "rule": 30,
+      "summary_collision_example": {
+        "core_a": "000000010",
+        "core_b": "000000011"
+      },
+      "summary_collisions": 508,
+      "summary_width": 1
+    },
+    {
+      "boundary_bits": 4,
+      "composition": {
+        "checked": true,
+        "child_distinct_summaries": 14,
+        "collision_example": {
+          "child_summary_key": [
+            0,
+            0,
+            0
+          ],
+          "output_a": 0,
+          "output_b": 1,
+          "row_a": "00000000000",
+          "row_b": "00000000001"
+        },
+        "composition_collisions": 1536,
+        "composition_keys": 92,
+        "success": false
+      },
+      "cone_base_bits": 11,
+      "core_bits": 7,
+      "core_count": 128,
+      "depth": 5,
+      "distinct_summaries": 22,
+      "map_domain_size": 16,
+      "output_window_bits": 2,
+      "rule": 30,
+      "summary_collision_example": {
+        "core_a": "0000100",
+        "core_b": "0000101"
+      },
+      "summary_collisions": 106,
+      "summary_width": 2
+    },
+    {
+      "boundary_bits": 6,
+      "composition": {
+        "checked": true,
+        "child_distinct_summaries": 8,
+        "collision_example": {
+          "child_summary_key": [
+            0,
+            0,
+            0
+          ],
+          "output_a": 0,
+          "output_b": 1,
+          "row_a": "00000000000",
+          "row_b": "00000000001"
+        },
+        "composition_collisions": 1792,
+        "composition_keys": 32,
+        "success": false
+      },
+      "cone_base_bits": 11,
+      "core_bits": 5,
+      "core_count": 32,
+      "depth": 5,
+      "distinct_summaries": 30,
+      "map_domain_size": 64,
+      "output_window_bits": 3,
+      "rule": 30,
+      "summary_collision_example": {
+        "core_a": "01010",
+        "core_b": "01011"
+      },
+      "summary_collisions": 2,
+      "summary_width": 3
+    },
+    {
+      "boundary_bits": 8,
+      "composition": {
+        "checked": true,
+        "child_distinct_summaries": 2,
+        "collision_example": {
+          "child_summary_key": [
+            0,
+            0,
+            0
+          ],
+          "output_a": 0,
+          "output_b": 1,
+          "row_a": "00000000000",
+          "row_b": "00000000001"
+        },
+        "composition_collisions": 1920,
+        "composition_keys": 8,
+        "success": false
+      },
+      "cone_base_bits": 11,
+      "core_bits": 3,
+      "core_count": 8,
+      "depth": 5,
+      "distinct_summaries": 8,
+      "map_domain_size": 256,
+      "output_window_bits": 4,
+      "rule": 30,
+      "summary_collision_example": null,
+      "summary_collisions": 0,
+      "summary_width": 4
+    },
+    {
+      "boundary_bits": 2,
+      "composition": {
+        "checked": true,
+        "child_distinct_summaries": 4,
+        "collision_example": {
+          "child_summary_key": [
+            0,
+            0,
+            0
+          ],
+          "output_a": 0,
+          "output_b": 1,
+          "row_a": "0000000000000",
+          "row_b": "0000000000001"
+        },
+        "composition_collisions": 4096,
+        "composition_keys": 36,
+        "success": false
+      },
+      "cone_base_bits": 13,
+      "core_bits": 11,
+      "core_count": 2048,
+      "depth": 6,
+      "distinct_summaries": 4,
+      "map_domain_size": 4,
+      "output_window_bits": 1,
+      "rule": 30,
+      "summary_collision_example": {
+        "core_a": "00000000010",
+        "core_b": "00000000011"
+      },
+      "summary_collisions": 2044,
+      "summary_width": 1
+    },
+    {
+      "boundary_bits": 4,
+      "composition": {
+        "checked": true,
+        "child_distinct_summaries": 22,
+        "collision_example": {
+          "child_summary_key": [
+            0,
+            0,
+            0
+          ],
+          "output_a": 0,
+          "output_b": 1,
+          "row_a": "0000000000000",
+          "row_b": "0000000000001"
+        },
+        "composition_collisions": 6144,
+        "composition_keys": 275,
+        "success": false
+      },
+      "cone_base_bits": 13,
+      "core_bits": 9,
+      "core_count": 512,
+      "depth": 6,
+      "distinct_summaries": 24,
+      "map_domain_size": 16,
+      "output_window_bits": 2,
+      "rule": 30,
+      "summary_collision_example": {
+        "core_a": "000000100",
+        "core_b": "000000101"
+      },
+      "summary_collisions": 488,
+      "summary_width": 2
+    },
+    {
+      "boundary_bits": 6,
+      "composition": {
+        "checked": true,
+        "child_distinct_summaries": 30,
+        "collision_example": {
+          "child_summary_key": [
+            0,
+            0,
+            0
+          ],
+          "output_a": 0,
+          "output_b": 1,
+          "row_a": "0000000000000",
+          "row_b": "0000000000001"
+        },
+        "composition_collisions": 7168,
+        "composition_keys": 124,
+        "success": false
+      },
+      "cone_base_bits": 13,
+      "core_bits": 7,
+      "core_count": 128,
+      "depth": 6,
+      "distinct_summaries": 79,
+      "map_domain_size": 64,
+      "output_window_bits": 3,
+      "rule": 30,
+      "summary_collision_example": {
+        "core_a": "0000100",
+        "core_b": "0000101"
+      },
+      "summary_collisions": 49,
+      "summary_width": 3
+    },
+    {
+      "boundary_bits": 8,
+      "composition": {
+        "checked": true,
+        "child_distinct_summaries": 8,
+        "collision_example": {
+          "child_summary_key": [
+            0,
+            0,
+            0
+          ],
+          "output_a": 0,
+          "output_b": 1,
+          "row_a": "0000000000000",
+          "row_b": "0000000000001"
+        },
+        "composition_collisions": 7680,
+        "composition_keys": 32,
+        "success": false
+      },
+      "cone_base_bits": 13,
+      "core_bits": 5,
+      "core_count": 32,
+      "depth": 6,
+      "distinct_summaries": 32,
+      "map_domain_size": 256,
+      "output_window_bits": 4,
+      "rule": 30,
+      "summary_collision_example": null,
+      "summary_collisions": 0,
+      "summary_width": 4
+    },
+    {
+      "boundary_bits": 2,
+      "composition": {
+        "checked": true,
+        "child_distinct_summaries": 4,
+        "collision_example": {
+          "child_summary_key": [
+            0,
+            0,
+            0
+          ],
+          "output_a": 0,
+          "output_b": 1,
+          "row_a": "000000000000000",
+          "row_b": "000000000000001"
+        },
+        "composition_collisions": 16384,
+        "composition_keys": 36,
+        "success": false
+      },
+      "cone_base_bits": 15,
+      "core_bits": 13,
+      "core_count": 8192,
+      "depth": 7,
+      "distinct_summaries": 4,
+      "map_domain_size": 4,
+      "output_window_bits": 1,
+      "rule": 30,
+      "summary_collision_example": {
+        "core_a": "0000000000010",
+        "core_b": "0000000000011"
+      },
+      "summary_collisions": 8188,
+      "summary_width": 1
+    },
+    {
+      "boundary_bits": 4,
+      "composition": {
+        "checked": true,
+        "child_distinct_summaries": 24,
+        "collision_example": {
+          "child_summary_key": [
+            0,
+            0,
+            0
+          ],
+          "output_a": 0,
+          "output_b": 1,
+          "row_a": "000000000000000",
+          "row_b": "000000000000001"
+        },
+        "composition_collisions": 24576,
+        "composition_keys": 494,
+        "success": false
+      },
+      "cone_base_bits": 15,
+      "core_bits": 11,
+      "core_count": 2048,
+      "depth": 7,
+      "distinct_summaries": 25,
+      "map_domain_size": 16,
+      "output_window_bits": 2,
+      "rule": 30,
+      "summary_collision_example": {
+        "core_a": "00000000100",
+        "core_b": "00000000101"
+      },
+      "summary_collisions": 2023,
+      "summary_width": 2
+    },
+    {
+      "boundary_bits": 6,
+      "composition": {
+        "checked": true,
+        "child_distinct_summaries": 79,
+        "collision_example": {
+          "child_summary_key": [
+            0,
+            0,
+            0
+          ],
+          "output_a": 0,
+          "output_b": 1,
+          "row_a": "000000000000000",
+          "row_b": "000000000000001"
+        },
+        "composition_collisions": 28672,
+        "composition_keys": 424,
+        "success": false
+      },
+      "cone_base_bits": 15,
+      "core_bits": 9,
+      "core_count": 512,
+      "depth": 7,
+      "distinct_summaries": 150,
+      "map_domain_size": 64,
+      "output_window_bits": 3,
+      "rule": 30,
+      "summary_collision_example": {
+        "core_a": "000000100",
+        "core_b": "000000101"
+      },
+      "summary_collisions": 362,
+      "summary_width": 3
+    },
+    {
+      "boundary_bits": 8,
+      "composition": {
+        "checked": true,
+        "child_distinct_summaries": 32,
+        "collision_example": {
+          "child_summary_key": [
+            0,
+            0,
+            0
+          ],
+          "output_a": 0,
+          "output_b": 1,
+          "row_a": "000000000000000",
+          "row_b": "000000000000001"
+        },
+        "composition_collisions": 30720,
+        "composition_keys": 128,
+        "success": false
+      },
+      "cone_base_bits": 15,
+      "core_bits": 7,
+      "core_count": 128,
+      "depth": 7,
+      "distinct_summaries": 114,
+      "map_domain_size": 256,
+      "output_window_bits": 4,
+      "rule": 30,
+      "summary_collision_example": {
+        "core_a": "0001101",
+        "core_b": "0001110"
+      },
+      "summary_collisions": 14,
+      "summary_width": 4
+    },
+    {
+      "boundary_bits": 2,
+      "composition": {
+        "checked": true,
+        "child_distinct_summaries": 4,
+        "collision_example": {
+          "child_summary_key": [
+            0,
+            0,
+            0
+          ],
+          "output_a": 0,
+          "output_b": 1,
+          "row_a": "00000000000000000",
+          "row_b": "00000000000000001"
+        },
+        "composition_collisions": 65536,
+        "composition_keys": 36,
+        "success": false
+      },
+      "cone_base_bits": 17,
+      "core_bits": 15,
+      "core_count": 32768,
+      "depth": 8,
+      "distinct_summaries": 4,
+      "map_domain_size": 4,
+      "output_window_bits": 1,
+      "rule": 30,
+      "summary_collision_example": {
+        "core_a": "000000000000010",
+        "core_b": "000000000000011"
+      },
+      "summary_collisions": 32764,
+      "summary_width": 1
+    },
+    {
+      "boundary_bits": 4,
+      "composition": {
+        "checked": true,
+        "child_distinct_summaries": 25,
+        "collision_example": {
+          "child_summary_key": [
+            0,
+            0,
+            0
+          ],
+          "output_a": 0,
+          "output_b": 1,
+          "row_a": "00000000000000000",
+          "row_b": "00000000000000001"
+        },
+        "composition_collisions": 98304,
+        "composition_keys": 868,
+        "success": false
+      },
+      "cone_base_bits": 17,
+      "core_bits": 13,
+      "core_count": 8192,
+      "depth": 8,
+      "distinct_summaries": 25,
+      "map_domain_size": 16,
+      "output_window_bits": 2,
+      "rule": 30,
+      "summary_collision_example": {
+        "core_a": "0000000000100",
+        "core_b": "0000000000101"
+      },
+      "summary_collisions": 8167,
+      "summary_width": 2
+    },
+    {
+      "boundary_bits": 6,
+      "composition": {
+        "checked": true,
+        "child_distinct_summaries": 150,
+        "collision_example": {
+          "child_summary_key": [
+            0,
+            0,
+            0
+          ],
+          "output_a": 0,
+          "output_b": 1,
+          "row_a": "00000000000000000",
+          "row_b": "00000000000000001"
+        },
+        "composition_collisions": 114688,
+        "composition_keys": 1172,
+        "success": false
+      },
+      "cone_base_bits": 17,
+      "core_bits": 11,
+      "core_count": 2048,
+      "depth": 8,
+      "distinct_summaries": 212,
+      "map_domain_size": 64,
+      "output_window_bits": 3,
+      "rule": 30,
+      "summary_collision_example": {
+        "core_a": "00000000100",
+        "core_b": "00000000101"
+      },
+      "summary_collisions": 1836,
+      "summary_width": 3
+    },
+    {
+      "boundary_bits": 8,
+      "composition": {
+        "checked": true,
+        "child_distinct_summaries": 114,
+        "collision_example": {
+          "child_summary_key": [
+            0,
+            0,
+            0
+          ],
+          "output_a": 0,
+          "output_b": 1,
+          "row_a": "00000000000000000",
+          "row_b": "00000000000000001"
+        },
+        "composition_collisions": 122880,
+        "composition_keys": 487,
+        "success": false
+      },
+      "cone_base_bits": 17,
+      "core_bits": 9,
+      "core_count": 512,
+      "depth": 8,
+      "distinct_summaries": 324,
+      "map_domain_size": 256,
+      "output_window_bits": 4,
+      "rule": 30,
+      "summary_collision_example": {
+        "core_a": "000000100",
+        "core_b": "000000101"
+      },
+      "summary_collisions": 188,
+      "summary_width": 4
+    },
+    {
+      "boundary_bits": 2,
+      "composition": {
+        "checked": true,
+        "child_distinct_summaries": 4,
+        "collision_example": {
+          "child_summary_key": [
+            0,
+            1,
+            2
+          ],
+          "output_a": 0,
+          "output_b": 1,
+          "row_a": "000011000",
+          "row_b": "000011001"
+        },
+        "composition_collisions": 256,
+        "composition_keys": 27,
+        "success": false
+      },
+      "cone_base_bits": 9,
+      "core_bits": 7,
+      "core_count": 128,
+      "depth": 4,
+      "distinct_summaries": 4,
+      "map_domain_size": 4,
+      "output_window_bits": 1,
+      "rule": 45,
+      "summary_collision_example": {
+        "core_a": "0000000",
+        "core_b": "0000001"
+      },
+      "summary_collisions": 124,
+      "summary_width": 1
+    },
+    {
+      "boundary_bits": 4,
+      "composition": {
+        "checked": true,
+        "child_distinct_summaries": 8,
+        "collision_example": {
+          "child_summary_key": [
+            1,
+            3,
+            6
+          ],
+          "output_a": 0,
+          "output_b": 1,
+          "row_a": "000011000",
+          "row_b": "000011001"
+        },
+        "composition_collisions": 384,
+        "composition_keys": 32,
+        "success": false
+      },
+      "cone_base_bits": 9,
+      "core_bits": 5,
+      "core_count": 32,
+      "depth": 4,
+      "distinct_summaries": 21,
+      "map_domain_size": 16,
+      "output_window_bits": 2,
+      "rule": 45,
+      "summary_collision_example": {
+        "core_a": "00010",
+        "core_b": "00011"
+      },
+      "summary_collisions": 11,
+      "summary_width": 2
+    },
+    {
+      "boundary_bits": 6,
+      "composition": {
+        "checked": true,
+        "child_distinct_summaries": 2,
+        "collision_example": {
+          "child_summary_key": [
+            0,
+            0,
+            0
+          ],
+          "output_a": 2,
+          "output_b": 1,
+          "row_a": "000000000",
+          "row_b": "000000100"
+        },
+        "composition_collisions": 448,
+        "composition_keys": 8,
+        "success": false
+      },
+      "cone_base_bits": 9,
+      "core_bits": 3,
+      "core_count": 8,
+      "depth": 4,
+      "distinct_summaries": 8,
+      "map_domain_size": 64,
+      "output_window_bits": 3,
+      "rule": 45,
+      "summary_collision_example": null,
+      "summary_collisions": 0,
+      "summary_width": 3
+    },
+    {
+      "boundary_bits": 8,
+      "composition": {
+        "checked": false,
+        "reason": "summary_width_exceeds_child_cone_base"
+      },
+      "cone_base_bits": 9,
+      "core_bits": 1,
+      "core_count": 2,
+      "depth": 4,
+      "distinct_summaries": 2,
+      "map_domain_size": 256,
+      "output_window_bits": 4,
+      "rule": 45,
+      "summary_collision_example": null,
+      "summary_collisions": 0,
+      "summary_width": 4
+    },
+    {
+      "boundary_bits": 2,
+      "composition": {
+        "checked": true,
+        "child_distinct_summaries": 4,
+        "collision_example": {
+          "child_summary_key": [
+            1,
+            0,
+            3
+          ],
+          "output_a": 1,
+          "output_b": 0,
+          "row_a": "00000101000",
+          "row_b": "00000101001"
+        },
+        "composition_collisions": 1024,
+        "composition_keys": 33,
+        "success": false
+      },
+      "cone_base_bits": 11,
+      "core_bits": 9,
+      "core_count": 512,
+      "depth": 5,
+      "distinct_summaries": 4,
+      "map_domain_size": 4,
+      "output_window_bits": 1,
+      "rule": 45,
+      "summary_collision_example": {
+        "core_a": "000000000",
+        "core_b": "000000001"
+      },
+      "summary_collisions": 508,
+      "summary_width": 1
+    },
+    {
+      "boundary_bits": 4,
+      "composition": {
+        "checked": true,
+        "child_distinct_summaries": 21,
+        "collision_example": {
+          "child_summary_key": [
+            2,
+            3,
+            7
+          ],
+          "output_a": 1,
+          "output_b": 0,
+          "row_a": "00000101000",
+          "row_b": "00000101001"
+        },
+        "composition_collisions": 1536,
+        "composition_keys": 113,
+        "success": false
+      },
+      "cone_base_bits": 11,
+      "core_bits": 7,
+      "core_count": 128,
+      "depth": 5,
+      "distinct_summaries": 30,
+      "map_domain_size": 16,
+      "output_window_bits": 2,
+      "rule": 45,
+      "summary_collision_example": {
+        "core_a": "0000010",
+        "core_b": "0000011"
+      },
+      "summary_collisions": 98,
+      "summary_width": 2
+    },
+    {
+      "boundary_bits": 6,
+      "composition": {
+        "checked": true,
+        "child_distinct_summaries": 8,
+        "collision_example": {
+          "child_summary_key": [
+            0,
+            0,
+            0
+          ],
+          "output_a": 5,
+          "output_b": 4,
+          "row_a": "00000000000",
+          "row_b": "00000000100"
+        },
+        "composition_collisions": 1792,
+        "composition_keys": 32,
+        "success": false
+      },
+      "cone_base_bits": 11,
+      "core_bits": 5,
+      "core_count": 32,
+      "depth": 5,
+      "distinct_summaries": 28,
+      "map_domain_size": 64,
+      "output_window_bits": 3,
+      "rule": 45,
+      "summary_collision_example": {
+        "core_a": "00010",
+        "core_b": "01111"
+      },
+      "summary_collisions": 4,
+      "summary_width": 3
+    },
+    {
+      "boundary_bits": 8,
+      "composition": {
+        "checked": true,
+        "child_distinct_summaries": 2,
+        "collision_example": {
+          "child_summary_key": [
+            0,
+            0,
+            0
+          ],
+          "output_a": 5,
+          "output_b": 4,
+          "row_a": "00000000000",
+          "row_b": "00000000100"
+        },
+        "composition_collisions": 1920,
+        "composition_keys": 8,
+        "success": false
+      },
+      "cone_base_bits": 11,
+      "core_bits": 3,
+      "core_count": 8,
+      "depth": 5,
+      "distinct_summaries": 8,
+      "map_domain_size": 256,
+      "output_window_bits": 4,
+      "rule": 45,
+      "summary_collision_example": null,
+      "summary_collisions": 0,
+      "summary_width": 4
+    },
+    {
+      "boundary_bits": 2,
+      "composition": {
+        "checked": true,
+        "child_distinct_summaries": 4,
+        "collision_example": {
+          "child_summary_key": [
+            0,
+            1,
+            2
+          ],
+          "output_a": 1,
+          "output_b": 0,
+          "row_a": "0000000101000",
+          "row_b": "0000000101001"
+        },
+        "composition_collisions": 4096,
+        "composition_keys": 36,
+        "success": false
+      },
+      "cone_base_bits": 13,
+      "core_bits": 11,
+      "core_count": 2048,
+      "depth": 6,
+      "distinct_summaries": 4,
+      "map_domain_size": 4,
+      "output_window_bits": 1,
+      "rule": 45,
+      "summary_collision_example": {
+        "core_a": "00000000000",
+        "core_b": "00000000001"
+      },
+      "summary_collisions": 2044,
+      "summary_width": 1
+    },
+    {
+      "boundary_bits": 4,
+      "composition": {
+        "checked": true,
+        "child_distinct_summaries": 30,
+        "collision_example": {
+          "child_summary_key": [
+            2,
+            3,
+            7
+          ],
+          "output_a": 1,
+          "output_b": 0,
+          "row_a": "0000000101000",
+          "row_b": "0000000101001"
+        },
+        "composition_collisions": 6144,
+        "composition_keys": 346,
+        "success": false
+      },
+      "cone_base_bits": 13,
+      "core_bits": 9,
+      "core_count": 512,
+      "depth": 6,
+      "distinct_summaries": 40,
+      "map_domain_size": 16,
+      "output_window_bits": 2,
+      "rule": 45,
+      "summary_collision_example": {
+        "core_a": "000000010",
+        "core_b": "000000011"
+      },
+      "summary_collisions": 472,
+      "summary_width": 2
+    },
+    {
+      "boundary_bits": 6,
+      "composition": {
+        "checked": true,
+        "child_distinct_summaries": 28,
+        "collision_example": {
+          "child_summary_key": [
+            1,
+            2,
+            5
+          ],
+          "output_a": 5,
+          "output_b": 4,
+          "row_a": "0000000101000",
+          "row_b": "0000000101001"
+        },
+        "composition_collisions": 7168,
+        "composition_keys": 124,
+        "success": false
+      },
+      "cone_base_bits": 13,
+      "core_bits": 7,
+      "core_count": 128,
+      "depth": 6,
+      "distinct_summaries": 78,
+      "map_domain_size": 64,
+      "output_window_bits": 3,
+      "rule": 45,
+      "summary_collision_example": {
+        "core_a": "0000010",
+        "core_b": "0000011"
+      },
+      "summary_collisions": 50,
+      "summary_width": 3
+    },
+    {
+      "boundary_bits": 8,
+      "composition": {
+        "checked": true,
+        "child_distinct_summaries": 8,
+        "collision_example": {
+          "child_summary_key": [
+            0,
+            0,
+            0
+          ],
+          "output_a": 10,
+          "output_b": 9,
+          "row_a": "0000000000000",
+          "row_b": "0000000001000"
+        },
+        "composition_collisions": 7680,
+        "composition_keys": 32,
+        "success": false
+      },
+      "cone_base_bits": 13,
+      "core_bits": 5,
+      "core_count": 32,
+      "depth": 6,
+      "distinct_summaries": 32,
+      "map_domain_size": 256,
+      "output_window_bits": 4,
+      "rule": 45,
+      "summary_collision_example": null,
+      "summary_collisions": 0,
+      "summary_width": 4
+    },
+    {
+      "boundary_bits": 2,
+      "composition": {
+        "checked": true,
+        "child_distinct_summaries": 4,
+        "collision_example": {
+          "child_summary_key": [
+            1,
+            2,
+            1
+          ],
+          "output_a": 0,
+          "output_b": 1,
+          "row_a": "000000001010000",
+          "row_b": "000000001010010"
+        },
+        "composition_collisions": 16384,
+        "composition_keys": 33,
+        "success": false
+      },
+      "cone_base_bits": 15,
+      "core_bits": 13,
+      "core_count": 8192,
+      "depth": 7,
+      "distinct_summaries": 4,
+      "map_domain_size": 4,
+      "output_window_bits": 1,
+      "rule": 45,
+      "summary_collision_example": {
+        "core_a": "0000000000000",
+        "core_b": "0000000000001"
+      },
+      "summary_collisions": 8188,
+      "summary_width": 1
+    },
+    {
+      "boundary_bits": 4,
+      "composition": {
+        "checked": true,
+        "child_distinct_summaries": 40,
+        "collision_example": {
+          "child_summary_key": [
+            3,
+            4,
+            9
+          ],
+          "output_a": 2,
+          "output_b": 1,
+          "row_a": "000000001010000",
+          "row_b": "000000001010010"
+        },
+        "composition_collisions": 24576,
+        "composition_keys": 653,
+        "success": false
+      },
+      "cone_base_bits": 15,
+      "core_bits": 11,
+      "core_count": 2048,
+      "depth": 7,
+      "distinct_summaries": 46,
+      "map_domain_size": 16,
+      "output_window_bits": 2,
+      "rule": 45,
+      "summary_collision_example": {
+        "core_a": "00000000000",
+        "core_b": "00000000001"
+      },
+      "summary_collisions": 2002,
+      "summary_width": 2
+    },
+    {
+      "boundary_bits": 6,
+      "composition": {
+        "checked": true,
+        "child_distinct_summaries": 78,
+        "collision_example": {
+          "child_summary_key": [
+            2,
+            4,
+            8
+          ],
+          "output_a": 2,
+          "output_b": 1,
+          "row_a": "000000001010000",
+          "row_b": "000000001010010"
+        },
+        "composition_collisions": 28672,
+        "composition_keys": 423,
+        "success": false
+      },
+      "cone_base_bits": 15,
+      "core_bits": 9,
+      "core_count": 512,
+      "depth": 7,
+      "distinct_summaries": 159,
+      "map_domain_size": 64,
+      "output_window_bits": 3,
+      "rule": 45,
+      "summary_collision_example": {
+        "core_a": "000000010",
+        "core_b": "000000011"
+      },
+      "summary_collisions": 353,
+      "summary_width": 3
+    },
+    {
+      "boundary_bits": 8,
+      "composition": {
+        "checked": true,
+        "child_distinct_summaries": 32,
+        "collision_example": {
+          "child_summary_key": [
+            0,
+            0,
+            0
+          ],
+          "output_a": 5,
+          "output_b": 4,
+          "row_a": "000000000000000",
+          "row_b": "000000000001000"
+        },
+        "composition_collisions": 30720,
+        "composition_keys": 128,
+        "success": false
+      },
+      "cone_base_bits": 15,
+      "core_bits": 7,
+      "core_count": 128,
+      "depth": 7,
+      "distinct_summaries": 114,
+      "map_domain_size": 256,
+      "output_window_bits": 4,
+      "rule": 45,
+      "summary_collision_example": {
+        "core_a": "0010010",
+        "core_b": "0010011"
+      },
+      "summary_collisions": 14,
+      "summary_width": 4
+    },
+    {
+      "boundary_bits": 2,
+      "composition": {
+        "checked": true,
+        "child_distinct_summaries": 4,
+        "collision_example": {
+          "child_summary_key": [
+            0,
+            2,
+            0
+          ],
+          "output_a": 0,
+          "output_b": 1,
+          "row_a": "00000100001010000",
+          "row_b": "00000100001010010"
+        },
+        "composition_collisions": 65536,
+        "composition_keys": 35,
+        "success": false
+      },
+      "cone_base_bits": 17,
+      "core_bits": 15,
+      "core_count": 32768,
+      "depth": 8,
+      "distinct_summaries": 4,
+      "map_domain_size": 4,
+      "output_window_bits": 1,
+      "rule": 45,
+      "summary_collision_example": {
+        "core_a": "000000000000000",
+        "core_b": "000000000000001"
+      },
+      "summary_collisions": 32764,
+      "summary_width": 1
+    },
+    {
+      "boundary_bits": 4,
+      "composition": {
+        "checked": true,
+        "child_distinct_summaries": 46,
+        "collision_example": {
+          "child_summary_key": [
+            2,
+            4,
+            9
+          ],
+          "output_a": 0,
+          "output_b": 1,
+          "row_a": "00000000001010000",
+          "row_b": "00000000001010010"
+        },
+        "composition_collisions": 98304,
+        "composition_keys": 1336,
+        "success": false
+      },
+      "cone_base_bits": 17,
+      "core_bits": 13,
+      "core_count": 8192,
+      "depth": 8,
+      "distinct_summaries": 45,
+      "map_domain_size": 16,
+      "output_window_bits": 2,
+      "rule": 45,
+      "summary_collision_example": {
+        "core_a": "0000000000000",
+        "core_b": "0000000000001"
+      },
+      "summary_collisions": 8147,
+      "summary_width": 2
+    },
+    {
+      "boundary_bits": 6,
+      "composition": {
+        "checked": true,
+        "child_distinct_summaries": 159,
+        "collision_example": {
+          "child_summary_key": [
+            2,
+            4,
+            8
+          ],
+          "output_a": 4,
+          "output_b": 5,
+          "row_a": "00000000001010000",
+          "row_b": "00000000001010010"
+        },
+        "composition_collisions": 114688,
+        "composition_keys": 1208,
+        "success": false
+      },
+      "cone_base_bits": 17,
+      "core_bits": 11,
+      "core_count": 2048,
+      "depth": 8,
+      "distinct_summaries": 267,
+      "map_domain_size": 64,
+      "output_window_bits": 3,
+      "rule": 45,
+      "summary_collision_example": {
+        "core_a": "00000000010",
+        "core_b": "00000000011"
+      },
+      "summary_collisions": 1781,
+      "summary_width": 3
+    },
+    {
+      "boundary_bits": 8,
+      "composition": {
+        "checked": true,
+        "child_distinct_summaries": 114,
+        "collision_example": {
+          "child_summary_key": [
+            1,
+            2,
+            5
+          ],
+          "output_a": 12,
+          "output_b": 13,
+          "row_a": "00000000001010000",
+          "row_b": "00000000001010010"
+        },
+        "composition_collisions": 122880,
+        "composition_keys": 496,
+        "success": false
+      },
+      "cone_base_bits": 17,
+      "core_bits": 9,
+      "core_count": 512,
+      "depth": 8,
+      "distinct_summaries": 324,
+      "map_domain_size": 256,
+      "output_window_bits": 4,
+      "rule": 45,
+      "summary_collision_example": {
+        "core_a": "000001000",
+        "core_b": "000001001"
+      },
+      "summary_collisions": 188,
+      "summary_width": 4
+    },
+    {
+      "boundary_bits": 2,
+      "composition": {
+        "checked": true,
+        "child_distinct_summaries": 8,
+        "collision_example": {
+          "child_summary_key": [
+            1,
+            3,
+            3
+          ],
+          "output_a": 0,
+          "output_b": 1,
+          "row_a": "000010100",
+          "row_b": "000010101"
+        },
+        "composition_collisions": 126,
+        "composition_keys": 76,
+        "success": false
+      },
+      "cone_base_bits": 9,
+      "core_bits": 7,
+      "core_count": 128,
+      "depth": 4,
+      "distinct_summaries": 9,
+      "map_domain_size": 4,
+      "output_window_bits": 1,
+      "rule": 148,
+      "summary_collision_example": {
+        "core_a": "0000000",
+        "core_b": "0000001"
+      },
+      "summary_collisions": 119,
+      "summary_width": 1
+    },
+    {
+      "boundary_bits": 4,
+      "composition": {
+        "checked": true,
+        "child_distinct_summaries": 8,
+        "collision_example": {
+          "child_summary_key": [
+            1,
+            2,
+            5
+          ],
+          "output_a": 2,
+          "output_b": 3,
+          "row_a": "000010100",
+          "row_b": "000010101"
+        },
+        "composition_collisions": 241,
+        "composition_keys": 32,
+        "success": false
+      },
+      "cone_base_bits": 9,
+      "core_bits": 5,
+      "core_count": 32,
+      "depth": 4,
+      "distinct_summaries": 23,
+      "map_domain_size": 16,
+      "output_window_bits": 2,
+      "rule": 148,
+      "summary_collision_example": {
+        "core_a": "00000",
+        "core_b": "00001"
+      },
+      "summary_collisions": 9,
+      "summary_width": 2
+    },
+    {
+      "boundary_bits": 6,
+      "composition": {
+        "checked": true,
+        "child_distinct_summaries": 2,
+        "collision_example": {
+          "child_summary_key": [
+            0,
+            1,
+            0
+          ],
+          "output_a": 0,
+          "output_b": 6,
+          "row_a": "000010000",
+          "row_b": "000010100"
+        },
+        "composition_collisions": 362,
+        "composition_keys": 8,
+        "success": false
+      },
+      "cone_base_bits": 9,
+      "core_bits": 3,
+      "core_count": 8,
+      "depth": 4,
+      "distinct_summaries": 8,
+      "map_domain_size": 64,
+      "output_window_bits": 3,
+      "rule": 148,
+      "summary_collision_example": null,
+      "summary_collisions": 0,
+      "summary_width": 3
+    },
+    {
+      "boundary_bits": 8,
+      "composition": {
+        "checked": false,
+        "reason": "summary_width_exceeds_child_cone_base"
+      },
+      "cone_base_bits": 9,
+      "core_bits": 1,
+      "core_count": 2,
+      "depth": 4,
+      "distinct_summaries": 2,
+      "map_domain_size": 256,
+      "output_window_bits": 4,
+      "rule": 148,
+      "summary_collision_example": null,
+      "summary_collisions": 0,
+      "summary_width": 4
+    },
+    {
+      "boundary_bits": 2,
+      "composition": {
+        "checked": true,
+        "child_distinct_summaries": 9,
+        "collision_example": {
+          "child_summary_key": [
+            1,
+            2,
+            2
+          ],
+          "output_a": 1,
+          "output_b": 0,
+          "row_a": "00000101010",
+          "row_b": "00000101011"
+        },
+        "composition_collisions": 489,
+        "composition_keys": 108,
+        "success": false
+      },
+      "cone_base_bits": 11,
+      "core_bits": 9,
+      "core_count": 512,
+      "depth": 5,
+      "distinct_summaries": 11,
+      "map_domain_size": 4,
+      "output_window_bits": 1,
+      "rule": 148,
+      "summary_collision_example": {
+        "core_a": "000000000",
+        "core_b": "000000001"
+      },
+      "summary_collisions": 501,
+      "summary_width": 1
+    },
+    {
+      "boundary_bits": 4,
+      "composition": {
+        "checked": true,
+        "child_distinct_summaries": 23,
+        "collision_example": {
+          "child_summary_key": [
+            1,
+            3,
+            6
+          ],
+          "output_a": 0,
+          "output_b": 3,
+          "row_a": "00000101000",
+          "row_b": "00000101010"
+        },
+        "composition_collisions": 830,
+        "composition_keys": 110,
+        "success": false
+      },
+      "cone_base_bits": 11,
+      "core_bits": 7,
+      "core_count": 128,
+      "depth": 5,
+      "distinct_summaries": 39,
+      "map_domain_size": 16,
+      "output_window_bits": 2,
+      "rule": 148,
+      "summary_collision_example": {
+        "core_a": "0000000",
+        "core_b": "0000001"
+      },
+      "summary_collisions": 89,
+      "summary_width": 2
+    },
+    {
+      "boundary_bits": 6,
+      "composition": {
+        "checked": true,
+        "child_distinct_summaries": 8,
+        "collision_example": {
+          "child_summary_key": [
+            1,
+            2,
+            5
+          ],
+          "output_a": 4,
+          "output_b": 7,
+          "row_a": "00000101000",
+          "row_b": "00000101010"
+        },
+        "composition_collisions": 1266,
+        "composition_keys": 32,
+        "success": false
+      },
+      "cone_base_bits": 11,
+      "core_bits": 5,
+      "core_count": 32,
+      "depth": 5,
+      "distinct_summaries": 30,
+      "map_domain_size": 64,
+      "output_window_bits": 3,
+      "rule": 148,
+      "summary_collision_example": {
+        "core_a": "00001",
+        "core_b": "00110"
+      },
+      "summary_collisions": 2,
+      "summary_width": 3
+    },
+    {
+      "boundary_bits": 8,
+      "composition": {
+        "checked": true,
+        "child_distinct_summaries": 2,
+        "collision_example": {
+          "child_summary_key": [
+            0,
+            1,
+            0
+          ],
+          "output_a": 0,
+          "output_b": 12,
+          "row_a": "00000100000",
+          "row_b": "00000101000"
+        },
+        "composition_collisions": 1636,
+        "composition_keys": 8,
+        "success": false
+      },
+      "cone_base_bits": 11,
+      "core_bits": 3,
+      "core_count": 8,
+      "depth": 5,
+      "distinct_summaries": 8,
+      "map_domain_size": 256,
+      "output_window_bits": 4,
+      "rule": 148,
+      "summary_collision_example": null,
+      "summary_collisions": 0,
+      "summary_width": 4
+    },
+    {
+      "boundary_bits": 2,
+      "composition": {
+        "checked": true,
+        "child_distinct_summaries": 11,
+        "collision_example": {
+          "child_summary_key": [
+            1,
+            3,
+            3
+          ],
+          "output_a": 0,
+          "output_b": 1,
+          "row_a": "0000001010100",
+          "row_b": "0000001010101"
+        },
+        "composition_collisions": 1737,
+        "composition_keys": 135,
+        "success": false
+      },
+      "cone_base_bits": 13,
+      "core_bits": 11,
+      "core_count": 2048,
+      "depth": 6,
+      "distinct_summaries": 9,
+      "map_domain_size": 4,
+      "output_window_bits": 1,
+      "rule": 148,
+      "summary_collision_example": {
+        "core_a": "00000000000",
+        "core_b": "00000000001"
+      },
+      "summary_collisions": 2039,
+      "summary_width": 1
+    },
+    {
+      "boundary_bits": 4,
+      "composition": {
+        "checked": true,
+        "child_distinct_summaries": 39,
+        "collision_example": {
+          "child_summary_key": [
+            1,
+            2,
+            9
+          ],
+          "output_a": 2,
+          "output_b": 3,
+          "row_a": "0000001010100",
+          "row_b": "0000001010101"
+        },
+        "composition_collisions": 3106,
+        "composition_keys": 272,
+        "success": false
+      },
+      "cone_base_bits": 13,
+      "core_bits": 9,
+      "core_count": 512,
+      "depth": 6,
+      "distinct_summaries": 53,
+      "map_domain_size": 16,
+      "output_window_bits": 2,
+      "rule": 148,
+      "summary_collision_example": {
+        "core_a": "000000000",
+        "core_b": "000000001"
+      },
+      "summary_collisions": 459,
+      "summary_width": 2
+    },
+    {
+      "boundary_bits": 6,
+      "composition": {
+        "checked": true,
+        "child_distinct_summaries": 30,
+        "collision_example": {
+          "child_summary_key": [
+            2,
+            5,
+            9
+          ],
+          "output_a": 0,
+          "output_b": 6,
+          "row_a": "0000001010000",
+          "row_b": "0000001010100"
+        },
+        "composition_collisions": 4794,
+        "composition_keys": 128,
+        "success": false
+      },
+      "cone_base_bits": 13,
+      "core_bits": 7,
+      "core_count": 128,
+      "depth": 6,
+      "distinct_summaries": 70,
+      "map_domain_size": 64,
+      "output_window_bits": 3,
+      "rule": 148,
+      "summary_collision_example": {
+        "core_a": "0000000",
+        "core_b": "0000001"
+      },
+      "summary_collisions": 58,
+      "summary_width": 3
+    },
+    {
+      "boundary_bits": 8,
+      "composition": {
+        "checked": true,
+        "child_distinct_summaries": 8,
+        "collision_example": {
+          "child_summary_key": [
+            1,
+            2,
+            5
+          ],
+          "output_a": 8,
+          "output_b": 14,
+          "row_a": "0000001010000",
+          "row_b": "0000001010100"
+        },
+        "composition_collisions": 6060,
+        "composition_keys": 32,
+        "success": false
+      },
+      "cone_base_bits": 13,
+      "core_bits": 5,
+      "core_count": 32,
+      "depth": 6,
+      "distinct_summaries": 31,
+      "map_domain_size": 256,
+      "output_window_bits": 4,
+      "rule": 148,
+      "summary_collision_example": {
+        "core_a": "00001",
+        "core_b": "00110"
+      },
+      "summary_collisions": 1,
+      "summary_width": 4
+    },
+    {
+      "boundary_bits": 2,
+      "composition": {
+        "checked": true,
+        "child_distinct_summaries": 9,
+        "collision_example": {
+          "child_summary_key": [
+            1,
+            2,
+            2
+          ],
+          "output_a": 1,
+          "output_b": 0,
+          "row_a": "000000010101010",
+          "row_b": "000000010101011"
+        },
+        "composition_collisions": 6640,
+        "composition_keys": 136,
+        "success": false
+      },
+      "cone_base_bits": 15,
+      "core_bits": 13,
+      "core_count": 8192,
+      "depth": 7,
+      "distinct_summaries": 11,
+      "map_domain_size": 4,
+      "output_window_bits": 1,
+      "rule": 148,
+      "summary_collision_example": {
+        "core_a": "0000000000000",
+        "core_b": "0000000000001"
+      },
+      "summary_collisions": 8181,
+      "summary_width": 1
+    },
+    {
+      "boundary_bits": 4,
+      "composition": {
+        "checked": true,
+        "child_distinct_summaries": 53,
+        "collision_example": {
+          "child_summary_key": [
+            1,
+            3,
+            7
+          ],
+          "output_a": 0,
+          "output_b": 3,
+          "row_a": "000000010101000",
+          "row_b": "000000010101010"
+        },
+        "composition_collisions": 11399,
+        "composition_keys": 468,
+        "success": false
+      },
+      "cone_base_bits": 15,
+      "core_bits": 11,
+      "core_count": 2048,
+      "depth": 7,
+      "distinct_summaries": 60,
+      "map_domain_size": 16,
+      "output_window_bits": 2,
+      "rule": 148,
+      "summary_collision_example": {
+        "core_a": "00000000000",
+        "core_b": "00000000001"
+      },
+      "summary_collisions": 1988,
+      "summary_width": 2
+    },
+    {
+      "boundary_bits": 6,
+      "composition": {
+        "checked": true,
+        "child_distinct_summaries": 70,
+        "collision_example": {
+          "child_summary_key": [
+            2,
+            5,
+            12
+          ],
+          "output_a": 4,
+          "output_b": 7,
+          "row_a": "000000010101000",
+          "row_b": "000000010101010"
+        },
+        "composition_collisions": 17669,
+        "composition_keys": 424,
+        "success": false
+      },
+      "cone_base_bits": 15,
+      "core_bits": 9,
+      "core_count": 512,
+      "depth": 7,
+      "distinct_summaries": 122,
+      "map_domain_size": 64,
+      "output_window_bits": 3,
+      "rule": 148,
+      "summary_collision_example": {
+        "core_a": "000000000",
+        "core_b": "000000001"
+      },
+      "summary_collisions": 390,
+      "summary_width": 3
+    },
+    {
+      "boundary_bits": 8,
+      "composition": {
+        "checked": true,
+        "child_distinct_summaries": 31,
+        "collision_example": {
+          "child_summary_key": [
+            2,
+            5,
+            9
+          ],
+          "output_a": 0,
+          "output_b": 12,
+          "row_a": "000000010100000",
+          "row_b": "000000010101000"
+        },
+        "composition_collisions": 22993,
+        "composition_keys": 128,
+        "success": false
+      },
+      "cone_base_bits": 15,
+      "core_bits": 7,
+      "core_count": 128,
+      "depth": 7,
+      "distinct_summaries": 95,
+      "map_domain_size": 256,
+      "output_window_bits": 4,
+      "rule": 148,
+      "summary_collision_example": {
+        "core_a": "0000000",
+        "core_b": "0000001"
+      },
+      "summary_collisions": 33,
+      "summary_width": 4
+    },
+    {
+      "boundary_bits": 2,
+      "composition": {
+        "checked": true,
+        "child_distinct_summaries": 11,
+        "collision_example": {
+          "child_summary_key": [
+            1,
+            3,
+            3
+          ],
+          "output_a": 0,
+          "output_b": 1,
+          "row_a": "00000000101010100",
+          "row_b": "00000000101010101"
+        },
+        "composition_collisions": 24727,
+        "composition_keys": 149,
+        "success": false
+      },
+      "cone_base_bits": 17,
+      "core_bits": 15,
+      "core_count": 32768,
+      "depth": 8,
+      "distinct_summaries": 9,
+      "map_domain_size": 4,
+      "output_window_bits": 1,
+      "rule": 148,
+      "summary_collision_example": {
+        "core_a": "000000000000000",
+        "core_b": "000000000000001"
+      },
+      "summary_collisions": 32759,
+      "summary_width": 1
+    },
+    {
+      "boundary_bits": 4,
+      "composition": {
+        "checked": true,
+        "child_distinct_summaries": 60,
+        "collision_example": {
+          "child_summary_key": [
+            1,
+            2,
+            9
+          ],
+          "output_a": 2,
+          "output_b": 3,
+          "row_a": "00000000101010100",
+          "row_b": "00000000101010101"
+        },
+        "composition_collisions": 43513,
+        "composition_keys": 672,
+        "success": false
+      },
+      "cone_base_bits": 17,
+      "core_bits": 13,
+      "core_count": 8192,
+      "depth": 8,
+      "distinct_summaries": 68,
+      "map_domain_size": 16,
+      "output_window_bits": 2,
+      "rule": 148,
+      "summary_collision_example": {
+        "core_a": "0000000000000",
+        "core_b": "0000000000001"
+      },
+      "summary_collisions": 8124,
+      "summary_width": 2
+    },
+    {
+      "boundary_bits": 6,
+      "composition": {
+        "checked": true,
+        "child_distinct_summaries": 122,
+        "collision_example": {
+          "child_summary_key": [
+            2,
+            5,
+            12
+          ],
+          "output_a": 0,
+          "output_b": 6,
+          "row_a": "00000000101010000",
+          "row_b": "00000000101010100"
+        },
+        "composition_collisions": 68000,
+        "composition_keys": 961,
+        "success": false
+      },
+      "cone_base_bits": 17,
+      "core_bits": 11,
+      "core_count": 2048,
+      "depth": 8,
+      "distinct_summaries": 157,
+      "map_domain_size": 64,
+      "output_window_bits": 3,
+      "rule": 148,
+      "summary_collision_example": {
+        "core_a": "00000000000",
+        "core_b": "00000000001"
+      },
+      "summary_collisions": 1891,
+      "summary_width": 3
+    },
+    {
+      "boundary_bits": 8,
+      "composition": {
+        "checked": true,
+        "child_distinct_summaries": 95,
+        "collision_example": {
+          "child_summary_key": [
+            2,
+            5,
+            14
+          ],
+          "output_a": 8,
+          "output_b": 14,
+          "row_a": "00000000101010000",
+          "row_b": "00000000101010100"
+        },
+        "composition_collisions": 87067,
+        "composition_keys": 480,
+        "success": false
+      },
+      "cone_base_bits": 17,
+      "core_bits": 9,
+      "core_count": 512,
+      "depth": 8,
+      "distinct_summaries": 182,
+      "map_domain_size": 256,
+      "output_window_bits": 4,
+      "rule": 148,
+      "summary_collision_example": {
+        "core_a": "000000000",
+        "core_b": "000000001"
+      },
+      "summary_collisions": 330,
+      "summary_width": 4
+    }
+  ],
+  "rules": [
+    30,
+    45,
+    148
+  ],
+  "run_id": "cone-summary-2026-06-15",
+  "summary_widths": [
+    1,
+    2,
+    3,
+    4
+  ]
+}
