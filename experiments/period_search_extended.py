@@ -32,13 +32,15 @@ from scipy.stats import norm
 # ---------------------------------------------------------------------------
 # Configuration
 # ---------------------------------------------------------------------------
-DATA_FILE  = Path(r"D:\APATPROJECTS\rule30-research\data\center_col_46M.bin")
-OUT_CSV    = Path(r"D:\APATPROJECTS\rule30-research\data\period_search_extended.csv")
-PLOT_FILE  = Path(r"D:\APATPROJECTS\rule30-research\docs\plots\period_search_extended.png")
-LOG_FILE   = Path(r"D:\APATPROJECTS\rule30-research\docs\experiment-logs\M_period_search_extended.md")
-JSON_FILE  = Path(r"D:\APATPROJECTS\rule30-research\data\period_search_extended.json")
+REPO_ROOT = Path(__file__).resolve().parents[1]
+DATA_FILE  = REPO_ROOT / "data" / "center_col_46M.bin"
+OUT_CSV    = REPO_ROOT / "data" / "period_search_extended.csv"
+PLOT_FILE  = REPO_ROOT / "docs" / "plots" / "period_search_extended.png"
+LOG_FILE   = REPO_ROOT / "docs" / "experiment-logs" / "M_period_search_extended.md"
+JSON_FILE  = REPO_ROOT / "data" / "period_search_extended.json"
 
 TOTAL_BITS = 46_000_000
+EXPECTED_BYTES = (TOTAL_BITS + 7) // 8
 MAX_PERIOD = 4_500_000   # search lags 1 .. 4.5M
 ALPHA      = 0.05        # family-wise error rate for Bonferroni
 
@@ -85,10 +87,13 @@ def main():
         sys.exit(1)
 
     actual_size = DATA_FILE.stat().st_size
-    expected    = TOTAL_BITS   # 1 byte per bit in this format
-    if actual_size < expected * 0.99:
-        print(f"WARNING: file is {actual_size:,} bytes, expected {expected:,}.")
-        print("Simulation may still be running. Check again later.")
+    expected    = EXPECTED_BYTES
+    if actual_size != expected:
+        print(f"ERROR: file is {actual_size:,} bytes, expected exactly {expected:,}.")
+        if actual_size < expected:
+            print("Truncated or simulation still running — refusing to analyse a partial artifact.")
+        else:
+            print("File larger than expected — refusing to analyse a corrupt artifact.")
         sys.exit(1)
     print(f"Data file OK: {actual_size:,} bytes ({actual_size/1e6:.1f} MB)")
 

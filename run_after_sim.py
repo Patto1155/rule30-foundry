@@ -13,38 +13,58 @@ import subprocess
 import sys
 from pathlib import Path
 
-SIM_OUTPUT = Path(r"D:\APATPROJECTS\rule30-research\data\center_col_46M.bin")
-EXPECTED_BYTES = 46_000_000
+REPO_ROOT = Path(__file__).resolve().parent
+TOTAL_BITS = 46_000_000
+EXPECTED_BYTES = (TOTAL_BITS + 7) // 8
+SIM_OUTPUT = REPO_ROOT / "data" / "center_col_46M.bin"
 SCRIPTS = [
-    (r"D:\APATPROJECTS\rule30-research\experiments\period_search_extended.py",
-     "Extended Period Search"),
-    (r"D:\APATPROJECTS\rule30-research\experiments\causal_sensitivity.py",
-     "Causal Sensitivity Mapping"),
-    (r"D:\APATPROJECTS\rule30-research\experiments\motif_mining.py",
-     "Motif Mining & Grammar Compression"),
+    (REPO_ROOT / "experiments" / "period_search_extended.py", "Extended Period Search"),
+    (REPO_ROOT / "experiments" / "causal_sensitivity.py", "Causal Sensitivity Mapping"),
+    (REPO_ROOT / "experiments" / "motif_mining.py", "Motif Mining & Grammar Compression"),
 ]
+
+def artifact_size_status(size: int, expected: int) -> str:
+    """Classify a packed-artifact file size against the exact expected size.
+
+    The packed Rule 30 artifact is exactly ``expected`` bytes when complete, so
+    we require an exact match: a shorter file is a truncated/in-progress write
+    and a longer file is corrupt. Accepting a near-complete file (the old
+    ``>= expected * 0.99`` gate) let up to 1% of truncated data be analysed and
+    reported as a full 46M-bit run.
+    """
+    if size == expected:
+        return "complete"
+    if size < expected:
+        return "incomplete"
+    return "oversized"
+
 
 def wait_for_sim():
     print("Waiting for simulation output …")
     while True:
         if SIM_OUTPUT.exists():
             size = SIM_OUTPUT.stat().st_size
-            if size >= EXPECTED_BYTES * 0.99:
+            status = artifact_size_status(size, EXPECTED_BYTES)
+            if status == "complete":
                 print(f"  Found: {SIM_OUTPUT}  ({size:,} bytes)")
                 return
-            else:
-                print(f"  File exists but incomplete: {size:,}/{EXPECTED_BYTES:,} bytes")
+            if status == "oversized":
+                raise SystemExit(
+                    f"ERROR: {SIM_OUTPUT} is {size:,} bytes, larger than the expected "
+                    f"{EXPECTED_BYTES:,}; refusing to proceed on a corrupt artifact."
+                )
+            print(f"  File exists but incomplete: {size:,}/{EXPECTED_BYTES:,} bytes")
         else:
             print(f"  Not found yet. Waiting 60s …")
         time.sleep(60)
 
 
-def run_script(script_path: str, name: str):
+def run_script(script_path: Path, name: str):
     print(f"\n{'='*65}")
     print(f"Running: {name}")
     print(f"{'='*65}")
     t0 = time.perf_counter()
-    result = subprocess.run([sys.executable, script_path], check=False)
+    result = subprocess.run([sys.executable, str(script_path)], cwd=REPO_ROOT, check=False)
     elapsed = time.perf_counter() - t0
     status = "OK" if result.returncode == 0 else f"FAILED (code {result.returncode})"
     print(f"\n  {name}: {status}  ({elapsed:.0f}s)")

@@ -34,10 +34,11 @@ from scipy.stats import chi2
 # ---------------------------------------------------------------------------
 # Configuration
 # ---------------------------------------------------------------------------
-DATA_FILE   = Path(r"D:\APATPROJECTS\rule30-research\data\center_col_46M.bin")
-OUT_JSON    = Path(r"D:\APATPROJECTS\rule30-research\data\motif_mining.json")
-PLOT_FILE   = Path(r"D:\APATPROJECTS\rule30-research\docs\plots\motif_mining.png")
-LOG_FILE    = Path(r"D:\APATPROJECTS\rule30-research\docs\experiment-logs\N_motif_mining.md")
+REPO_ROOT = Path(__file__).resolve().parents[1]
+DATA_FILE   = REPO_ROOT / "data" / "center_col_46M.bin"
+OUT_JSON    = REPO_ROOT / "data" / "motif_mining.json"
+PLOT_FILE   = REPO_ROOT / "docs" / "plots" / "motif_mining.png"
+LOG_FILE    = REPO_ROOT / "docs" / "experiment-logs" / "N_motif_mining.md"
 
 TOTAL_BITS   = 46_000_000
 ANALYSIS_BITS = 10_000_000   # use first 10M for most tests (fast enough)
