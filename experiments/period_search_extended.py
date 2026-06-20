@@ -88,9 +88,12 @@ def main():
 
     actual_size = DATA_FILE.stat().st_size
     expected    = EXPECTED_BYTES
-    if actual_size < expected * 0.99:
-        print(f"WARNING: file is {actual_size:,} bytes, expected {expected:,}.")
-        print("Simulation may still be running. Check again later.")
+    if actual_size != expected:
+        print(f"ERROR: file is {actual_size:,} bytes, expected exactly {expected:,}.")
+        if actual_size < expected:
+            print("Truncated or simulation still running — refusing to analyse a partial artifact.")
+        else:
+            print("File larger than expected — refusing to analyse a corrupt artifact.")
         sys.exit(1)
     print(f"Data file OK: {actual_size:,} bytes ({actual_size/1e6:.1f} MB)")
 

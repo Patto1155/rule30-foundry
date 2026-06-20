@@ -23,16 +23,37 @@ SCRIPTS = [
     (REPO_ROOT / "experiments" / "motif_mining.py", "Motif Mining & Grammar Compression"),
 ]
 
+def artifact_size_status(size: int, expected: int) -> str:
+    """Classify a packed-artifact file size against the exact expected size.
+
+    The packed Rule 30 artifact is exactly ``expected`` bytes when complete, so
+    we require an exact match: a shorter file is a truncated/in-progress write
+    and a longer file is corrupt. Accepting a near-complete file (the old
+    ``>= expected * 0.99`` gate) let up to 1% of truncated data be analysed and
+    reported as a full 46M-bit run.
+    """
+    if size == expected:
+        return "complete"
+    if size < expected:
+        return "incomplete"
+    return "oversized"
+
+
 def wait_for_sim():
     print("Waiting for simulation output …")
     while True:
         if SIM_OUTPUT.exists():
             size = SIM_OUTPUT.stat().st_size
-            if size >= EXPECTED_BYTES * 0.99:
+            status = artifact_size_status(size, EXPECTED_BYTES)
+            if status == "complete":
                 print(f"  Found: {SIM_OUTPUT}  ({size:,} bytes)")
                 return
-            else:
-                print(f"  File exists but incomplete: {size:,}/{EXPECTED_BYTES:,} bytes")
+            if status == "oversized":
+                raise SystemExit(
+                    f"ERROR: {SIM_OUTPUT} is {size:,} bytes, larger than the expected "
+                    f"{EXPECTED_BYTES:,}; refusing to proceed on a corrupt artifact."
+                )
+            print(f"  File exists but incomplete: {size:,}/{EXPECTED_BYTES:,} bytes")
         else:
             print(f"  Not found yet. Waiting 60s …")
         time.sleep(60)
