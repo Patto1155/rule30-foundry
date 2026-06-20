@@ -73,9 +73,15 @@ def verify_kernel() -> None:
     rng = np.random.default_rng(7)
     initial = rng.integers(0, 2, size=128, dtype=np.uint8)
     ref = naive_periodic(initial, 48)
-    got = simulate_rows(initial, 48, sample_every=1, gpu=False)
-    if not np.array_equal(ref, got):
-        raise RuntimeError("Periodic packed-bit Rule 30 kernel failed naive verification.")
+    backends = [("CPU", False)]
+    if GPU:
+        backends.append(("GPU", True))
+    for backend_name, use_gpu in backends:
+        got = simulate_rows(initial, 48, sample_every=1, gpu=use_gpu)
+        if not np.array_equal(ref, got):
+            raise RuntimeError(
+                f"Periodic packed-bit Rule 30 {backend_name} kernel failed naive verification."
+            )
 
 
 def pack_row(bits: np.ndarray) -> np.ndarray:
