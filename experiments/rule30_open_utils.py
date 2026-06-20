@@ -155,7 +155,9 @@ def simulate_center_columns_batch_from_packed(
                 if _gpu_dir not in _sys.path:
                     _sys.path.insert(0, _gpu_dir)
                 from rule30_fast import center_columns_from_packed_fast
-                return center_columns_from_packed_fast(rows, n_steps, center_cell)
+                return center_columns_from_packed_fast(
+                    rows, n_steps, center_cell, n_cells=n_cells
+                )
         except Exception:
             pass
 
