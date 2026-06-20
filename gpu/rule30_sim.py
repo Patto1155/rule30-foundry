@@ -168,6 +168,13 @@ def simulate(n_cells, n_steps, extract_center=False, center_out_path=None):
     pbar = tqdm(total=n_steps, desc="Rule 30", unit="step", unit_scale=True,
                 bar_format="{l_bar}{bar}| {n_fmt}/{total_fmt} [{elapsed}<{remaining}, {rate_fmt}]",
                 miniters=update_interval)
+    completed_steps = 0
+
+    def update_progress(done_steps):
+        nonlocal completed_steps
+        if done_steps == n_steps or done_steps - completed_steps >= update_interval:
+            pbar.update(done_steps - completed_steps)
+            completed_steps = done_steps
 
     if extract_center:
         for step in range(n_steps):
@@ -178,16 +185,12 @@ def simulate(n_cells, n_steps, extract_center=False, center_out_path=None):
                  center_gpu, np.int64(step))
             )
             current, next_buf = next_buf, current
-            if step % update_interval == 0:
-                pbar.update(update_interval)
-        pbar.update(n_steps - (n_steps // update_interval) * update_interval)
+            update_progress(step + 1)
     else:
         for step in range(n_steps):
             rule30_kernel((grid_size,), (block_size,), (current, next_buf, n_words))
             current, next_buf = next_buf, current
-            if step % update_interval == 0:
-                pbar.update(update_interval)
-        pbar.update(n_steps - (n_steps // update_interval) * update_interval)
+            update_progress(step + 1)
 
     cp.cuda.Stream.null.synchronize()
     elapsed = time.perf_counter() - start
