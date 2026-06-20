@@ -16,15 +16,15 @@ For the overnight sim (Experiment 5):
   # In a separate terminal, start telemetry FIRST:
   nvidia-smi dmon -s pucvmet -d 5 -f data\\gpu_telemetry.csv
   # Then start the simulation:
-  C:\\Python313\\python.exe experiments\\sim_200m.py
+  python experiments\\sim_200m.py
   # Watch progress:
   tail -f data\\sim_progress.log     (or: type data\\sim_progress.log on Windows)
 """
 import sys, subprocess, time, datetime
 from pathlib import Path
 
-PYTHON  = r"C:\Python313\python.exe"
-REPO    = Path(r"D:\APATPROJECTS\rule30-research")
+PYTHON  = sys.executable
+REPO    = Path(__file__).resolve().parent
 EXPS    = REPO / "experiments"
 TEST    = "--test" in sys.argv
 
@@ -77,7 +77,7 @@ def main():
     print(r"    nvidia-smi dmon -s pucvmet -d 5 -f data\gpu_telemetry.csv")
     print()
     print("  For the overnight 100M simulation (Experiment 5), run separately:")
-    print(r"    C:\Python313\python.exe experiments\sim_200m.py")
+    print(f"    {PYTHON} experiments\\sim_200m.py")
     print(f"    (estimated runtime: {'~10s test' if TEST else '~9h for 100M steps'})")
     print()
 
@@ -106,7 +106,7 @@ def main():
         print()
         print("  Next step: run the overnight 100M simulation:")
         print(r"    nvidia-smi dmon -s pucvmet -d 5 -f data\gpu_telemetry.csv")
-        print(r"    C:\Python313\python.exe experiments\sim_200m.py")
+        print(f"    {PYTHON} experiments\\sim_200m.py")
     else:
         print("  Some experiments failed — check output above.")
 
