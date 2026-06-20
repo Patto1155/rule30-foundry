@@ -142,6 +142,23 @@ def simulate_center_columns_batch_from_packed(
     out_steps = n_steps + 1
 
     if gpu and GPU_AVAILABLE:
+        # Fast path: delegate to the fused multi-step kernel (~K-fold fewer
+        # launches). It is byte-verified against this very implementation; fall
+        # through to the per-step kernel below on ANY problem so behavior is
+        # never worse than the reference. Zero API change for callers.
+        try:
+            import os
+            if os.environ.get("RULE30_NO_FAST") != "1":
+                import sys as _sys
+                from pathlib import Path as _Path
+                _gpu_dir = str(_Path(__file__).resolve().parents[1] / "gpu")
+                if _gpu_dir not in _sys.path:
+                    _sys.path.insert(0, _gpu_dir)
+                from rule30_fast import center_columns_from_packed_fast
+                return center_columns_from_packed_fast(rows, n_steps, center_cell)
+        except Exception:
+            pass
+
         kernel = cp.RawKernel(BATCH_KERNEL_SRC, "rule30_batch_step")
         cur = cp.asarray(rows)
         cur[:, -1] &= cp.uint64(last_mask)

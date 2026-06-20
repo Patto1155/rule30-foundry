@@ -1,0 +1,143 @@
+{
+  "experiment": "T2_same_statistics_null",
+  "params": {
+    "n_steps": 1200,
+    "width": 1200,
+    "b": 2,
+    "r": 1,
+    "h_min": 0.85,
+    "shears": [
+      0.0,
+      0.25,
+      1.0
+    ],
+    "seed": 7,
+    "test": false
+  },
+  "results": {
+    "30": {
+      "role": "subject (chaotic, class 3)",
+      "density": 0.4997,
+      "best": {
+        "excess": 0.21539999999999992,
+        "closure": 0.71615,
+        "shear": 0.0
+      },
+      "per_shear": {
+        "0.0": {
+          "excess": 0.2154,
+          "closure": 0.7161
+        },
+        "0.25": {
+          "excess": 0.1586,
+          "closure": 0.6633
+        },
+        "1.0": {
+          "excess": 0.2088,
+          "closure": 0.7097
+        }
+      }
+    },
+    "45": {
+      "role": "same-statistics null (chaotic, class 3)",
+      "density": 0.5,
+      "best": {
+        "excess": 0.21760000000000002,
+        "closure": 0.7205,
+        "shear": 0.0
+      },
+      "per_shear": {
+        "0.0": {
+          "excess": 0.2176,
+          "closure": 0.7205
+        },
+        "0.25": {
+          "excess": 0.1321,
+          "closure": 0.635
+        },
+        "1.0": {
+          "excess": 0.1777,
+          "closure": 0.6847
+        }
+      }
+    },
+    "90": {
+      "role": "positive control (additive/linear -> reducible)",
+      "density": 0.4997,
+      "best": {
+        "excess": 0.49995,
+        "closure": 1.0,
+        "shear": 0.0
+      },
+      "per_shear": {
+        "0.0": {
+          "excess": 0.5,
+          "closure": 1.0
+        },
+        "0.25": {
+          "excess": 0.2499,
+          "closure": 0.7502
+        },
+        "1.0": {
+          "excess": 0.1268,
+          "closure": 0.6282
+        }
+      }
+    },
+    "110": {
+      "role": "class-4, Turing-complete",
+      "density": 0.5698,
+      "best": {
+        "excess": 0.38055000000000005,
+        "closure": 0.8849,
+        "shear": 0.0
+      },
+      "per_shear": {
+        "0.0": {
+          "excess": 0.3806,
+          "closure": 0.8849
+        },
+        "0.25": {
+          "excess": 0.2712,
+          "closure": 0.7823
+        },
+        "1.0": {
+          "excess": 0.3396,
+          "closure": 0.8893
+        }
+      }
+    },
+    "iid": {
+      "role": "weak null (fair coin)",
+      "best": {
+        "excess": 0.017400000000000082,
+        "closure": 0.5703,
+        "shear": 1.0
+      },
+      "per_shear": {
+        "0.0": {
+          "excess": 0.0166,
+          "closure": 0.5686
+        },
+        "0.25": {
+          "excess": 0.0151,
+          "closure": 0.5687
+        },
+        "1.0": {
+          "excess": 0.0174,
+          "closure": 0.5703
+        }
+      }
+    }
+  },
+  "summary": {
+    "excess_30": 0.2154,
+    "excess_45": 0.2176,
+    "excess_90": 0.5,
+    "excess_iid": 0.0174,
+    "gap_30_minus_45": -0.0022,
+    "gap_90_minus_30": 0.2846
+  },
+  "verdict": "Rule 30 ~= rule 45 (chaotic null) while rule 90 (linear) stands out: the ~0.2 excess is GENERIC local leakage, not 30-specific reducibility. Rule 30 is irreducible at b=2; open question -> b>=3.",
+  "elapsed_s": 242.6
+}
