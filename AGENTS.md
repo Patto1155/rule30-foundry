@@ -2,6 +2,11 @@
 
 Use this workspace as a disciplined scratchpad, not as an ad hoc notebook dump.
 
+**New here? Read `docs/AGENT_QUICKSTART.md` first**, then
+`docs/WORKFLOW.md`. The quickstart gives agents the tool map and prize-facing
+triage rules; the workflow file is the operating manual for the GPU-accelerated,
+verification-first loop.
+
 ## Before Proposing Experiments
 
 Read these first, in order:
