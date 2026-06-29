@@ -44,6 +44,8 @@ O(area) and its output is VRAM-bound, so it is time-chunked over `base_step`.
 
 from __future__ import annotations
 
+from contextlib import contextmanager
+import os
 import sys
 import time
 from pathlib import Path
@@ -160,6 +162,20 @@ def _kernel():
 def _require_gpu():
     if cp is None or not GPU_AVAILABLE:
         raise RuntimeError("fused kernel requires CuPy + a CUDA device")
+
+
+@contextmanager
+def _single_step_reference():
+    """Temporarily disable the fused delegation in rule30_open_utils."""
+    old = os.environ.get("RULE30_NO_FAST")
+    os.environ["RULE30_NO_FAST"] = "1"
+    try:
+        yield
+    finally:
+        if old is None:
+            os.environ.pop("RULE30_NO_FAST", None)
+        else:
+            os.environ["RULE30_NO_FAST"] = old
 
 
 # --------------------------------------------------------------------------- #
@@ -333,7 +349,8 @@ def verify(seed: int = 0) -> None:
         n_cells = 2 * center + 1
         row = (make_single_spike_row(n_cells, center) if name == "spike"
                else rng.integers(0, 2, size=n_cells, dtype=np.uint8))
-        ref = simulate_center_columns_batch(row, ns, center, gpu=GPU_AVAILABLE)[0]
+        with _single_step_reference():
+            ref = simulate_center_columns_batch(row, ns, center, gpu=GPU_AVAILABLE)[0]
         fast = simulate_center_column_fast(row, ns, center)
         if not np.array_equal(ref, fast):
             d = int(np.flatnonzero(ref != fast)[0])
@@ -350,7 +367,8 @@ def verify(seed: int = 0) -> None:
         rng.integers(0, 2, size=n_cells, dtype=np.uint8),
         make_single_spike_row(n_cells, center) ^ rng.integers(0, 2, size=n_cells, dtype=np.uint8),
     ])
-    ref = simulate_center_columns_batch(batch, ns, center, gpu=GPU_AVAILABLE)
+    with _single_step_reference():
+        ref = simulate_center_columns_batch(batch, ns, center, gpu=GPU_AVAILABLE)
     fast = simulate_center_columns_batch_fast(batch, ns, center)
     if not np.array_equal(ref, fast):
         v, d = (int(x[0]) for x in np.where(ref != fast))
@@ -380,8 +398,6 @@ def benchmark(n_steps: int = 30000) -> None:
         return
     # The reference is now wired to delegate to this fast path; force the true
     # per-step kernel for an honest baseline.
-    import os
-    os.environ["RULE30_NO_FAST"] = "1"
     sync = cp.cuda.Stream.null.synchronize
 
     def timed(fn):
@@ -392,7 +408,8 @@ def benchmark(n_steps: int = 30000) -> None:
     center = n_steps + 64
     n_cells = 2 * center + 1
     row = make_single_spike_row(n_cells, center)
-    ref, t_ref = timed(lambda: simulate_center_columns_batch(row, n_steps, center, gpu=True)[0])
+    with _single_step_reference():
+        ref, t_ref = timed(lambda: simulate_center_columns_batch(row, n_steps, center, gpu=True)[0])
     fast, t_fast = timed(lambda: simulate_center_column_fast(row, n_steps, center))
     assert np.array_equal(ref, fast), "center benchmark mismatch!"
     print(f"\n  center column  n_steps={n_steps:,}")
