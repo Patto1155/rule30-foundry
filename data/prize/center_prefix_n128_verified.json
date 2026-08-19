@@ -1,0 +1,25 @@
+{
+  "artifact_type": "rule30.center_prefix",
+  "artifact_version": 1,
+  "time_zero_included": true,
+  "params": {
+    "steps": 127,
+    "margin": 0,
+    "engine": "python_int",
+    "verification": {
+      "checked_steps": 127,
+      "engines": [
+        "python_int",
+        "packed_cpu",
+        "naive_array"
+      ],
+      "ok": true
+    }
+  },
+  "n_bits": 128,
+  "ones": 63,
+  "zeros": 65,
+  "density": 0.4921875,
+  "sha256_bits_ascii": "a4d0748bb05e4a19738a0252b8f87b374385df59d0630c27dffb175d3fa98a5e",
+  "elapsed_s": 0.398834
+}
