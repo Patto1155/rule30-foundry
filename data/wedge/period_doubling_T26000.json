@@ -1,0 +1,208 @@
+{
+ "artifact_type": "rule30.period_doubling",
+ "artifact_version": 1,
+ "elapsed_s": 3.077,
+ "first_collision_beyond_structured_regime": {
+  "consensus": {
+   "d_hi": 53206,
+   "d_lo": 53205,
+   "doubles": false,
+   "kind": "collision",
+   "parity": 0,
+   "popcount": 6,
+   "word": 10435,
+   "zero_word_at": 53207
+  },
+  "per_seed": [
+   {
+    "hit": {
+     "d_hi": 53206,
+     "d_lo": 53205,
+     "doubles": false,
+     "kind": "collision",
+     "parity": 0,
+     "popcount": 6,
+     "word": 10435,
+     "zero_word_at": 53207
+    },
+    "seed_d": 500
+   },
+   {
+    "hit": {
+     "d_hi": 53206,
+     "d_lo": 53205,
+     "doubles": false,
+     "kind": "collision",
+     "parity": 0,
+     "popcount": 6,
+     "word": 10435,
+     "zero_word_at": 53207
+    },
+    "seed_d": 1000
+   },
+   {
+    "hit": {
+     "d_hi": 53206,
+     "d_lo": 53205,
+     "doubles": false,
+     "kind": "collision",
+     "parity": 0,
+     "popcount": 6,
+     "word": 10435,
+     "zero_word_at": 53207
+    },
+    "seed_d": 2000
+   },
+   {
+    "hit": {
+     "d_hi": 53206,
+     "d_lo": 53205,
+     "doubles": false,
+     "kind": "collision",
+     "parity": 0,
+     "popcount": 6,
+     "word": 10435,
+     "zero_word_at": 53207
+    },
+    "seed_d": 4000
+   },
+   {
+    "hit": {
+     "d_hi": 53206,
+     "d_lo": 53205,
+     "doubles": false,
+     "kind": "collision",
+     "parity": 0,
+     "popcount": 6,
+     "word": 10435,
+     "zero_word_at": 53207
+    },
+    "seed_d": 8000
+   },
+   {
+    "hit": {
+     "d_hi": 53206,
+     "d_lo": 53205,
+     "doubles": false,
+     "kind": "collision",
+     "parity": 0,
+     "popcount": 6,
+     "word": 10435,
+     "zero_word_at": 53207
+    },
+    "seed_d": 11000
+   }
+  ],
+  "seeds_agree": true
+ },
+ "lemma_a_collision_criterion": {
+  "exhaustive_period8": {
+   "tested": 65280,
+   "violations": 0
+  },
+  "ok": true,
+  "sampled": {
+   "period": 16,
+   "tested": 199996,
+   "violations": 0
+  }
+ },
+ "map_vs_simulation": {
+  "ok": true,
+  "per_seed": [
+   {
+    "mismatches": 0,
+    "seed_d": 500,
+    "stopped": null
+   },
+   {
+    "mismatches": 0,
+    "seed_d": 1000,
+    "stopped": null
+   },
+   {
+    "mismatches": 0,
+    "seed_d": 2000,
+    "stopped": null
+   },
+   {
+    "mismatches": 0,
+    "seed_d": 4000,
+    "stopped": null
+   },
+   {
+    "mismatches": 0,
+    "seed_d": 8000,
+    "stopped": null
+   },
+   {
+    "mismatches": 0,
+    "seed_d": 11000,
+    "stopped": null
+   }
+  ]
+ },
+ "ok": true,
+ "params": {
+  "diagonals": 12000,
+  "limit": 400000,
+  "period": 16,
+  "steps": 26000,
+  "tail": 4096
+ },
+ "simulation_range": {
+  "any_doubling": false,
+  "collision_pairs": [
+   0,
+   5,
+   26,
+   397
+  ],
+  "diagonals": 12000,
+  "doubling_events": [
+   {
+    "doubles": false,
+    "parity": 0,
+    "popcount": 16,
+    "predecessor_d": 0,
+    "predecessor_word": 65535,
+    "zero_at_d": 2
+   },
+   {
+    "doubles": false,
+    "parity": 0,
+    "popcount": 8,
+    "predecessor_d": 5,
+    "predecessor_word": 43690,
+    "zero_at_d": 7
+   },
+   {
+    "doubles": false,
+    "parity": 0,
+    "popcount": 12,
+    "predecessor_d": 26,
+    "predecessor_word": 61166,
+    "zero_at_d": 28
+   },
+   {
+    "doubles": false,
+    "parity": 0,
+    "popcount": 6,
+    "predecessor_d": 397,
+    "predecessor_word": 53456,
+    "zero_at_d": 399
+   }
+  ],
+  "first_odd_parity_d": 403,
+  "lemma_a_violations": [],
+  "parity_even": 6185,
+  "parity_odd": 5815,
+  "settled": 12000,
+  "zero_words": [
+   2,
+   7,
+   28,
+   399
+  ]
+ }
+}
