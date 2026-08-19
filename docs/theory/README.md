@@ -208,6 +208,7 @@ Note the numerical coincidence with the ensemble damage velocity
 | Aggregate randomness tests (A-L) | **Exhausted** — no promotion path | `idea-bank/theoretical-reframe-2026-03-28.md` |
 | Small-DFAO negatives at large `n` | **Vacuous by construction** — do not extend | §2 above |
 | Diagonal-periodicity compression of the cone | **Closed** — the settled 37% is `O(t)`-describable but *disjoint from the centre column* | §3 above |
+| Any bounded-period claim for the left diagonals | **Closed - the period is UNBOUNDED.** `period(d) ~ 2*log2(d)`; period 32 first appears at d=87867. | `2026-08-19-period16-refuted.md` |
 | Finite-orbit / Floyd cycle certificate for period-16 | **Closed** — the state map is *partial*: the orbit leaves the deterministic region at every zero word (rate `2^-16`), so there is no cycle to find. `P[a trajectory survives long enough to cycle] ~ 10^-14231`. | `2026-08-19-orbit-cycle-structure.md` |
 | Exhaustive `2^32` state-graph reachability sweep for period-16 | **Closed** — same flaw: assumes a total map on `(w_{d-2}, w_{d-1})`, which is not a complete state. | `2026-08-19-orbit-cycle-structure.md` |
 | "Every left diagonal is eventually periodic" as a shortcut | **Closed** — settling time grows linearly, centre column never settles | §3 above |

@@ -71,6 +71,25 @@ def words_from_simulation(steps: int, diagonals: int, tail: int, period: int = P
     return out
 
 
+def minimal_period_of_word(w: int, period: int = PERIOD) -> int:
+    """Smallest p dividing `period` with w p-periodic.
+
+    A period-p diagonal (p < 16) still yields a 16-bit word -- 16/p copies of
+    its p-bit word. Taking popcount over all 16 bits therefore DOUBLES the true
+    popcount whenever 16/p is even, forcing even parity and making Lemma B
+    report "never doubles" for every p < 16 diagonal. Lemma B's parity must be
+    taken at the minimal period. See 2026-08-19-period16-refuted.md.
+    """
+    for p in (1, 2, 4, 8):
+        if p >= period:
+            break
+        blk = w & ((1 << p) - 1)
+        if all(((w >> (i * p)) & ((1 << p) - 1)) == blk
+               for i in range(1, period // p)):
+            return p
+    return period
+
+
 def check_lemma_a(period: int = PERIOD, samples: int = 200_000, seed: int = 0) -> dict:
     """Lemma A, exhaustively at period 8 and by sampling at the working period."""
     rng = random.Random(seed)
@@ -140,10 +159,15 @@ def collisions_from_simulation(words, period: int = PERIOD) -> dict:
     for z in zeros:
         if z < 2 or words[z - 2] is None:
             continue
-        pc = bin(words[z - 2]).count("1")
+        # Parity MUST be taken at the minimal period, not over the padded
+        # 16-bit word -- padding forces even parity for every p < 16.
+        mp = minimal_period_of_word(words[z - 2], period)
+        wp = words[z - 2] & ((1 << mp) - 1)
+        pc = bin(wp).count("1")
         doubling.append({
             "zero_at_d": z, "predecessor_d": z - 2,
-            "predecessor_word": words[z - 2], "popcount": pc,
+            "predecessor_word": words[z - 2], "minimal_period": mp,
+            "predecessor_word_at_period": wp, "popcount": pc,
             "parity": pc & 1, "doubles": bool(pc & 1),
         })
     parities = [bin(w).count("1") & 1 for w in words if w is not None]

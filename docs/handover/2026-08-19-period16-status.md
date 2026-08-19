@@ -9,18 +9,30 @@
 
 ---
 
-## TL;DR
+## TL;DR — RESOLVED: the conjecture is FALSE
 
-The period-16 conjecture on the left diagonals now has an **exact trigger**
-(two proved lemmas) instead of a vague "bound how often the branch fires".
-Applying that trigger **downgrades the evidence that was supporting it**: the
-~3x10^4-diagonal test range behind it was a factor ~2 below the scale at which
-the falsifying event can occur at all. The conjecture is still open, but it is
-now a *quantified* open question with a predicted failure point at
-`d ~ 1.3x10^5`.
+> **Period-16 is refuted.** Left diagonal `d = 87867` has minimal period **32**,
+> confirmed at two independent simulation sizes. The period is **unbounded**,
+> growing as `period(d) ~ 2*log2(d)`.
 
-Nothing proved was lost. "Every left diagonal is eventually periodic" remains a
-Theorem, and the 276M-cell settled-wedge Certificate is unaffected.
+The trigger was exactly what Lemmas A and B predicted: a collision
+`w_87864 = w_87865 = 0x28a8` with **odd** popcount 5, producing a zero word at
+`d = 87866` and doubling the period at `d = 87867`. Lemma B is confirmed at
+**7 of 7** events across `d < 10^6`, including the two even-parity collisions
+that correctly kept the period at 16.
+
+Full detail: [`../experiment-logs/2026-08-19-period16-refuted.md`](../experiment-logs/2026-08-19-period16-refuted.md).
+
+Period histogram over `d < 10^6` (all 10^6 diagonals settled, T = 1476886):
+
+```
+{1: 16, 2: 10, 4: 56, 8: 668, 16: 87136, 32: 912114, 64: 0}
+```
+
+Nothing proved was lost. **"Every left diagonal is eventually periodic" remains
+a Theorem** (periods simply grow, as the propagation lemma always allowed), and
+the 276M-cell wedge Certificate stands — it was run entirely inside the
+period-16 region. Its `O(1)` 16-bit pattern map is valid only for `d < 87866`.
 
 ---
 
@@ -115,9 +127,21 @@ From simulation at `T = 26000`, `d < 12000`:
 
 - **Zero words occur only at `d = 2, 7, 28, 399`**, with collision pairs at
   `d = 0, 5, 26, 397` — exactly as Lemma A predicts.
-- All four predecessors have **even** parity (`0xffff`, `0xaaaa`, `0xeeee`,
-  `0xd0d0`; popcounts 16, 8, 12, 6), so **doubling never fired**. The early
-  regime survives for a structural reason: those words are highly regular.
+- ~~All four predecessors have **even** parity, so doubling never fired.~~
+  **WRONG — corrected 2026-08-19.** That reads the popcount off a 16-bit
+  *padded* word; a period-`p` word (`p < 16`) is stored as `16/p` copies, which
+  doubles its popcount and forces even parity. At their **minimal** periods all
+  four predecessors are **odd** and the period doubled at every one:
+
+  | zero `d` | period | predecessor at that period | popcount | parity |
+  |---|---|---|---|---|
+  | 2 | 1 → 2 | `0x1` | 1 | odd |
+  | 7 | 2 → 4 | `0x2` | 1 | odd |
+  | 28 | 4 → 8 | `0xe` | 3 | odd |
+  | 399 | 8 → 16 | `0xd0` | 3 | odd |
+
+  This is *how the period reached 16*. Fixed in `experiments/period_doubling.py`
+  (`minimal_period_of_word`).
 - **The parity regime ends at `d = 403`.** Every word below 403 has even parity;
   from 403 on the split is essentially balanced (**even 6185 / odd 5815** over
   `d < 12000`) and the words look generic.
@@ -175,56 +199,48 @@ anything simulated, and 2.5x beyond the first collision found here.
 
 ---
 
-## Pending tasks, in order
+## Status of the tasks that were pending
 
-### 1. Regression test for zero-word handling
-Guard against re-introducing the `d = 399` bug. A test that seeds the map
-iteration *before* a known zero word must either fail loudly or fall back to
-simulation — never silently step through. Assert that the six-seed consensus
-holds and that the `last_zero` gating is applied.
+| Task | Status |
+|---|---|
+| 1. Regression test for zero-word handling | **Done** — `experiments/zero_word_regression.py`, 5 gates, mutation-tested |
+| 2. Justify the `2^-16` independence assumption | **Done** — measured to 0.5% over 1.39e9 pairs, `2026-08-19-settled-word-genericity.md` |
+| 3. Walk to `d ~ 10^6` | **Done, and it refuted the conjecture** — `2026-08-19-period16-refuted.md` |
 
-*Cost: minutes. Do this first — it protects every result below.*
+### Now open
 
-### 2. Justify the `2^-16` independence assumption empirically
-The power analysis currently **asserts** genericity. Measure the actual
-collision rate and parity balance of `w_d` over `403 < d < 12000` against a
-matched random-word control, so the model is evidenced rather than assumed. If
-the words are *not* generic, the whole power calculation changes and the
-expected failure point moves.
+1. **Generalize the wedge pattern map** to `2*log2(d)`-bit words and re-issue the
+   compression certificate without the period-16 assumption.
+2. **Confirm the growth law** at the predicted `32 -> 64` event near
+   `d ~ 8.6x10^9`. Direct simulation is out of reach (`T ~ 1.2x10^10`), so this
+   needs the generalized map first.
+3. **DFAO minimal-state curve** — still has unfilled placeholders; PySAT now works.
 
-*Cost: seconds to minutes; reuses the already-simulated words.*
-
-### 3. Walk the map to `d ~ 10^6`, logging every zero word
-Resolve each zero word by a **targeted local simulation** (a narrow diagonal
-window, not a full cone) — only ~15 are expected across the range. Then:
-
-- **First odd-parity collision refutes period-16 outright.**
-- **Reaching `10^6` with none is strong evidence for a parity invariant, not
-  proof of one.** Under the generic model ~15.3 collisions are expected in
-  `403 < d <= 10^6`, so all-even is a **~`2^-11`** coincidence unconditionally
-  (`exp(-λ/2)` with `λ = 15.3`), or `2^-15` conditional on exactly 15
-  collisions actually occurring. That is a strong hint to go looking for an
-  invariant — it is not itself a proof that one exists. Note also that no
-  invariant of the simple kind is available, since the even-parity regime
-  demonstrably ends at `d = 403`.
-
-*Cost: the only non-trivial run in this thread. The map itself is O(1) per
-diagonal; the expense is the ~15 local simulations.*
-
-### Routes already closed — do not re-propose
+## Routes already closed — do not re-propose
 
 | Route | Why it fails |
 |---|---|
-| Floyd cycle certificate | The state map is **partial**. At a zero word two period-16 words satisfy the recursion and only the diagonal transient (length `~1.34d`, unbounded) picks one, so `(w_{d-2}, w_{d-1})` is not a complete state. The orbit exits the deterministic region every `~2^16` diagonals; measured `P[cycle] ~ 10^-14231`. |
+| Floyd cycle certificate | The state map is **partial**. At a zero word two words satisfy the recursion and only the diagonal transient (length `~1.34d`, unbounded) picks one. Measured `P[cycle] ~ 10^-14231`. |
 | Exhaustive `2^32` reachability bitmap | Same flaw — assumes a total map. |
+| Any **bounded**-period claim | The period is unbounded: `~ 2*log2(d)`. |
 
-See `docs/experiment-logs/2026-08-19-orbit-cycle-structure.md`.
+### The recurring failure mode — read this before quoting any negative
+
+Three separate errors in this thread had the same shape: *a negative quoted from
+a range, or a representation, too small to contain the falsifying event.*
+
+1. The retracted DFAO certificate — model class too small (counting bound).
+2. The original period-16 evidence — test range below the event rate (power).
+3. The 16-bit word representation — **could not express a period-32 diagonal at
+   all**, so the counterexample was invisible and surfaced only as an
+   unexplained drop in the "settled" count.
+
+Ask not only whether the range is large enough, but whether the representation
+can **express the counterexample**.
 
 ### Standing rule
 **Do not** extend the "tested to N diagonals, zero exceptions" framing without
 first quoting the event rate and the resulting power.
-
----
 
 ## Reproduction
 

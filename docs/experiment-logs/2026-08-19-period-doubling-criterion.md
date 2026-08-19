@@ -1,5 +1,21 @@
 # Experiment Log — The Period-Doubling Criterion, and Why Period-16 Was Under-Tested
 
+> **SUPERSEDED IN PART, 2026-08-19.** Lemmas A and B below are correct and were
+> later confirmed 7/7 against ground truth. But two claims in this log are
+> **wrong** and are corrected in
+> [`2026-08-19-period16-refuted.md`](2026-08-19-period16-refuted.md):
+>
+> 1. **"The four early predecessors have even parity, so doubling never fired"**
+>    is an artifact of padding period-`p` words (`p < 16`) out to 16 bits, which
+>    doubles the popcount and forces even parity. At their **minimal** periods
+>    all four are **odd**, and the period doubled at every one: `1->2->4->8->16`
+>    at `d = 2, 7, 28, 399`. That is how the period reached 16.
+> 2. **The period-16 conjecture is FALSE.** Diagonal `d = 87867` has minimal
+>    period 32. The period is unbounded, growing as `~ 2*log2(d)`.
+>
+> The power analysis in Result 2 stands and was vindicated: it predicted first
+> failure near `d ~ 1.3x10^5`; the true failure is at `d = 87866`.
+
 - Date: 2026-08-19
 - Title: Exact trigger for period doubling on the left diagonals; power analysis of the period-16 conjecture
 - Claim Level: **Theorem** (Lemmas A and B) + **Robust observation** (the power analysis)
