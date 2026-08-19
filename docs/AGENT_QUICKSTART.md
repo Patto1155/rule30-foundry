@@ -15,10 +15,19 @@ toward checkable artifacts.
 
 2. Read these files in order:
 
+   - **`docs/theory/README.md` — the theory gate. Read this first.** It lists what
+     is already proved (do not re-measure it), which routes are closed, the
+     single-seed rule for prize-facing work, and the counting bound that decides
+     whether a planned search can produce information at all. A repo certificate
+     was retracted in 2026-08 because this file did not exist yet.
    - `docs/WORKFLOW.md` for the operating loop and GPU/coarse-grain discipline.
    - `AGENTS.md` for naming, logging, and guardrails.
    - `docs/CLAIM_LEDGER.md` for what is observation vs certificate.
    - The latest relevant file in `docs/experiment-logs/`.
+
+   Before proposing any "search class `M`, find no fit" experiment, run
+   `python experiments/counting_bound.py --pretty` and check `log2|M| >= n`.
+   If not, the negative is guaranteed and the run is worthless.
 
 3. Prefer existing tools over one-off scripts. If you need coarse-grain or CA
    exploration, start with `ca_lab.py`.
@@ -39,6 +48,10 @@ toward checkable artifacts.
 | b>=3 projection search | `python ca_lab.py search ...` | Heuristic search; full re-score required. |
 | b=3 verdict reproduction | `experiments/coarse_grain_bk_verdict.py` | `--test` writes test JSON by default; full run is expensive. |
 | Batch old experiments | `run_all.py --test` | Smoke-test runner; now self-relative to this checkout. |
+| Prize center-column artifacts | `prize_lab.py` | Exact prefix, GF(2) recurrences, finite kernel lower bounds, DFAO SAT encodings. |
+| Counting bound for a search class | `experiments/counting_bound.py` | Run BEFORE any "no fit found" experiment. `--verdict S:N` evaluates a specific claim. |
+| Settled-wedge decomposition | `experiments/wedge_profile.py` | Single-seed cone structure; settling law, entropy split, cap invariance. |
+| Diagonal recursion + period-16 | `experiments/diagonal_recursion.py` | Bit-exact identity check, period histogram, O(1) pattern map. |
 
 ## Prize-Facing Filter
 
@@ -50,9 +63,9 @@ Before proposing a new experiment, answer these:
 - What is the null, control, or impossible-output invariant?
 - What would promote the result from observation to certificate?
 
-High-upside next direction: build a `prize_lab.py` path for exact center-column
-work and shortcut searches (`n -> center_bit(n)`), including finite automata,
-transducers, recurrences, divide-and-conquer summaries, SAT encodings, and
+High-upside current direction: extend `prize_lab.py` exact center-column work and
+shortcut searches (`n -> center_bit(n)`) toward finite automata, transducers,
+recurrences, divide-and-conquer summaries, SAT encodings, and
 machine-checkable counterexamples.
 
 ## Claim Levels
@@ -62,7 +75,9 @@ Use these labels in logs and PRs:
 - `Observation`: one run, one scale, or exploratory score.
 - `Robust observation`: controls, nulls, multiple scales/seeds, held-out checks.
 - `Certificate`: finite artifact that another agent can verify mechanically.
+- `Theorem`: proved outright; no experiment needed. Do not re-measure these.
 - `Proof candidate`: theorem-shaped argument with checkable lemmas or code.
+- `Retracted`: was recorded too high and has been withdrawn, with the reason.
 
 Most empirical Rule 30 work starts at observation. Prize-relevant work should aim
 for certificate or proof candidate.
@@ -71,6 +86,12 @@ for certificate or proof candidate.
 
 - Do not call another "looks random" experiment prize progress unless it narrows
   a named hypothesis or emits a reusable artifact.
+- Do not record a "no fit in class `M`" negative without the counting check. If
+  the matched random control returns the *same* negative, that is a red flag the
+  experiment is vacuous — not a reassuring baseline. This is exactly how the
+  1-5 state / 128-bit DFAO certificate got recorded and later retracted.
+- Do not report an ensemble/random-IC quantity as prize progress. All three
+  prizes concern the single deterministic seed; see `docs/theory/README.md` §0.
 - Do not use linear rules 90/150 as b>=3 coarse-grain controls. Use shift rules
   170/240.
 - Do not report searched closure without searching the null at equal budget and
