@@ -211,6 +211,15 @@ window, not a full cone) — only ~15 are expected across the range. Then:
 *Cost: the only non-trivial run in this thread. The map itself is O(1) per
 diagonal; the expense is the ~15 local simulations.*
 
+### Routes already closed — do not re-propose
+
+| Route | Why it fails |
+|---|---|
+| Floyd cycle certificate | The state map is **partial**. At a zero word two period-16 words satisfy the recursion and only the diagonal transient (length `~1.34d`, unbounded) picks one, so `(w_{d-2}, w_{d-1})` is not a complete state. The orbit exits the deterministic region every `~2^16` diagonals; measured `P[cycle] ~ 10^-14231`. |
+| Exhaustive `2^32` reachability bitmap | Same flaw — assumes a total map. |
+
+See `docs/experiment-logs/2026-08-19-orbit-cycle-structure.md`.
+
 ### Standing rule
 **Do not** extend the "tested to N diagonals, zero exceptions" framing without
 first quoting the event rate and the resulting power.
