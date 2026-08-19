@@ -142,7 +142,10 @@ diagonals.
 1. **Decide the conjecture.** Walk the map to `d ~ 10⁶`, resolving each zero
    word by a targeted local simulation (only ~15 expected, each a narrow
    diagonal window rather than a full cone). First odd-parity collision refutes
-   period-16 outright; reaching `10⁶` with none demands a parity invariant.
+   period-16 outright; reaching `10⁶` with none is **strong evidence for** a
+   parity invariant, not proof of one — under the generic model ~15.3 collisions
+   are expected in that range and all-even is a ~`2^-11` coincidence
+   (`exp(-λ/2)`, or `2^-15` conditional on exactly 15 collisions occurring).
 2. **Test genericity directly** rather than assuming it: measure the collision
    rate and parity balance of `w_d` over `403 < d < 12000` against a matched
    random-word control, so the `2^-16` model is evidenced rather than asserted.

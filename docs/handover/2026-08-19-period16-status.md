@@ -199,7 +199,12 @@ Resolve each zero word by a **targeted local simulation** (a narrow diagonal
 window, not a full cone) — only ~15 are expected across the range. Then:
 
 - **First odd-parity collision refutes period-16 outright.**
-- **Reaching `10^6` with none demands a parity invariant** — and note that no
+- **Reaching `10^6` with none is strong evidence for a parity invariant, not
+  proof of one.** Under the generic model ~15.3 collisions are expected in
+  `403 < d <= 10^6`, so all-even is a **~`2^-11`** coincidence unconditionally
+  (`exp(-λ/2)` with `λ = 15.3`), or `2^-15` conditional on exactly 15
+  collisions actually occurring. That is a strong hint to go looking for an
+  invariant — it is not itself a proof that one exists. Note also that no
   invariant of the simple kind is available, since the even-parity regime
   demonstrably ends at `d = 403`.
 
