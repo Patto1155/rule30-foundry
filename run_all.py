@@ -67,7 +67,12 @@ def run_experiment(name: str, label: str, progress_log: str) -> int:
     return result.returncode
 
 
-def main():
+def batch_exit_code(results: dict[str, int]) -> int:
+    """Return success only when every configured experiment completed successfully."""
+    return 0 if results and all(rc == 0 for rc in results.values()) else 1
+
+
+def main() -> int:
     banner(f"Rule 30 Experiment Runner  (TEST={TEST})")
     print(f"  Time: {datetime.datetime.now().isoformat()}")
     print(f"  Repo: {REPO}")
@@ -99,7 +104,8 @@ def main():
     print(f"  Total time: {total_elapsed:.1f}s")
     print()
 
-    all_ok = all(rc == 0 for rc in results.values())
+    exit_code = batch_exit_code(results)
+    all_ok = exit_code == 0
     if all_ok:
         print("  All experiments completed successfully.")
         print("  Results in data/ — plots in docs/plots/")
@@ -109,7 +115,8 @@ def main():
         print(f"    {PYTHON} experiments\\sim_200m.py")
     else:
         print("  Some experiments failed — check output above.")
+    return exit_code
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())
