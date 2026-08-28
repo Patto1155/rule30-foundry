@@ -113,18 +113,15 @@ def cmd_closure(args) -> dict:
             "pi": g.get("pi"), "elapsed_s": round(time.perf_counter() - t0, 2)}
 
 
-def _to_np(a):
-    try:
-        import cupy as cp
-        if isinstance(a, cp.ndarray):
-            return cp.asnumpy(a)
-    except Exception:
-        pass
-    return np.asarray(a)
+def _round_score(score: dict, key: str):
+    value = score[key]
+    if key == "excess" and not score["valid"]:
+        return None
+    return round(value, 5)
 
 
 def cmd_search(args) -> dict:
-    from coarse_grain_bk import prep_blocks, search_projection, closure_batch
+    from coarse_grain_bk import prep_blocks, search_projection, score_projection
     t0 = time.perf_counter()
     field = _rule_field(args.rule, args.steps, args.width, args.seed)
     prep = prep_blocks(field, args.b, args.shear, args.r, gpu=GPU_AVAILABLE,
@@ -133,9 +130,7 @@ def cmd_search(args) -> dict:
                             seed=args.sseed, h_min=args.hmin, b=args.b)
     # re-evaluate the best projection on the FULL transition set (no subsample)
     prep_full = prep_blocks(field, args.b, args.shear, args.r, gpu=GPU_AVAILABLE)
-    cb = closure_batch(prep_full, np.array(res["best_pi"], dtype=np.int64)[None, :], h_min=0.0)
-    full_clo = float(_to_np(cb["closure"])[0])
-    full_exc = float(_to_np(cb["excess"])[0])
+    full = score_projection(prep_full, res["best_pi"], h_min=args.hmin)
     return {"cmd": "search",
             "params": {"rule": args.rule, "b": args.b, "shear": args.shear, "r": args.r,
                        "hmin": args.hmin, "steps": args.steps, "width": args.width,
@@ -143,8 +138,10 @@ def cmd_search(args) -> dict:
                        "seed": args.seed, "sseed": args.sseed, "gpu": GPU_AVAILABLE},
             "search_closure": round(res["best_closure"], 5),
             "search_excess": round(res["best_excess"], 5),
-            "full_closure": round(full_clo, 5),
-            "full_excess": round(full_exc, 5),
+            "full_closure": _round_score(full, "closure"),
+            "full_excess": _round_score(full, "excess"),
+            "full_entropy": _round_score(full, "entropy"),
+            "full_valid": full["valid"],
             "M_search": prep["M"], "M_full": prep_full["M"],
             "evals": res["evals"], "generations": res["generations"],
             "elapsed_s": round(time.perf_counter() - t0, 2)}
@@ -189,9 +186,10 @@ def _pretty(out: dict):
               f"excess {out['excess']:+.4f}  closure {out['closure']:.4f}  "
               f"({out['elapsed_s']}s)", file=sys.stderr)
     elif c == "search":
+        excess = "invalid" if out["full_excess"] is None else f"{out['full_excess']:+.4f}"
         print(f"search rule={out['params']['rule']} b={out['params']['b']} "
               f"shear={out['params']['shear']}: search_clo {out['search_closure']:.4f} "
-              f"-> full_clo {out['full_closure']:.4f} (excess {out['full_excess']:+.4f})  "
+              f"-> full_clo {out['full_closure']:.4f} (excess {excess})  "
               f"evals={out['evals']} M {out['M_search']}->{out['M_full']}  "
               f"({out['elapsed_s']}s)", file=sys.stderr)
     elif c == "sim":

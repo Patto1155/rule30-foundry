@@ -36,21 +36,11 @@ import numpy as np
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from eca_sim import simulate_spacetime_rule, GPU_AVAILABLE  # noqa: E402
-from coarse_grain_bk import prep_blocks, search_projection, closure_batch  # noqa: E402
+from coarse_grain_bk import prep_blocks, search_projection, score_projection  # noqa: E402
 
 DATA_DIR = Path(__file__).resolve().parents[1] / "data"
 OUT_JSON = DATA_DIR / "coarse_grain_b3_verdict.json"
 TEST_OUT_JSON = DATA_DIR / "coarse_grain_b3_verdict_test.json"
-
-
-def _to_np(a):
-    try:
-        import cupy as cp
-        if isinstance(a, cp.ndarray):
-            return cp.asnumpy(a)
-    except Exception:
-        pass
-    return np.asarray(a)
 
 
 def _field(rule, n_steps, width, seed):
@@ -64,6 +54,10 @@ def _field(rule, n_steps, width, seed):
     return st[:, margin:margin + width].copy()
 
 
+def _round_optional(value, ndigits=5):
+    return None if value is None else round(value, ndigits)
+
+
 def search_best_over_shears(field, b, shears, r, budget, msearch, hmin, sseed):
     best = {"full_closure": -1.0, "full_excess": -1.0, "shear": None}
     per_shear = {}
@@ -71,13 +65,18 @@ def search_best_over_shears(field, b, shears, r, budget, msearch, hmin, sseed):
         prep = prep_blocks(field, b, sigma, r, gpu=GPU_AVAILABLE, m_max=msearch, seed=0)
         res = search_projection(prep, budget=budget, b=b, seed=sseed, h_min=hmin)
         prep_full = prep_blocks(field, b, sigma, r, gpu=GPU_AVAILABLE)
-        cb = closure_batch(prep_full, np.array(res["best_pi"], dtype=np.int64)[None, :], h_min=0.0)
-        fc = float(_to_np(cb["closure"])[0]); fe = float(_to_np(cb["excess"])[0])
-        per_shear[str(sigma)] = {"full_closure": round(fc, 5), "full_excess": round(fe, 5),
+        full = score_projection(prep_full, res["best_pi"], h_min=hmin)
+        fc = full["closure"]
+        fe = full["excess"] if full["valid"] else None
+        per_shear[str(sigma)] = {"full_closure": round(fc, 5), "full_excess": _round_optional(fe),
+                                 "full_valid": full["valid"],
+                                 "full_entropy": round(full["entropy"], 5),
                                  "search_closure": round(res["best_closure"], 5),
                                  "evals": res["evals"]}
-        if fc > best["full_closure"]:
-            best = {"full_closure": round(fc, 5), "full_excess": round(fe, 5), "shear": sigma}
+        gated_closure = fc if full["valid"] else -1.0
+        if gated_closure > best["full_closure"]:
+            best = {"full_closure": round(fc, 5), "full_excess": _round_optional(fe), "shear": sigma,
+                    "full_valid": full["valid"], "full_entropy": round(full["entropy"], 5)}
     return best, per_shear
 
 
