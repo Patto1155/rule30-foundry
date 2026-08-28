@@ -201,14 +201,23 @@ def _pretty(out: dict):
 
 
 def build_parser() -> argparse.ArgumentParser:
-    common = argparse.ArgumentParser(add_help=False)
-    common.add_argument("--pretty", action="store_true", help="also print a human table to stderr")
+    sub_common = argparse.ArgumentParser(add_help=False)
+    sub_common.add_argument(
+        "--pretty",
+        action="store_true",
+        default=argparse.SUPPRESS,
+        help="also print a human table to stderr",
+    )
 
-    p = argparse.ArgumentParser(description="CA coarse-grain exploration CLI (JSON out).",
-                                parents=[common])
+    p = argparse.ArgumentParser(description="CA coarse-grain exploration CLI (JSON out).")
+    p.add_argument(
+        "--pretty",
+        action="store_true",
+        help="also print a human table to stderr",
+    )
     sub = p.add_subparsers(dest="command", required=True)
 
-    s = sub.add_parser("sweep", parents=[common],
+    s = sub.add_parser("sweep", parents=[sub_common],
                        help="coarse-grain closure across rules x shears")
     s.add_argument("--rules", default="30,45,90,110")
     s.add_argument("--shears", default="0,0.25,1")
@@ -220,7 +229,7 @@ def build_parser() -> argparse.ArgumentParser:
     s.add_argument("--null", action="store_true", help="also evaluate an i.i.d. null")
     s.set_defaults(func=cmd_sweep)
 
-    c = sub.add_parser("closure", parents=[common], help="single (rule, shear) closure")
+    c = sub.add_parser("closure", parents=[sub_common], help="single (rule, shear) closure")
     c.add_argument("--rule", type=int, required=True)
     c.add_argument("--shear", type=float, default=0.0)
     c.add_argument("--steps", type=int, default=1200)
@@ -230,7 +239,7 @@ def build_parser() -> argparse.ArgumentParser:
     c.add_argument("--seed", type=int, default=7)
     c.set_defaults(func=cmd_closure)
 
-    sr = sub.add_parser("search", parents=[common],
+    sr = sub.add_parser("search", parents=[sub_common],
                         help="search for the closure-maximizing projection at given b (b>=3)")
     sr.add_argument("--rule", type=int, required=True)
     sr.add_argument("--b", type=int, default=3)
@@ -247,7 +256,7 @@ def build_parser() -> argparse.ArgumentParser:
     sr.add_argument("--sseed", type=int, default=1, help="search RNG seed")
     sr.set_defaults(func=cmd_search)
 
-    m = sub.add_parser("sim", parents=[common], help="simulate a rule, report field statistics")
+    m = sub.add_parser("sim", parents=[sub_common], help="simulate a rule, report field statistics")
     m.add_argument("--rule", type=int, required=True)
     m.add_argument("--steps", type=int, default=400)
     m.add_argument("--width", type=int, default=400)
