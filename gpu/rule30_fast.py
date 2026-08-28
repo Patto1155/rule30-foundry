@@ -86,7 +86,7 @@ void rule30_multistep(
     unsigned long long*       nxt_out,
     unsigned char*            center_out,   // [n_variants * center_stride] or dummy
     unsigned long long*       rows_out,     // [chunk_steps * n_words]      or dummy
-    int n_words, int T, int m, int n_sub,
+    int n_words, unsigned long long last_word_mask, int T, int m, int n_sub,
     int base_step, int center_word, int center_bit,
     int center_stride, int write_center, int write_rows)
 {
@@ -135,7 +135,9 @@ void rule30_multistep(
             // halo words at g<0 / g>=n_words must NOT evolve, else their bits leak
             // back across the edge. Internal-tile halos (real neighbors) are kept.
             int gj = load0 + j;
-            B[j] = (gj < 0 || gj >= n_words) ? 0ULL : (left ^ (c | right));
+            unsigned long long value =
+                (gj < 0 || gj >= n_words) ? 0ULL : (left ^ (c | right));
+            B[j] = (gj == n_words - 1) ? (value & last_word_mask) : value;
         }
         __syncthreads();
         unsigned long long* tmp = A; A = B; B = tmp;
@@ -150,6 +152,11 @@ void rule30_multistep(
 """
 
 _KERNEL = None
+
+
+def _last_word_mask(n_cells: int) -> np.uint64:
+    used_bits = n_cells % 64
+    return np.uint64((1 << used_bits) - 1 if used_bits else (1 << 64) - 1)
 
 
 def _kernel():
@@ -189,6 +196,7 @@ def center_columns_from_packed_fast(
     K: int = DEFAULT_K,
     T: int = DEFAULT_T,
     threads: int = DEFAULT_THREADS,
+    n_cells: int | None = None,
 ) -> np.ndarray:
     """Center column [n_variants, n_steps+1] from already-packed tapes (GPU only).
 
@@ -199,6 +207,13 @@ def center_columns_from_packed_fast(
     if rows.ndim == 1:
         rows = rows[None, :]
     n_variants, n_words = rows.shape
+    if n_cells is None:
+        n_cells = n_words * 64
+    if not 0 < n_cells <= n_words * 64:
+        raise ValueError(f"n_cells={n_cells} is incompatible with {n_words} packed words")
+    if not 0 <= center_cell < n_cells:
+        raise ValueError(f"center_cell={center_cell} is outside n_cells={n_cells}")
+    last_word_mask = _last_word_mask(n_cells)
     m = (K + 63) // 64
     if K >= 64 * m:
         raise ValueError(f"unsafe K={K}: requires K < 64*m (m={m})")
@@ -207,6 +222,7 @@ def center_columns_from_packed_fast(
     out_steps = n_steps + 1
 
     cur = cp.asarray(np.ascontiguousarray(rows))
+    cur[:, -1] &= cp.uint64(last_word_mask)
     nxt = cp.zeros_like(cur)
     center_out = cp.zeros((n_variants, out_steps), dtype=cp.uint8)
     rows_dummy = cp.zeros(1, dtype=cp.uint64)
@@ -222,7 +238,8 @@ def center_columns_from_packed_fast(
         kern(
             (n_blocks, n_variants), (threads,),
             (cur, nxt, center_out, rows_dummy,
-             np.int32(n_words), np.int32(T), np.int32(m), np.int32(n_sub),
+             np.int32(n_words), last_word_mask,
+             np.int32(T), np.int32(m), np.int32(n_sub),
              np.int32(base), np.int32(center_word), np.int32(center_bit),
              np.int32(out_steps), np.int32(1), np.int32(0)),
             shared_mem=shmem,
@@ -248,8 +265,11 @@ def simulate_center_columns_batch_fast(
     """Center columns [n_variants, n_steps+1] for a batch of tapes."""
     if cp is None or not GPU_AVAILABLE:
         return simulate_center_columns_batch(initial_rows, n_steps, center_cell, gpu=False)
-    packed = pack_rows(initial_rows)
-    return center_columns_from_packed_fast(packed, n_steps, center_cell, K, T, threads)
+    rows = np.asarray(initial_rows, dtype=np.uint8)
+    packed = pack_rows(rows)
+    return center_columns_from_packed_fast(
+        packed, n_steps, center_cell, K, T, threads, n_cells=rows.shape[-1]
+    )
 
 
 def simulate_center_column_fast(
@@ -263,8 +283,11 @@ def simulate_center_column_fast(
     """Center column [n_steps+1] for one tape (a batch of one)."""
     if cp is None or not GPU_AVAILABLE:
         return simulate_center_columns_batch(initial_row, n_steps, center_cell, gpu=False)[0]
-    packed = pack_rows(initial_row)  # (1, n_words)
-    return center_columns_from_packed_fast(packed, n_steps, center_cell, K, T, threads)[0]
+    row = np.asarray(initial_row, dtype=np.uint8)
+    packed = pack_rows(row)  # (1, n_words)
+    return center_columns_from_packed_fast(
+        packed, n_steps, center_cell, K, T, threads, n_cells=len(row)
+    )[0]
 
 
 # --------------------------------------------------------------------------- #
@@ -293,6 +316,7 @@ def simulate_spacetime_fast(
     n_cells = len(row)
     packed = pack_rows(row)[0]
     n_words = int(packed.shape[0])
+    last_word_mask = _last_word_mask(n_cells)
     m = (K + 63) // 64
     if K >= 64 * m:
         raise ValueError(f"unsafe K={K}: requires K < 64*m (m={m})")
@@ -319,7 +343,8 @@ def simulate_spacetime_fast(
             kern(
                 (n_blocks, 1), (threads,),
                 (cur, nxt, center_dummy, rows_gpu,
-                 np.int32(n_words), np.int32(T), np.int32(m), np.int32(n_sub),
+                 np.int32(n_words), last_word_mask,
+                 np.int32(T), np.int32(m), np.int32(n_sub),
                  np.int32(base), np.int32(0), np.int32(0),
                  np.int32(1), np.int32(0), np.int32(1)),
                 shared_mem=shmem,
@@ -374,6 +399,16 @@ def verify(seed: int = 0) -> None:
         v, d = (int(x[0]) for x in np.where(ref != fast))
         raise RuntimeError(f"batch mismatch first at variant {v}, step {d}")
     print(f"  verify center_columns_batch: fast == reference, {batch.shape[0]} tapes × {ns+1} steps  OK")
+
+    # A non-word-aligned tape must keep padded bits pinned to zero. Otherwise
+    # those bits evolve as real cells and leak back across the right boundary.
+    row = np.array([1, 0], dtype=np.uint8)
+    ref = simulate_center_columns_batch(row, 12, 1, gpu=False)[0]
+    fast = simulate_center_column_fast(row, 12, 1)
+    if not np.array_equal(ref, fast):
+        d = int(np.flatnonzero(ref != fast)[0])
+        raise RuntimeError(f"center_column padding-boundary mismatch first at step {d}")
+    print("  verify center_column padding boundary: fast == reference  OK")
 
     # Mode 3: full space-time field. Use a RANDOM IC (active at the tape edges)
     # and force >1 time-chunk — a centered spike leaves the edges 0 and would hide

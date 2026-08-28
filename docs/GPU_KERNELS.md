@@ -48,8 +48,9 @@ of slack on the 64-cell halo. `center_columns_from_packed_fast` and
 `simulate_spacetime_fast` both assert `K < 64·m` and raise `ValueError` otherwise.
 
 At the true tape boundary the phantom zeros are *genuinely* correct (open
-boundary = zeros beyond the tape), so the leftmost/rightmost tiles need no special
-case.
+boundary = zeros beyond the tape). The last packed word may also contain padding
+bits when the tape width is not divisible by 64; those bits are masked after
+every substep so they cannot evolve as cells and leak back into the real tape.
 
 ## Three modes, one kernel
 
@@ -97,9 +98,11 @@ PYTHONUTF8=1 python gpu/rule30_fast.py
 ```
 
 `verify()` checks: single-tape center column (spike + random IC, crossing 64-bit
-word boundaries), batched center columns (4 mixed tapes), and the full space-time
-field (forced to use >1 time-chunk to exercise carry-over). Any mismatch raises
-with the first differing `(variant, step)`.
+word boundaries), a non-word-aligned two-cell tape that exposes padding leakage,
+batched center columns (4 mixed tapes), and the full space-time field (forced to
+use >1 time-chunk to exercise carry-over). Center-mode references force the
+independent packed-CPU path rather than delegating back to the fused kernel. Any
+mismatch raises with the first differing `(variant, step)`.
 
 End-to-end equivalence inside a real experiment:
 
