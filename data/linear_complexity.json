@@ -1,0 +1,18 @@
+{
+  "experiment": "S_linear_complexity",
+  "object": "single-seed center column (...0001000...)",
+  "n_bits_generated": 16385,
+  "per_scale": {
+    "4096": {
+      "L": 2049,
+      "L_over_n": 0.5002
+    },
+    "8192": {
+      "L": 4096,
+      "L_over_n": 0.5
+    }
+  },
+  "longest_plateau_steps": 17,
+  "verdict": "L(n) = n/2 at all scales; maximal linear complexity; no GF(2) linear-recurrence shortcut (Prize-2 linear route closed).",
+  "elapsed_s": 2.9
+}

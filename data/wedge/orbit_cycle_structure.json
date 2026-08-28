@@ -1,0 +1,92 @@
+{
+ "artifact_type": "rule30.orbit_cycle_structure",
+ "artifact_version": 1,
+ "cycle_feasibility": {
+  "expected_cycle_length_random_permutation": 2147483648.0,
+  "log10_prob_trajectory_survives_that_long": -14231.1
+ },
+ "elapsed_s": 105.068,
+ "floyd_on_seed_orbit": {
+  "final_state": [
+   10435,
+   0
+  ],
+  "outcome": "left_deterministic_region",
+  "reason": "v_is_zero",
+  "steps": 52805
+ },
+ "gate_vec_matches_reference": {
+  "mismatches": 0,
+  "ok": true,
+  "tested": 20000
+ },
+ "ok": true,
+ "params": {
+  "cap": 131072,
+  "period": 16,
+  "state_space": 4294967296,
+  "terminal_states": 65536,
+  "trajectories": 4096
+ },
+ "random_start_survey": {
+  "cap": 131072,
+  "mean_length": 44893.754125874126,
+  "median_length": 38417.0,
+  "n_trajectories": 4096,
+  "predicted_mean": 65536,
+  "still_alive_at_cap": 521,
+  "survival_checkpoints": [
+   {
+    "predicted": 4080.0,
+    "steps": 256,
+    "survivors": 4072
+   },
+   {
+    "predicted": 4064.1,
+    "steps": 512,
+    "survivors": 4053
+   },
+   {
+    "predicted": 4032.5,
+    "steps": 1024,
+    "survivors": 4016
+   },
+   {
+    "predicted": 3970.0,
+    "steps": 2048,
+    "survivors": 3960
+   },
+   {
+    "predicted": 3847.8,
+    "steps": 4096,
+    "survivors": 3847
+   },
+   {
+    "predicted": 3614.7,
+    "steps": 8192,
+    "survivors": 3607
+   },
+   {
+    "predicted": 3190.0,
+    "steps": 16384,
+    "survivors": 3194
+   },
+   {
+    "predicted": 2484.3,
+    "steps": 32768,
+    "survivors": 2542
+   },
+   {
+    "predicted": 1506.8,
+    "steps": 65536,
+    "survivors": 1443
+   },
+   {
+    "predicted": 554.3,
+    "steps": 131072,
+    "survivors": 521
+   }
+  ],
+  "terminated": 3575
+ }
+}

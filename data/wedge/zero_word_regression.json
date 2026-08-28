@@ -1,0 +1,125 @@
+{
+ "artifact_type": "rule30.zero_word_regression",
+ "artifact_version": 1,
+ "elapsed_s": 2.519,
+ "gates": {
+  "1_fixture": {
+   "ok": true,
+   "pred_parity": 0,
+   "w_pred": 53456,
+   "w_pred2": 53456,
+   "w_zero": 0,
+   "zero_at": 399
+  },
+  "2_halts_at_zero": {
+   "ok": true,
+   "per_seed": [
+    {
+     "mismatches": 0,
+     "seed_d": 256,
+     "stopped": {
+      "d": 399,
+      "reason": "zero_word"
+     }
+    },
+    {
+     "mismatches": 0,
+     "seed_d": 300,
+     "stopped": {
+      "d": 399,
+      "reason": "zero_word"
+     }
+    }
+   ],
+   "seeds": [
+    256,
+    300
+   ]
+  },
+  "3_teeth_ambiguous": {
+   "candidates": [
+    40800,
+    24735
+   ],
+   "candidates_are_complements": true,
+   "distinct_answers": 2,
+   "map_alone_could_not_tell": true,
+   "ok": true,
+   "outcomes": [
+    {
+     "first_collision": {
+      "d_hi": 53206,
+      "d_lo": 53205,
+      "kind": "collision",
+      "word": 10435
+     },
+     "successor": 40800
+    },
+    {
+     "first_collision": {
+      "d_hi": 53206,
+      "d_lo": 53205,
+      "kind": "collision",
+      "word": 49960
+     },
+     "successor": 24735
+    }
+   ],
+   "predecessor": 53456,
+   "simulation_says": 40800
+  },
+  "4_seed_filter": {
+   "last_zero": 399,
+   "ok": true,
+   "seeds": [
+    500,
+    1000,
+    2000,
+    4000,
+    8000,
+    11000
+   ],
+   "zero_words": [
+    2,
+    7,
+    28,
+    399
+   ]
+  },
+  "5_consensus": {
+   "consensus": {
+    "d_hi": 53206,
+    "d_lo": 53205,
+    "doubles": false,
+    "kind": "collision",
+    "parity": 0,
+    "popcount": 6,
+    "word": 10435,
+    "zero_word_at": 53207
+   },
+   "expected": [
+    53205,
+    53206,
+    10435
+   ],
+   "ok": true,
+   "seeds": [
+    500,
+    1000,
+    2000,
+    4000,
+    8000,
+    11000
+   ],
+   "seeds_agree": true
+  }
+ },
+ "ok": true,
+ "params": {
+  "diagonals": 12000,
+  "limit": 400000,
+  "period": 16,
+  "steps": 26000,
+  "tail": 4096
+ }
+}

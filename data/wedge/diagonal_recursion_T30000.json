@@ -1,0 +1,69 @@
+{
+  "artifact_type": "rule30.diagonal_recursion",
+  "artifact_version": 1,
+  "params": {
+    "steps": 30000,
+    "diagonals": 15000,
+    "tail": 4096
+  },
+  "centre_prefix_A051023": {
+    "prefix": "1101110011000101",
+    "ok": true
+  },
+  "base_cases": {
+    "D0_all_ones_from_t0": true,
+    "D1_all_ones_from_t1": true,
+    "D1_at_t0": 0,
+    "ok": true
+  },
+  "recursion_check": {
+    "checked_diagonals": 14998,
+    "checked_steps": 30000,
+    "mismatches": [],
+    "ok": true
+  },
+  "period_study": {
+    "tail_window": 4096,
+    "histogram": {
+      "1": 10,
+      "2": 8,
+      "4": 38,
+      "8": 403,
+      "16": 14541
+    },
+    "max_finite_period": 16,
+    "n_settled": 15000,
+    "n_unsettled_in_tail": 0,
+    "unsettled_d_range": null,
+    "settled_with_period_over_16": [],
+    "period_16_conjecture_holds": true
+  },
+  "pattern_map_study": {
+    "period": 16,
+    "n_settled": 15000,
+    "map_vs_measurement": {
+      "agree": 14994,
+      "mismatch": 0,
+      "ambiguous_v_zero": 4,
+      "ok": true
+    },
+    "n_pairs_examined": 14999,
+    "n_distinct_pairs": 14999,
+    "orbit_cycle": null,
+    "n_distinct_patterns": 13242,
+    "finite_orbit_proof_available": false
+  },
+  "generator_certificate": {
+    "period": 16,
+    "seed_diagonals": 256,
+    "margin": 1.45,
+    "words_generated_by_map": 14743,
+    "fallbacks_to_simulation": 1,
+    "cells_checked": 276326150,
+    "mismatches": 0,
+    "description_bits": 240000,
+    "compression_ratio": 1151.4,
+    "ok": true
+  },
+  "elapsed_s": 23.75
+}

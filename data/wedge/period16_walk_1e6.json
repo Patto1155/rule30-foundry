@@ -1,0 +1,204 @@
+{
+ "artifact_type": "rule30.period16_walk",
+ "artifact_version": 1,
+ "collisions": [
+  {
+   "d_hi": 53206,
+   "d_lo": 53205,
+   "doubles": false,
+   "hex": "0x28c3",
+   "parity": 0,
+   "popcount": 6,
+   "word": 10435,
+   "zero_at": 53207
+  },
+  {
+   "d_hi": 58285,
+   "d_lo": 58284,
+   "doubles": false,
+   "hex": "0x6f74",
+   "parity": 0,
+   "popcount": 10,
+   "word": 28532,
+   "zero_at": 58286
+  },
+  {
+   "d_hi": 87865,
+   "d_lo": 87864,
+   "doubles": true,
+   "hex": "0x28a8",
+   "parity": 1,
+   "popcount": 5,
+   "word": 10408,
+   "zero_at": 87866
+  }
+ ],
+ "doubling_events": [
+  {
+   "collision_pair": [
+    0,
+    1
+   ],
+   "lemma_b_confirmed": true,
+   "lemma_b_predicted_period": 2,
+   "parity": 1,
+   "period_after": 2,
+   "period_before": 1,
+   "popcount_at_period": 1,
+   "predecessor_hex": "0x1",
+   "predecessor_word_p_bits": 1,
+   "zero_word_at_d": 2
+  },
+  {
+   "collision_pair": [
+    5,
+    6
+   ],
+   "lemma_b_confirmed": true,
+   "lemma_b_predicted_period": 4,
+   "parity": 1,
+   "period_after": 4,
+   "period_before": 2,
+   "popcount_at_period": 1,
+   "predecessor_hex": "0x2",
+   "predecessor_word_p_bits": 2,
+   "zero_word_at_d": 7
+  },
+  {
+   "collision_pair": [
+    26,
+    27
+   ],
+   "lemma_b_confirmed": true,
+   "lemma_b_predicted_period": 8,
+   "parity": 1,
+   "period_after": 8,
+   "period_before": 4,
+   "popcount_at_period": 3,
+   "predecessor_hex": "0xe",
+   "predecessor_word_p_bits": 14,
+   "zero_word_at_d": 28
+  },
+  {
+   "collision_pair": [
+    397,
+    398
+   ],
+   "lemma_b_confirmed": true,
+   "lemma_b_predicted_period": 16,
+   "parity": 1,
+   "period_after": 16,
+   "period_before": 8,
+   "popcount_at_period": 3,
+   "predecessor_hex": "0xd0",
+   "predecessor_word_p_bits": 208,
+   "zero_word_at_d": 399
+  },
+  {
+   "collision_pair": [
+    53205,
+    53206
+   ],
+   "lemma_b_confirmed": true,
+   "lemma_b_predicted_period": 16,
+   "parity": 0,
+   "period_after": 16,
+   "period_before": 16,
+   "popcount_at_period": 6,
+   "predecessor_hex": "0x28c3",
+   "predecessor_word_p_bits": 10435,
+   "zero_word_at_d": 53207
+  },
+  {
+   "collision_pair": [
+    58284,
+    58285
+   ],
+   "lemma_b_confirmed": true,
+   "lemma_b_predicted_period": 16,
+   "parity": 0,
+   "period_after": 16,
+   "period_before": 16,
+   "popcount_at_period": 10,
+   "predecessor_hex": "0x6f74",
+   "predecessor_word_p_bits": 28532,
+   "zero_word_at_d": 58286
+  },
+  {
+   "collision_pair": [
+    87864,
+    87865
+   ],
+   "lemma_b_confirmed": true,
+   "lemma_b_predicted_period": 32,
+   "parity": 1,
+   "period_after": 32,
+   "period_before": 16,
+   "popcount_at_period": 5,
+   "predecessor_hex": "0x28a8",
+   "predecessor_word_p_bits": 10408,
+   "zero_word_at_d": 87866
+  }
+ ],
+ "elapsed_s": 394.08,
+ "lemma_a_violations": [],
+ "lemma_b_failures": [],
+ "n_collisions": 3,
+ "n_doubling_events": 7,
+ "n_zero_words": 7,
+ "odd_parity_collisions": [
+  {
+   "d_hi": 87865,
+   "d_lo": 87864,
+   "doubles": true,
+   "hex": "0x28a8",
+   "parity": 1,
+   "popcount": 5,
+   "word": 10408,
+   "zero_at": 87866
+  }
+ ],
+ "ok": false,
+ "params": {
+  "base_row": 1475856,
+  "diagonals": 1000000,
+  "keep_rows": 1031,
+  "period": 16,
+  "steps": 1476886
+ },
+ "parity_even": 43243,
+ "parity_odd": 43893,
+ "settled": {
+  "censoring_note": "period 0 = not periodic at any tested candidate within the recorded tail; right-censored, excluded from verdicts",
+  "count": 1000000,
+  "first_d_with_period_over_16": 87867,
+  "first_unsettled_d": 1000000,
+  "fraction": 1.0,
+  "period_histogram": {
+   "0": 0,
+   "1": 16,
+   "2": 10,
+   "4": 56,
+   "8": 668,
+   "16": 87136,
+   "32": 912114,
+   "64": 0,
+   "128": 0,
+   "256": 0
+  }
+ },
+ "timing": {
+  "extract_s": 1.22,
+  "simulate_s": 392.81
+ },
+ "verdict": "REFUTED: period exceeds 16 at d=87867",
+ "zero_words": [
+  2,
+  7,
+  28,
+  399,
+  53207,
+  58286,
+  87866
+ ]
+}

@@ -1,0 +1,11 @@
+{
+  "artifact_type": "rule30.dfao_candidate_check",
+  "artifact_version": 1,
+  "candidate": "D:\\APATPROJECTS\\rule30-foundry\\data\\prize\\dfao_control_thue_morse_b2_msd_n128_s2.json",
+  "sequence": "thue-morse",
+  "checked_bits": 128,
+  "ok": true,
+  "first_mismatch": null,
+  "sha256_bits_ascii": "491a521f7686347157fd67dd8146edd6539bc57465eb4798cf25f9266113eee4",
+  "elapsed_s": 0.00045
+}

@@ -1,0 +1,28 @@
+{
+  "experiment": "Q_damage_velocity",
+  "description": "Directional damage-spreading velocity of Rule 30 over random ICs.",
+  "n_steps": 1200,
+  "n_ic": 60,
+  "d_max": 120,
+  "d_step": 3,
+  "results": [
+    {
+      "seed": 1,
+      "by_side": {
+        "L": {
+          "slope": 1.0,
+          "velocity": 1.0,
+          "max_excess_delay": 0.0,
+          "median_excess_at_dmax": 0.0
+        },
+        "R": {
+          "slope": 3.9375,
+          "velocity": 0.254,
+          "max_excess_delay": 333.0,
+          "median_excess_at_dmax": 333.0
+        }
+      }
+    }
+  ],
+  "elapsed_s": 11.4
+}

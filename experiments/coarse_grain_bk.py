@@ -133,6 +133,26 @@ def closure_batch(prep, luts, h_min=0.0, chunk=None):
             "entropy": ent, "baseline": baseline, "valid": valid}
 
 
+def score_projection(prep, lut, h_min=0.0):
+    """Score one projection and return host scalars, preserving the validity gate."""
+    cb = closure_batch(prep, np.asarray(lut, dtype=np.int64)[None, :], h_min=h_min)
+
+    def scalar(name):
+        value = cb[name][0]
+        if cp is not None and isinstance(value, cp.ndarray):
+            value = cp.asnumpy(value)
+        return value.item() if hasattr(value, "item") else value
+
+    return {
+        "closure": float(scalar("closure")),
+        "excess": float(scalar("excess")),
+        "p1": float(scalar("p1")),
+        "entropy": float(scalar("entropy")),
+        "baseline": float(scalar("baseline")),
+        "valid": bool(scalar("valid")),
+    }
+
+
 def closure_enumerate_b2(prep, h_min):
     """Exhaustive best over all 2^16 b=2 projections via the code histogram.
 

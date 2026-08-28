@@ -1,0 +1,53 @@
+{
+  "artifact_type": "rule30.dfao_frontier_search",
+  "artifact_version": 1,
+  "base": 2,
+  "bits": 64,
+  "candidate": null,
+  "candidate_check": null,
+  "claim_level": "Certificate",
+  "command": "python prize_lab.py dfao-frontier --sequences center,random,thue-morse --bits 32,64,96,128 --max-states 4 --directions msd,lsd --run-id dfao-frontier-2026-06-15-prefix-scaling-s4 --progress",
+  "complete": true,
+  "created_at": "2026-06-15T00:56:06Z",
+  "direction": "msd",
+  "elapsed_s": 0.162089,
+  "found": false,
+  "git_branch": "feat/prize-center-column-lab",
+  "git_head": "1d0c80e3901de122788cbc9fe96cd0498fd203f7",
+  "lower_bound_states": 5,
+  "margin": 0,
+  "max_transitions": 10000000,
+  "per_state": [
+    {
+      "fit_found": false,
+      "states": 1,
+      "tested": 1,
+      "transition_tables": 1
+    },
+    {
+      "fit_found": false,
+      "states": 2,
+      "tested": 16,
+      "transition_tables": 16
+    },
+    {
+      "fit_found": false,
+      "states": 3,
+      "tested": 729,
+      "transition_tables": 729
+    },
+    {
+      "fit_found": false,
+      "states": 4,
+      "tested": 65536,
+      "transition_tables": 65536
+    }
+  ],
+  "positive_control": null,
+  "run_id": "dfao-frontier-2026-06-15-prefix-scaling-s4",
+  "searched_states": 4,
+  "seed": 30,
+  "sequence": "random",
+  "sha256_bits_ascii": "1a7cd9e9aa0a20258e7a824998520d1a4eba9c5b93dd7ff73f1884d113a5af00",
+  "states": 4
+}
