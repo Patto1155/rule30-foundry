@@ -1,0 +1,59 @@
+{
+  "artifact_type": "rule30.dfao_frontier_search",
+  "artifact_version": 1,
+  "base": 2,
+  "bits": 128,
+  "candidate": null,
+  "candidate_check": null,
+  "claim_level": "Certificate",
+  "command": "python prize_lab.py dfao-frontier --run-id dfao-frontier-2026-06-15-s5 --progress",
+  "complete": true,
+  "created_at": "2026-06-15T00:52:14Z",
+  "direction": "lsd",
+  "elapsed_s": 28.143665,
+  "found": false,
+  "git_branch": "feat/prize-center-column-lab",
+  "git_head": "1d0c80e3901de122788cbc9fe96cd0498fd203f7",
+  "lower_bound_states": 6,
+  "margin": 0,
+  "max_transitions": 10000000,
+  "per_state": [
+    {
+      "fit_found": false,
+      "states": 1,
+      "tested": 1,
+      "transition_tables": 1
+    },
+    {
+      "fit_found": false,
+      "states": 2,
+      "tested": 16,
+      "transition_tables": 16
+    },
+    {
+      "fit_found": false,
+      "states": 3,
+      "tested": 729,
+      "transition_tables": 729
+    },
+    {
+      "fit_found": false,
+      "states": 4,
+      "tested": 65536,
+      "transition_tables": 65536
+    },
+    {
+      "fit_found": false,
+      "states": 5,
+      "tested": 9765625,
+      "transition_tables": 9765625
+    }
+  ],
+  "positive_control": null,
+  "run_id": "dfao-frontier-2026-06-15-s5",
+  "searched_states": 5,
+  "seed": 30,
+  "sequence": "random",
+  "sha256_bits_ascii": "ad89ec5637cb849a64582f87dac1d9c0ea40dd3872a5abcc69befc585745629c",
+  "states": 5
+}

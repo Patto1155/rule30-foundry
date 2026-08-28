@@ -1,0 +1,89 @@
+{
+  "experiment": "R_left_edge_cone",
+  "note": "Interventional leftward dependence-cone edge. v_right=1 is a left-permutivity theorem (checked, not measured). Edge = fastest arrival (causal bound); median = bulk damage rate.",
+  "n_ic": 1500,
+  "horizon_mult": 6,
+  "seed": 11,
+  "per_d": [
+    {
+      "d": 30,
+      "n_steps": 180,
+      "censored_frac": 0.1073,
+      "min": 48,
+      "p1": 59.0,
+      "p10": 76.0,
+      "median": 115.0,
+      "v_edge": 0.625,
+      "v_p10": 0.3947,
+      "v_median": 0.2609
+    },
+    {
+      "d": 60,
+      "n_steps": 360,
+      "censored_frac": 0.0507,
+      "min": 119,
+      "p1": 141.99,
+      "p10": 177.0,
+      "median": 236.0,
+      "v_edge": 0.5042,
+      "v_p10": 0.339,
+      "v_median": 0.2542
+    },
+    {
+      "d": 120,
+      "n_steps": 720,
+      "censored_frac": 0.0093,
+      "min": 290,
+      "p1": 323.0,
+      "p10": 382.0,
+      "median": 478.0,
+      "v_edge": 0.4138,
+      "v_p10": 0.3141,
+      "v_median": 0.251
+    },
+    {
+      "d": 240,
+      "n_steps": 1440,
+      "censored_frac": 0.0027,
+      "min": 678,
+      "p1": 741.98,
+      "p10": 834.0,
+      "median": 982.0,
+      "v_edge": 0.354,
+      "v_p10": 0.2878,
+      "v_median": 0.2444
+    },
+    {
+      "d": 480,
+      "n_steps": 2880,
+      "censored_frac": 0.0,
+      "min": 1478,
+      "p1": 1590.99,
+      "p10": 1752.9,
+      "median": 1966.0,
+      "v_edge": 0.3248,
+      "v_p10": 0.2738,
+      "v_median": 0.2442
+    },
+    {
+      "d": 960,
+      "n_steps": 5760,
+      "censored_frac": 0.0,
+      "min": 3225,
+      "p1": 3433.77,
+      "p10": 3634.9,
+      "median": 3932.5,
+      "v_edge": 0.2977,
+      "v_p10": 0.2641,
+      "v_median": 0.2441
+    }
+  ],
+  "convergence": {
+    "v_edge_largest_d": 0.2977,
+    "v_p10_largest_d": 0.2641,
+    "v_median_largest_d": 0.2441,
+    "v_median_mean_over_large_d": 0.2442,
+    "v_p10_mean_over_large_d": 0.2752
+  },
+  "elapsed_s": 7.8
+}

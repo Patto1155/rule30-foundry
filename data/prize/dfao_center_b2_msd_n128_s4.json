@@ -1,0 +1,48 @@
+{
+  "artifact_type": "rule30.dfao_exhaustive_search",
+  "artifact_version": 1,
+  "params": {
+    "sequence": "center",
+    "bits": 128,
+    "max_states": 4,
+    "base": 2,
+    "direction": "msd",
+    "margin": 0,
+    "seed": null,
+    "max_transitions": 2000000
+  },
+  "claim_level": "Certificate",
+  "sha256_bits_ascii": "a4d0748bb05e4a19738a0252b8f87b374385df59d0630c27dffb175d3fa98a5e",
+  "found": false,
+  "complete": true,
+  "searched_states": 4,
+  "lower_bound_states": 5,
+  "per_state": [
+    {
+      "states": 1,
+      "transition_tables": 1,
+      "tested": 1,
+      "fit_found": false
+    },
+    {
+      "states": 2,
+      "transition_tables": 16,
+      "tested": 16,
+      "fit_found": false
+    },
+    {
+      "states": 3,
+      "transition_tables": 729,
+      "tested": 729,
+      "fit_found": false
+    },
+    {
+      "states": 4,
+      "transition_tables": 65536,
+      "tested": 65536,
+      "fit_found": false
+    }
+  ],
+  "candidate": null,
+  "elapsed_s": 0.118115
+}

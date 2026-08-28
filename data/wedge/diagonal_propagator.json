@@ -1,0 +1,39 @@
+{
+ "artifact_type": "rule30.diagonal_propagator",
+ "artifact_version": 1,
+ "benchmark": {
+  "baseline_left_diagonals_s": {
+   "best": 0.051,
+   "mean": 0.052,
+   "spread_pct": 2.1,
+   "worst": 0.053
+  },
+  "baseline_peak_bytes": 32004000,
+  "memory_ratio": 307.7,
+  "propagator_s": {
+   "best": 0.435,
+   "mean": 0.455,
+   "spread_pct": 14.1,
+   "worst": 0.496
+  },
+  "propagator_working_bytes": 104013,
+  "repeats": 3,
+  "single_diagonal": {
+   "agree": true,
+   "serial_s": 0.0028,
+   "speedup": 27.0,
+   "vectorized_s": 0.0001
+  },
+  "speedup_on_mean": 0.11
+ },
+ "elapsed_s": 10.399,
+ "ok": true,
+ "verification": {
+  "compared_cells": 312012000,
+  "diagonals": 12000,
+  "method": "np.array_equal per diagonal, all diagonals",
+  "mismatched_diagonals": [],
+  "ok": true,
+  "steps": 26000
+ }
+}

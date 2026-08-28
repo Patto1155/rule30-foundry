@@ -1,0 +1,68 @@
+{
+  "artifact_type": "rule30.dfao_frontier_search",
+  "artifact_version": 1,
+  "base": 2,
+  "bits": 128,
+  "candidate": {
+    "artifact_type": "rule30.dfao_candidate",
+    "artifact_version": 1,
+    "base": 2,
+    "direction": "msd",
+    "initial_state": 0,
+    "outputs": [
+      0,
+      1
+    ],
+    "states": 2,
+    "transitions": [
+      [
+        0,
+        1
+      ],
+      [
+        1,
+        0
+      ]
+    ]
+  },
+  "candidate_check": {
+    "first_mismatch": null,
+    "ok": true
+  },
+  "claim_level": "Certificate",
+  "command": "python prize_lab.py dfao-frontier --sequences thue-morse --directions msd --max-states 2 --run-id dfao-frontier-2026-06-15-positive --force",
+  "complete": true,
+  "created_at": "2026-06-15T00:22:07Z",
+  "direction": "msd",
+  "elapsed_s": 0.053372,
+  "found": true,
+  "git_branch": "feat/prize-center-column-lab",
+  "git_head": "b536f265138b605096eb0125b934dc1d7af02a67",
+  "lower_bound_states": 2,
+  "margin": 0,
+  "max_transitions": 10000000,
+  "per_state": [
+    {
+      "fit_found": false,
+      "states": 1,
+      "tested": 1,
+      "transition_tables": 1
+    },
+    {
+      "fit_found": true,
+      "states": 2,
+      "tested": 7,
+      "transition_tables": 16
+    }
+  ],
+  "positive_control": {
+    "expected_states": 2,
+    "passed": true
+  },
+  "run_id": "dfao-frontier-2026-06-15-positive",
+  "searched_states": 2,
+  "seed": null,
+  "sequence": "thue-morse",
+  "sha256_bits_ascii": "491a521f7686347157fd67dd8146edd6539bc57465eb4798cf25f9266113eee4",
+  "states": 2
+}

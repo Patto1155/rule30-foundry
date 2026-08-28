@@ -1,0 +1,6073 @@
+c rule30-foundry prize_lab DFAO finite-prefix SAT encoding
+c metadata {"artifact_type": "rule30.dfao_sat_dimacs", "artifact_version": 1, "base": 2, "clauses": 5370, "direction": "msd", "n_bits": 128, "sha256_bits_ascii": "a4d0748bb05e4a19738a0252b8f87b374385df59d0630c27dffb175d3fa98a5e", "states": 5, "time_zero_included": true, "trie_nodes": 129, "variables": 700}
+c var 1 x_node0_state0
+c var 2 x_node0_state1
+c var 3 x_node0_state2
+c var 4 x_node0_state3
+c var 5 x_node0_state4
+c var 6 x_node1_state0
+c var 7 x_node1_state1
+c var 8 x_node1_state2
+c var 9 x_node1_state3
+c var 10 x_node1_state4
+c var 11 x_node2_state0
+c var 12 x_node2_state1
+c var 13 x_node2_state2
+c var 14 x_node2_state3
+c var 15 x_node2_state4
+c var 16 x_node3_state0
+c var 17 x_node3_state1
+c var 18 x_node3_state2
+c var 19 x_node3_state3
+c var 20 x_node3_state4
+c var 21 x_node4_state0
+c var 22 x_node4_state1
+c var 23 x_node4_state2
+c var 24 x_node4_state3
+c var 25 x_node4_state4
+c var 26 x_node5_state0
+c var 27 x_node5_state1
+c var 28 x_node5_state2
+c var 29 x_node5_state3
+c var 30 x_node5_state4
+c var 31 x_node6_state0
+c var 32 x_node6_state1
+c var 33 x_node6_state2
+c var 34 x_node6_state3
+c var 35 x_node6_state4
+c var 36 x_node7_state0
+c var 37 x_node7_state1
+c var 38 x_node7_state2
+c var 39 x_node7_state3
+c var 40 x_node7_state4
+c var 41 x_node8_state0
+c var 42 x_node8_state1
+c var 43 x_node8_state2
+c var 44 x_node8_state3
+c var 45 x_node8_state4
+c var 46 x_node9_state0
+c var 47 x_node9_state1
+c var 48 x_node9_state2
+c var 49 x_node9_state3
+c var 50 x_node9_state4
+c var 51 x_node10_state0
+c var 52 x_node10_state1
+c var 53 x_node10_state2
+c var 54 x_node10_state3
+c var 55 x_node10_state4
+c var 56 x_node11_state0
+c var 57 x_node11_state1
+c var 58 x_node11_state2
+c var 59 x_node11_state3
+c var 60 x_node11_state4
+c var 61 x_node12_state0
+c var 62 x_node12_state1
+c var 63 x_node12_state2
+c var 64 x_node12_state3
+c var 65 x_node12_state4
+c var 66 x_node13_state0
+c var 67 x_node13_state1
+c var 68 x_node13_state2
+c var 69 x_node13_state3
+c var 70 x_node13_state4
+c var 71 x_node14_state0
+c var 72 x_node14_state1
+c var 73 x_node14_state2
+c var 74 x_node14_state3
+c var 75 x_node14_state4
+c var 76 x_node15_state0
+c var 77 x_node15_state1
+c var 78 x_node15_state2
+c var 79 x_node15_state3
+c var 80 x_node15_state4
+c var 81 x_node16_state0
+c var 82 x_node16_state1
+c var 83 x_node16_state2
+c var 84 x_node16_state3
+c var 85 x_node16_state4
+c var 86 x_node17_state0
+c var 87 x_node17_state1
+c var 88 x_node17_state2
+c var 89 x_node17_state3
+c var 90 x_node17_state4
+c var 91 x_node18_state0
+c var 92 x_node18_state1
+c var 93 x_node18_state2
+c var 94 x_node18_state3
+c var 95 x_node18_state4
+c var 96 x_node19_state0
+c var 97 x_node19_state1
+c var 98 x_node19_state2
+c var 99 x_node19_state3
+c var 100 x_node19_state4
+c var 101 x_node20_state0
+c var 102 x_node20_state1
+c var 103 x_node20_state2
+c var 104 x_node20_state3
+c var 105 x_node20_state4
+c var 106 x_node21_state0
+c var 107 x_node21_state1
+c var 108 x_node21_state2
+c var 109 x_node21_state3
+c var 110 x_node21_state4
+c var 111 x_node22_state0
+c var 112 x_node22_state1
+c var 113 x_node22_state2
+c var 114 x_node22_state3
+c var 115 x_node22_state4
+c var 116 x_node23_state0
+c var 117 x_node23_state1
+c var 118 x_node23_state2
+c var 119 x_node23_state3
+c var 120 x_node23_state4
+c var 121 x_node24_state0
+c var 122 x_node24_state1
+c var 123 x_node24_state2
+c var 124 x_node24_state3
+c var 125 x_node24_state4
+c var 126 x_node25_state0
+c var 127 x_node25_state1
+c var 128 x_node25_state2
+c var 129 x_node25_state3
+c var 130 x_node25_state4
+c var 131 x_node26_state0
+c var 132 x_node26_state1
+c var 133 x_node26_state2
+c var 134 x_node26_state3
+c var 135 x_node26_state4
+c var 136 x_node27_state0
+c var 137 x_node27_state1
+c var 138 x_node27_state2
+c var 139 x_node27_state3
+c var 140 x_node27_state4
+c var 141 x_node28_state0
+c var 142 x_node28_state1
+c var 143 x_node28_state2
+c var 144 x_node28_state3
+c var 145 x_node28_state4
+c var 146 x_node29_state0
+c var 147 x_node29_state1
+c var 148 x_node29_state2
+c var 149 x_node29_state3
+c var 150 x_node29_state4
+c var 151 x_node30_state0
+c var 152 x_node30_state1
+c var 153 x_node30_state2
+c var 154 x_node30_state3
+c var 155 x_node30_state4
+c var 156 x_node31_state0
+c var 157 x_node31_state1
+c var 158 x_node31_state2
+c var 159 x_node31_state3
+c var 160 x_node31_state4
+c var 161 x_node32_state0
+c var 162 x_node32_state1
+c var 163 x_node32_state2
+c var 164 x_node32_state3
+c var 165 x_node32_state4
+c var 166 x_node33_state0
+c var 167 x_node33_state1
+c var 168 x_node33_state2
+c var 169 x_node33_state3
+c var 170 x_node33_state4
+c var 171 x_node34_state0
+c var 172 x_node34_state1
+c var 173 x_node34_state2
+c var 174 x_node34_state3
+c var 175 x_node34_state4
+c var 176 x_node35_state0
+c var 177 x_node35_state1
+c var 178 x_node35_state2
+c var 179 x_node35_state3
+c var 180 x_node35_state4
+c var 181 x_node36_state0
+c var 182 x_node36_state1
+c var 183 x_node36_state2
+c var 184 x_node36_state3
+c var 185 x_node36_state4
+c var 186 x_node37_state0
+c var 187 x_node37_state1
+c var 188 x_node37_state2
+c var 189 x_node37_state3
+c var 190 x_node37_state4
+c var 191 x_node38_state0
+c var 192 x_node38_state1
+c var 193 x_node38_state2
+c var 194 x_node38_state3
+c var 195 x_node38_state4
+c var 196 x_node39_state0
+c var 197 x_node39_state1
+c var 198 x_node39_state2
+c var 199 x_node39_state3
+c var 200 x_node39_state4
+c var 201 x_node40_state0
+c var 202 x_node40_state1
+c var 203 x_node40_state2
+c var 204 x_node40_state3
+c var 205 x_node40_state4
+c var 206 x_node41_state0
+c var 207 x_node41_state1
+c var 208 x_node41_state2
+c var 209 x_node41_state3
+c var 210 x_node41_state4
+c var 211 x_node42_state0
+c var 212 x_node42_state1
+c var 213 x_node42_state2
+c var 214 x_node42_state3
+c var 215 x_node42_state4
+c var 216 x_node43_state0
+c var 217 x_node43_state1
+c var 218 x_node43_state2
+c var 219 x_node43_state3
+c var 220 x_node43_state4
+c var 221 x_node44_state0
+c var 222 x_node44_state1
+c var 223 x_node44_state2
+c var 224 x_node44_state3
+c var 225 x_node44_state4
+c var 226 x_node45_state0
+c var 227 x_node45_state1
+c var 228 x_node45_state2
+c var 229 x_node45_state3
+c var 230 x_node45_state4
+c var 231 x_node46_state0
+c var 232 x_node46_state1
+c var 233 x_node46_state2
+c var 234 x_node46_state3
+c var 235 x_node46_state4
+c var 236 x_node47_state0
+c var 237 x_node47_state1
+c var 238 x_node47_state2
+c var 239 x_node47_state3
+c var 240 x_node47_state4
+c var 241 x_node48_state0
+c var 242 x_node48_state1
+c var 243 x_node48_state2
+c var 244 x_node48_state3
+c var 245 x_node48_state4
+c var 246 x_node49_state0
+c var 247 x_node49_state1
+c var 248 x_node49_state2
+c var 249 x_node49_state3
+c var 250 x_node49_state4
+c var 251 x_node50_state0
+c var 252 x_node50_state1
+c var 253 x_node50_state2
+c var 254 x_node50_state3
+c var 255 x_node50_state4
+c var 256 x_node51_state0
+c var 257 x_node51_state1
+c var 258 x_node51_state2
+c var 259 x_node51_state3
+c var 260 x_node51_state4
+c var 261 x_node52_state0
+c var 262 x_node52_state1
+c var 263 x_node52_state2
+c var 264 x_node52_state3
+c var 265 x_node52_state4
+c var 266 x_node53_state0
+c var 267 x_node53_state1
+c var 268 x_node53_state2
+c var 269 x_node53_state3
+c var 270 x_node53_state4
+c var 271 x_node54_state0
+c var 272 x_node54_state1
+c var 273 x_node54_state2
+c var 274 x_node54_state3
+c var 275 x_node54_state4
+c var 276 x_node55_state0
+c var 277 x_node55_state1
+c var 278 x_node55_state2
+c var 279 x_node55_state3
+c var 280 x_node55_state4
+c var 281 x_node56_state0
+c var 282 x_node56_state1
+c var 283 x_node56_state2
+c var 284 x_node56_state3
+c var 285 x_node56_state4
+c var 286 x_node57_state0
+c var 287 x_node57_state1
+c var 288 x_node57_state2
+c var 289 x_node57_state3
+c var 290 x_node57_state4
+c var 291 x_node58_state0
+c var 292 x_node58_state1
+c var 293 x_node58_state2
+c var 294 x_node58_state3
+c var 295 x_node58_state4
+c var 296 x_node59_state0
+c var 297 x_node59_state1
+c var 298 x_node59_state2
+c var 299 x_node59_state3
+c var 300 x_node59_state4
+c var 301 x_node60_state0
+c var 302 x_node60_state1
+c var 303 x_node60_state2
+c var 304 x_node60_state3
+c var 305 x_node60_state4
+c var 306 x_node61_state0
+c var 307 x_node61_state1
+c var 308 x_node61_state2
+c var 309 x_node61_state3
+c var 310 x_node61_state4
+c var 311 x_node62_state0
+c var 312 x_node62_state1
+c var 313 x_node62_state2
+c var 314 x_node62_state3
+c var 315 x_node62_state4
+c var 316 x_node63_state0
+c var 317 x_node63_state1
+c var 318 x_node63_state2
+c var 319 x_node63_state3
+c var 320 x_node63_state4
+c var 321 x_node64_state0
+c var 322 x_node64_state1
+c var 323 x_node64_state2
+c var 324 x_node64_state3
+c var 325 x_node64_state4
+c var 326 x_node65_state0
+c var 327 x_node65_state1
+c var 328 x_node65_state2
+c var 329 x_node65_state3
+c var 330 x_node65_state4
+c var 331 x_node66_state0
+c var 332 x_node66_state1
+c var 333 x_node66_state2
+c var 334 x_node66_state3
+c var 335 x_node66_state4
+c var 336 x_node67_state0
+c var 337 x_node67_state1
+c var 338 x_node67_state2
+c var 339 x_node67_state3
+c var 340 x_node67_state4
+c var 341 x_node68_state0
+c var 342 x_node68_state1
+c var 343 x_node68_state2
+c var 344 x_node68_state3
+c var 345 x_node68_state4
+c var 346 x_node69_state0
+c var 347 x_node69_state1
+c var 348 x_node69_state2
+c var 349 x_node69_state3
+c var 350 x_node69_state4
+c var 351 x_node70_state0
+c var 352 x_node70_state1
+c var 353 x_node70_state2
+c var 354 x_node70_state3
+c var 355 x_node70_state4
+c var 356 x_node71_state0
+c var 357 x_node71_state1
+c var 358 x_node71_state2
+c var 359 x_node71_state3
+c var 360 x_node71_state4
+c var 361 x_node72_state0
+c var 362 x_node72_state1
+c var 363 x_node72_state2
+c var 364 x_node72_state3
+c var 365 x_node72_state4
+c var 366 x_node73_state0
+c var 367 x_node73_state1
+c var 368 x_node73_state2
+c var 369 x_node73_state3
+c var 370 x_node73_state4
+c var 371 x_node74_state0
+c var 372 x_node74_state1
+c var 373 x_node74_state2
+c var 374 x_node74_state3
+c var 375 x_node74_state4
+c var 376 x_node75_state0
+c var 377 x_node75_state1
+c var 378 x_node75_state2
+c var 379 x_node75_state3
+c var 380 x_node75_state4
+c var 381 x_node76_state0
+c var 382 x_node76_state1
+c var 383 x_node76_state2
+c var 384 x_node76_state3
+c var 385 x_node76_state4
+c var 386 x_node77_state0
+c var 387 x_node77_state1
+c var 388 x_node77_state2
+c var 389 x_node77_state3
+c var 390 x_node77_state4
+c var 391 x_node78_state0
+c var 392 x_node78_state1
+c var 393 x_node78_state2
+c var 394 x_node78_state3
+c var 395 x_node78_state4
+c var 396 x_node79_state0
+c var 397 x_node79_state1
+c var 398 x_node79_state2
+c var 399 x_node79_state3
+c var 400 x_node79_state4
+c var 401 x_node80_state0
+c var 402 x_node80_state1
+c var 403 x_node80_state2
+c var 404 x_node80_state3
+c var 405 x_node80_state4
+c var 406 x_node81_state0
+c var 407 x_node81_state1
+c var 408 x_node81_state2
+c var 409 x_node81_state3
+c var 410 x_node81_state4
+c var 411 x_node82_state0
+c var 412 x_node82_state1
+c var 413 x_node82_state2
+c var 414 x_node82_state3
+c var 415 x_node82_state4
+c var 416 x_node83_state0
+c var 417 x_node83_state1
+c var 418 x_node83_state2
+c var 419 x_node83_state3
+c var 420 x_node83_state4
+c var 421 x_node84_state0
+c var 422 x_node84_state1
+c var 423 x_node84_state2
+c var 424 x_node84_state3
+c var 425 x_node84_state4
+c var 426 x_node85_state0
+c var 427 x_node85_state1
+c var 428 x_node85_state2
+c var 429 x_node85_state3
+c var 430 x_node85_state4
+c var 431 x_node86_state0
+c var 432 x_node86_state1
+c var 433 x_node86_state2
+c var 434 x_node86_state3
+c var 435 x_node86_state4
+c var 436 x_node87_state0
+c var 437 x_node87_state1
+c var 438 x_node87_state2
+c var 439 x_node87_state3
+c var 440 x_node87_state4
+c var 441 x_node88_state0
+c var 442 x_node88_state1
+c var 443 x_node88_state2
+c var 444 x_node88_state3
+c var 445 x_node88_state4
+c var 446 x_node89_state0
+c var 447 x_node89_state1
+c var 448 x_node89_state2
+c var 449 x_node89_state3
+c var 450 x_node89_state4
+c var 451 x_node90_state0
+c var 452 x_node90_state1
+c var 453 x_node90_state2
+c var 454 x_node90_state3
+c var 455 x_node90_state4
+c var 456 x_node91_state0
+c var 457 x_node91_state1
+c var 458 x_node91_state2
+c var 459 x_node91_state3
+c var 460 x_node91_state4
+c var 461 x_node92_state0
+c var 462 x_node92_state1
+c var 463 x_node92_state2
+c var 464 x_node92_state3
+c var 465 x_node92_state4
+c var 466 x_node93_state0
+c var 467 x_node93_state1
+c var 468 x_node93_state2
+c var 469 x_node93_state3
+c var 470 x_node93_state4
+c var 471 x_node94_state0
+c var 472 x_node94_state1
+c var 473 x_node94_state2
+c var 474 x_node94_state3
+c var 475 x_node94_state4
+c var 476 x_node95_state0
+c var 477 x_node95_state1
+c var 478 x_node95_state2
+c var 479 x_node95_state3
+c var 480 x_node95_state4
+c var 481 x_node96_state0
+c var 482 x_node96_state1
+c var 483 x_node96_state2
+c var 484 x_node96_state3
+c var 485 x_node96_state4
+c var 486 x_node97_state0
+c var 487 x_node97_state1
+c var 488 x_node97_state2
+c var 489 x_node97_state3
+c var 490 x_node97_state4
+c var 491 x_node98_state0
+c var 492 x_node98_state1
+c var 493 x_node98_state2
+c var 494 x_node98_state3
+c var 495 x_node98_state4
+c var 496 x_node99_state0
+c var 497 x_node99_state1
+c var 498 x_node99_state2
+c var 499 x_node99_state3
+c var 500 x_node99_state4
+c var 501 x_node100_state0
+c var 502 x_node100_state1
+c var 503 x_node100_state2
+c var 504 x_node100_state3
+c var 505 x_node100_state4
+c var 506 x_node101_state0
+c var 507 x_node101_state1
+c var 508 x_node101_state2
+c var 509 x_node101_state3
+c var 510 x_node101_state4
+c var 511 x_node102_state0
+c var 512 x_node102_state1
+c var 513 x_node102_state2
+c var 514 x_node102_state3
+c var 515 x_node102_state4
+c var 516 x_node103_state0
+c var 517 x_node103_state1
+c var 518 x_node103_state2
+c var 519 x_node103_state3
+c var 520 x_node103_state4
+c var 521 x_node104_state0
+c var 522 x_node104_state1
+c var 523 x_node104_state2
+c var 524 x_node104_state3
+c var 525 x_node104_state4
+c var 526 x_node105_state0
+c var 527 x_node105_state1
+c var 528 x_node105_state2
+c var 529 x_node105_state3
+c var 530 x_node105_state4
+c var 531 x_node106_state0
+c var 532 x_node106_state1
+c var 533 x_node106_state2
+c var 534 x_node106_state3
+c var 535 x_node106_state4
+c var 536 x_node107_state0
+c var 537 x_node107_state1
+c var 538 x_node107_state2
+c var 539 x_node107_state3
+c var 540 x_node107_state4
+c var 541 x_node108_state0
+c var 542 x_node108_state1
+c var 543 x_node108_state2
+c var 544 x_node108_state3
+c var 545 x_node108_state4
+c var 546 x_node109_state0
+c var 547 x_node109_state1
+c var 548 x_node109_state2
+c var 549 x_node109_state3
+c var 550 x_node109_state4
+c var 551 x_node110_state0
+c var 552 x_node110_state1
+c var 553 x_node110_state2
+c var 554 x_node110_state3
+c var 555 x_node110_state4
+c var 556 x_node111_state0
+c var 557 x_node111_state1
+c var 558 x_node111_state2
+c var 559 x_node111_state3
+c var 560 x_node111_state4
+c var 561 x_node112_state0
+c var 562 x_node112_state1
+c var 563 x_node112_state2
+c var 564 x_node112_state3
+c var 565 x_node112_state4
+c var 566 x_node113_state0
+c var 567 x_node113_state1
+c var 568 x_node113_state2
+c var 569 x_node113_state3
+c var 570 x_node113_state4
+c var 571 x_node114_state0
+c var 572 x_node114_state1
+c var 573 x_node114_state2
+c var 574 x_node114_state3
+c var 575 x_node114_state4
+c var 576 x_node115_state0
+c var 577 x_node115_state1
+c var 578 x_node115_state2
+c var 579 x_node115_state3
+c var 580 x_node115_state4
+c var 581 x_node116_state0
+c var 582 x_node116_state1
+c var 583 x_node116_state2
+c var 584 x_node116_state3
+c var 585 x_node116_state4
+c var 586 x_node117_state0
+c var 587 x_node117_state1
+c var 588 x_node117_state2
+c var 589 x_node117_state3
+c var 590 x_node117_state4
+c var 591 x_node118_state0
+c var 592 x_node118_state1
+c var 593 x_node118_state2
+c var 594 x_node118_state3
+c var 595 x_node118_state4
+c var 596 x_node119_state0
+c var 597 x_node119_state1
+c var 598 x_node119_state2
+c var 599 x_node119_state3
+c var 600 x_node119_state4
+c var 601 x_node120_state0
+c var 602 x_node120_state1
+c var 603 x_node120_state2
+c var 604 x_node120_state3
+c var 605 x_node120_state4
+c var 606 x_node121_state0
+c var 607 x_node121_state1
+c var 608 x_node121_state2
+c var 609 x_node121_state3
+c var 610 x_node121_state4
+c var 611 x_node122_state0
+c var 612 x_node122_state1
+c var 613 x_node122_state2
+c var 614 x_node122_state3
+c var 615 x_node122_state4
+c var 616 x_node123_state0
+c var 617 x_node123_state1
+c var 618 x_node123_state2
+c var 619 x_node123_state3
+c var 620 x_node123_state4
+c var 621 x_node124_state0
+c var 622 x_node124_state1
+c var 623 x_node124_state2
+c var 624 x_node124_state3
+c var 625 x_node124_state4
+c var 626 x_node125_state0
+c var 627 x_node125_state1
+c var 628 x_node125_state2
+c var 629 x_node125_state3
+c var 630 x_node125_state4
+c var 631 x_node126_state0
+c var 632 x_node126_state1
+c var 633 x_node126_state2
+c var 634 x_node126_state3
+c var 635 x_node126_state4
+c var 636 x_node127_state0
+c var 637 x_node127_state1
+c var 638 x_node127_state2
+c var 639 x_node127_state3
+c var 640 x_node127_state4
+c var 641 x_node128_state0
+c var 642 x_node128_state1
+c var 643 x_node128_state2
+c var 644 x_node128_state3
+c var 645 x_node128_state4
+c var 646 t_state0_digit0_state0
+c var 647 t_state0_digit0_state1
+c var 648 t_state0_digit0_state2
+c var 649 t_state0_digit0_state3
+c var 650 t_state0_digit0_state4
+c var 651 t_state0_digit1_state0
+c var 652 t_state0_digit1_state1
+c var 653 t_state0_digit1_state2
+c var 654 t_state0_digit1_state3
+c var 655 t_state0_digit1_state4
+c var 656 t_state1_digit0_state0
+c var 657 t_state1_digit0_state1
+c var 658 t_state1_digit0_state2
+c var 659 t_state1_digit0_state3
+c var 660 t_state1_digit0_state4
+c var 661 t_state1_digit1_state0
+c var 662 t_state1_digit1_state1
+c var 663 t_state1_digit1_state2
+c var 664 t_state1_digit1_state3
+c var 665 t_state1_digit1_state4
+c var 666 t_state2_digit0_state0
+c var 667 t_state2_digit0_state1
+c var 668 t_state2_digit0_state2
+c var 669 t_state2_digit0_state3
+c var 670 t_state2_digit0_state4
+c var 671 t_state2_digit1_state0
+c var 672 t_state2_digit1_state1
+c var 673 t_state2_digit1_state2
+c var 674 t_state2_digit1_state3
+c var 675 t_state2_digit1_state4
+c var 676 t_state3_digit0_state0
+c var 677 t_state3_digit0_state1
+c var 678 t_state3_digit0_state2
+c var 679 t_state3_digit0_state3
+c var 680 t_state3_digit0_state4
+c var 681 t_state3_digit1_state0
+c var 682 t_state3_digit1_state1
+c var 683 t_state3_digit1_state2
+c var 684 t_state3_digit1_state3
+c var 685 t_state3_digit1_state4
+c var 686 t_state4_digit0_state0
+c var 687 t_state4_digit0_state1
+c var 688 t_state4_digit0_state2
+c var 689 t_state4_digit0_state3
+c var 690 t_state4_digit0_state4
+c var 691 t_state4_digit1_state0
+c var 692 t_state4_digit1_state1
+c var 693 t_state4_digit1_state2
+c var 694 t_state4_digit1_state3
+c var 695 t_state4_digit1_state4
+c var 696 out_state0
+c var 697 out_state1
+c var 698 out_state2
+c var 699 out_state3
+c var 700 out_state4
+p cnf 700 5370
+1 0
+1 2 3 4 5 0
+-1 -2 0
+-1 -3 0
+-1 -4 0
+-1 -5 0
+-2 -3 0
+-2 -4 0
+-2 -5 0
+-3 -4 0
+-3 -5 0
+-4 -5 0
+6 7 8 9 10 0
+-6 -7 0
+-6 -8 0
+-6 -9 0
+-6 -10 0
+-7 -8 0
+-7 -9 0
+-7 -10 0
+-8 -9 0
+-8 -10 0
+-9 -10 0
+11 12 13 14 15 0
+-11 -12 0
+-11 -13 0
+-11 -14 0
+-11 -15 0
+-12 -13 0
+-12 -14 0
+-12 -15 0
+-13 -14 0
+-13 -15 0
+-14 -15 0
+16 17 18 19 20 0
+-16 -17 0
+-16 -18 0
+-16 -19 0
+-16 -20 0
+-17 -18 0
+-17 -19 0
+-17 -20 0
+-18 -19 0
+-18 -20 0
+-19 -20 0
+21 22 23 24 25 0
+-21 -22 0
+-21 -23 0
+-21 -24 0
+-21 -25 0
+-22 -23 0
+-22 -24 0
+-22 -25 0
+-23 -24 0
+-23 -25 0
+-24 -25 0
+26 27 28 29 30 0
+-26 -27 0
+-26 -28 0
+-26 -29 0
+-26 -30 0
+-27 -28 0
+-27 -29 0
+-27 -30 0
+-28 -29 0
+-28 -30 0
+-29 -30 0
+31 32 33 34 35 0
+-31 -32 0
+-31 -33 0
+-31 -34 0
+-31 -35 0
+-32 -33 0
+-32 -34 0
+-32 -35 0
+-33 -34 0
+-33 -35 0
+-34 -35 0
+36 37 38 39 40 0
+-36 -37 0
+-36 -38 0
+-36 -39 0
+-36 -40 0
+-37 -38 0
+-37 -39 0
+-37 -40 0
+-38 -39 0
+-38 -40 0
+-39 -40 0
+41 42 43 44 45 0
+-41 -42 0
+-41 -43 0
+-41 -44 0
+-41 -45 0
+-42 -43 0
+-42 -44 0
+-42 -45 0
+-43 -44 0
+-43 -45 0
+-44 -45 0
+46 47 48 49 50 0
+-46 -47 0
+-46 -48 0
+-46 -49 0
+-46 -50 0
+-47 -48 0
+-47 -49 0
+-47 -50 0
+-48 -49 0
+-48 -50 0
+-49 -50 0
+51 52 53 54 55 0
+-51 -52 0
+-51 -53 0
+-51 -54 0
+-51 -55 0
+-52 -53 0
+-52 -54 0
+-52 -55 0
+-53 -54 0
+-53 -55 0
+-54 -55 0
+56 57 58 59 60 0
+-56 -57 0
+-56 -58 0
+-56 -59 0
+-56 -60 0
+-57 -58 0
+-57 -59 0
+-57 -60 0
+-58 -59 0
+-58 -60 0
+-59 -60 0
+61 62 63 64 65 0
+-61 -62 0
+-61 -63 0
+-61 -64 0
+-61 -65 0
+-62 -63 0
+-62 -64 0
+-62 -65 0
+-63 -64 0
+-63 -65 0
+-64 -65 0
+66 67 68 69 70 0
+-66 -67 0
+-66 -68 0
+-66 -69 0
+-66 -70 0
+-67 -68 0
+-67 -69 0
+-67 -70 0
+-68 -69 0
+-68 -70 0
+-69 -70 0
+71 72 73 74 75 0
+-71 -72 0
+-71 -73 0
+-71 -74 0
+-71 -75 0
+-72 -73 0
+-72 -74 0
+-72 -75 0
+-73 -74 0
+-73 -75 0
+-74 -75 0
+76 77 78 79 80 0
+-76 -77 0
+-76 -78 0
+-76 -79 0
+-76 -80 0
+-77 -78 0
+-77 -79 0
+-77 -80 0
+-78 -79 0
+-78 -80 0
+-79 -80 0
+81 82 83 84 85 0
+-81 -82 0
+-81 -83 0
+-81 -84 0
+-81 -85 0
+-82 -83 0
+-82 -84 0
+-82 -85 0
+-83 -84 0
+-83 -85 0
+-84 -85 0
+86 87 88 89 90 0
+-86 -87 0
+-86 -88 0
+-86 -89 0
+-86 -90 0
+-87 -88 0
+-87 -89 0
+-87 -90 0
+-88 -89 0
+-88 -90 0
+-89 -90 0
+91 92 93 94 95 0
+-91 -92 0
+-91 -93 0
+-91 -94 0
+-91 -95 0
+-92 -93 0
+-92 -94 0
+-92 -95 0
+-93 -94 0
+-93 -95 0
+-94 -95 0
+96 97 98 99 100 0
+-96 -97 0
+-96 -98 0
+-96 -99 0
+-96 -100 0
+-97 -98 0
+-97 -99 0
+-97 -100 0
+-98 -99 0
+-98 -100 0
+-99 -100 0
+101 102 103 104 105 0
+-101 -102 0
+-101 -103 0
+-101 -104 0
+-101 -105 0
+-102 -103 0
+-102 -104 0
+-102 -105 0
+-103 -104 0
+-103 -105 0
+-104 -105 0
+106 107 108 109 110 0
+-106 -107 0
+-106 -108 0
+-106 -109 0
+-106 -110 0
+-107 -108 0
+-107 -109 0
+-107 -110 0
+-108 -109 0
+-108 -110 0
+-109 -110 0
+111 112 113 114 115 0
+-111 -112 0
+-111 -113 0
+-111 -114 0
+-111 -115 0
+-112 -113 0
+-112 -114 0
+-112 -115 0
+-113 -114 0
+-113 -115 0
+-114 -115 0
+116 117 118 119 120 0
+-116 -117 0
+-116 -118 0
+-116 -119 0
+-116 -120 0
+-117 -118 0
+-117 -119 0
+-117 -120 0
+-118 -119 0
+-118 -120 0
+-119 -120 0
+121 122 123 124 125 0
+-121 -122 0
+-121 -123 0
+-121 -124 0
+-121 -125 0
+-122 -123 0
+-122 -124 0
+-122 -125 0
+-123 -124 0
+-123 -125 0
+-124 -125 0
+126 127 128 129 130 0
+-126 -127 0
+-126 -128 0
+-126 -129 0
+-126 -130 0
+-127 -128 0
+-127 -129 0
+-127 -130 0
+-128 -129 0
+-128 -130 0
+-129 -130 0
+131 132 133 134 135 0
+-131 -132 0
+-131 -133 0
+-131 -134 0
+-131 -135 0
+-132 -133 0
+-132 -134 0
+-132 -135 0
+-133 -134 0
+-133 -135 0
+-134 -135 0
+136 137 138 139 140 0
+-136 -137 0
+-136 -138 0
+-136 -139 0
+-136 -140 0
+-137 -138 0
+-137 -139 0
+-137 -140 0
+-138 -139 0
+-138 -140 0
+-139 -140 0
+141 142 143 144 145 0
+-141 -142 0
+-141 -143 0
+-141 -144 0
+-141 -145 0
+-142 -143 0
+-142 -144 0
+-142 -145 0
+-143 -144 0
+-143 -145 0
+-144 -145 0
+146 147 148 149 150 0
+-146 -147 0
+-146 -148 0
+-146 -149 0
+-146 -150 0
+-147 -148 0
+-147 -149 0
+-147 -150 0
+-148 -149 0
+-148 -150 0
+-149 -150 0
+151 152 153 154 155 0
+-151 -152 0
+-151 -153 0
+-151 -154 0
+-151 -155 0
+-152 -153 0
+-152 -154 0
+-152 -155 0
+-153 -154 0
+-153 -155 0
+-154 -155 0
+156 157 158 159 160 0
+-156 -157 0
+-156 -158 0
+-156 -159 0
+-156 -160 0
+-157 -158 0
+-157 -159 0
+-157 -160 0
+-158 -159 0
+-158 -160 0
+-159 -160 0
+161 162 163 164 165 0
+-161 -162 0
+-161 -163 0
+-161 -164 0
+-161 -165 0
+-162 -163 0
+-162 -164 0
+-162 -165 0
+-163 -164 0
+-163 -165 0
+-164 -165 0
+166 167 168 169 170 0
+-166 -167 0
+-166 -168 0
+-166 -169 0
+-166 -170 0
+-167 -168 0
+-167 -169 0
+-167 -170 0
+-168 -169 0
+-168 -170 0
+-169 -170 0
+171 172 173 174 175 0
+-171 -172 0
+-171 -173 0
+-171 -174 0
+-171 -175 0
+-172 -173 0
+-172 -174 0
+-172 -175 0
+-173 -174 0
+-173 -175 0
+-174 -175 0
+176 177 178 179 180 0
+-176 -177 0
+-176 -178 0
+-176 -179 0
+-176 -180 0
+-177 -178 0
+-177 -179 0
+-177 -180 0
+-178 -179 0
+-178 -180 0
+-179 -180 0
+181 182 183 184 185 0
+-181 -182 0
+-181 -183 0
+-181 -184 0
+-181 -185 0
+-182 -183 0
+-182 -184 0
+-182 -185 0
+-183 -184 0
+-183 -185 0
+-184 -185 0
+186 187 188 189 190 0
+-186 -187 0
+-186 -188 0
+-186 -189 0
+-186 -190 0
+-187 -188 0
+-187 -189 0
+-187 -190 0
+-188 -189 0
+-188 -190 0
+-189 -190 0
+191 192 193 194 195 0
+-191 -192 0
+-191 -193 0
+-191 -194 0
+-191 -195 0
+-192 -193 0
+-192 -194 0
+-192 -195 0
+-193 -194 0
+-193 -195 0
+-194 -195 0
+196 197 198 199 200 0
+-196 -197 0
+-196 -198 0
+-196 -199 0
+-196 -200 0
+-197 -198 0
+-197 -199 0
+-197 -200 0
+-198 -199 0
+-198 -200 0
+-199 -200 0
+201 202 203 204 205 0
+-201 -202 0
+-201 -203 0
+-201 -204 0
+-201 -205 0
+-202 -203 0
+-202 -204 0
+-202 -205 0
+-203 -204 0
+-203 -205 0
+-204 -205 0
+206 207 208 209 210 0
+-206 -207 0
+-206 -208 0
+-206 -209 0
+-206 -210 0
+-207 -208 0
+-207 -209 0
+-207 -210 0
+-208 -209 0
+-208 -210 0
+-209 -210 0
+211 212 213 214 215 0
+-211 -212 0
+-211 -213 0
+-211 -214 0
+-211 -215 0
+-212 -213 0
+-212 -214 0
+-212 -215 0
+-213 -214 0
+-213 -215 0
+-214 -215 0
+216 217 218 219 220 0
+-216 -217 0
+-216 -218 0
+-216 -219 0
+-216 -220 0
+-217 -218 0
+-217 -219 0
+-217 -220 0
+-218 -219 0
+-218 -220 0
+-219 -220 0
+221 222 223 224 225 0
+-221 -222 0
+-221 -223 0
+-221 -224 0
+-221 -225 0
+-222 -223 0
+-222 -224 0
+-222 -225 0
+-223 -224 0
+-223 -225 0
+-224 -225 0
+226 227 228 229 230 0
+-226 -227 0
+-226 -228 0
+-226 -229 0
+-226 -230 0
+-227 -228 0
+-227 -229 0
+-227 -230 0
+-228 -229 0
+-228 -230 0
+-229 -230 0
+231 232 233 234 235 0
+-231 -232 0
+-231 -233 0
+-231 -234 0
+-231 -235 0
+-232 -233 0
+-232 -234 0
+-232 -235 0
+-233 -234 0
+-233 -235 0
+-234 -235 0
+236 237 238 239 240 0
+-236 -237 0
+-236 -238 0
+-236 -239 0
+-236 -240 0
+-237 -238 0
+-237 -239 0
+-237 -240 0
+-238 -239 0
+-238 -240 0
+-239 -240 0
+241 242 243 244 245 0
+-241 -242 0
+-241 -243 0
+-241 -244 0
+-241 -245 0
+-242 -243 0
+-242 -244 0
+-242 -245 0
+-243 -244 0
+-243 -245 0
+-244 -245 0
+246 247 248 249 250 0
+-246 -247 0
+-246 -248 0
+-246 -249 0
+-246 -250 0
+-247 -248 0
+-247 -249 0
+-247 -250 0
+-248 -249 0
+-248 -250 0
+-249 -250 0
+251 252 253 254 255 0
+-251 -252 0
+-251 -253 0
+-251 -254 0
+-251 -255 0
+-252 -253 0
+-252 -254 0
+-252 -255 0
+-253 -254 0
+-253 -255 0
+-254 -255 0
+256 257 258 259 260 0
+-256 -257 0
+-256 -258 0
+-256 -259 0
+-256 -260 0
+-257 -258 0
+-257 -259 0
+-257 -260 0
+-258 -259 0
+-258 -260 0
+-259 -260 0
+261 262 263 264 265 0
+-261 -262 0
+-261 -263 0
+-261 -264 0
+-261 -265 0
+-262 -263 0
+-262 -264 0
+-262 -265 0
+-263 -264 0
+-263 -265 0
+-264 -265 0
+266 267 268 269 270 0
+-266 -267 0
+-266 -268 0
+-266 -269 0
+-266 -270 0
+-267 -268 0
+-267 -269 0
+-267 -270 0
+-268 -269 0
+-268 -270 0
+-269 -270 0
+271 272 273 274 275 0
+-271 -272 0
+-271 -273 0
+-271 -274 0
+-271 -275 0
+-272 -273 0
+-272 -274 0
+-272 -275 0
+-273 -274 0
+-273 -275 0
+-274 -275 0
+276 277 278 279 280 0
+-276 -277 0
+-276 -278 0
+-276 -279 0
+-276 -280 0
+-277 -278 0
+-277 -279 0
+-277 -280 0
+-278 -279 0
+-278 -280 0
+-279 -280 0
+281 282 283 284 285 0
+-281 -282 0
+-281 -283 0
+-281 -284 0
+-281 -285 0
+-282 -283 0
+-282 -284 0
+-282 -285 0
+-283 -284 0
+-283 -285 0
+-284 -285 0
+286 287 288 289 290 0
+-286 -287 0
+-286 -288 0
+-286 -289 0
+-286 -290 0
+-287 -288 0
+-287 -289 0
+-287 -290 0
+-288 -289 0
+-288 -290 0
+-289 -290 0
+291 292 293 294 295 0
+-291 -292 0
+-291 -293 0
+-291 -294 0
+-291 -295 0
+-292 -293 0
+-292 -294 0
+-292 -295 0
+-293 -294 0
+-293 -295 0
+-294 -295 0
+296 297 298 299 300 0
+-296 -297 0
+-296 -298 0
+-296 -299 0
+-296 -300 0
+-297 -298 0
+-297 -299 0
+-297 -300 0
+-298 -299 0
+-298 -300 0
+-299 -300 0
+301 302 303 304 305 0
+-301 -302 0
+-301 -303 0
+-301 -304 0
+-301 -305 0
+-302 -303 0
+-302 -304 0
+-302 -305 0
+-303 -304 0
+-303 -305 0
+-304 -305 0
+306 307 308 309 310 0
+-306 -307 0
+-306 -308 0
+-306 -309 0
+-306 -310 0
+-307 -308 0
+-307 -309 0
+-307 -310 0
+-308 -309 0
+-308 -310 0
+-309 -310 0
+311 312 313 314 315 0
+-311 -312 0
+-311 -313 0
+-311 -314 0
+-311 -315 0
+-312 -313 0
+-312 -314 0
+-312 -315 0
+-313 -314 0
+-313 -315 0
+-314 -315 0
+316 317 318 319 320 0
+-316 -317 0
+-316 -318 0
+-316 -319 0
+-316 -320 0
+-317 -318 0
+-317 -319 0
+-317 -320 0
+-318 -319 0
+-318 -320 0
+-319 -320 0
+321 322 323 324 325 0
+-321 -322 0
+-321 -323 0
+-321 -324 0
+-321 -325 0
+-322 -323 0
+-322 -324 0
+-322 -325 0
+-323 -324 0
+-323 -325 0
+-324 -325 0
+326 327 328 329 330 0
+-326 -327 0
+-326 -328 0
+-326 -329 0
+-326 -330 0
+-327 -328 0
+-327 -329 0
+-327 -330 0
+-328 -329 0
+-328 -330 0
+-329 -330 0
+331 332 333 334 335 0
+-331 -332 0
+-331 -333 0
+-331 -334 0
+-331 -335 0
+-332 -333 0
+-332 -334 0
+-332 -335 0
+-333 -334 0
+-333 -335 0
+-334 -335 0
+336 337 338 339 340 0
+-336 -337 0
+-336 -338 0
+-336 -339 0
+-336 -340 0
+-337 -338 0
+-337 -339 0
+-337 -340 0
+-338 -339 0
+-338 -340 0
+-339 -340 0
+341 342 343 344 345 0
+-341 -342 0
+-341 -343 0
+-341 -344 0
+-341 -345 0
+-342 -343 0
+-342 -344 0
+-342 -345 0
+-343 -344 0
+-343 -345 0
+-344 -345 0
+346 347 348 349 350 0
+-346 -347 0
+-346 -348 0
+-346 -349 0
+-346 -350 0
+-347 -348 0
+-347 -349 0
+-347 -350 0
+-348 -349 0
+-348 -350 0
+-349 -350 0
+351 352 353 354 355 0
+-351 -352 0
+-351 -353 0
+-351 -354 0
+-351 -355 0
+-352 -353 0
+-352 -354 0
+-352 -355 0
+-353 -354 0
+-353 -355 0
+-354 -355 0
+356 357 358 359 360 0
+-356 -357 0
+-356 -358 0
+-356 -359 0
+-356 -360 0
+-357 -358 0
+-357 -359 0
+-357 -360 0
+-358 -359 0
+-358 -360 0
+-359 -360 0
+361 362 363 364 365 0
+-361 -362 0
+-361 -363 0
+-361 -364 0
+-361 -365 0
+-362 -363 0
+-362 -364 0
+-362 -365 0
+-363 -364 0
+-363 -365 0
+-364 -365 0
+366 367 368 369 370 0
+-366 -367 0
+-366 -368 0
+-366 -369 0
+-366 -370 0
+-367 -368 0
+-367 -369 0
+-367 -370 0
+-368 -369 0
+-368 -370 0
+-369 -370 0
+371 372 373 374 375 0
+-371 -372 0
+-371 -373 0
+-371 -374 0
+-371 -375 0
+-372 -373 0
+-372 -374 0
+-372 -375 0
+-373 -374 0
+-373 -375 0
+-374 -375 0
+376 377 378 379 380 0
+-376 -377 0
+-376 -378 0
+-376 -379 0
+-376 -380 0
+-377 -378 0
+-377 -379 0
+-377 -380 0
+-378 -379 0
+-378 -380 0
+-379 -380 0
+381 382 383 384 385 0
+-381 -382 0
+-381 -383 0
+-381 -384 0
+-381 -385 0
+-382 -383 0
+-382 -384 0
+-382 -385 0
+-383 -384 0
+-383 -385 0
+-384 -385 0
+386 387 388 389 390 0
+-386 -387 0
+-386 -388 0
+-386 -389 0
+-386 -390 0
+-387 -388 0
+-387 -389 0
+-387 -390 0
+-388 -389 0
+-388 -390 0
+-389 -390 0
+391 392 393 394 395 0
+-391 -392 0
+-391 -393 0
+-391 -394 0
+-391 -395 0
+-392 -393 0
+-392 -394 0
+-392 -395 0
+-393 -394 0
+-393 -395 0
+-394 -395 0
+396 397 398 399 400 0
+-396 -397 0
+-396 -398 0
+-396 -399 0
+-396 -400 0
+-397 -398 0
+-397 -399 0
+-397 -400 0
+-398 -399 0
+-398 -400 0
+-399 -400 0
+401 402 403 404 405 0
+-401 -402 0
+-401 -403 0
+-401 -404 0
+-401 -405 0
+-402 -403 0
+-402 -404 0
+-402 -405 0
+-403 -404 0
+-403 -405 0
+-404 -405 0
+406 407 408 409 410 0
+-406 -407 0
+-406 -408 0
+-406 -409 0
+-406 -410 0
+-407 -408 0
+-407 -409 0
+-407 -410 0
+-408 -409 0
+-408 -410 0
+-409 -410 0
+411 412 413 414 415 0
+-411 -412 0
+-411 -413 0
+-411 -414 0
+-411 -415 0
+-412 -413 0
+-412 -414 0
+-412 -415 0
+-413 -414 0
+-413 -415 0
+-414 -415 0
+416 417 418 419 420 0
+-416 -417 0
+-416 -418 0
+-416 -419 0
+-416 -420 0
+-417 -418 0
+-417 -419 0
+-417 -420 0
+-418 -419 0
+-418 -420 0
+-419 -420 0
+421 422 423 424 425 0
+-421 -422 0
+-421 -423 0
+-421 -424 0
+-421 -425 0
+-422 -423 0
+-422 -424 0
+-422 -425 0
+-423 -424 0
+-423 -425 0
+-424 -425 0
+426 427 428 429 430 0
+-426 -427 0
+-426 -428 0
+-426 -429 0
+-426 -430 0
+-427 -428 0
+-427 -429 0
+-427 -430 0
+-428 -429 0
+-428 -430 0
+-429 -430 0
+431 432 433 434 435 0
+-431 -432 0
+-431 -433 0
+-431 -434 0
+-431 -435 0
+-432 -433 0
+-432 -434 0
+-432 -435 0
+-433 -434 0
+-433 -435 0
+-434 -435 0
+436 437 438 439 440 0
+-436 -437 0
+-436 -438 0
+-436 -439 0
+-436 -440 0
+-437 -438 0
+-437 -439 0
+-437 -440 0
+-438 -439 0
+-438 -440 0
+-439 -440 0
+441 442 443 444 445 0
+-441 -442 0
+-441 -443 0
+-441 -444 0
+-441 -445 0
+-442 -443 0
+-442 -444 0
+-442 -445 0
+-443 -444 0
+-443 -445 0
+-444 -445 0
+446 447 448 449 450 0
+-446 -447 0
+-446 -448 0
+-446 -449 0
+-446 -450 0
+-447 -448 0
+-447 -449 0
+-447 -450 0
+-448 -449 0
+-448 -450 0
+-449 -450 0
+451 452 453 454 455 0
+-451 -452 0
+-451 -453 0
+-451 -454 0
+-451 -455 0
+-452 -453 0
+-452 -454 0
+-452 -455 0
+-453 -454 0
+-453 -455 0
+-454 -455 0
+456 457 458 459 460 0
+-456 -457 0
+-456 -458 0
+-456 -459 0
+-456 -460 0
+-457 -458 0
+-457 -459 0
+-457 -460 0
+-458 -459 0
+-458 -460 0
+-459 -460 0
+461 462 463 464 465 0
+-461 -462 0
+-461 -463 0
+-461 -464 0
+-461 -465 0
+-462 -463 0
+-462 -464 0
+-462 -465 0
+-463 -464 0
+-463 -465 0
+-464 -465 0
+466 467 468 469 470 0
+-466 -467 0
+-466 -468 0
+-466 -469 0
+-466 -470 0
+-467 -468 0
+-467 -469 0
+-467 -470 0
+-468 -469 0
+-468 -470 0
+-469 -470 0
+471 472 473 474 475 0
+-471 -472 0
+-471 -473 0
+-471 -474 0
+-471 -475 0
+-472 -473 0
+-472 -474 0
+-472 -475 0
+-473 -474 0
+-473 -475 0
+-474 -475 0
+476 477 478 479 480 0
+-476 -477 0
+-476 -478 0
+-476 -479 0
+-476 -480 0
+-477 -478 0
+-477 -479 0
+-477 -480 0
+-478 -479 0
+-478 -480 0
+-479 -480 0
+481 482 483 484 485 0
+-481 -482 0
+-481 -483 0
+-481 -484 0
+-481 -485 0
+-482 -483 0
+-482 -484 0
+-482 -485 0
+-483 -484 0
+-483 -485 0
+-484 -485 0
+486 487 488 489 490 0
+-486 -487 0
+-486 -488 0
+-486 -489 0
+-486 -490 0
+-487 -488 0
+-487 -489 0
+-487 -490 0
+-488 -489 0
+-488 -490 0
+-489 -490 0
+491 492 493 494 495 0
+-491 -492 0
+-491 -493 0
+-491 -494 0
+-491 -495 0
+-492 -493 0
+-492 -494 0
+-492 -495 0
+-493 -494 0
+-493 -495 0
+-494 -495 0
+496 497 498 499 500 0
+-496 -497 0
+-496 -498 0
+-496 -499 0
+-496 -500 0
+-497 -498 0
+-497 -499 0
+-497 -500 0
+-498 -499 0
+-498 -500 0
+-499 -500 0
+501 502 503 504 505 0
+-501 -502 0
+-501 -503 0
+-501 -504 0
+-501 -505 0
+-502 -503 0
+-502 -504 0
+-502 -505 0
+-503 -504 0
+-503 -505 0
+-504 -505 0
+506 507 508 509 510 0
+-506 -507 0
+-506 -508 0
+-506 -509 0
+-506 -510 0
+-507 -508 0
+-507 -509 0
+-507 -510 0
+-508 -509 0
+-508 -510 0
+-509 -510 0
+511 512 513 514 515 0
+-511 -512 0
+-511 -513 0
+-511 -514 0
+-511 -515 0
+-512 -513 0
+-512 -514 0
+-512 -515 0
+-513 -514 0
+-513 -515 0
+-514 -515 0
+516 517 518 519 520 0
+-516 -517 0
+-516 -518 0
+-516 -519 0
+-516 -520 0
+-517 -518 0
+-517 -519 0
+-517 -520 0
+-518 -519 0
+-518 -520 0
+-519 -520 0
+521 522 523 524 525 0
+-521 -522 0
+-521 -523 0
+-521 -524 0
+-521 -525 0
+-522 -523 0
+-522 -524 0
+-522 -525 0
+-523 -524 0
+-523 -525 0
+-524 -525 0
+526 527 528 529 530 0
+-526 -527 0
+-526 -528 0
+-526 -529 0
+-526 -530 0
+-527 -528 0
+-527 -529 0
+-527 -530 0
+-528 -529 0
+-528 -530 0
+-529 -530 0
+531 532 533 534 535 0
+-531 -532 0
+-531 -533 0
+-531 -534 0
+-531 -535 0
+-532 -533 0
+-532 -534 0
+-532 -535 0
+-533 -534 0
+-533 -535 0
+-534 -535 0
+536 537 538 539 540 0
+-536 -537 0
+-536 -538 0
+-536 -539 0
+-536 -540 0
+-537 -538 0
+-537 -539 0
+-537 -540 0
+-538 -539 0
+-538 -540 0
+-539 -540 0
+541 542 543 544 545 0
+-541 -542 0
+-541 -543 0
+-541 -544 0
+-541 -545 0
+-542 -543 0
+-542 -544 0
+-542 -545 0
+-543 -544 0
+-543 -545 0
+-544 -545 0
+546 547 548 549 550 0
+-546 -547 0
+-546 -548 0
+-546 -549 0
+-546 -550 0
+-547 -548 0
+-547 -549 0
+-547 -550 0
+-548 -549 0
+-548 -550 0
+-549 -550 0
+551 552 553 554 555 0
+-551 -552 0
+-551 -553 0
+-551 -554 0
+-551 -555 0
+-552 -553 0
+-552 -554 0
+-552 -555 0
+-553 -554 0
+-553 -555 0
+-554 -555 0
+556 557 558 559 560 0
+-556 -557 0
+-556 -558 0
+-556 -559 0
+-556 -560 0
+-557 -558 0
+-557 -559 0
+-557 -560 0
+-558 -559 0
+-558 -560 0
+-559 -560 0
+561 562 563 564 565 0
+-561 -562 0
+-561 -563 0
+-561 -564 0
+-561 -565 0
+-562 -563 0
+-562 -564 0
+-562 -565 0
+-563 -564 0
+-563 -565 0
+-564 -565 0
+566 567 568 569 570 0
+-566 -567 0
+-566 -568 0
+-566 -569 0
+-566 -570 0
+-567 -568 0
+-567 -569 0
+-567 -570 0
+-568 -569 0
+-568 -570 0
+-569 -570 0
+571 572 573 574 575 0
+-571 -572 0
+-571 -573 0
+-571 -574 0
+-571 -575 0
+-572 -573 0
+-572 -574 0
+-572 -575 0
+-573 -574 0
+-573 -575 0
+-574 -575 0
+576 577 578 579 580 0
+-576 -577 0
+-576 -578 0
+-576 -579 0
+-576 -580 0
+-577 -578 0
+-577 -579 0
+-577 -580 0
+-578 -579 0
+-578 -580 0
+-579 -580 0
+581 582 583 584 585 0
+-581 -582 0
+-581 -583 0
+-581 -584 0
+-581 -585 0
+-582 -583 0
+-582 -584 0
+-582 -585 0
+-583 -584 0
+-583 -585 0
+-584 -585 0
+586 587 588 589 590 0
+-586 -587 0
+-586 -588 0
+-586 -589 0
+-586 -590 0
+-587 -588 0
+-587 -589 0
+-587 -590 0
+-588 -589 0
+-588 -590 0
+-589 -590 0
+591 592 593 594 595 0
+-591 -592 0
+-591 -593 0
+-591 -594 0
+-591 -595 0
+-592 -593 0
+-592 -594 0
+-592 -595 0
+-593 -594 0
+-593 -595 0
+-594 -595 0
+596 597 598 599 600 0
+-596 -597 0
+-596 -598 0
+-596 -599 0
+-596 -600 0
+-597 -598 0
+-597 -599 0
+-597 -600 0
+-598 -599 0
+-598 -600 0
+-599 -600 0
+601 602 603 604 605 0
+-601 -602 0
+-601 -603 0
+-601 -604 0
+-601 -605 0
+-602 -603 0
+-602 -604 0
+-602 -605 0
+-603 -604 0
+-603 -605 0
+-604 -605 0
+606 607 608 609 610 0
+-606 -607 0
+-606 -608 0
+-606 -609 0
+-606 -610 0
+-607 -608 0
+-607 -609 0
+-607 -610 0
+-608 -609 0
+-608 -610 0
+-609 -610 0
+611 612 613 614 615 0
+-611 -612 0
+-611 -613 0
+-611 -614 0
+-611 -615 0
+-612 -613 0
+-612 -614 0
+-612 -615 0
+-613 -614 0
+-613 -615 0
+-614 -615 0
+616 617 618 619 620 0
+-616 -617 0
+-616 -618 0
+-616 -619 0
+-616 -620 0
+-617 -618 0
+-617 -619 0
+-617 -620 0
+-618 -619 0
+-618 -620 0
+-619 -620 0
+621 622 623 624 625 0
+-621 -622 0
+-621 -623 0
+-621 -624 0
+-621 -625 0
+-622 -623 0
+-622 -624 0
+-622 -625 0
+-623 -624 0
+-623 -625 0
+-624 -625 0
+626 627 628 629 630 0
+-626 -627 0
+-626 -628 0
+-626 -629 0
+-626 -630 0
+-627 -628 0
+-627 -629 0
+-627 -630 0
+-628 -629 0
+-628 -630 0
+-629 -630 0
+631 632 633 634 635 0
+-631 -632 0
+-631 -633 0
+-631 -634 0
+-631 -635 0
+-632 -633 0
+-632 -634 0
+-632 -635 0
+-633 -634 0
+-633 -635 0
+-634 -635 0
+636 637 638 639 640 0
+-636 -637 0
+-636 -638 0
+-636 -639 0
+-636 -640 0
+-637 -638 0
+-637 -639 0
+-637 -640 0
+-638 -639 0
+-638 -640 0
+-639 -640 0
+641 642 643 644 645 0
+-641 -642 0
+-641 -643 0
+-641 -644 0
+-641 -645 0
+-642 -643 0
+-642 -644 0
+-642 -645 0
+-643 -644 0
+-643 -645 0
+-644 -645 0
+646 647 648 649 650 0
+-646 -647 0
+-646 -648 0
+-646 -649 0
+-646 -650 0
+-647 -648 0
+-647 -649 0
+-647 -650 0
+-648 -649 0
+-648 -650 0
+-649 -650 0
+651 652 653 654 655 0
+-651 -652 0
+-651 -653 0
+-651 -654 0
+-651 -655 0
+-652 -653 0
+-652 -654 0
+-652 -655 0
+-653 -654 0
+-653 -655 0
+-654 -655 0
+656 657 658 659 660 0
+-656 -657 0
+-656 -658 0
+-656 -659 0
+-656 -660 0
+-657 -658 0
+-657 -659 0
+-657 -660 0
+-658 -659 0
+-658 -660 0
+-659 -660 0
+661 662 663 664 665 0
+-661 -662 0
+-661 -663 0
+-661 -664 0
+-661 -665 0
+-662 -663 0
+-662 -664 0
+-662 -665 0
+-663 -664 0
+-663 -665 0
+-664 -665 0
+666 667 668 669 670 0
+-666 -667 0
+-666 -668 0
+-666 -669 0
+-666 -670 0
+-667 -668 0
+-667 -669 0
+-667 -670 0
+-668 -669 0
+-668 -670 0
+-669 -670 0
+671 672 673 674 675 0
+-671 -672 0
+-671 -673 0
+-671 -674 0
+-671 -675 0
+-672 -673 0
+-672 -674 0
+-672 -675 0
+-673 -674 0
+-673 -675 0
+-674 -675 0
+676 677 678 679 680 0
+-676 -677 0
+-676 -678 0
+-676 -679 0
+-676 -680 0
+-677 -678 0
+-677 -679 0
+-677 -680 0
+-678 -679 0
+-678 -680 0
+-679 -680 0
+681 682 683 684 685 0
+-681 -682 0
+-681 -683 0
+-681 -684 0
+-681 -685 0
+-682 -683 0
+-682 -684 0
+-682 -685 0
+-683 -684 0
+-683 -685 0
+-684 -685 0
+686 687 688 689 690 0
+-686 -687 0
+-686 -688 0
+-686 -689 0
+-686 -690 0
+-687 -688 0
+-687 -689 0
+-687 -690 0
+-688 -689 0
+-688 -690 0
+-689 -690 0
+691 692 693 694 695 0
+-691 -692 0
+-691 -693 0
+-691 -694 0
+-691 -695 0
+-692 -693 0
+-692 -694 0
+-692 -695 0
+-693 -694 0
+-693 -695 0
+-694 -695 0
+-1 -646 6 0
+-1 -647 7 0
+-1 -648 8 0
+-1 -649 9 0
+-1 -650 10 0
+-2 -656 6 0
+-2 -657 7 0
+-2 -658 8 0
+-2 -659 9 0
+-2 -660 10 0
+-3 -666 6 0
+-3 -667 7 0
+-3 -668 8 0
+-3 -669 9 0
+-3 -670 10 0
+-4 -676 6 0
+-4 -677 7 0
+-4 -678 8 0
+-4 -679 9 0
+-4 -680 10 0
+-5 -686 6 0
+-5 -687 7 0
+-5 -688 8 0
+-5 -689 9 0
+-5 -690 10 0
+-1 -651 11 0
+-1 -652 12 0
+-1 -653 13 0
+-1 -654 14 0
+-1 -655 15 0
+-2 -661 11 0
+-2 -662 12 0
+-2 -663 13 0
+-2 -664 14 0
+-2 -665 15 0
+-3 -671 11 0
+-3 -672 12 0
+-3 -673 13 0
+-3 -674 14 0
+-3 -675 15 0
+-4 -681 11 0
+-4 -682 12 0
+-4 -683 13 0
+-4 -684 14 0
+-4 -685 15 0
+-5 -691 11 0
+-5 -692 12 0
+-5 -693 13 0
+-5 -694 14 0
+-5 -695 15 0
+-11 -646 16 0
+-11 -647 17 0
+-11 -648 18 0
+-11 -649 19 0
+-11 -650 20 0
+-12 -656 16 0
+-12 -657 17 0
+-12 -658 18 0
+-12 -659 19 0
+-12 -660 20 0
+-13 -666 16 0
+-13 -667 17 0
+-13 -668 18 0
+-13 -669 19 0
+-13 -670 20 0
+-14 -676 16 0
+-14 -677 17 0
+-14 -678 18 0
+-14 -679 19 0
+-14 -680 20 0
+-15 -686 16 0
+-15 -687 17 0
+-15 -688 18 0
+-15 -689 19 0
+-15 -690 20 0
+-11 -651 21 0
+-11 -652 22 0
+-11 -653 23 0
+-11 -654 24 0
+-11 -655 25 0
+-12 -661 21 0
+-12 -662 22 0
+-12 -663 23 0
+-12 -664 24 0
+-12 -665 25 0
+-13 -671 21 0
+-13 -672 22 0
+-13 -673 23 0
+-13 -674 24 0
+-13 -675 25 0
+-14 -681 21 0
+-14 -682 22 0
+-14 -683 23 0
+-14 -684 24 0
+-14 -685 25 0
+-15 -691 21 0
+-15 -692 22 0
+-15 -693 23 0
+-15 -694 24 0
+-15 -695 25 0
+-16 -646 26 0
+-16 -647 27 0
+-16 -648 28 0
+-16 -649 29 0
+-16 -650 30 0
+-17 -656 26 0
+-17 -657 27 0
+-17 -658 28 0
+-17 -659 29 0
+-17 -660 30 0
+-18 -666 26 0
+-18 -667 27 0
+-18 -668 28 0
+-18 -669 29 0
+-18 -670 30 0
+-19 -676 26 0
+-19 -677 27 0
+-19 -678 28 0
+-19 -679 29 0
+-19 -680 30 0
+-20 -686 26 0
+-20 -687 27 0
+-20 -688 28 0
+-20 -689 29 0
+-20 -690 30 0
+-16 -651 31 0
+-16 -652 32 0
+-16 -653 33 0
+-16 -654 34 0
+-16 -655 35 0
+-17 -661 31 0
+-17 -662 32 0
+-17 -663 33 0
+-17 -664 34 0
+-17 -665 35 0
+-18 -671 31 0
+-18 -672 32 0
+-18 -673 33 0
+-18 -674 34 0
+-18 -675 35 0
+-19 -681 31 0
+-19 -682 32 0
+-19 -683 33 0
+-19 -684 34 0
+-19 -685 35 0
+-20 -691 31 0
+-20 -692 32 0
+-20 -693 33 0
+-20 -694 34 0
+-20 -695 35 0
+-21 -646 36 0
+-21 -647 37 0
+-21 -648 38 0
+-21 -649 39 0
+-21 -650 40 0
+-22 -656 36 0
+-22 -657 37 0
+-22 -658 38 0
+-22 -659 39 0
+-22 -660 40 0
+-23 -666 36 0
+-23 -667 37 0
+-23 -668 38 0
+-23 -669 39 0
+-23 -670 40 0
+-24 -676 36 0
+-24 -677 37 0
+-24 -678 38 0
+-24 -679 39 0
+-24 -680 40 0
+-25 -686 36 0
+-25 -687 37 0
+-25 -688 38 0
+-25 -689 39 0
+-25 -690 40 0
+-21 -651 41 0
+-21 -652 42 0
+-21 -653 43 0
+-21 -654 44 0
+-21 -655 45 0
+-22 -661 41 0
+-22 -662 42 0
+-22 -663 43 0
+-22 -664 44 0
+-22 -665 45 0
+-23 -671 41 0
+-23 -672 42 0
+-23 -673 43 0
+-23 -674 44 0
+-23 -675 45 0
+-24 -681 41 0
+-24 -682 42 0
+-24 -683 43 0
+-24 -684 44 0
+-24 -685 45 0
+-25 -691 41 0
+-25 -692 42 0
+-25 -693 43 0
+-25 -694 44 0
+-25 -695 45 0
+-26 -646 46 0
+-26 -647 47 0
+-26 -648 48 0
+-26 -649 49 0
+-26 -650 50 0
+-27 -656 46 0
+-27 -657 47 0
+-27 -658 48 0
+-27 -659 49 0
+-27 -660 50 0
+-28 -666 46 0
+-28 -667 47 0
+-28 -668 48 0
+-28 -669 49 0
+-28 -670 50 0
+-29 -676 46 0
+-29 -677 47 0
+-29 -678 48 0
+-29 -679 49 0
+-29 -680 50 0
+-30 -686 46 0
+-30 -687 47 0
+-30 -688 48 0
+-30 -689 49 0
+-30 -690 50 0
+-26 -651 51 0
+-26 -652 52 0
+-26 -653 53 0
+-26 -654 54 0
+-26 -655 55 0
+-27 -661 51 0
+-27 -662 52 0
+-27 -663 53 0
+-27 -664 54 0
+-27 -665 55 0
+-28 -671 51 0
+-28 -672 52 0
+-28 -673 53 0
+-28 -674 54 0
+-28 -675 55 0
+-29 -681 51 0
+-29 -682 52 0
+-29 -683 53 0
+-29 -684 54 0
+-29 -685 55 0
+-30 -691 51 0
+-30 -692 52 0
+-30 -693 53 0
+-30 -694 54 0
+-30 -695 55 0
+-31 -646 56 0
+-31 -647 57 0
+-31 -648 58 0
+-31 -649 59 0
+-31 -650 60 0
+-32 -656 56 0
+-32 -657 57 0
+-32 -658 58 0
+-32 -659 59 0
+-32 -660 60 0
+-33 -666 56 0
+-33 -667 57 0
+-33 -668 58 0
+-33 -669 59 0
+-33 -670 60 0
+-34 -676 56 0
+-34 -677 57 0
+-34 -678 58 0
+-34 -679 59 0
+-34 -680 60 0
+-35 -686 56 0
+-35 -687 57 0
+-35 -688 58 0
+-35 -689 59 0
+-35 -690 60 0
+-31 -651 61 0
+-31 -652 62 0
+-31 -653 63 0
+-31 -654 64 0
+-31 -655 65 0
+-32 -661 61 0
+-32 -662 62 0
+-32 -663 63 0
+-32 -664 64 0
+-32 -665 65 0
+-33 -671 61 0
+-33 -672 62 0
+-33 -673 63 0
+-33 -674 64 0
+-33 -675 65 0
+-34 -681 61 0
+-34 -682 62 0
+-34 -683 63 0
+-34 -684 64 0
+-34 -685 65 0
+-35 -691 61 0
+-35 -692 62 0
+-35 -693 63 0
+-35 -694 64 0
+-35 -695 65 0
+-36 -646 66 0
+-36 -647 67 0
+-36 -648 68 0
+-36 -649 69 0
+-36 -650 70 0
+-37 -656 66 0
+-37 -657 67 0
+-37 -658 68 0
+-37 -659 69 0
+-37 -660 70 0
+-38 -666 66 0
+-38 -667 67 0
+-38 -668 68 0
+-38 -669 69 0
+-38 -670 70 0
+-39 -676 66 0
+-39 -677 67 0
+-39 -678 68 0
+-39 -679 69 0
+-39 -680 70 0
+-40 -686 66 0
+-40 -687 67 0
+-40 -688 68 0
+-40 -689 69 0
+-40 -690 70 0
+-36 -651 71 0
+-36 -652 72 0
+-36 -653 73 0
+-36 -654 74 0
+-36 -655 75 0
+-37 -661 71 0
+-37 -662 72 0
+-37 -663 73 0
+-37 -664 74 0
+-37 -665 75 0
+-38 -671 71 0
+-38 -672 72 0
+-38 -673 73 0
+-38 -674 74 0
+-38 -675 75 0
+-39 -681 71 0
+-39 -682 72 0
+-39 -683 73 0
+-39 -684 74 0
+-39 -685 75 0
+-40 -691 71 0
+-40 -692 72 0
+-40 -693 73 0
+-40 -694 74 0
+-40 -695 75 0
+-41 -646 76 0
+-41 -647 77 0
+-41 -648 78 0
+-41 -649 79 0
+-41 -650 80 0
+-42 -656 76 0
+-42 -657 77 0
+-42 -658 78 0
+-42 -659 79 0
+-42 -660 80 0
+-43 -666 76 0
+-43 -667 77 0
+-43 -668 78 0
+-43 -669 79 0
+-43 -670 80 0
+-44 -676 76 0
+-44 -677 77 0
+-44 -678 78 0
+-44 -679 79 0
+-44 -680 80 0
+-45 -686 76 0
+-45 -687 77 0
+-45 -688 78 0
+-45 -689 79 0
+-45 -690 80 0
+-41 -651 81 0
+-41 -652 82 0
+-41 -653 83 0
+-41 -654 84 0
+-41 -655 85 0
+-42 -661 81 0
+-42 -662 82 0
+-42 -663 83 0
+-42 -664 84 0
+-42 -665 85 0
+-43 -671 81 0
+-43 -672 82 0
+-43 -673 83 0
+-43 -674 84 0
+-43 -675 85 0
+-44 -681 81 0
+-44 -682 82 0
+-44 -683 83 0
+-44 -684 84 0
+-44 -685 85 0
+-45 -691 81 0
+-45 -692 82 0
+-45 -693 83 0
+-45 -694 84 0
+-45 -695 85 0
+-46 -646 86 0
+-46 -647 87 0
+-46 -648 88 0
+-46 -649 89 0
+-46 -650 90 0
+-47 -656 86 0
+-47 -657 87 0
+-47 -658 88 0
+-47 -659 89 0
+-47 -660 90 0
+-48 -666 86 0
+-48 -667 87 0
+-48 -668 88 0
+-48 -669 89 0
+-48 -670 90 0
+-49 -676 86 0
+-49 -677 87 0
+-49 -678 88 0
+-49 -679 89 0
+-49 -680 90 0
+-50 -686 86 0
+-50 -687 87 0
+-50 -688 88 0
+-50 -689 89 0
+-50 -690 90 0
+-46 -651 91 0
+-46 -652 92 0
+-46 -653 93 0
+-46 -654 94 0
+-46 -655 95 0
+-47 -661 91 0
+-47 -662 92 0
+-47 -663 93 0
+-47 -664 94 0
+-47 -665 95 0
+-48 -671 91 0
+-48 -672 92 0
+-48 -673 93 0
+-48 -674 94 0
+-48 -675 95 0
+-49 -681 91 0
+-49 -682 92 0
+-49 -683 93 0
+-49 -684 94 0
+-49 -685 95 0
+-50 -691 91 0
+-50 -692 92 0
+-50 -693 93 0
+-50 -694 94 0
+-50 -695 95 0
+-51 -646 96 0
+-51 -647 97 0
+-51 -648 98 0
+-51 -649 99 0
+-51 -650 100 0
+-52 -656 96 0
+-52 -657 97 0
+-52 -658 98 0
+-52 -659 99 0
+-52 -660 100 0
+-53 -666 96 0
+-53 -667 97 0
+-53 -668 98 0
+-53 -669 99 0
+-53 -670 100 0
+-54 -676 96 0
+-54 -677 97 0
+-54 -678 98 0
+-54 -679 99 0
+-54 -680 100 0
+-55 -686 96 0
+-55 -687 97 0
+-55 -688 98 0
+-55 -689 99 0
+-55 -690 100 0
+-51 -651 101 0
+-51 -652 102 0
+-51 -653 103 0
+-51 -654 104 0
+-51 -655 105 0
+-52 -661 101 0
+-52 -662 102 0
+-52 -663 103 0
+-52 -664 104 0
+-52 -665 105 0
+-53 -671 101 0
+-53 -672 102 0
+-53 -673 103 0
+-53 -674 104 0
+-53 -675 105 0
+-54 -681 101 0
+-54 -682 102 0
+-54 -683 103 0
+-54 -684 104 0
+-54 -685 105 0
+-55 -691 101 0
+-55 -692 102 0
+-55 -693 103 0
+-55 -694 104 0
+-55 -695 105 0
+-56 -646 106 0
+-56 -647 107 0
+-56 -648 108 0
+-56 -649 109 0
+-56 -650 110 0
+-57 -656 106 0
+-57 -657 107 0
+-57 -658 108 0
+-57 -659 109 0
+-57 -660 110 0
+-58 -666 106 0
+-58 -667 107 0
+-58 -668 108 0
+-58 -669 109 0
+-58 -670 110 0
+-59 -676 106 0
+-59 -677 107 0
+-59 -678 108 0
+-59 -679 109 0
+-59 -680 110 0
+-60 -686 106 0
+-60 -687 107 0
+-60 -688 108 0
+-60 -689 109 0
+-60 -690 110 0
+-56 -651 111 0
+-56 -652 112 0
+-56 -653 113 0
+-56 -654 114 0
+-56 -655 115 0
+-57 -661 111 0
+-57 -662 112 0
+-57 -663 113 0
+-57 -664 114 0
+-57 -665 115 0
+-58 -671 111 0
+-58 -672 112 0
+-58 -673 113 0
+-58 -674 114 0
+-58 -675 115 0
+-59 -681 111 0
+-59 -682 112 0
+-59 -683 113 0
+-59 -684 114 0
+-59 -685 115 0
+-60 -691 111 0
+-60 -692 112 0
+-60 -693 113 0
+-60 -694 114 0
+-60 -695 115 0
+-61 -646 116 0
+-61 -647 117 0
+-61 -648 118 0
+-61 -649 119 0
+-61 -650 120 0
+-62 -656 116 0
+-62 -657 117 0
+-62 -658 118 0
+-62 -659 119 0
+-62 -660 120 0
+-63 -666 116 0
+-63 -667 117 0
+-63 -668 118 0
+-63 -669 119 0
+-63 -670 120 0
+-64 -676 116 0
+-64 -677 117 0
+-64 -678 118 0
+-64 -679 119 0
+-64 -680 120 0
+-65 -686 116 0
+-65 -687 117 0
+-65 -688 118 0
+-65 -689 119 0
+-65 -690 120 0
+-61 -651 121 0
+-61 -652 122 0
+-61 -653 123 0
+-61 -654 124 0
+-61 -655 125 0
+-62 -661 121 0
+-62 -662 122 0
+-62 -663 123 0
+-62 -664 124 0
+-62 -665 125 0
+-63 -671 121 0
+-63 -672 122 0
+-63 -673 123 0
+-63 -674 124 0
+-63 -675 125 0
+-64 -681 121 0
+-64 -682 122 0
+-64 -683 123 0
+-64 -684 124 0
+-64 -685 125 0
+-65 -691 121 0
+-65 -692 122 0
+-65 -693 123 0
+-65 -694 124 0
+-65 -695 125 0
+-66 -646 126 0
+-66 -647 127 0
+-66 -648 128 0
+-66 -649 129 0
+-66 -650 130 0
+-67 -656 126 0
+-67 -657 127 0
+-67 -658 128 0
+-67 -659 129 0
+-67 -660 130 0
+-68 -666 126 0
+-68 -667 127 0
+-68 -668 128 0
+-68 -669 129 0
+-68 -670 130 0
+-69 -676 126 0
+-69 -677 127 0
+-69 -678 128 0
+-69 -679 129 0
+-69 -680 130 0
+-70 -686 126 0
+-70 -687 127 0
+-70 -688 128 0
+-70 -689 129 0
+-70 -690 130 0
+-66 -651 131 0
+-66 -652 132 0
+-66 -653 133 0
+-66 -654 134 0
+-66 -655 135 0
+-67 -661 131 0
+-67 -662 132 0
+-67 -663 133 0
+-67 -664 134 0
+-67 -665 135 0
+-68 -671 131 0
+-68 -672 132 0
+-68 -673 133 0
+-68 -674 134 0
+-68 -675 135 0
+-69 -681 131 0
+-69 -682 132 0
+-69 -683 133 0
+-69 -684 134 0
+-69 -685 135 0
+-70 -691 131 0
+-70 -692 132 0
+-70 -693 133 0
+-70 -694 134 0
+-70 -695 135 0
+-71 -646 136 0
+-71 -647 137 0
+-71 -648 138 0
+-71 -649 139 0
+-71 -650 140 0
+-72 -656 136 0
+-72 -657 137 0
+-72 -658 138 0
+-72 -659 139 0
+-72 -660 140 0
+-73 -666 136 0
+-73 -667 137 0
+-73 -668 138 0
+-73 -669 139 0
+-73 -670 140 0
+-74 -676 136 0
+-74 -677 137 0
+-74 -678 138 0
+-74 -679 139 0
+-74 -680 140 0
+-75 -686 136 0
+-75 -687 137 0
+-75 -688 138 0
+-75 -689 139 0
+-75 -690 140 0
+-71 -651 141 0
+-71 -652 142 0
+-71 -653 143 0
+-71 -654 144 0
+-71 -655 145 0
+-72 -661 141 0
+-72 -662 142 0
+-72 -663 143 0
+-72 -664 144 0
+-72 -665 145 0
+-73 -671 141 0
+-73 -672 142 0
+-73 -673 143 0
+-73 -674 144 0
+-73 -675 145 0
+-74 -681 141 0
+-74 -682 142 0
+-74 -683 143 0
+-74 -684 144 0
+-74 -685 145 0
+-75 -691 141 0
+-75 -692 142 0
+-75 -693 143 0
+-75 -694 144 0
+-75 -695 145 0
+-76 -646 146 0
+-76 -647 147 0
+-76 -648 148 0
+-76 -649 149 0
+-76 -650 150 0
+-77 -656 146 0
+-77 -657 147 0
+-77 -658 148 0
+-77 -659 149 0
+-77 -660 150 0
+-78 -666 146 0
+-78 -667 147 0
+-78 -668 148 0
+-78 -669 149 0
+-78 -670 150 0
+-79 -676 146 0
+-79 -677 147 0
+-79 -678 148 0
+-79 -679 149 0
+-79 -680 150 0
+-80 -686 146 0
+-80 -687 147 0
+-80 -688 148 0
+-80 -689 149 0
+-80 -690 150 0
+-76 -651 151 0
+-76 -652 152 0
+-76 -653 153 0
+-76 -654 154 0
+-76 -655 155 0
+-77 -661 151 0
+-77 -662 152 0
+-77 -663 153 0
+-77 -664 154 0
+-77 -665 155 0
+-78 -671 151 0
+-78 -672 152 0
+-78 -673 153 0
+-78 -674 154 0
+-78 -675 155 0
+-79 -681 151 0
+-79 -682 152 0
+-79 -683 153 0
+-79 -684 154 0
+-79 -685 155 0
+-80 -691 151 0
+-80 -692 152 0
+-80 -693 153 0
+-80 -694 154 0
+-80 -695 155 0
+-81 -646 156 0
+-81 -647 157 0
+-81 -648 158 0
+-81 -649 159 0
+-81 -650 160 0
+-82 -656 156 0
+-82 -657 157 0
+-82 -658 158 0
+-82 -659 159 0
+-82 -660 160 0
+-83 -666 156 0
+-83 -667 157 0
+-83 -668 158 0
+-83 -669 159 0
+-83 -670 160 0
+-84 -676 156 0
+-84 -677 157 0
+-84 -678 158 0
+-84 -679 159 0
+-84 -680 160 0
+-85 -686 156 0
+-85 -687 157 0
+-85 -688 158 0
+-85 -689 159 0
+-85 -690 160 0
+-81 -651 161 0
+-81 -652 162 0
+-81 -653 163 0
+-81 -654 164 0
+-81 -655 165 0
+-82 -661 161 0
+-82 -662 162 0
+-82 -663 163 0
+-82 -664 164 0
+-82 -665 165 0
+-83 -671 161 0
+-83 -672 162 0
+-83 -673 163 0
+-83 -674 164 0
+-83 -675 165 0
+-84 -681 161 0
+-84 -682 162 0
+-84 -683 163 0
+-84 -684 164 0
+-84 -685 165 0
+-85 -691 161 0
+-85 -692 162 0
+-85 -693 163 0
+-85 -694 164 0
+-85 -695 165 0
+-86 -646 166 0
+-86 -647 167 0
+-86 -648 168 0
+-86 -649 169 0
+-86 -650 170 0
+-87 -656 166 0
+-87 -657 167 0
+-87 -658 168 0
+-87 -659 169 0
+-87 -660 170 0
+-88 -666 166 0
+-88 -667 167 0
+-88 -668 168 0
+-88 -669 169 0
+-88 -670 170 0
+-89 -676 166 0
+-89 -677 167 0
+-89 -678 168 0
+-89 -679 169 0
+-89 -680 170 0
+-90 -686 166 0
+-90 -687 167 0
+-90 -688 168 0
+-90 -689 169 0
+-90 -690 170 0
+-86 -651 171 0
+-86 -652 172 0
+-86 -653 173 0
+-86 -654 174 0
+-86 -655 175 0
+-87 -661 171 0
+-87 -662 172 0
+-87 -663 173 0
+-87 -664 174 0
+-87 -665 175 0
+-88 -671 171 0
+-88 -672 172 0
+-88 -673 173 0
+-88 -674 174 0
+-88 -675 175 0
+-89 -681 171 0
+-89 -682 172 0
+-89 -683 173 0
+-89 -684 174 0
+-89 -685 175 0
+-90 -691 171 0
+-90 -692 172 0
+-90 -693 173 0
+-90 -694 174 0
+-90 -695 175 0
+-91 -646 176 0
+-91 -647 177 0
+-91 -648 178 0
+-91 -649 179 0
+-91 -650 180 0
+-92 -656 176 0
+-92 -657 177 0
+-92 -658 178 0
+-92 -659 179 0
+-92 -660 180 0
+-93 -666 176 0
+-93 -667 177 0
+-93 -668 178 0
+-93 -669 179 0
+-93 -670 180 0
+-94 -676 176 0
+-94 -677 177 0
+-94 -678 178 0
+-94 -679 179 0
+-94 -680 180 0
+-95 -686 176 0
+-95 -687 177 0
+-95 -688 178 0
+-95 -689 179 0
+-95 -690 180 0
+-91 -651 181 0
+-91 -652 182 0
+-91 -653 183 0
+-91 -654 184 0
+-91 -655 185 0
+-92 -661 181 0
+-92 -662 182 0
+-92 -663 183 0
+-92 -664 184 0
+-92 -665 185 0
+-93 -671 181 0
+-93 -672 182 0
+-93 -673 183 0
+-93 -674 184 0
+-93 -675 185 0
+-94 -681 181 0
+-94 -682 182 0
+-94 -683 183 0
+-94 -684 184 0
+-94 -685 185 0
+-95 -691 181 0
+-95 -692 182 0
+-95 -693 183 0
+-95 -694 184 0
+-95 -695 185 0
+-96 -646 186 0
+-96 -647 187 0
+-96 -648 188 0
+-96 -649 189 0
+-96 -650 190 0
+-97 -656 186 0
+-97 -657 187 0
+-97 -658 188 0
+-97 -659 189 0
+-97 -660 190 0
+-98 -666 186 0
+-98 -667 187 0
+-98 -668 188 0
+-98 -669 189 0
+-98 -670 190 0
+-99 -676 186 0
+-99 -677 187 0
+-99 -678 188 0
+-99 -679 189 0
+-99 -680 190 0
+-100 -686 186 0
+-100 -687 187 0
+-100 -688 188 0
+-100 -689 189 0
+-100 -690 190 0
+-96 -651 191 0
+-96 -652 192 0
+-96 -653 193 0
+-96 -654 194 0
+-96 -655 195 0
+-97 -661 191 0
+-97 -662 192 0
+-97 -663 193 0
+-97 -664 194 0
+-97 -665 195 0
+-98 -671 191 0
+-98 -672 192 0
+-98 -673 193 0
+-98 -674 194 0
+-98 -675 195 0
+-99 -681 191 0
+-99 -682 192 0
+-99 -683 193 0
+-99 -684 194 0
+-99 -685 195 0
+-100 -691 191 0
+-100 -692 192 0
+-100 -693 193 0
+-100 -694 194 0
+-100 -695 195 0
+-101 -646 196 0
+-101 -647 197 0
+-101 -648 198 0
+-101 -649 199 0
+-101 -650 200 0
+-102 -656 196 0
+-102 -657 197 0
+-102 -658 198 0
+-102 -659 199 0
+-102 -660 200 0
+-103 -666 196 0
+-103 -667 197 0
+-103 -668 198 0
+-103 -669 199 0
+-103 -670 200 0
+-104 -676 196 0
+-104 -677 197 0
+-104 -678 198 0
+-104 -679 199 0
+-104 -680 200 0
+-105 -686 196 0
+-105 -687 197 0
+-105 -688 198 0
+-105 -689 199 0
+-105 -690 200 0
+-101 -651 201 0
+-101 -652 202 0
+-101 -653 203 0
+-101 -654 204 0
+-101 -655 205 0
+-102 -661 201 0
+-102 -662 202 0
+-102 -663 203 0
+-102 -664 204 0
+-102 -665 205 0
+-103 -671 201 0
+-103 -672 202 0
+-103 -673 203 0
+-103 -674 204 0
+-103 -675 205 0
+-104 -681 201 0
+-104 -682 202 0
+-104 -683 203 0
+-104 -684 204 0
+-104 -685 205 0
+-105 -691 201 0
+-105 -692 202 0
+-105 -693 203 0
+-105 -694 204 0
+-105 -695 205 0
+-106 -646 206 0
+-106 -647 207 0
+-106 -648 208 0
+-106 -649 209 0
+-106 -650 210 0
+-107 -656 206 0
+-107 -657 207 0
+-107 -658 208 0
+-107 -659 209 0
+-107 -660 210 0
+-108 -666 206 0
+-108 -667 207 0
+-108 -668 208 0
+-108 -669 209 0
+-108 -670 210 0
+-109 -676 206 0
+-109 -677 207 0
+-109 -678 208 0
+-109 -679 209 0
+-109 -680 210 0
+-110 -686 206 0
+-110 -687 207 0
+-110 -688 208 0
+-110 -689 209 0
+-110 -690 210 0
+-106 -651 211 0
+-106 -652 212 0
+-106 -653 213 0
+-106 -654 214 0
+-106 -655 215 0
+-107 -661 211 0
+-107 -662 212 0
+-107 -663 213 0
+-107 -664 214 0
+-107 -665 215 0
+-108 -671 211 0
+-108 -672 212 0
+-108 -673 213 0
+-108 -674 214 0
+-108 -675 215 0
+-109 -681 211 0
+-109 -682 212 0
+-109 -683 213 0
+-109 -684 214 0
+-109 -685 215 0
+-110 -691 211 0
+-110 -692 212 0
+-110 -693 213 0
+-110 -694 214 0
+-110 -695 215 0
+-111 -646 216 0
+-111 -647 217 0
+-111 -648 218 0
+-111 -649 219 0
+-111 -650 220 0
+-112 -656 216 0
+-112 -657 217 0
+-112 -658 218 0
+-112 -659 219 0
+-112 -660 220 0
+-113 -666 216 0
+-113 -667 217 0
+-113 -668 218 0
+-113 -669 219 0
+-113 -670 220 0
+-114 -676 216 0
+-114 -677 217 0
+-114 -678 218 0
+-114 -679 219 0
+-114 -680 220 0
+-115 -686 216 0
+-115 -687 217 0
+-115 -688 218 0
+-115 -689 219 0
+-115 -690 220 0
+-111 -651 221 0
+-111 -652 222 0
+-111 -653 223 0
+-111 -654 224 0
+-111 -655 225 0
+-112 -661 221 0
+-112 -662 222 0
+-112 -663 223 0
+-112 -664 224 0
+-112 -665 225 0
+-113 -671 221 0
+-113 -672 222 0
+-113 -673 223 0
+-113 -674 224 0
+-113 -675 225 0
+-114 -681 221 0
+-114 -682 222 0
+-114 -683 223 0
+-114 -684 224 0
+-114 -685 225 0
+-115 -691 221 0
+-115 -692 222 0
+-115 -693 223 0
+-115 -694 224 0
+-115 -695 225 0
+-116 -646 226 0
+-116 -647 227 0
+-116 -648 228 0
+-116 -649 229 0
+-116 -650 230 0
+-117 -656 226 0
+-117 -657 227 0
+-117 -658 228 0
+-117 -659 229 0
+-117 -660 230 0
+-118 -666 226 0
+-118 -667 227 0
+-118 -668 228 0
+-118 -669 229 0
+-118 -670 230 0
+-119 -676 226 0
+-119 -677 227 0
+-119 -678 228 0
+-119 -679 229 0
+-119 -680 230 0
+-120 -686 226 0
+-120 -687 227 0
+-120 -688 228 0
+-120 -689 229 0
+-120 -690 230 0
+-116 -651 231 0
+-116 -652 232 0
+-116 -653 233 0
+-116 -654 234 0
+-116 -655 235 0
+-117 -661 231 0
+-117 -662 232 0
+-117 -663 233 0
+-117 -664 234 0
+-117 -665 235 0
+-118 -671 231 0
+-118 -672 232 0
+-118 -673 233 0
+-118 -674 234 0
+-118 -675 235 0
+-119 -681 231 0
+-119 -682 232 0
+-119 -683 233 0
+-119 -684 234 0
+-119 -685 235 0
+-120 -691 231 0
+-120 -692 232 0
+-120 -693 233 0
+-120 -694 234 0
+-120 -695 235 0
+-121 -646 236 0
+-121 -647 237 0
+-121 -648 238 0
+-121 -649 239 0
+-121 -650 240 0
+-122 -656 236 0
+-122 -657 237 0
+-122 -658 238 0
+-122 -659 239 0
+-122 -660 240 0
+-123 -666 236 0
+-123 -667 237 0
+-123 -668 238 0
+-123 -669 239 0
+-123 -670 240 0
+-124 -676 236 0
+-124 -677 237 0
+-124 -678 238 0
+-124 -679 239 0
+-124 -680 240 0
+-125 -686 236 0
+-125 -687 237 0
+-125 -688 238 0
+-125 -689 239 0
+-125 -690 240 0
+-121 -651 241 0
+-121 -652 242 0
+-121 -653 243 0
+-121 -654 244 0
+-121 -655 245 0
+-122 -661 241 0
+-122 -662 242 0
+-122 -663 243 0
+-122 -664 244 0
+-122 -665 245 0
+-123 -671 241 0
+-123 -672 242 0
+-123 -673 243 0
+-123 -674 244 0
+-123 -675 245 0
+-124 -681 241 0
+-124 -682 242 0
+-124 -683 243 0
+-124 -684 244 0
+-124 -685 245 0
+-125 -691 241 0
+-125 -692 242 0
+-125 -693 243 0
+-125 -694 244 0
+-125 -695 245 0
+-126 -646 246 0
+-126 -647 247 0
+-126 -648 248 0
+-126 -649 249 0
+-126 -650 250 0
+-127 -656 246 0
+-127 -657 247 0
+-127 -658 248 0
+-127 -659 249 0
+-127 -660 250 0
+-128 -666 246 0
+-128 -667 247 0
+-128 -668 248 0
+-128 -669 249 0
+-128 -670 250 0
+-129 -676 246 0
+-129 -677 247 0
+-129 -678 248 0
+-129 -679 249 0
+-129 -680 250 0
+-130 -686 246 0
+-130 -687 247 0
+-130 -688 248 0
+-130 -689 249 0
+-130 -690 250 0
+-126 -651 251 0
+-126 -652 252 0
+-126 -653 253 0
+-126 -654 254 0
+-126 -655 255 0
+-127 -661 251 0
+-127 -662 252 0
+-127 -663 253 0
+-127 -664 254 0
+-127 -665 255 0
+-128 -671 251 0
+-128 -672 252 0
+-128 -673 253 0
+-128 -674 254 0
+-128 -675 255 0
+-129 -681 251 0
+-129 -682 252 0
+-129 -683 253 0
+-129 -684 254 0
+-129 -685 255 0
+-130 -691 251 0
+-130 -692 252 0
+-130 -693 253 0
+-130 -694 254 0
+-130 -695 255 0
+-131 -646 256 0
+-131 -647 257 0
+-131 -648 258 0
+-131 -649 259 0
+-131 -650 260 0
+-132 -656 256 0
+-132 -657 257 0
+-132 -658 258 0
+-132 -659 259 0
+-132 -660 260 0
+-133 -666 256 0
+-133 -667 257 0
+-133 -668 258 0
+-133 -669 259 0
+-133 -670 260 0
+-134 -676 256 0
+-134 -677 257 0
+-134 -678 258 0
+-134 -679 259 0
+-134 -680 260 0
+-135 -686 256 0
+-135 -687 257 0
+-135 -688 258 0
+-135 -689 259 0
+-135 -690 260 0
+-131 -651 261 0
+-131 -652 262 0
+-131 -653 263 0
+-131 -654 264 0
+-131 -655 265 0
+-132 -661 261 0
+-132 -662 262 0
+-132 -663 263 0
+-132 -664 264 0
+-132 -665 265 0
+-133 -671 261 0
+-133 -672 262 0
+-133 -673 263 0
+-133 -674 264 0
+-133 -675 265 0
+-134 -681 261 0
+-134 -682 262 0
+-134 -683 263 0
+-134 -684 264 0
+-134 -685 265 0
+-135 -691 261 0
+-135 -692 262 0
+-135 -693 263 0
+-135 -694 264 0
+-135 -695 265 0
+-136 -646 266 0
+-136 -647 267 0
+-136 -648 268 0
+-136 -649 269 0
+-136 -650 270 0
+-137 -656 266 0
+-137 -657 267 0
+-137 -658 268 0
+-137 -659 269 0
+-137 -660 270 0
+-138 -666 266 0
+-138 -667 267 0
+-138 -668 268 0
+-138 -669 269 0
+-138 -670 270 0
+-139 -676 266 0
+-139 -677 267 0
+-139 -678 268 0
+-139 -679 269 0
+-139 -680 270 0
+-140 -686 266 0
+-140 -687 267 0
+-140 -688 268 0
+-140 -689 269 0
+-140 -690 270 0
+-136 -651 271 0
+-136 -652 272 0
+-136 -653 273 0
+-136 -654 274 0
+-136 -655 275 0
+-137 -661 271 0
+-137 -662 272 0
+-137 -663 273 0
+-137 -664 274 0
+-137 -665 275 0
+-138 -671 271 0
+-138 -672 272 0
+-138 -673 273 0
+-138 -674 274 0
+-138 -675 275 0
+-139 -681 271 0
+-139 -682 272 0
+-139 -683 273 0
+-139 -684 274 0
+-139 -685 275 0
+-140 -691 271 0
+-140 -692 272 0
+-140 -693 273 0
+-140 -694 274 0
+-140 -695 275 0
+-141 -646 276 0
+-141 -647 277 0
+-141 -648 278 0
+-141 -649 279 0
+-141 -650 280 0
+-142 -656 276 0
+-142 -657 277 0
+-142 -658 278 0
+-142 -659 279 0
+-142 -660 280 0
+-143 -666 276 0
+-143 -667 277 0
+-143 -668 278 0
+-143 -669 279 0
+-143 -670 280 0
+-144 -676 276 0
+-144 -677 277 0
+-144 -678 278 0
+-144 -679 279 0
+-144 -680 280 0
+-145 -686 276 0
+-145 -687 277 0
+-145 -688 278 0
+-145 -689 279 0
+-145 -690 280 0
+-141 -651 281 0
+-141 -652 282 0
+-141 -653 283 0
+-141 -654 284 0
+-141 -655 285 0
+-142 -661 281 0
+-142 -662 282 0
+-142 -663 283 0
+-142 -664 284 0
+-142 -665 285 0
+-143 -671 281 0
+-143 -672 282 0
+-143 -673 283 0
+-143 -674 284 0
+-143 -675 285 0
+-144 -681 281 0
+-144 -682 282 0
+-144 -683 283 0
+-144 -684 284 0
+-144 -685 285 0
+-145 -691 281 0
+-145 -692 282 0
+-145 -693 283 0
+-145 -694 284 0
+-145 -695 285 0
+-146 -646 286 0
+-146 -647 287 0
+-146 -648 288 0
+-146 -649 289 0
+-146 -650 290 0
+-147 -656 286 0
+-147 -657 287 0
+-147 -658 288 0
+-147 -659 289 0
+-147 -660 290 0
+-148 -666 286 0
+-148 -667 287 0
+-148 -668 288 0
+-148 -669 289 0
+-148 -670 290 0
+-149 -676 286 0
+-149 -677 287 0
+-149 -678 288 0
+-149 -679 289 0
+-149 -680 290 0
+-150 -686 286 0
+-150 -687 287 0
+-150 -688 288 0
+-150 -689 289 0
+-150 -690 290 0
+-146 -651 291 0
+-146 -652 292 0
+-146 -653 293 0
+-146 -654 294 0
+-146 -655 295 0
+-147 -661 291 0
+-147 -662 292 0
+-147 -663 293 0
+-147 -664 294 0
+-147 -665 295 0
+-148 -671 291 0
+-148 -672 292 0
+-148 -673 293 0
+-148 -674 294 0
+-148 -675 295 0
+-149 -681 291 0
+-149 -682 292 0
+-149 -683 293 0
+-149 -684 294 0
+-149 -685 295 0
+-150 -691 291 0
+-150 -692 292 0
+-150 -693 293 0
+-150 -694 294 0
+-150 -695 295 0
+-151 -646 296 0
+-151 -647 297 0
+-151 -648 298 0
+-151 -649 299 0
+-151 -650 300 0
+-152 -656 296 0
+-152 -657 297 0
+-152 -658 298 0
+-152 -659 299 0
+-152 -660 300 0
+-153 -666 296 0
+-153 -667 297 0
+-153 -668 298 0
+-153 -669 299 0
+-153 -670 300 0
+-154 -676 296 0
+-154 -677 297 0
+-154 -678 298 0
+-154 -679 299 0
+-154 -680 300 0
+-155 -686 296 0
+-155 -687 297 0
+-155 -688 298 0
+-155 -689 299 0
+-155 -690 300 0
+-151 -651 301 0
+-151 -652 302 0
+-151 -653 303 0
+-151 -654 304 0
+-151 -655 305 0
+-152 -661 301 0
+-152 -662 302 0
+-152 -663 303 0
+-152 -664 304 0
+-152 -665 305 0
+-153 -671 301 0
+-153 -672 302 0
+-153 -673 303 0
+-153 -674 304 0
+-153 -675 305 0
+-154 -681 301 0
+-154 -682 302 0
+-154 -683 303 0
+-154 -684 304 0
+-154 -685 305 0
+-155 -691 301 0
+-155 -692 302 0
+-155 -693 303 0
+-155 -694 304 0
+-155 -695 305 0
+-156 -646 306 0
+-156 -647 307 0
+-156 -648 308 0
+-156 -649 309 0
+-156 -650 310 0
+-157 -656 306 0
+-157 -657 307 0
+-157 -658 308 0
+-157 -659 309 0
+-157 -660 310 0
+-158 -666 306 0
+-158 -667 307 0
+-158 -668 308 0
+-158 -669 309 0
+-158 -670 310 0
+-159 -676 306 0
+-159 -677 307 0
+-159 -678 308 0
+-159 -679 309 0
+-159 -680 310 0
+-160 -686 306 0
+-160 -687 307 0
+-160 -688 308 0
+-160 -689 309 0
+-160 -690 310 0
+-156 -651 311 0
+-156 -652 312 0
+-156 -653 313 0
+-156 -654 314 0
+-156 -655 315 0
+-157 -661 311 0
+-157 -662 312 0
+-157 -663 313 0
+-157 -664 314 0
+-157 -665 315 0
+-158 -671 311 0
+-158 -672 312 0
+-158 -673 313 0
+-158 -674 314 0
+-158 -675 315 0
+-159 -681 311 0
+-159 -682 312 0
+-159 -683 313 0
+-159 -684 314 0
+-159 -685 315 0
+-160 -691 311 0
+-160 -692 312 0
+-160 -693 313 0
+-160 -694 314 0
+-160 -695 315 0
+-161 -646 316 0
+-161 -647 317 0
+-161 -648 318 0
+-161 -649 319 0
+-161 -650 320 0
+-162 -656 316 0
+-162 -657 317 0
+-162 -658 318 0
+-162 -659 319 0
+-162 -660 320 0
+-163 -666 316 0
+-163 -667 317 0
+-163 -668 318 0
+-163 -669 319 0
+-163 -670 320 0
+-164 -676 316 0
+-164 -677 317 0
+-164 -678 318 0
+-164 -679 319 0
+-164 -680 320 0
+-165 -686 316 0
+-165 -687 317 0
+-165 -688 318 0
+-165 -689 319 0
+-165 -690 320 0
+-161 -651 321 0
+-161 -652 322 0
+-161 -653 323 0
+-161 -654 324 0
+-161 -655 325 0
+-162 -661 321 0
+-162 -662 322 0
+-162 -663 323 0
+-162 -664 324 0
+-162 -665 325 0
+-163 -671 321 0
+-163 -672 322 0
+-163 -673 323 0
+-163 -674 324 0
+-163 -675 325 0
+-164 -681 321 0
+-164 -682 322 0
+-164 -683 323 0
+-164 -684 324 0
+-164 -685 325 0
+-165 -691 321 0
+-165 -692 322 0
+-165 -693 323 0
+-165 -694 324 0
+-165 -695 325 0
+-166 -646 326 0
+-166 -647 327 0
+-166 -648 328 0
+-166 -649 329 0
+-166 -650 330 0
+-167 -656 326 0
+-167 -657 327 0
+-167 -658 328 0
+-167 -659 329 0
+-167 -660 330 0
+-168 -666 326 0
+-168 -667 327 0
+-168 -668 328 0
+-168 -669 329 0
+-168 -670 330 0
+-169 -676 326 0
+-169 -677 327 0
+-169 -678 328 0
+-169 -679 329 0
+-169 -680 330 0
+-170 -686 326 0
+-170 -687 327 0
+-170 -688 328 0
+-170 -689 329 0
+-170 -690 330 0
+-166 -651 331 0
+-166 -652 332 0
+-166 -653 333 0
+-166 -654 334 0
+-166 -655 335 0
+-167 -661 331 0
+-167 -662 332 0
+-167 -663 333 0
+-167 -664 334 0
+-167 -665 335 0
+-168 -671 331 0
+-168 -672 332 0
+-168 -673 333 0
+-168 -674 334 0
+-168 -675 335 0
+-169 -681 331 0
+-169 -682 332 0
+-169 -683 333 0
+-169 -684 334 0
+-169 -685 335 0
+-170 -691 331 0
+-170 -692 332 0
+-170 -693 333 0
+-170 -694 334 0
+-170 -695 335 0
+-171 -646 336 0
+-171 -647 337 0
+-171 -648 338 0
+-171 -649 339 0
+-171 -650 340 0
+-172 -656 336 0
+-172 -657 337 0
+-172 -658 338 0
+-172 -659 339 0
+-172 -660 340 0
+-173 -666 336 0
+-173 -667 337 0
+-173 -668 338 0
+-173 -669 339 0
+-173 -670 340 0
+-174 -676 336 0
+-174 -677 337 0
+-174 -678 338 0
+-174 -679 339 0
+-174 -680 340 0
+-175 -686 336 0
+-175 -687 337 0
+-175 -688 338 0
+-175 -689 339 0
+-175 -690 340 0
+-171 -651 341 0
+-171 -652 342 0
+-171 -653 343 0
+-171 -654 344 0
+-171 -655 345 0
+-172 -661 341 0
+-172 -662 342 0
+-172 -663 343 0
+-172 -664 344 0
+-172 -665 345 0
+-173 -671 341 0
+-173 -672 342 0
+-173 -673 343 0
+-173 -674 344 0
+-173 -675 345 0
+-174 -681 341 0
+-174 -682 342 0
+-174 -683 343 0
+-174 -684 344 0
+-174 -685 345 0
+-175 -691 341 0
+-175 -692 342 0
+-175 -693 343 0
+-175 -694 344 0
+-175 -695 345 0
+-176 -646 346 0
+-176 -647 347 0
+-176 -648 348 0
+-176 -649 349 0
+-176 -650 350 0
+-177 -656 346 0
+-177 -657 347 0
+-177 -658 348 0
+-177 -659 349 0
+-177 -660 350 0
+-178 -666 346 0
+-178 -667 347 0
+-178 -668 348 0
+-178 -669 349 0
+-178 -670 350 0
+-179 -676 346 0
+-179 -677 347 0
+-179 -678 348 0
+-179 -679 349 0
+-179 -680 350 0
+-180 -686 346 0
+-180 -687 347 0
+-180 -688 348 0
+-180 -689 349 0
+-180 -690 350 0
+-176 -651 351 0
+-176 -652 352 0
+-176 -653 353 0
+-176 -654 354 0
+-176 -655 355 0
+-177 -661 351 0
+-177 -662 352 0
+-177 -663 353 0
+-177 -664 354 0
+-177 -665 355 0
+-178 -671 351 0
+-178 -672 352 0
+-178 -673 353 0
+-178 -674 354 0
+-178 -675 355 0
+-179 -681 351 0
+-179 -682 352 0
+-179 -683 353 0
+-179 -684 354 0
+-179 -685 355 0
+-180 -691 351 0
+-180 -692 352 0
+-180 -693 353 0
+-180 -694 354 0
+-180 -695 355 0
+-181 -646 356 0
+-181 -647 357 0
+-181 -648 358 0
+-181 -649 359 0
+-181 -650 360 0
+-182 -656 356 0
+-182 -657 357 0
+-182 -658 358 0
+-182 -659 359 0
+-182 -660 360 0
+-183 -666 356 0
+-183 -667 357 0
+-183 -668 358 0
+-183 -669 359 0
+-183 -670 360 0
+-184 -676 356 0
+-184 -677 357 0
+-184 -678 358 0
+-184 -679 359 0
+-184 -680 360 0
+-185 -686 356 0
+-185 -687 357 0
+-185 -688 358 0
+-185 -689 359 0
+-185 -690 360 0
+-181 -651 361 0
+-181 -652 362 0
+-181 -653 363 0
+-181 -654 364 0
+-181 -655 365 0
+-182 -661 361 0
+-182 -662 362 0
+-182 -663 363 0
+-182 -664 364 0
+-182 -665 365 0
+-183 -671 361 0
+-183 -672 362 0
+-183 -673 363 0
+-183 -674 364 0
+-183 -675 365 0
+-184 -681 361 0
+-184 -682 362 0
+-184 -683 363 0
+-184 -684 364 0
+-184 -685 365 0
+-185 -691 361 0
+-185 -692 362 0
+-185 -693 363 0
+-185 -694 364 0
+-185 -695 365 0
+-186 -646 366 0
+-186 -647 367 0
+-186 -648 368 0
+-186 -649 369 0
+-186 -650 370 0
+-187 -656 366 0
+-187 -657 367 0
+-187 -658 368 0
+-187 -659 369 0
+-187 -660 370 0
+-188 -666 366 0
+-188 -667 367 0
+-188 -668 368 0
+-188 -669 369 0
+-188 -670 370 0
+-189 -676 366 0
+-189 -677 367 0
+-189 -678 368 0
+-189 -679 369 0
+-189 -680 370 0
+-190 -686 366 0
+-190 -687 367 0
+-190 -688 368 0
+-190 -689 369 0
+-190 -690 370 0
+-186 -651 371 0
+-186 -652 372 0
+-186 -653 373 0
+-186 -654 374 0
+-186 -655 375 0
+-187 -661 371 0
+-187 -662 372 0
+-187 -663 373 0
+-187 -664 374 0
+-187 -665 375 0
+-188 -671 371 0
+-188 -672 372 0
+-188 -673 373 0
+-188 -674 374 0
+-188 -675 375 0
+-189 -681 371 0
+-189 -682 372 0
+-189 -683 373 0
+-189 -684 374 0
+-189 -685 375 0
+-190 -691 371 0
+-190 -692 372 0
+-190 -693 373 0
+-190 -694 374 0
+-190 -695 375 0
+-191 -646 376 0
+-191 -647 377 0
+-191 -648 378 0
+-191 -649 379 0
+-191 -650 380 0
+-192 -656 376 0
+-192 -657 377 0
+-192 -658 378 0
+-192 -659 379 0
+-192 -660 380 0
+-193 -666 376 0
+-193 -667 377 0
+-193 -668 378 0
+-193 -669 379 0
+-193 -670 380 0
+-194 -676 376 0
+-194 -677 377 0
+-194 -678 378 0
+-194 -679 379 0
+-194 -680 380 0
+-195 -686 376 0
+-195 -687 377 0
+-195 -688 378 0
+-195 -689 379 0
+-195 -690 380 0
+-191 -651 381 0
+-191 -652 382 0
+-191 -653 383 0
+-191 -654 384 0
+-191 -655 385 0
+-192 -661 381 0
+-192 -662 382 0
+-192 -663 383 0
+-192 -664 384 0
+-192 -665 385 0
+-193 -671 381 0
+-193 -672 382 0
+-193 -673 383 0
+-193 -674 384 0
+-193 -675 385 0
+-194 -681 381 0
+-194 -682 382 0
+-194 -683 383 0
+-194 -684 384 0
+-194 -685 385 0
+-195 -691 381 0
+-195 -692 382 0
+-195 -693 383 0
+-195 -694 384 0
+-195 -695 385 0
+-196 -646 386 0
+-196 -647 387 0
+-196 -648 388 0
+-196 -649 389 0
+-196 -650 390 0
+-197 -656 386 0
+-197 -657 387 0
+-197 -658 388 0
+-197 -659 389 0
+-197 -660 390 0
+-198 -666 386 0
+-198 -667 387 0
+-198 -668 388 0
+-198 -669 389 0
+-198 -670 390 0
+-199 -676 386 0
+-199 -677 387 0
+-199 -678 388 0
+-199 -679 389 0
+-199 -680 390 0
+-200 -686 386 0
+-200 -687 387 0
+-200 -688 388 0
+-200 -689 389 0
+-200 -690 390 0
+-196 -651 391 0
+-196 -652 392 0
+-196 -653 393 0
+-196 -654 394 0
+-196 -655 395 0
+-197 -661 391 0
+-197 -662 392 0
+-197 -663 393 0
+-197 -664 394 0
+-197 -665 395 0
+-198 -671 391 0
+-198 -672 392 0
+-198 -673 393 0
+-198 -674 394 0
+-198 -675 395 0
+-199 -681 391 0
+-199 -682 392 0
+-199 -683 393 0
+-199 -684 394 0
+-199 -685 395 0
+-200 -691 391 0
+-200 -692 392 0
+-200 -693 393 0
+-200 -694 394 0
+-200 -695 395 0
+-201 -646 396 0
+-201 -647 397 0
+-201 -648 398 0
+-201 -649 399 0
+-201 -650 400 0
+-202 -656 396 0
+-202 -657 397 0
+-202 -658 398 0
+-202 -659 399 0
+-202 -660 400 0
+-203 -666 396 0
+-203 -667 397 0
+-203 -668 398 0
+-203 -669 399 0
+-203 -670 400 0
+-204 -676 396 0
+-204 -677 397 0
+-204 -678 398 0
+-204 -679 399 0
+-204 -680 400 0
+-205 -686 396 0
+-205 -687 397 0
+-205 -688 398 0
+-205 -689 399 0
+-205 -690 400 0
+-201 -651 401 0
+-201 -652 402 0
+-201 -653 403 0
+-201 -654 404 0
+-201 -655 405 0
+-202 -661 401 0
+-202 -662 402 0
+-202 -663 403 0
+-202 -664 404 0
+-202 -665 405 0
+-203 -671 401 0
+-203 -672 402 0
+-203 -673 403 0
+-203 -674 404 0
+-203 -675 405 0
+-204 -681 401 0
+-204 -682 402 0
+-204 -683 403 0
+-204 -684 404 0
+-204 -685 405 0
+-205 -691 401 0
+-205 -692 402 0
+-205 -693 403 0
+-205 -694 404 0
+-205 -695 405 0
+-206 -646 406 0
+-206 -647 407 0
+-206 -648 408 0
+-206 -649 409 0
+-206 -650 410 0
+-207 -656 406 0
+-207 -657 407 0
+-207 -658 408 0
+-207 -659 409 0
+-207 -660 410 0
+-208 -666 406 0
+-208 -667 407 0
+-208 -668 408 0
+-208 -669 409 0
+-208 -670 410 0
+-209 -676 406 0
+-209 -677 407 0
+-209 -678 408 0
+-209 -679 409 0
+-209 -680 410 0
+-210 -686 406 0
+-210 -687 407 0
+-210 -688 408 0
+-210 -689 409 0
+-210 -690 410 0
+-206 -651 411 0
+-206 -652 412 0
+-206 -653 413 0
+-206 -654 414 0
+-206 -655 415 0
+-207 -661 411 0
+-207 -662 412 0
+-207 -663 413 0
+-207 -664 414 0
+-207 -665 415 0
+-208 -671 411 0
+-208 -672 412 0
+-208 -673 413 0
+-208 -674 414 0
+-208 -675 415 0
+-209 -681 411 0
+-209 -682 412 0
+-209 -683 413 0
+-209 -684 414 0
+-209 -685 415 0
+-210 -691 411 0
+-210 -692 412 0
+-210 -693 413 0
+-210 -694 414 0
+-210 -695 415 0
+-211 -646 416 0
+-211 -647 417 0
+-211 -648 418 0
+-211 -649 419 0
+-211 -650 420 0
+-212 -656 416 0
+-212 -657 417 0
+-212 -658 418 0
+-212 -659 419 0
+-212 -660 420 0
+-213 -666 416 0
+-213 -667 417 0
+-213 -668 418 0
+-213 -669 419 0
+-213 -670 420 0
+-214 -676 416 0
+-214 -677 417 0
+-214 -678 418 0
+-214 -679 419 0
+-214 -680 420 0
+-215 -686 416 0
+-215 -687 417 0
+-215 -688 418 0
+-215 -689 419 0
+-215 -690 420 0
+-211 -651 421 0
+-211 -652 422 0
+-211 -653 423 0
+-211 -654 424 0
+-211 -655 425 0
+-212 -661 421 0
+-212 -662 422 0
+-212 -663 423 0
+-212 -664 424 0
+-212 -665 425 0
+-213 -671 421 0
+-213 -672 422 0
+-213 -673 423 0
+-213 -674 424 0
+-213 -675 425 0
+-214 -681 421 0
+-214 -682 422 0
+-214 -683 423 0
+-214 -684 424 0
+-214 -685 425 0
+-215 -691 421 0
+-215 -692 422 0
+-215 -693 423 0
+-215 -694 424 0
+-215 -695 425 0
+-216 -646 426 0
+-216 -647 427 0
+-216 -648 428 0
+-216 -649 429 0
+-216 -650 430 0
+-217 -656 426 0
+-217 -657 427 0
+-217 -658 428 0
+-217 -659 429 0
+-217 -660 430 0
+-218 -666 426 0
+-218 -667 427 0
+-218 -668 428 0
+-218 -669 429 0
+-218 -670 430 0
+-219 -676 426 0
+-219 -677 427 0
+-219 -678 428 0
+-219 -679 429 0
+-219 -680 430 0
+-220 -686 426 0
+-220 -687 427 0
+-220 -688 428 0
+-220 -689 429 0
+-220 -690 430 0
+-216 -651 431 0
+-216 -652 432 0
+-216 -653 433 0
+-216 -654 434 0
+-216 -655 435 0
+-217 -661 431 0
+-217 -662 432 0
+-217 -663 433 0
+-217 -664 434 0
+-217 -665 435 0
+-218 -671 431 0
+-218 -672 432 0
+-218 -673 433 0
+-218 -674 434 0
+-218 -675 435 0
+-219 -681 431 0
+-219 -682 432 0
+-219 -683 433 0
+-219 -684 434 0
+-219 -685 435 0
+-220 -691 431 0
+-220 -692 432 0
+-220 -693 433 0
+-220 -694 434 0
+-220 -695 435 0
+-221 -646 436 0
+-221 -647 437 0
+-221 -648 438 0
+-221 -649 439 0
+-221 -650 440 0
+-222 -656 436 0
+-222 -657 437 0
+-222 -658 438 0
+-222 -659 439 0
+-222 -660 440 0
+-223 -666 436 0
+-223 -667 437 0
+-223 -668 438 0
+-223 -669 439 0
+-223 -670 440 0
+-224 -676 436 0
+-224 -677 437 0
+-224 -678 438 0
+-224 -679 439 0
+-224 -680 440 0
+-225 -686 436 0
+-225 -687 437 0
+-225 -688 438 0
+-225 -689 439 0
+-225 -690 440 0
+-221 -651 441 0
+-221 -652 442 0
+-221 -653 443 0
+-221 -654 444 0
+-221 -655 445 0
+-222 -661 441 0
+-222 -662 442 0
+-222 -663 443 0
+-222 -664 444 0
+-222 -665 445 0
+-223 -671 441 0
+-223 -672 442 0
+-223 -673 443 0
+-223 -674 444 0
+-223 -675 445 0
+-224 -681 441 0
+-224 -682 442 0
+-224 -683 443 0
+-224 -684 444 0
+-224 -685 445 0
+-225 -691 441 0
+-225 -692 442 0
+-225 -693 443 0
+-225 -694 444 0
+-225 -695 445 0
+-226 -646 446 0
+-226 -647 447 0
+-226 -648 448 0
+-226 -649 449 0
+-226 -650 450 0
+-227 -656 446 0
+-227 -657 447 0
+-227 -658 448 0
+-227 -659 449 0
+-227 -660 450 0
+-228 -666 446 0
+-228 -667 447 0
+-228 -668 448 0
+-228 -669 449 0
+-228 -670 450 0
+-229 -676 446 0
+-229 -677 447 0
+-229 -678 448 0
+-229 -679 449 0
+-229 -680 450 0
+-230 -686 446 0
+-230 -687 447 0
+-230 -688 448 0
+-230 -689 449 0
+-230 -690 450 0
+-226 -651 451 0
+-226 -652 452 0
+-226 -653 453 0
+-226 -654 454 0
+-226 -655 455 0
+-227 -661 451 0
+-227 -662 452 0
+-227 -663 453 0
+-227 -664 454 0
+-227 -665 455 0
+-228 -671 451 0
+-228 -672 452 0
+-228 -673 453 0
+-228 -674 454 0
+-228 -675 455 0
+-229 -681 451 0
+-229 -682 452 0
+-229 -683 453 0
+-229 -684 454 0
+-229 -685 455 0
+-230 -691 451 0
+-230 -692 452 0
+-230 -693 453 0
+-230 -694 454 0
+-230 -695 455 0
+-231 -646 456 0
+-231 -647 457 0
+-231 -648 458 0
+-231 -649 459 0
+-231 -650 460 0
+-232 -656 456 0
+-232 -657 457 0
+-232 -658 458 0
+-232 -659 459 0
+-232 -660 460 0
+-233 -666 456 0
+-233 -667 457 0
+-233 -668 458 0
+-233 -669 459 0
+-233 -670 460 0
+-234 -676 456 0
+-234 -677 457 0
+-234 -678 458 0
+-234 -679 459 0
+-234 -680 460 0
+-235 -686 456 0
+-235 -687 457 0
+-235 -688 458 0
+-235 -689 459 0
+-235 -690 460 0
+-231 -651 461 0
+-231 -652 462 0
+-231 -653 463 0
+-231 -654 464 0
+-231 -655 465 0
+-232 -661 461 0
+-232 -662 462 0
+-232 -663 463 0
+-232 -664 464 0
+-232 -665 465 0
+-233 -671 461 0
+-233 -672 462 0
+-233 -673 463 0
+-233 -674 464 0
+-233 -675 465 0
+-234 -681 461 0
+-234 -682 462 0
+-234 -683 463 0
+-234 -684 464 0
+-234 -685 465 0
+-235 -691 461 0
+-235 -692 462 0
+-235 -693 463 0
+-235 -694 464 0
+-235 -695 465 0
+-236 -646 466 0
+-236 -647 467 0
+-236 -648 468 0
+-236 -649 469 0
+-236 -650 470 0
+-237 -656 466 0
+-237 -657 467 0
+-237 -658 468 0
+-237 -659 469 0
+-237 -660 470 0
+-238 -666 466 0
+-238 -667 467 0
+-238 -668 468 0
+-238 -669 469 0
+-238 -670 470 0
+-239 -676 466 0
+-239 -677 467 0
+-239 -678 468 0
+-239 -679 469 0
+-239 -680 470 0
+-240 -686 466 0
+-240 -687 467 0
+-240 -688 468 0
+-240 -689 469 0
+-240 -690 470 0
+-236 -651 471 0
+-236 -652 472 0
+-236 -653 473 0
+-236 -654 474 0
+-236 -655 475 0
+-237 -661 471 0
+-237 -662 472 0
+-237 -663 473 0
+-237 -664 474 0
+-237 -665 475 0
+-238 -671 471 0
+-238 -672 472 0
+-238 -673 473 0
+-238 -674 474 0
+-238 -675 475 0
+-239 -681 471 0
+-239 -682 472 0
+-239 -683 473 0
+-239 -684 474 0
+-239 -685 475 0
+-240 -691 471 0
+-240 -692 472 0
+-240 -693 473 0
+-240 -694 474 0
+-240 -695 475 0
+-241 -646 476 0
+-241 -647 477 0
+-241 -648 478 0
+-241 -649 479 0
+-241 -650 480 0
+-242 -656 476 0
+-242 -657 477 0
+-242 -658 478 0
+-242 -659 479 0
+-242 -660 480 0
+-243 -666 476 0
+-243 -667 477 0
+-243 -668 478 0
+-243 -669 479 0
+-243 -670 480 0
+-244 -676 476 0
+-244 -677 477 0
+-244 -678 478 0
+-244 -679 479 0
+-244 -680 480 0
+-245 -686 476 0
+-245 -687 477 0
+-245 -688 478 0
+-245 -689 479 0
+-245 -690 480 0
+-241 -651 481 0
+-241 -652 482 0
+-241 -653 483 0
+-241 -654 484 0
+-241 -655 485 0
+-242 -661 481 0
+-242 -662 482 0
+-242 -663 483 0
+-242 -664 484 0
+-242 -665 485 0
+-243 -671 481 0
+-243 -672 482 0
+-243 -673 483 0
+-243 -674 484 0
+-243 -675 485 0
+-244 -681 481 0
+-244 -682 482 0
+-244 -683 483 0
+-244 -684 484 0
+-244 -685 485 0
+-245 -691 481 0
+-245 -692 482 0
+-245 -693 483 0
+-245 -694 484 0
+-245 -695 485 0
+-246 -646 486 0
+-246 -647 487 0
+-246 -648 488 0
+-246 -649 489 0
+-246 -650 490 0
+-247 -656 486 0
+-247 -657 487 0
+-247 -658 488 0
+-247 -659 489 0
+-247 -660 490 0
+-248 -666 486 0
+-248 -667 487 0
+-248 -668 488 0
+-248 -669 489 0
+-248 -670 490 0
+-249 -676 486 0
+-249 -677 487 0
+-249 -678 488 0
+-249 -679 489 0
+-249 -680 490 0
+-250 -686 486 0
+-250 -687 487 0
+-250 -688 488 0
+-250 -689 489 0
+-250 -690 490 0
+-246 -651 491 0
+-246 -652 492 0
+-246 -653 493 0
+-246 -654 494 0
+-246 -655 495 0
+-247 -661 491 0
+-247 -662 492 0
+-247 -663 493 0
+-247 -664 494 0
+-247 -665 495 0
+-248 -671 491 0
+-248 -672 492 0
+-248 -673 493 0
+-248 -674 494 0
+-248 -675 495 0
+-249 -681 491 0
+-249 -682 492 0
+-249 -683 493 0
+-249 -684 494 0
+-249 -685 495 0
+-250 -691 491 0
+-250 -692 492 0
+-250 -693 493 0
+-250 -694 494 0
+-250 -695 495 0
+-251 -646 496 0
+-251 -647 497 0
+-251 -648 498 0
+-251 -649 499 0
+-251 -650 500 0
+-252 -656 496 0
+-252 -657 497 0
+-252 -658 498 0
+-252 -659 499 0
+-252 -660 500 0
+-253 -666 496 0
+-253 -667 497 0
+-253 -668 498 0
+-253 -669 499 0
+-253 -670 500 0
+-254 -676 496 0
+-254 -677 497 0
+-254 -678 498 0
+-254 -679 499 0
+-254 -680 500 0
+-255 -686 496 0
+-255 -687 497 0
+-255 -688 498 0
+-255 -689 499 0
+-255 -690 500 0
+-251 -651 501 0
+-251 -652 502 0
+-251 -653 503 0
+-251 -654 504 0
+-251 -655 505 0
+-252 -661 501 0
+-252 -662 502 0
+-252 -663 503 0
+-252 -664 504 0
+-252 -665 505 0
+-253 -671 501 0
+-253 -672 502 0
+-253 -673 503 0
+-253 -674 504 0
+-253 -675 505 0
+-254 -681 501 0
+-254 -682 502 0
+-254 -683 503 0
+-254 -684 504 0
+-254 -685 505 0
+-255 -691 501 0
+-255 -692 502 0
+-255 -693 503 0
+-255 -694 504 0
+-255 -695 505 0
+-256 -646 506 0
+-256 -647 507 0
+-256 -648 508 0
+-256 -649 509 0
+-256 -650 510 0
+-257 -656 506 0
+-257 -657 507 0
+-257 -658 508 0
+-257 -659 509 0
+-257 -660 510 0
+-258 -666 506 0
+-258 -667 507 0
+-258 -668 508 0
+-258 -669 509 0
+-258 -670 510 0
+-259 -676 506 0
+-259 -677 507 0
+-259 -678 508 0
+-259 -679 509 0
+-259 -680 510 0
+-260 -686 506 0
+-260 -687 507 0
+-260 -688 508 0
+-260 -689 509 0
+-260 -690 510 0
+-256 -651 511 0
+-256 -652 512 0
+-256 -653 513 0
+-256 -654 514 0
+-256 -655 515 0
+-257 -661 511 0
+-257 -662 512 0
+-257 -663 513 0
+-257 -664 514 0
+-257 -665 515 0
+-258 -671 511 0
+-258 -672 512 0
+-258 -673 513 0
+-258 -674 514 0
+-258 -675 515 0
+-259 -681 511 0
+-259 -682 512 0
+-259 -683 513 0
+-259 -684 514 0
+-259 -685 515 0
+-260 -691 511 0
+-260 -692 512 0
+-260 -693 513 0
+-260 -694 514 0
+-260 -695 515 0
+-261 -646 516 0
+-261 -647 517 0
+-261 -648 518 0
+-261 -649 519 0
+-261 -650 520 0
+-262 -656 516 0
+-262 -657 517 0
+-262 -658 518 0
+-262 -659 519 0
+-262 -660 520 0
+-263 -666 516 0
+-263 -667 517 0
+-263 -668 518 0
+-263 -669 519 0
+-263 -670 520 0
+-264 -676 516 0
+-264 -677 517 0
+-264 -678 518 0
+-264 -679 519 0
+-264 -680 520 0
+-265 -686 516 0
+-265 -687 517 0
+-265 -688 518 0
+-265 -689 519 0
+-265 -690 520 0
+-261 -651 521 0
+-261 -652 522 0
+-261 -653 523 0
+-261 -654 524 0
+-261 -655 525 0
+-262 -661 521 0
+-262 -662 522 0
+-262 -663 523 0
+-262 -664 524 0
+-262 -665 525 0
+-263 -671 521 0
+-263 -672 522 0
+-263 -673 523 0
+-263 -674 524 0
+-263 -675 525 0
+-264 -681 521 0
+-264 -682 522 0
+-264 -683 523 0
+-264 -684 524 0
+-264 -685 525 0
+-265 -691 521 0
+-265 -692 522 0
+-265 -693 523 0
+-265 -694 524 0
+-265 -695 525 0
+-266 -646 526 0
+-266 -647 527 0
+-266 -648 528 0
+-266 -649 529 0
+-266 -650 530 0
+-267 -656 526 0
+-267 -657 527 0
+-267 -658 528 0
+-267 -659 529 0
+-267 -660 530 0
+-268 -666 526 0
+-268 -667 527 0
+-268 -668 528 0
+-268 -669 529 0
+-268 -670 530 0
+-269 -676 526 0
+-269 -677 527 0
+-269 -678 528 0
+-269 -679 529 0
+-269 -680 530 0
+-270 -686 526 0
+-270 -687 527 0
+-270 -688 528 0
+-270 -689 529 0
+-270 -690 530 0
+-266 -651 531 0
+-266 -652 532 0
+-266 -653 533 0
+-266 -654 534 0
+-266 -655 535 0
+-267 -661 531 0
+-267 -662 532 0
+-267 -663 533 0
+-267 -664 534 0
+-267 -665 535 0
+-268 -671 531 0
+-268 -672 532 0
+-268 -673 533 0
+-268 -674 534 0
+-268 -675 535 0
+-269 -681 531 0
+-269 -682 532 0
+-269 -683 533 0
+-269 -684 534 0
+-269 -685 535 0
+-270 -691 531 0
+-270 -692 532 0
+-270 -693 533 0
+-270 -694 534 0
+-270 -695 535 0
+-271 -646 536 0
+-271 -647 537 0
+-271 -648 538 0
+-271 -649 539 0
+-271 -650 540 0
+-272 -656 536 0
+-272 -657 537 0
+-272 -658 538 0
+-272 -659 539 0
+-272 -660 540 0
+-273 -666 536 0
+-273 -667 537 0
+-273 -668 538 0
+-273 -669 539 0
+-273 -670 540 0
+-274 -676 536 0
+-274 -677 537 0
+-274 -678 538 0
+-274 -679 539 0
+-274 -680 540 0
+-275 -686 536 0
+-275 -687 537 0
+-275 -688 538 0
+-275 -689 539 0
+-275 -690 540 0
+-271 -651 541 0
+-271 -652 542 0
+-271 -653 543 0
+-271 -654 544 0
+-271 -655 545 0
+-272 -661 541 0
+-272 -662 542 0
+-272 -663 543 0
+-272 -664 544 0
+-272 -665 545 0
+-273 -671 541 0
+-273 -672 542 0
+-273 -673 543 0
+-273 -674 544 0
+-273 -675 545 0
+-274 -681 541 0
+-274 -682 542 0
+-274 -683 543 0
+-274 -684 544 0
+-274 -685 545 0
+-275 -691 541 0
+-275 -692 542 0
+-275 -693 543 0
+-275 -694 544 0
+-275 -695 545 0
+-276 -646 546 0
+-276 -647 547 0
+-276 -648 548 0
+-276 -649 549 0
+-276 -650 550 0
+-277 -656 546 0
+-277 -657 547 0
+-277 -658 548 0
+-277 -659 549 0
+-277 -660 550 0
+-278 -666 546 0
+-278 -667 547 0
+-278 -668 548 0
+-278 -669 549 0
+-278 -670 550 0
+-279 -676 546 0
+-279 -677 547 0
+-279 -678 548 0
+-279 -679 549 0
+-279 -680 550 0
+-280 -686 546 0
+-280 -687 547 0
+-280 -688 548 0
+-280 -689 549 0
+-280 -690 550 0
+-276 -651 551 0
+-276 -652 552 0
+-276 -653 553 0
+-276 -654 554 0
+-276 -655 555 0
+-277 -661 551 0
+-277 -662 552 0
+-277 -663 553 0
+-277 -664 554 0
+-277 -665 555 0
+-278 -671 551 0
+-278 -672 552 0
+-278 -673 553 0
+-278 -674 554 0
+-278 -675 555 0
+-279 -681 551 0
+-279 -682 552 0
+-279 -683 553 0
+-279 -684 554 0
+-279 -685 555 0
+-280 -691 551 0
+-280 -692 552 0
+-280 -693 553 0
+-280 -694 554 0
+-280 -695 555 0
+-281 -646 556 0
+-281 -647 557 0
+-281 -648 558 0
+-281 -649 559 0
+-281 -650 560 0
+-282 -656 556 0
+-282 -657 557 0
+-282 -658 558 0
+-282 -659 559 0
+-282 -660 560 0
+-283 -666 556 0
+-283 -667 557 0
+-283 -668 558 0
+-283 -669 559 0
+-283 -670 560 0
+-284 -676 556 0
+-284 -677 557 0
+-284 -678 558 0
+-284 -679 559 0
+-284 -680 560 0
+-285 -686 556 0
+-285 -687 557 0
+-285 -688 558 0
+-285 -689 559 0
+-285 -690 560 0
+-281 -651 561 0
+-281 -652 562 0
+-281 -653 563 0
+-281 -654 564 0
+-281 -655 565 0
+-282 -661 561 0
+-282 -662 562 0
+-282 -663 563 0
+-282 -664 564 0
+-282 -665 565 0
+-283 -671 561 0
+-283 -672 562 0
+-283 -673 563 0
+-283 -674 564 0
+-283 -675 565 0
+-284 -681 561 0
+-284 -682 562 0
+-284 -683 563 0
+-284 -684 564 0
+-284 -685 565 0
+-285 -691 561 0
+-285 -692 562 0
+-285 -693 563 0
+-285 -694 564 0
+-285 -695 565 0
+-286 -646 566 0
+-286 -647 567 0
+-286 -648 568 0
+-286 -649 569 0
+-286 -650 570 0
+-287 -656 566 0
+-287 -657 567 0
+-287 -658 568 0
+-287 -659 569 0
+-287 -660 570 0
+-288 -666 566 0
+-288 -667 567 0
+-288 -668 568 0
+-288 -669 569 0
+-288 -670 570 0
+-289 -676 566 0
+-289 -677 567 0
+-289 -678 568 0
+-289 -679 569 0
+-289 -680 570 0
+-290 -686 566 0
+-290 -687 567 0
+-290 -688 568 0
+-290 -689 569 0
+-290 -690 570 0
+-286 -651 571 0
+-286 -652 572 0
+-286 -653 573 0
+-286 -654 574 0
+-286 -655 575 0
+-287 -661 571 0
+-287 -662 572 0
+-287 -663 573 0
+-287 -664 574 0
+-287 -665 575 0
+-288 -671 571 0
+-288 -672 572 0
+-288 -673 573 0
+-288 -674 574 0
+-288 -675 575 0
+-289 -681 571 0
+-289 -682 572 0
+-289 -683 573 0
+-289 -684 574 0
+-289 -685 575 0
+-290 -691 571 0
+-290 -692 572 0
+-290 -693 573 0
+-290 -694 574 0
+-290 -695 575 0
+-291 -646 576 0
+-291 -647 577 0
+-291 -648 578 0
+-291 -649 579 0
+-291 -650 580 0
+-292 -656 576 0
+-292 -657 577 0
+-292 -658 578 0
+-292 -659 579 0
+-292 -660 580 0
+-293 -666 576 0
+-293 -667 577 0
+-293 -668 578 0
+-293 -669 579 0
+-293 -670 580 0
+-294 -676 576 0
+-294 -677 577 0
+-294 -678 578 0
+-294 -679 579 0
+-294 -680 580 0
+-295 -686 576 0
+-295 -687 577 0
+-295 -688 578 0
+-295 -689 579 0
+-295 -690 580 0
+-291 -651 581 0
+-291 -652 582 0
+-291 -653 583 0
+-291 -654 584 0
+-291 -655 585 0
+-292 -661 581 0
+-292 -662 582 0
+-292 -663 583 0
+-292 -664 584 0
+-292 -665 585 0
+-293 -671 581 0
+-293 -672 582 0
+-293 -673 583 0
+-293 -674 584 0
+-293 -675 585 0
+-294 -681 581 0
+-294 -682 582 0
+-294 -683 583 0
+-294 -684 584 0
+-294 -685 585 0
+-295 -691 581 0
+-295 -692 582 0
+-295 -693 583 0
+-295 -694 584 0
+-295 -695 585 0
+-296 -646 586 0
+-296 -647 587 0
+-296 -648 588 0
+-296 -649 589 0
+-296 -650 590 0
+-297 -656 586 0
+-297 -657 587 0
+-297 -658 588 0
+-297 -659 589 0
+-297 -660 590 0
+-298 -666 586 0
+-298 -667 587 0
+-298 -668 588 0
+-298 -669 589 0
+-298 -670 590 0
+-299 -676 586 0
+-299 -677 587 0
+-299 -678 588 0
+-299 -679 589 0
+-299 -680 590 0
+-300 -686 586 0
+-300 -687 587 0
+-300 -688 588 0
+-300 -689 589 0
+-300 -690 590 0
+-296 -651 591 0
+-296 -652 592 0
+-296 -653 593 0
+-296 -654 594 0
+-296 -655 595 0
+-297 -661 591 0
+-297 -662 592 0
+-297 -663 593 0
+-297 -664 594 0
+-297 -665 595 0
+-298 -671 591 0
+-298 -672 592 0
+-298 -673 593 0
+-298 -674 594 0
+-298 -675 595 0
+-299 -681 591 0
+-299 -682 592 0
+-299 -683 593 0
+-299 -684 594 0
+-299 -685 595 0
+-300 -691 591 0
+-300 -692 592 0
+-300 -693 593 0
+-300 -694 594 0
+-300 -695 595 0
+-301 -646 596 0
+-301 -647 597 0
+-301 -648 598 0
+-301 -649 599 0
+-301 -650 600 0
+-302 -656 596 0
+-302 -657 597 0
+-302 -658 598 0
+-302 -659 599 0
+-302 -660 600 0
+-303 -666 596 0
+-303 -667 597 0
+-303 -668 598 0
+-303 -669 599 0
+-303 -670 600 0
+-304 -676 596 0
+-304 -677 597 0
+-304 -678 598 0
+-304 -679 599 0
+-304 -680 600 0
+-305 -686 596 0
+-305 -687 597 0
+-305 -688 598 0
+-305 -689 599 0
+-305 -690 600 0
+-301 -651 601 0
+-301 -652 602 0
+-301 -653 603 0
+-301 -654 604 0
+-301 -655 605 0
+-302 -661 601 0
+-302 -662 602 0
+-302 -663 603 0
+-302 -664 604 0
+-302 -665 605 0
+-303 -671 601 0
+-303 -672 602 0
+-303 -673 603 0
+-303 -674 604 0
+-303 -675 605 0
+-304 -681 601 0
+-304 -682 602 0
+-304 -683 603 0
+-304 -684 604 0
+-304 -685 605 0
+-305 -691 601 0
+-305 -692 602 0
+-305 -693 603 0
+-305 -694 604 0
+-305 -695 605 0
+-306 -646 606 0
+-306 -647 607 0
+-306 -648 608 0
+-306 -649 609 0
+-306 -650 610 0
+-307 -656 606 0
+-307 -657 607 0
+-307 -658 608 0
+-307 -659 609 0
+-307 -660 610 0
+-308 -666 606 0
+-308 -667 607 0
+-308 -668 608 0
+-308 -669 609 0
+-308 -670 610 0
+-309 -676 606 0
+-309 -677 607 0
+-309 -678 608 0
+-309 -679 609 0
+-309 -680 610 0
+-310 -686 606 0
+-310 -687 607 0
+-310 -688 608 0
+-310 -689 609 0
+-310 -690 610 0
+-306 -651 611 0
+-306 -652 612 0
+-306 -653 613 0
+-306 -654 614 0
+-306 -655 615 0
+-307 -661 611 0
+-307 -662 612 0
+-307 -663 613 0
+-307 -664 614 0
+-307 -665 615 0
+-308 -671 611 0
+-308 -672 612 0
+-308 -673 613 0
+-308 -674 614 0
+-308 -675 615 0
+-309 -681 611 0
+-309 -682 612 0
+-309 -683 613 0
+-309 -684 614 0
+-309 -685 615 0
+-310 -691 611 0
+-310 -692 612 0
+-310 -693 613 0
+-310 -694 614 0
+-310 -695 615 0
+-311 -646 616 0
+-311 -647 617 0
+-311 -648 618 0
+-311 -649 619 0
+-311 -650 620 0
+-312 -656 616 0
+-312 -657 617 0
+-312 -658 618 0
+-312 -659 619 0
+-312 -660 620 0
+-313 -666 616 0
+-313 -667 617 0
+-313 -668 618 0
+-313 -669 619 0
+-313 -670 620 0
+-314 -676 616 0
+-314 -677 617 0
+-314 -678 618 0
+-314 -679 619 0
+-314 -680 620 0
+-315 -686 616 0
+-315 -687 617 0
+-315 -688 618 0
+-315 -689 619 0
+-315 -690 620 0
+-311 -651 621 0
+-311 -652 622 0
+-311 -653 623 0
+-311 -654 624 0
+-311 -655 625 0
+-312 -661 621 0
+-312 -662 622 0
+-312 -663 623 0
+-312 -664 624 0
+-312 -665 625 0
+-313 -671 621 0
+-313 -672 622 0
+-313 -673 623 0
+-313 -674 624 0
+-313 -675 625 0
+-314 -681 621 0
+-314 -682 622 0
+-314 -683 623 0
+-314 -684 624 0
+-314 -685 625 0
+-315 -691 621 0
+-315 -692 622 0
+-315 -693 623 0
+-315 -694 624 0
+-315 -695 625 0
+-316 -646 626 0
+-316 -647 627 0
+-316 -648 628 0
+-316 -649 629 0
+-316 -650 630 0
+-317 -656 626 0
+-317 -657 627 0
+-317 -658 628 0
+-317 -659 629 0
+-317 -660 630 0
+-318 -666 626 0
+-318 -667 627 0
+-318 -668 628 0
+-318 -669 629 0
+-318 -670 630 0
+-319 -676 626 0
+-319 -677 627 0
+-319 -678 628 0
+-319 -679 629 0
+-319 -680 630 0
+-320 -686 626 0
+-320 -687 627 0
+-320 -688 628 0
+-320 -689 629 0
+-320 -690 630 0
+-316 -651 631 0
+-316 -652 632 0
+-316 -653 633 0
+-316 -654 634 0
+-316 -655 635 0
+-317 -661 631 0
+-317 -662 632 0
+-317 -663 633 0
+-317 -664 634 0
+-317 -665 635 0
+-318 -671 631 0
+-318 -672 632 0
+-318 -673 633 0
+-318 -674 634 0
+-318 -675 635 0
+-319 -681 631 0
+-319 -682 632 0
+-319 -683 633 0
+-319 -684 634 0
+-319 -685 635 0
+-320 -691 631 0
+-320 -692 632 0
+-320 -693 633 0
+-320 -694 634 0
+-320 -695 635 0
+-321 -646 636 0
+-321 -647 637 0
+-321 -648 638 0
+-321 -649 639 0
+-321 -650 640 0
+-322 -656 636 0
+-322 -657 637 0
+-322 -658 638 0
+-322 -659 639 0
+-322 -660 640 0
+-323 -666 636 0
+-323 -667 637 0
+-323 -668 638 0
+-323 -669 639 0
+-323 -670 640 0
+-324 -676 636 0
+-324 -677 637 0
+-324 -678 638 0
+-324 -679 639 0
+-324 -680 640 0
+-325 -686 636 0
+-325 -687 637 0
+-325 -688 638 0
+-325 -689 639 0
+-325 -690 640 0
+-321 -651 641 0
+-321 -652 642 0
+-321 -653 643 0
+-321 -654 644 0
+-321 -655 645 0
+-322 -661 641 0
+-322 -662 642 0
+-322 -663 643 0
+-322 -664 644 0
+-322 -665 645 0
+-323 -671 641 0
+-323 -672 642 0
+-323 -673 643 0
+-323 -674 644 0
+-323 -675 645 0
+-324 -681 641 0
+-324 -682 642 0
+-324 -683 643 0
+-324 -684 644 0
+-324 -685 645 0
+-325 -691 641 0
+-325 -692 642 0
+-325 -693 643 0
+-325 -694 644 0
+-325 -695 645 0
+-6 696 0
+-7 697 0
+-8 698 0
+-9 699 0
+-10 700 0
+-11 696 0
+-12 697 0
+-13 698 0
+-14 699 0
+-15 700 0
+-16 -696 0
+-17 -697 0
+-18 -698 0
+-19 -699 0
+-20 -700 0
+-21 696 0
+-22 697 0
+-23 698 0
+-24 699 0
+-25 700 0
+-26 696 0
+-27 697 0
+-28 698 0
+-29 699 0
+-30 700 0
+-31 696 0
+-32 697 0
+-33 698 0
+-34 699 0
+-35 700 0
+-36 -696 0
+-37 -697 0
+-38 -698 0
+-39 -699 0
+-40 -700 0
+-41 -696 0
+-42 -697 0
+-43 -698 0
+-44 -699 0
+-45 -700 0
+-46 696 0
+-47 697 0
+-48 698 0
+-49 699 0
+-50 700 0
+-51 696 0
+-52 697 0
+-53 698 0
+-54 699 0
+-55 700 0
+-56 -696 0
+-57 -697 0
+-58 -698 0
+-59 -699 0
+-60 -700 0
+-61 -696 0
+-62 -697 0
+-63 -698 0
+-64 -699 0
+-65 -700 0
+-66 -696 0
+-67 -697 0
+-68 -698 0
+-69 -699 0
+-70 -700 0
+-71 696 0
+-72 697 0
+-73 698 0
+-74 699 0
+-75 700 0
+-76 -696 0
+-77 -697 0
+-78 -698 0
+-79 -699 0
+-80 -700 0
+-81 696 0
+-82 697 0
+-83 698 0
+-84 699 0
+-85 700 0
+-86 696 0
+-87 697 0
+-88 698 0
+-89 699 0
+-90 700 0
+-91 -696 0
+-92 -697 0
+-93 -698 0
+-94 -699 0
+-95 -700 0
+-96 -696 0
+-97 -697 0
+-98 -698 0
+-99 -699 0
+-100 -700 0
+-101 696 0
+-102 697 0
+-103 698 0
+-104 699 0
+-105 700 0
+-106 -696 0
+-107 -697 0
+-108 -698 0
+-109 -699 0
+-110 -700 0
+-111 -696 0
+-112 -697 0
+-113 -698 0
+-114 -699 0
+-115 -700 0
+-116 696 0
+-117 697 0
+-118 698 0
+-119 699 0
+-120 700 0
+-121 696 0
+-122 697 0
+-123 698 0
+-124 699 0
+-125 700 0
+-126 696 0
+-127 697 0
+-128 698 0
+-129 699 0
+-130 700 0
+-131 -696 0
+-132 -697 0
+-133 -698 0
+-134 -699 0
+-135 -700 0
+-136 696 0
+-137 697 0
+-138 698 0
+-139 699 0
+-140 700 0
+-141 -696 0
+-142 -697 0
+-143 -698 0
+-144 -699 0
+-145 -700 0
+-146 696 0
+-147 697 0
+-148 698 0
+-149 699 0
+-150 700 0
+-151 696 0
+-152 697 0
+-153 698 0
+-154 699 0
+-155 700 0
+-156 696 0
+-157 697 0
+-158 698 0
+-159 699 0
+-160 700 0
+-161 -696 0
+-162 -697 0
+-163 -698 0
+-164 -699 0
+-165 -700 0
+-166 -696 0
+-167 -697 0
+-168 -698 0
+-169 -699 0
+-170 -700 0
+-171 696 0
+-172 697 0
+-173 698 0
+-174 699 0
+-175 700 0
+-176 696 0
+-177 697 0
+-178 698 0
+-179 699 0
+-180 700 0
+-181 696 0
+-182 697 0
+-183 698 0
+-184 699 0
+-185 700 0
+-186 -696 0
+-187 -697 0
+-188 -698 0
+-189 -699 0
+-190 -700 0
+-191 696 0
+-192 697 0
+-193 698 0
+-194 699 0
+-195 700 0
+-196 -696 0
+-197 -697 0
+-198 -698 0
+-199 -699 0
+-200 -700 0
+-201 696 0
+-202 697 0
+-203 698 0
+-204 699 0
+-205 700 0
+-206 -696 0
+-207 -697 0
+-208 -698 0
+-209 -699 0
+-210 -700 0
+-211 696 0
+-212 697 0
+-213 698 0
+-214 699 0
+-215 700 0
+-216 696 0
+-217 697 0
+-218 698 0
+-219 699 0
+-220 700 0
+-221 -696 0
+-222 -697 0
+-223 -698 0
+-224 -699 0
+-225 -700 0
+-226 -696 0
+-227 -697 0
+-228 -698 0
+-229 -699 0
+-230 -700 0
+-231 -696 0
+-232 -697 0
+-233 -698 0
+-234 -699 0
+-235 -700 0
+-236 -696 0
+-237 -697 0
+-238 -698 0
+-239 -699 0
+-240 -700 0
+-241 696 0
+-242 697 0
+-243 698 0
+-244 699 0
+-245 700 0
+-246 696 0
+-247 697 0
+-248 698 0
+-249 699 0
+-250 700 0
+-251 -696 0
+-252 -697 0
+-253 -698 0
+-254 -699 0
+-255 -700 0
+-256 -696 0
+-257 -697 0
+-258 -698 0
+-259 -699 0
+-260 -700 0
+-261 696 0
+-262 697 0
+-263 698 0
+-264 699 0
+-265 700 0
+-266 -696 0
+-267 -697 0
+-268 -698 0
+-269 -699 0
+-270 -700 0
+-271 696 0
+-272 697 0
+-273 698 0
+-274 699 0
+-275 700 0
+-276 -696 0
+-277 -697 0
+-278 -698 0
+-279 -699 0
+-280 -700 0
+-281 696 0
+-282 697 0
+-283 698 0
+-284 699 0
+-285 700 0
+-286 696 0
+-287 697 0
+-288 698 0
+-289 699 0
+-290 700 0
+-291 -696 0
+-292 -697 0
+-293 -698 0
+-294 -699 0
+-295 -700 0
+-296 696 0
+-297 697 0
+-298 698 0
+-299 699 0
+-300 700 0
+-301 -696 0
+-302 -697 0
+-303 -698 0
+-304 -699 0
+-305 -700 0
+-306 696 0
+-307 697 0
+-308 698 0
+-309 699 0
+-310 700 0
+-311 -696 0
+-312 -697 0
+-313 -698 0
+-314 -699 0
+-315 -700 0
+-316 696 0
+-317 697 0
+-318 698 0
+-319 699 0
+-320 700 0
+-321 696 0
+-322 697 0
+-323 698 0
+-324 699 0
+-325 700 0
+-326 696 0
+-327 697 0
+-328 698 0
+-329 699 0
+-330 700 0
+-331 696 0
+-332 697 0
+-333 698 0
+-334 699 0
+-335 700 0
+-336 696 0
+-337 697 0
+-338 698 0
+-339 699 0
+-340 700 0
+-341 696 0
+-342 697 0
+-343 698 0
+-344 699 0
+-345 700 0
+-346 -696 0
+-347 -697 0
+-348 -698 0
+-349 -699 0
+-350 -700 0
+-351 -696 0
+-352 -697 0
+-353 -698 0
+-354 -699 0
+-355 -700 0
+-356 -696 0
+-357 -697 0
+-358 -698 0
+-359 -699 0
+-360 -700 0
+-361 -696 0
+-362 -697 0
+-363 -698 0
+-364 -699 0
+-365 -700 0
+-366 696 0
+-367 697 0
+-368 698 0
+-369 699 0
+-370 700 0
+-371 696 0
+-372 697 0
+-373 698 0
+-374 699 0
+-375 700 0
+-376 696 0
+-377 697 0
+-378 698 0
+-379 699 0
+-380 700 0
+-381 696 0
+-382 697 0
+-383 698 0
+-384 699 0
+-385 700 0
+-386 -696 0
+-387 -697 0
+-388 -698 0
+-389 -699 0
+-390 -700 0
+-391 -696 0
+-392 -697 0
+-393 -698 0
+-394 -699 0
+-395 -700 0
+-396 -696 0
+-397 -697 0
+-398 -698 0
+-399 -699 0
+-400 -700 0
+-401 696 0
+-402 697 0
+-403 698 0
+-404 699 0
+-405 700 0
+-406 -696 0
+-407 -697 0
+-408 -698 0
+-409 -699 0
+-410 -700 0
+-411 696 0
+-412 697 0
+-413 698 0
+-414 699 0
+-415 700 0
+-416 -696 0
+-417 -697 0
+-418 -698 0
+-419 -699 0
+-420 -700 0
+-421 696 0
+-422 697 0
+-423 698 0
+-424 699 0
+-425 700 0
+-426 696 0
+-427 697 0
+-428 698 0
+-429 699 0
+-430 700 0
+-431 696 0
+-432 697 0
+-433 698 0
+-434 699 0
+-435 700 0
+-436 -696 0
+-437 -697 0
+-438 -698 0
+-439 -699 0
+-440 -700 0
+-441 -696 0
+-442 -697 0
+-443 -698 0
+-444 -699 0
+-445 -700 0
+-446 -696 0
+-447 -697 0
+-448 -698 0
+-449 -699 0
+-450 -700 0
+-451 -696 0
+-452 -697 0
+-453 -698 0
+-454 -699 0
+-455 -700 0
+-456 -696 0
+-457 -697 0
+-458 -698 0
+-459 -699 0
+-460 -700 0
+-461 696 0
+-462 697 0
+-463 698 0
+-464 699 0
+-465 700 0
+-466 -696 0
+-467 -697 0
+-468 -698 0
+-469 -699 0
+-470 -700 0
+-471 -696 0
+-472 -697 0
+-473 -698 0
+-474 -699 0
+-475 -700 0
+-476 696 0
+-477 697 0
+-478 698 0
+-479 699 0
+-480 700 0
+-481 -696 0
+-482 -697 0
+-483 -698 0
+-484 -699 0
+-485 -700 0
+-486 696 0
+-487 697 0
+-488 698 0
+-489 699 0
+-490 700 0
+-491 696 0
+-492 697 0
+-493 698 0
+-494 699 0
+-495 700 0
+-496 -696 0
+-497 -697 0
+-498 -698 0
+-499 -699 0
+-500 -700 0
+-501 -696 0
+-502 -697 0
+-503 -698 0
+-504 -699 0
+-505 -700 0
+-506 -696 0
+-507 -697 0
+-508 -698 0
+-509 -699 0
+-510 -700 0
+-511 696 0
+-512 697 0
+-513 698 0
+-514 699 0
+-515 700 0
+-516 696 0
+-517 697 0
+-518 698 0
+-519 699 0
+-520 700 0
+-521 696 0
+-522 697 0
+-523 698 0
+-524 699 0
+-525 700 0
+-526 -696 0
+-527 -697 0
+-528 -698 0
+-529 -699 0
+-530 -700 0
+-531 -696 0
+-532 -697 0
+-533 -698 0
+-534 -699 0
+-535 -700 0
+-536 -696 0
+-537 -697 0
+-538 -698 0
+-539 -699 0
+-540 -700 0
+-541 696 0
+-542 697 0
+-543 698 0
+-544 699 0
+-545 700 0
+-546 696 0
+-547 697 0
+-548 698 0
+-549 699 0
+-550 700 0
+-551 -696 0
+-552 -697 0
+-553 -698 0
+-554 -699 0
+-555 -700 0
+-556 696 0
+-557 697 0
+-558 698 0
+-559 699 0
+-560 700 0
+-561 696 0
+-562 697 0
+-563 698 0
+-564 699 0
+-565 700 0
+-566 -696 0
+-567 -697 0
+-568 -698 0
+-569 -699 0
+-570 -700 0
+-571 696 0
+-572 697 0
+-573 698 0
+-574 699 0
+-575 700 0
+-576 696 0
+-577 697 0
+-578 698 0
+-579 699 0
+-580 700 0
+-581 -696 0
+-582 -697 0
+-583 -698 0
+-584 -699 0
+-585 -700 0
+-586 696 0
+-587 697 0
+-588 698 0
+-589 699 0
+-590 700 0
+-591 -696 0
+-592 -697 0
+-593 -698 0
+-594 -699 0
+-595 -700 0
+-596 -696 0
+-597 -697 0
+-598 -698 0
+-599 -699 0
+-600 -700 0
+-601 -696 0
+-602 -697 0
+-603 -698 0
+-604 -699 0
+-605 -700 0
+-606 -696 0
+-607 -697 0
+-608 -698 0
+-609 -699 0
+-610 -700 0
+-611 -696 0
+-612 -697 0
+-613 -698 0
+-614 -699 0
+-615 -700 0
+-616 -696 0
+-617 -697 0
+-618 -698 0
+-619 -699 0
+-620 -700 0
+-621 -696 0
+-622 -697 0
+-623 -698 0
+-624 -699 0
+-625 -700 0
+-626 696 0
+-627 697 0
+-628 698 0
+-629 699 0
+-630 700 0
+-631 -696 0
+-632 -697 0
+-633 -698 0
+-634 -699 0
+-635 -700 0
+-636 -696 0
+-637 -697 0
+-638 -698 0
+-639 -699 0
+-640 -700 0
+-641 -696 0
+-642 -697 0
+-643 -698 0
+-644 -699 0
+-645 -700 0
