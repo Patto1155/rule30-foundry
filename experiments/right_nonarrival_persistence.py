@@ -19,8 +19,10 @@ from rule30_open_utils import (
     verify_single_spike_direction_and_boundary,
 )
 
+REPO_ROOT = Path(__file__).resolve().parent.parent
 
-ROOT = Path(r"D:\APATPROJECTS\rule30-research")
+
+ROOT = REPO_ROOT
 IN_JSON = ROOT / "data" / "causal_sensitivity.json"
 OUT_JSON = ROOT / "data" / "right_nonarrival_persistence.json"
 PLOT_FILE = ROOT / "docs" / "plots" / "right_nonarrival_persistence.png"

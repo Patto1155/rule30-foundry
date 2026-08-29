@@ -11,6 +11,8 @@ from pathlib import Path
 
 import numpy as np
 
+REPO_ROOT = Path(__file__).resolve().parent.parent
+
 try:
     import cupy as cp
     GPU = True
@@ -23,10 +25,10 @@ N_STEPS = 512 if TEST else 8192
 BOX_SIZES = [1, 2, 4, 8, 16, 32, 64] if TEST else [1, 2, 4, 8, 16, 32, 64, 128, 256, 512]
 DIAG_LAGS = [1, 2, 4, 8, 16, 32] if TEST else [1, 2, 4, 8, 16, 32, 64, 128, 256]
 
-OUT_JSON = Path(r"D:\APATPROJECTS\rule30-research\data\fractal_dimension.json")
-LOG_FILE = Path(r"D:\APATPROJECTS\rule30-research\docs\experiment-logs\O_2d_complexity_fractal.md")
-PLOT_FILE = Path(r"D:\APATPROJECTS\rule30-research\docs\plots\fractal_dimension.png")
-PROG_LOG = Path(r"D:\APATPROJECTS\rule30-research\data\fractal_dimension.progress.log")
+OUT_JSON = (REPO_ROOT / "data" / "fractal_dimension.json")
+LOG_FILE = (REPO_ROOT / "docs" / "experiment-logs" / "O_2d_complexity_fractal.md")
+PLOT_FILE = (REPO_ROOT / "docs" / "plots" / "fractal_dimension.png")
+PROG_LOG = (REPO_ROOT / "data" / "fractal_dimension.progress.log")
 
 KERNEL_SRC = r"""
 extern "C" __global__

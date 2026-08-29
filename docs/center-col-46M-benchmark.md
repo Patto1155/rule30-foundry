@@ -56,7 +56,8 @@ python py/rule30_gpu.py --steps 46000000 --width 93000000 --out data/center_col_
 # Verify bit sequence
 python -c "
 import numpy as np
-bits = np.unpackbits(np.fromfile('data/center_col_46M.bin', dtype=np.uint8))[:46000000]
+bits = np.unpackbits(np.fromfile('data/center_col_46M.bin', dtype=np.uint8),
+                     bitorder='little')[:46000000]  # LSB-first: see docs/DATA_INTEGRITY.md
 print(f'Fraction 1s: {bits.mean():.6f}')
 print(f'First 20:    {bits[:20].tolist()}')
 "

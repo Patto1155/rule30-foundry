@@ -14,11 +14,13 @@ import sys, gzip, bz2, json, time, datetime
 import numpy as np
 from pathlib import Path
 
-DATA_FILE = Path(r"D:\APATPROJECTS\rule30-research\data\center_col_46M.bin")
-OUT_JSON  = Path(r"D:\APATPROJECTS\rule30-research\data\compress_probe.json")
-LOG_FILE  = Path(r"D:\APATPROJECTS\rule30-research\docs\experiment-logs\N_compress_probe.md")
-PLOT_FILE = Path(r"D:\APATPROJECTS\rule30-research\docs\plots\compress_probe.png")
-PROG_LOG  = Path(r"D:\APATPROJECTS\rule30-research\data\N_progress.log")
+REPO_ROOT = Path(__file__).resolve().parent.parent
+
+DATA_FILE = (REPO_ROOT / "data" / "center_col_46M.bin")
+OUT_JSON  = (REPO_ROOT / "data" / "compress_probe.json")
+LOG_FILE  = (REPO_ROOT / "docs" / "experiment-logs" / "N_compress_probe.md")
+PLOT_FILE = (REPO_ROOT / "docs" / "plots" / "compress_probe.png")
+PROG_LOG  = (REPO_ROOT / "data" / "N_progress.log")
 
 TOTAL_BYTES = 5_750_000   # 46M bits packed
 

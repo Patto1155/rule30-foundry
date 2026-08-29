@@ -24,6 +24,8 @@ import sys, json, time, datetime
 import numpy as np
 from pathlib import Path
 
+REPO_ROOT = Path(__file__).resolve().parent.parent
+
 try:
     import cupy as cp
     GPU = True
@@ -40,10 +42,10 @@ BURN_IN     = STRIP_WIDTH + 500    # skip startup phase (pattern hasn't filled s
 DISTANCES   = [1,2,4,8,16,32,64]  if TEST else [1,2,4,8,16,32,64,128,256,512]
 SURROGATE_SHIFT = 257 if TEST else 9973
 
-OUT_JSON  = Path(r"D:\APATPROJECTS\rule30-research\data\column_mi.json")
-LOG_FILE  = Path(r"D:\APATPROJECTS\rule30-research\docs\experiment-logs\O_column_mi.md")
-PLOT_FILE = Path(r"D:\APATPROJECTS\rule30-research\docs\plots\column_mi.png")
-PROG_LOG  = Path(r"D:\APATPROJECTS\rule30-research\data\O_progress.log")
+OUT_JSON  = (REPO_ROOT / "data" / "column_mi.json")
+LOG_FILE  = (REPO_ROOT / "docs" / "experiment-logs" / "O_column_mi.md")
+PLOT_FILE = (REPO_ROOT / "docs" / "plots" / "column_mi.png")
+PROG_LOG  = (REPO_ROOT / "data" / "O_progress.log")
 
 # ── GPU kernel ────────────────────────────────────────────────────────────────
 KERNEL_SRC = r"""

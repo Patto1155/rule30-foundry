@@ -7,6 +7,7 @@ beats 50% significantly, that's relevant to Wolfram Problem 2 (computability
 of center column without running the full CA).
 """
 
+from pathlib import Path
 import sys
 import os
 import csv
@@ -15,12 +16,14 @@ import datetime
 import numpy as np
 from tqdm import tqdm
 
+REPO_ROOT = Path(__file__).resolve().parent.parent
+
 # ---------------------------------------------------------------------------
 # Configuration
 # ---------------------------------------------------------------------------
-DATA_FILE = r"D:\APATPROJECTS\rule30-research\data\center_col_10M.bin"
-OUT_CSV = r"D:\APATPROJECTS\rule30-research\data\markov_results.csv"
-LOG_FILE = r"D:\APATPROJECTS\rule30-research\docs\experiment-logs\D_markov_predictor.md"
+DATA_FILE = str(REPO_ROOT / "data" / "center_col_10M.bin")
+OUT_CSV = str(REPO_ROOT / "data" / "markov_results.csv")
+LOG_FILE = str(REPO_ROOT / "docs" / "experiment-logs" / "D_markov_predictor.md")
 TOTAL_BITS = 10_000_000
 TRAIN_SIZE = TOTAL_BITS // 2  # first half
 TEST_SIZE = TOTAL_BITS - TRAIN_SIZE  # second half
@@ -164,7 +167,7 @@ def main():
     # Save CSV
     os.makedirs(os.path.dirname(OUT_CSV), exist_ok=True)
     with open(OUT_CSV, "w", newline="", encoding="utf-8") as f:
-        writer = csv.writer(f)
+        writer = csv.writer(f, lineterminator="\n")
         writer.writerow(["order_k", "accuracy", "accuracy_pct", "avg_log_likelihood_bits",
                           "z_score", "n_test_samples", "significant_at_3sigma"])
         for r in results:

@@ -210,7 +210,7 @@ def main():
                   f"runs_KS={d['ks_runs_stat']:.4f} (p={d['ks_runs_pval']:.4f}) -> {status}")
 
         with open(os.path.join(DATA_DIR, 'distinguishing_attack.csv'), 'w', newline='') as f:
-            writer = csv.DictWriter(f, fieldnames=dist[0].keys())
+            writer = csv.DictWriter(f, fieldnames=dist[0].keys(), lineterminator="\n")
             writer.writeheader()
             writer.writerows(dist)
     except ImportError:

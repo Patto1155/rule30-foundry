@@ -3,6 +3,7 @@
 
 Searches for any repeating period in the center column using a sampling-based
 approach (Rabin-Karp style rolling comparison).  For each candidate period p
+from pathlib import Path
 from 1 to 1,000,000, estimates the match rate center_col[i] == center_col[i+p]
 over a large sample.  A perfect period would give match rate = 1.0.
 
@@ -17,12 +18,14 @@ import datetime
 import numpy as np
 from tqdm import tqdm
 
+REPO_ROOT = Path(__file__).resolve().parent.parent
+
 # ---------------------------------------------------------------------------
 # Configuration
 # ---------------------------------------------------------------------------
-DATA_FILE = r"D:\APATPROJECTS\rule30-research\data\center_col_10M.bin"
-OUT_CSV = r"D:\APATPROJECTS\rule30-research\data\period_search.csv"
-LOG_FILE = r"D:\APATPROJECTS\rule30-research\docs\experiment-logs\E_period_search.md"
+DATA_FILE = str(REPO_ROOT / "data" / "center_col_10M.bin")
+OUT_CSV = str(REPO_ROOT / "data" / "period_search.csv")
+LOG_FILE = str(REPO_ROOT / "docs" / "experiment-logs" / "E_period_search.md")
 TOTAL_BITS = 10_000_000
 MAX_PERIOD = 1_000_000
 # Number of sample positions to test per candidate period
@@ -149,7 +152,7 @@ def main():
     # Save results
     os.makedirs(os.path.dirname(OUT_CSV), exist_ok=True)
     with open(OUT_CSV, "w", newline="", encoding="utf-8") as f:
-        writer = csv.writer(f)
+        writer = csv.writer(f, lineterminator="\n")
         writer.writerow(["rank", "period", "match_rate", "z_score", "exhaustive_checked"])
         for rank, idx in enumerate(top_indices, 1):
             p = int(idx + 1)

@@ -7,6 +7,7 @@ and tests whether bias converges as 1/sqrt(N) (consistent with fair coin).
 Directly relevant to Wolfram Problem 3 (statistical properties).
 """
 
+from pathlib import Path
 import sys
 import os
 import csv
@@ -15,12 +16,14 @@ import datetime
 import numpy as np
 from tqdm import tqdm
 
+REPO_ROOT = Path(__file__).resolve().parent.parent
+
 # ---------------------------------------------------------------------------
 # Configuration
 # ---------------------------------------------------------------------------
-DATA_FILE = r"D:\APATPROJECTS\rule30-research\data\center_col_10M.bin"
-OUT_CSV = r"D:\APATPROJECTS\rule30-research\data\bit_distribution.csv"
-LOG_FILE = r"D:\APATPROJECTS\rule30-research\docs\experiment-logs\A_bit_distribution.md"
+DATA_FILE = str(REPO_ROOT / "data" / "center_col_10M.bin")
+OUT_CSV = str(REPO_ROOT / "data" / "bit_distribution.csv")
+LOG_FILE = str(REPO_ROOT / "docs" / "experiment-logs" / "A_bit_distribution.md")
 TOTAL_BITS = 10_000_000
 CHECKPOINT = 100_000  # record bias every 100k steps
 
@@ -110,7 +113,7 @@ def main():
     # Save CSV
     os.makedirs(os.path.dirname(OUT_CSV), exist_ok=True)
     with open(OUT_CSV, "w", newline="", encoding="utf-8") as f:
-        writer = csv.writer(f)
+        writer = csv.writer(f, lineterminator="\n")
         writer.writerow(["step", "count_0", "count_1", "bias"])
         for row in rows:
             writer.writerow(row)

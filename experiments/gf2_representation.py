@@ -231,7 +231,7 @@ def main():
     # Save results
     csv_path = os.path.join(DATA_DIR, 'gf2_search_results.csv')
     with open(csv_path, 'w', newline='') as f:
-        writer = csv.DictWriter(f, fieldnames=all_results[0].keys())
+        writer = csv.DictWriter(f, fieldnames=all_results[0].keys(), lineterminator="\n")
         writer.writeheader()
         writer.writerows(all_results)
     print(f"\nResults saved to {csv_path}")

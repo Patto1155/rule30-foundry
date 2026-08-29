@@ -19,8 +19,10 @@ from rule30_open_utils import (
     verify_single_spike_direction_and_boundary,
 )
 
+REPO_ROOT = Path(__file__).resolve().parent.parent
 
-ROOT = Path(r"D:\APATPROJECTS\rule30-research")
+
+ROOT = REPO_ROOT
 OUT_JSON = ROOT / "data" / "causal_sensitivity_multiseed.json"
 PLOT_FILE = ROOT / "docs" / "plots" / "causal_sensitivity_multiseed.png"
 PROG_LOG = ROOT / "data" / "causal_sensitivity_multiseed.progress.log"

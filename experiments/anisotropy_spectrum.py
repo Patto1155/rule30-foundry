@@ -13,8 +13,10 @@ import numpy as np
 
 from rule30_open_utils import GPU_AVAILABLE, make_single_spike_row, simulate_spacetime, verify_spacetime_against_naive
 
+REPO_ROOT = Path(__file__).resolve().parent.parent
 
-ROOT = Path(r"D:\APATPROJECTS\rule30-research")
+
+ROOT = REPO_ROOT
 OUT_JSON = ROOT / "data" / "anisotropy_spectrum.json"
 PLOT_FILE = ROOT / "docs" / "plots" / "anisotropy_spectrum.png"
 PROG_LOG = ROOT / "data" / "anisotropy_spectrum.progress.log"

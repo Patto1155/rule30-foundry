@@ -13,11 +13,13 @@ import sys, json, time, datetime
 import numpy as np
 from pathlib import Path
 
-DATA_FILE = Path(r"D:\APATPROJECTS\rule30-research\data\center_col_46M.bin")
-OUT_JSON  = Path(r"D:\APATPROJECTS\rule30-research\data\fft_autocorr.json")
-LOG_FILE  = Path(r"D:\APATPROJECTS\rule30-research\docs\experiment-logs\fft_autocorr.md")
-PLOT_FILE = Path(r"D:\APATPROJECTS\rule30-research\docs\plots\fft_autocorr.png")
-PROG_LOG  = Path(r"D:\APATPROJECTS\rule30-research\data\fft_autocorr.progress.log")
+REPO_ROOT = Path(__file__).resolve().parent.parent
+
+DATA_FILE = (REPO_ROOT / "data" / "center_col_46M.bin")
+OUT_JSON  = (REPO_ROOT / "data" / "fft_autocorr.json")
+LOG_FILE  = (REPO_ROOT / "docs" / "experiment-logs" / "fft_autocorr.md")
+PLOT_FILE = (REPO_ROOT / "docs" / "plots" / "fft_autocorr.png")
+PROG_LOG  = (REPO_ROOT / "data" / "fft_autocorr.progress.log")
 
 TOTAL_BITS       = 46_000_000
 N_TOP            = 200

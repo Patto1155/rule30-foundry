@@ -33,7 +33,7 @@ print(f"Device: {device}")
 def load_bits():
     data = np.frombuffer(open(DATA_FILE, "rb").read(), dtype=np.uint8)
     # Unpack bits
-    bits = np.unpackbits(data)[:TRAIN_BITS + TEST_BITS]
+    bits = np.unpackbits(data, bitorder='little')[:TRAIN_BITS + TEST_BITS]
     train = bits[:TRAIN_BITS]
     test = bits[TRAIN_BITS:TRAIN_BITS + TEST_BITS]
     return train, test

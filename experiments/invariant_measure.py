@@ -9,6 +9,8 @@ from pathlib import Path
 
 import numpy as np
 
+REPO_ROOT = Path(__file__).resolve().parent.parent
+
 try:
     import cupy as cp
     GPU = True
@@ -24,10 +26,10 @@ SAMPLE_STRIDE = 4 if TEST else 8
 K_VALUES = list(range(1, 13)) if TEST else list(range(1, 19))
 COMP_SAMPLE_BITS = 200_000 if TEST else 2_000_000
 
-OUT_JSON = Path(r"D:\APATPROJECTS\rule30-research\data\invariant_measure.json")
-LOG_FILE = Path(r"D:\APATPROJECTS\rule30-research\docs\experiment-logs\P_invariant_measure.md")
-PLOT_FILE = Path(r"D:\APATPROJECTS\rule30-research\docs\plots\invariant_measure.png")
-PROG_LOG = Path(r"D:\APATPROJECTS\rule30-research\data\invariant_measure.progress.log")
+OUT_JSON = (REPO_ROOT / "data" / "invariant_measure.json")
+LOG_FILE = (REPO_ROOT / "docs" / "experiment-logs" / "P_invariant_measure.md")
+PLOT_FILE = (REPO_ROOT / "docs" / "plots" / "invariant_measure.png")
+PROG_LOG = (REPO_ROOT / "data" / "invariant_measure.progress.log")
 
 KERNEL_SRC = r"""
 extern "C" __global__

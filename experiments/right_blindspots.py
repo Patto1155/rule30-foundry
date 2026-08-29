@@ -11,8 +11,10 @@ from pathlib import Path
 
 import numpy as np
 
+REPO_ROOT = Path(__file__).resolve().parent.parent
 
-ROOT = Path(r"D:\APATPROJECTS\rule30-research")
+
+ROOT = REPO_ROOT
 IN_JSON = ROOT / "data" / "causal_sensitivity.json"
 OUT_JSON = ROOT / "data" / "right_blindspots.json"
 PLOT_FILE = ROOT / "docs" / "plots" / "right_blindspots.png"
