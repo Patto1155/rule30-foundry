@@ -37,6 +37,11 @@ Nobody knows. Wolfram is offering **$30,000 in prizes for 3 problems** to find o
 | K | Transformer (context 64–1024) | BPT flat at ~1.000 across all context lengths | No long-range structure ✓ |
 | L | ML scaling laws (model+data) | BPT range <0.001 across d_model=32–256 and n_data=500K–7M | No scaling improvement ✓ |
 
+> **Integrity note:** these A-L results were computed in March 2026, before the
+> packed-kernel fixes of 2026-06-15, and have not been regenerated since. They
+> are unverified against the corrected kernels. See
+> [`docs/DATA_INTEGRITY.md`](docs/DATA_INTEGRITY.md).
+
 **All 12 experiments are consistent with Rule 30 being computationally irreducible.**
 No architecture (Markov, LSTM, CNN, Transformer) at any scale — of model size, context length, or training data — finds exploitable structure in 10 million bits.
 

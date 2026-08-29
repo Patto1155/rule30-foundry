@@ -120,6 +120,10 @@ For bit-packed Rule 30 code, treat these as mandatory:
 - In a radius-1 cellular automaton, `first_divergence < distance` is impossible. Treat that as a hard failure.
 - "Never reached within N steps" is right-censored. Do not report it as "never" without qualification.
 - If a metric is near zero, define a noise floor or baseline before calling it asymmetric or structured.
+- Do not cite a number from `data/` without checking `docs/DATA_INTEGRITY.md` first. The A-L results predate the 2026-06-15 kernel fixes and are not yet re-anchored.
+- Verify new packed kernels against `data/golden/center_col_golden_1M.bin` via `python tools/verify_data.py --bitstream <file>`, not only against a 20-bit prefix.
+- If you add a file under `data/`, add it to `.gitignore` as an explicit `!` exception and rerun `python tools/make_manifest.py`. Do not `git add -f`.
+- Do not hardcode absolute paths. 17 scripts under `experiments/` still hardcode `D:\\APATPROJECTS\\rule30-research\\` and cannot run anywhere else; do not add an eighteenth.
 - One-step TE at distance 1 may just restate the update rule. Do not oversell it as a novel discovery without literature support.
 
 ## Good Behavior
