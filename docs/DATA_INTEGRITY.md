@@ -3,10 +3,10 @@
 What the repo can and cannot vouch for about its own data. Read this before
 citing any number from the README results table.
 
-## The open issue
+## Resolved: the March-vs-June kernel gap (2026-08-29)
 
-The headline A–L results in `README.md` were computed on **27–28 March 2026**.
-The packed-kernel correctness fixes landed on **15 June 2026**:
+The headline A-L results were computed on **27-28 March 2026**. Packed-kernel
+correctness fixes landed afterwards:
 
 | Commit | Date | What it fixed |
 |---|---|---|
@@ -14,38 +14,73 @@ The packed-kernel correctness fixes landed on **15 June 2026**:
 | `a536acc` | 2026-06-15 | Packed open-boundary padding leakage |
 | `ec4ce4c` | 2026-06-21 | Fused packed-boundary padding leakage |
 
-Nothing under `data/` has been regenerated since. `center_col_10M_results.json`
-still carries its March timestamp, as do the `block_freq_k*.csv` tables and
-`autocorrelation.npy`.
+Nothing under `data/` had been regenerated since, so nobody knew whether the
+fixed kernel still reproduced the March bitstream.
 
-That does not mean the results are wrong. It means **nobody has checked**, and
-until someone does, every A–L number is an unverified observation rather than
-an anchored claim. `CLAIM_LEDGER.md` already grades these correctly as
-Observation level; this file records *why* they cannot be promoted yet.
+**It does, exactly.** The 10M center column was regenerated on the current
+kernel and compared byte-for-byte against the March artifact:
 
-## Closing it
-
-The bitstream regenerates in roughly six minutes on the GTX 1060, so this is
-cheap to settle:
-
-```bash
-# 1. regenerate on the fixed kernel
-python gpu/rule30_sim.py --steps 10000000 --center --center-out data/center_col_10M.bin
-
-# 2. check it against an independent implementation
-python tools/verify_data.py --bitstream data/center_col_10M.bin
-
-# 3. anchor the hash in git
-python tools/make_manifest.py
-git add data/MANIFEST.sha256 && git commit -m "Anchor 10M bitstream hash"
+```
+March sha256: 6f8670b4a89826c8228d6a165047792e91551dedfb2853b8f12572d466b7547e
+rerun sha256: 6f8670b4a89826c8228d6a165047792e91551dedfb2853b8f12572d466b7547e
+0 of 10,000,000 bits differ
 ```
 
-Step 2 is the one that answers the question. If it passes, the March results
-were computed on a bitstream that the fixed kernel still reproduces, and the
-A–L table can be cited. If it fails, the README needs correcting — which is a
-more valuable finding than another null result.
+The June fixes did not change center-column output. **The A-L bitstream is
+sound**, and both canonical bitstreams are now hash-anchored in
+`data/MANIFEST.sha256`.
 
-Either way, record the outcome in `CLAIM_LEDGER.md` and delete this section.
+The March artifacts were never lost. They were in
+`D:/APATPROJECTS/rule30-research/data/`, which earlier revisions of this file
+and of `AGENTS.md` described as "a repo that no longer exists under that name".
+It exists, shares this repo's git remote, and its HEAD is a **strict ancestor**
+of ours (49 commits behind, 0 divergent commits) - a stale checkout of this same
+repository. The 16 scripts under `experiments/` that hardcode that path are
+therefore pointing at an old copy of themselves.
+
+## The open issue: bit-order convention
+
+This repo packs center-column bits **two different ways**, and the mismatch is
+silent.
+
+| Component | Convention | Correct? |
+|---|---|---|
+| `gpu/rule30_sim.py:226` | `packbits(..., bitorder='little')` - LSB-first | writer of record |
+| `tools/gen_golden_reference.py` | MSB-first | deliberate, documented, self-tested |
+| `experiments/lstm_prediction.py:36` | omits `bitorder` -> MSB-first | **WRONG** |
+| `experiments/cnn_nonstationarity.py:31` | omits `bitorder` -> MSB-first | **WRONG** |
+| `experiments/transformer_prediction.py:40` | omits `bitorder` -> MSB-first | **WRONG** |
+| `experiments/scaling_laws_ml.py:51` | omits `bitorder` -> MSB-first | **WRONG** |
+
+Every other reader of `center_col_*.bin` passes `bitorder='little'` correctly.
+
+Reading an LSB-first file MSB-first returns the true stream **with every
+consecutive 8-bit block reversed**:
+
+```
+TRUE center col (LSB) : 110111001100010110010011
+what I,J,K,L saw (MSB): 001110111010001111001001
+499,516 of 1,000,000 bits differ (49.95%)
+MSB-decode == per-byte reversal of the true stream: True
+```
+
+The bit mean is **identical** under the bug (0.500768 either way), which is why
+no aggregate check caught it.
+
+Those four scripts are exactly README experiments **I (LSTM), J (CNN),
+K (Transformer) and L (ML scaling laws)**. They were trained on a byte-reversed
+variant of the center column, not the center column. A-H are unaffected.
+
+The reversal is deterministic, bijective and position-local, so it permutes
+structure within bytes rather than destroying it, and a model with >= 8 bits of
+context could in principle see through it. The I-L conclusions may well survive
+a re-run. What does not survive is the claim that they tested the center column.
+
+`tools/verify_data.py` now tries both bit orders and names the one that matched,
+so this failure mode reports as a packing mismatch instead of as corruption.
+
+**Next step:** re-run I-L with `bitorder='little'` and compare against the
+recorded results.
 
 ## The golden reference
 
@@ -98,10 +133,11 @@ not, so a third party can check any copy they obtain.
 
 ## Still outstanding
 
-- Bitstream hashes are `UNANCHORED` until `make_manifest.py` is run on the
-  machine holding the `.bin` files.
+- Experiments **I-L** were computed on a byte-reversed stream (see the bit-order
+  section above) and must be re-run before their numbers are cited.
 - No git tags or GitHub Releases exist, so there is no citable snapshot for any
   published number.
-- 17 scripts under `experiments/` hardcode `D:\APATPROJECTS\rule30-research\`,
-  a path that names a repo that no longer exists under that name. They cannot
-  run on any other machine, including CI. See the note in `AGENTS.md`.
+- 16 scripts under `experiments/` hardcode a path into
+  `D:/APATPROJECTS/rule30-research/data/`, a stale checkout of this same repository.
+  They should be made repo-relative; the raw bitstreams they read now exist
+  under this repo's own `data/`, so the repoint is mechanical.

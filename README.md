@@ -32,18 +32,31 @@ Nobody knows. Wolfram is offering **$30,000 in prizes for 3 problems** to find o
 | F | Cryptanalysis (NIST suite) | Passes monobit, runs, distinguishing attack | Indistinguishable from RNG ✓ |
 | G | GF(2) linear transform search | No significant entropy reduction | No algebraic shortcut ✓ |
 | H | Markov scaling laws (order 1–18) | Accuracy flat at ~50% across all orders | Computationally irreducible ✓ |
-| I | LSTM predictor (hidden 32–256) | BPT=1.000001 at all sizes — no non-linear memory | No LSTM shortcut ✓ |
-| J | CNN non-stationarity probe | 10.15% accuracy (chance=10%) — mode collapse | Stationary sequence ✓ |
-| K | Transformer (context 64–1024) | BPT flat at ~1.000 across all context lengths | No long-range structure ✓ |
-| L | ML scaling laws (model+data) | BPT range <0.001 across d_model=32–256 and n_data=500K–7M | No scaling improvement ✓ |
+| I ⚠ | LSTM predictor (hidden 32–256) | BPT=1.000001 at all sizes — no non-linear memory | No LSTM shortcut ✓ |
+| J ⚠ | CNN non-stationarity probe | 10.15% accuracy (chance=10%) — mode collapse | Stationary sequence ✓ |
+| K ⚠ | Transformer (context 64–1024) | BPT flat at ~1.000 across all context lengths | No long-range structure ✓ |
+| L ⚠ | ML scaling laws (model+data) | BPT range <0.001 across d_model=32–256 and n_data=500K–7M | No scaling improvement ✓ |
 
-> **Integrity note:** these A-L results were computed in March 2026, before the
-> packed-kernel fixes of 2026-06-15, and have not been regenerated since. They
-> are unverified against the corrected kernels. See
-> [`docs/DATA_INTEGRITY.md`](docs/DATA_INTEGRITY.md).
+> **Integrity note (2026-08-29).** The bitstream is now verified: the 10M center
+> column was regenerated on the post-fix kernel and is **byte-identical** to the
+> March artifact (sha256 `6f8670b4...`, 0 of 10,000,000 bits differ), so the
+> 2026-06-15 kernel fixes did not change it.
+>
+> However, **I, J, K and L are known-bad and pending a re-run.** Those four
+> scripts read the LSB-first bitstream with numpy's MSB-first default, so they
+> were trained on the center column with every consecutive 8-bit block reversed
+> — a different sequence, though the bit mean is identical, which is why it
+> went unnoticed. A–H pass the correct `bitorder='little'` and are unaffected.
+> See [`docs/DATA_INTEGRITY.md`](docs/DATA_INTEGRITY.md).
 
-**All 12 experiments are consistent with Rule 30 being computationally irreducible.**
-No architecture (Markov, LSTM, CNN, Transformer) at any scale — of model size, context length, or training data — finds exploitable structure in 10 million bits.
+⚠ = computed on a byte-reversed stream; re-run pending (see integrity note).
+
+**A–H are consistent with Rule 30 being computationally irreducible.** The
+neural results (I–L) point the same way but do not currently support that
+sentence, because they were not run on the center column. The reversal is a
+deterministic, position-local recoding rather than a randomisation, so the
+conclusions may well survive a re-run — but that has to be demonstrated, not
+assumed.
 
 ---
 
