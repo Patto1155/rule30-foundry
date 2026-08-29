@@ -26,9 +26,27 @@ rerun sha256: 6f8670b4a89826c8228d6a165047792e91551dedfb2853b8f12572d466b7547e
 0 of 10,000,000 bits differ
 ```
 
+The 46M column was regenerated too, and is likewise byte-identical:
+
+```
+March sha256: f281f11bb5d93132248213b3b353857814fd4b8dc754c606e846f3c2c3f67b5c
+rerun sha256: f281f11bb5d93132248213b3b353857814fd4b8dc754c606e846f3c2c3f67b5c
+0 of 46,000,000 bits differ
+```
+
+That run used a **different tape width** (96M cells, against 21M for the 10M
+run), so a padding or boundary bug whose behaviour depended on tape geometry
+would have shown up as a divergence. It did not.
+
 The June fixes did not change center-column output. **The A-L bitstream is
 sound**, and both canonical bitstreams are now hash-anchored in
 `data/MANIFEST.sha256`.
+
+One limit worth stating: the *independent* reference
+(`tools/gen_golden_reference.py`, which shares no code with `gpu/`) covers only
+the first 1,000,000 bits. Everything above that is verified by two runs of the
+same kernel family agreeing, which cannot catch a bug they share. Extending the
+golden reference is the open item that would close this.
 
 The March artifacts were never lost. They were in
 `D:/APATPROJECTS/rule30-research/data/`, which earlier revisions of this file
