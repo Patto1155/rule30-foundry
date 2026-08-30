@@ -2,9 +2,12 @@
 
 - Date: 2026-08-15
 - Title: Minimal-DFAO-Size Curve s*(n) for the Rule 30 Center Column
-- Claim Level: Robust observation (exact minima vs a 7-seed null band and a
-  positive control). Not a Certificate: the SAT side ships a re-verified
-  witness, but the UNSAT lower bounds rest on trusting the solver.
+- Claim Level: **Certificate** as of 2026-08-30. Originally Robust observation
+  (exact minima vs a 7-seed null band and a positive control), because the
+  UNSAT lower bounds rested on trusting the solver. Both bounds are now
+  machine-checkable - see
+  [`2026-08-30-dfao-drat-certification.md`](2026-08-30-dfao-drat-certification.md).
+  The curve below is unchanged; only its epistemic status moved.
 - Run date: 2026-08-29 (harness committed 2026-08-15; Rule 30 curve not run until now)
 
 ## Goal
