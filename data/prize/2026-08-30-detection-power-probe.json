@@ -1,0 +1,135 @@
+{
+  "artifact_type": "rule30.detection_power_probe",
+  "artifact_version": 1,
+  "created_at": "2026-08-30T10:25:53Z",
+  "elapsed_s": 732.8,
+  "question": "Is the I-L suite's failure on a 27-bit LFSR budget-limited or architecture-limited, and can its CNN probe detect non-stationarity at all?",
+  "device": "cpu",
+  "lfsr_13_27_ladder": [
+    {
+      "bpt": 1.000165368692494,
+      "accuracy": 0.49815882164585334,
+      "test_predictions": 12492,
+      "params": 50497,
+      "label": "lstm as re-run (h=64, c=64, 200k, 2ep)",
+      "config": {
+        "label": "lstm as re-run (h=64, c=64, 200k, 2ep)",
+        "kind": "lstm",
+        "hidden": 64,
+        "seq_len": 64,
+        "train_bits": 200000,
+        "epochs": 2
+      },
+      "elapsed_s": 38.0,
+      "learned": false
+    },
+    {
+      "bpt": 1.000085489827624,
+      "accuracy": 0.49871918027537626,
+      "test_predictions": 12492,
+      "params": 199297,
+      "label": "lstm wider + more data (h=128, c=64, 300k, 3ep)",
+      "config": {
+        "label": "lstm wider + more data (h=128, c=64, 300k, 3ep)",
+        "kind": "lstm",
+        "hidden": 128,
+        "seq_len": 64,
+        "train_bits": 300000,
+        "epochs": 3
+      },
+      "elapsed_s": 205.7,
+      "learned": false
+    },
+    {
+      "bpt": 0.999970610780678,
+      "accuracy": 0.503601152368758,
+      "test_predictions": 12496,
+      "params": 199297,
+      "label": "lstm short ctx (h=128, c=32, 300k, 3ep)",
+      "config": {
+        "label": "lstm short ctx (h=128, c=32, 300k, 3ep)",
+        "kind": "lstm",
+        "hidden": 128,
+        "seq_len": 32,
+        "train_bits": 300000,
+        "epochs": 3
+      },
+      "elapsed_s": 92.7,
+      "learned": false
+    },
+    {
+      "bpt": 1.0036080911292222,
+      "accuracy": 0.5072046109510087,
+      "test_predictions": 3123,
+      "params": 100161,
+      "label": "tfmr as re-run (d=64, c=64, 200k, 2ep)",
+      "config": {
+        "label": "tfmr as re-run (d=64, c=64, 200k, 2ep)",
+        "kind": "tfmr",
+        "d_model": 64,
+        "seq_len": 64,
+        "train_bits": 200000,
+        "epochs": 2
+      },
+      "elapsed_s": 36.3,
+      "learned": false
+    },
+    {
+      "bpt": 1.0034486610090847,
+      "accuracy": 0.5091258405379443,
+      "test_predictions": 3123,
+      "params": 265345,
+      "label": "tfmr wider + more data (d=128, c=64, 300k, 4ep)",
+      "config": {
+        "label": "tfmr wider + more data (d=128, c=64, 300k, 4ep)",
+        "kind": "tfmr",
+        "d_model": 128,
+        "seq_len": 64,
+        "train_bits": 300000,
+        "epochs": 4
+      },
+      "elapsed_s": 141.3,
+      "learned": false
+    },
+    {
+      "bpt": 1.0041361106302775,
+      "accuracy": 0.49055697823303457,
+      "test_predictions": 6248,
+      "params": 265345,
+      "label": "tfmr short ctx (d=128, c=32, 300k, 6ep)",
+      "config": {
+        "label": "tfmr short ctx (d=128, c=32, 300k, 6ep)",
+        "kind": "tfmr",
+        "d_model": 128,
+        "seq_len": 32,
+        "train_bits": 300000,
+        "epochs": 6
+      },
+      "elapsed_s": 209.3,
+      "learned": false
+    }
+  ],
+  "lfsr_verdict": "architecture-limited at every budget tested here: the suite cannot see XOR structure at lag 27",
+  "cnn_control": {
+    "drift_0.30_to_0.70": {
+      "accuracy": 0.5766666666666667,
+      "chance": 0.1,
+      "test_windows": 3000,
+      "params": 155594,
+      "elapsed_s": 4.5
+    },
+    "random_stationary": {
+      "accuracy": 0.10033333333333333,
+      "chance": 0.1,
+      "test_windows": 3000,
+      "params": 155594,
+      "elapsed_s": 4.3
+    }
+  },
+  "cnn_verdict": "the decile probe detects non-stationarity",
+  "note": "periodic31 is not a positive control for the decile probe: a periodic stream is genuinely stationary, so 10% is the correct answer there, not a failure.",
+  "git": {
+    "git_branch": "claude/keen-sagan-21rzbr",
+    "git_head": "e355154d543a351c3529d9b04489472708db243d"
+  }
+}
