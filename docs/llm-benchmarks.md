@@ -1,4 +1,4 @@
-# LLM Inference Benchmarks — GTX 1060 6GB
+# LLM Inference Benchmarks â€” GTX 1060 6GB
 
 **Date:** 2026-03-27
 **Engine:** llama.cpp build b8532 (CUDA SM 6.1)
@@ -28,20 +28,20 @@
 | 28 | 407 | 20.1 |
 | **35 (all)** | **414** | **23.2** |
 
-**Use ngl=35 for 7B models.** The curve is steep up to ngl=28, then plateaus — all transformer layers fit in 6 GB VRAM.
+**Use ngl=35 for 7B models.** The curve is steep up to ngl=28, then plateaus â€” all transformer layers fit in 6 GB VRAM.
 
 ---
 
 ## Observations
 
 - **Qwen2 architecture** (Qwen2.5-7B and DeepSeek-R1-Distill-Qwen-7B): nearly identical throughput because both use the same 7B Qwen2 weight layout
-- **Llama 3.1 8B** (4.9 GB): ~12% slower prompt vs Qwen 7B, same generation — slightly larger model fills VRAM more tightly
-- **Qwen2.5-3B** (1.9 GB): prompt within 5% of 7B models (bandwidth-limited), generation ~19 t/s — fits 3B in ~1.9 GB VRAM, leaving 4 GB for KV cache
+- **Llama 3.1 8B** (4.9 GB): ~12% slower prompt vs Qwen 7B, same generation â€” slightly larger model fills VRAM more tightly
+- **Qwen2.5-3B** (1.9 GB): prompt within 5% of 7B models (bandwidth-limited), generation ~19 t/s â€” fits 3B in ~1.9 GB VRAM, leaving 4 GB for KV cache
 - Memory bandwidth utilization at tg128: ~88 GB/s / 192 GB/s = **~46%** (GDDR5, typical for single-GPU LLM inference)
 
 ## Notes
 
-- Gemma-3-4B and Phi-4-mini skipped — gated repos require HF token (Google/Microsoft ToS). Substitute: Qwen2.5-3B.
+- Gemma-3-4B and Phi-4-mini skipped â€” gated repos require HF token (Google/Microsoft ToS). Substitute: Qwen2.5-3B.
 - For code/reasoning experiments: Qwen2.5-7B and DeepSeek-R1-7B both suitable; DeepSeek-R1 has reasoning chain training
 
 ## Raw Data

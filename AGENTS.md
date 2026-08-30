@@ -2,6 +2,41 @@
 
 Use this workspace as a disciplined scratchpad, not as an ad hoc notebook dump.
 
+## Before you touch anything
+
+```bash
+python tools/verify_all.py
+```
+
+One command, ~2 s on a fresh clone. It runs the golden self-test, the hash
+manifest, the manifest-is-current check, each canonical bitstream against the
+independent reference, both lints, and the test suite, and prints PASS / FAIL /
+SKIP per stage. Run it before an experiment and again before you commit.
+
+`SKIP` is not `PASS`. The canonical bitstreams (`data/center_col_*.bin`) are
+gitignored, so on a machine that has not regenerated them those stages check
+nothing at all - which is exactly how a bad bitstream would go unnoticed.
+
+Two standing conventions the tooling now enforces, both of which cost this repo
+real months:
+
+- **`bitorder='little'` for every `data/center_col_*.bin`.** `gpu/rule30_sim.py`
+  writes LSB-first; NumPy defaults to MSB-first. A bare `np.unpackbits(data)`
+  returns the true stream with every 8-bit block reversed - 49.95% of positions
+  differ while the bit mean is *identical*, so no aggregate check catches it.
+  `tools/lint_bitorder.py` rejects a bare call; annotate a genuinely
+  order-agnostic one with `# bitorder-exempt: <reason>`.
+  `tools/gen_golden_reference.py` is MSB-first by deliberate, documented
+  exception - its independence is the whole point. Do not "fix" it.
+- **LF line endings for everything under `data/`.** `data/** -text` in
+  `.gitattributes` stops git normalising them for you, so `csv.writer` needs an
+  explicit `lineterminator="\n"` and `Path.write_text` needs `newline=""`.
+  `tests/test_manifest_determinism.py` fails the build if either is forgotten.
+
+A ~50% bit difference between two streams is **never** a kernel bug. It means
+they are uncorrelated: a packing or seed mismatch. A real kernel bug diverges
+*late*.
+
 **New here? Read
 [`docs/handover/2026-08-29-data-integrity-and-dfao-curve.md`](docs/handover/2026-08-29-data-integrity-and-dfao-curve.md)
 first** - it is the most recent state of play: what is verified, what was

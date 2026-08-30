@@ -94,6 +94,8 @@ def center_packed(steps: int, progress: int = 0) -> np.ndarray:
 def self_test() -> None:
     n = 4096
     naive = center_naive(n)
+    # bitorder-exempt: MSB-first on both sides here by design; this module
+    # must not share a bit-order convention with gpu/rule30_sim.py.
     packed = np.unpackbits(center_packed(n))[:n]
     assert np.array_equal(naive, packed), "packed kernel disagrees with naive"
     prefix = "".join(map(str, naive[:len(OEIS_A051023_PREFIX)]))
@@ -123,6 +125,9 @@ def main() -> int:
     args.out.parent.mkdir(parents=True, exist_ok=True)
     packed.tofile(args.out)
 
+    # bitorder-exempt: this file's MSB-first convention is deliberate and
+    # load-bearing -- see the module docstring. Do not make it track the
+    # kernel it exists to check.
     bits = np.unpackbits(packed)[:args.steps]
     digest = hashlib.sha256(packed.tobytes()).hexdigest()
     print(f"wrote {args.out} ({args.steps:,} bits, {packed.nbytes:,} bytes) "

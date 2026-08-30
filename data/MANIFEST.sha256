@@ -170,6 +170,7 @@ f0408abde531588e381d3508222c89ac0deda0c7be90498acb6b31a486d27f67  data/wedge/wor
 dfa3c44382e6383a3f8f04c58b47077c5e7b4fb3eaba05383deea5d399a7b8db  data/wedge_verify_T65536.json
 #
 # Canonical bitstreams (not tracked in git; hashes anchored here).
-# Absent entries are expected on a fresh clone.
+# A bitstream absent from this machine keeps its previously anchored
+# hash -- regenerating the manifest must never drop an anchor.
 6f8670b4a89826c8228d6a165047792e91551dedfb2853b8f12572d466b7547e  data/center_col_10M.bin
 f281f11bb5d93132248213b3b353857814fd4b8dc754c606e846f3c2c3f67b5c  data/center_col_46M.bin

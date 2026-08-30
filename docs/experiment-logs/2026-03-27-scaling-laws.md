@@ -30,5 +30,5 @@
     - order=16: 50.022% (info_gain=0.000000 bits, coverage=100.0%)
     - order=17: 49.974% (info_gain=0.000000 bits, coverage=100.0%)
     - order=18: 49.984% (info_gain=0.000000 bits, coverage=100.0%)
-- Interpretation: Accuracy plateaus quickly — strong evidence that no context-based shortcut exists (computational irreducibility)
+- Interpretation: Accuracy plateaus quickly â€” strong evidence that no context-based shortcut exists (computational irreducibility)
 - Next Step: Try non-Markov models (LSTMs, transformers) to check if the plateau holds for richer model families

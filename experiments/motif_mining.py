@@ -61,6 +61,9 @@ def bits_to_bytes_packed(bits: np.ndarray) -> bytes:
     """Pack bits back to bytes (MSB first, zero-pad to byte boundary)."""
     padded = np.zeros(((len(bits) + 7) // 8) * 8, dtype=np.uint8)
     padded[:len(bits)] = bits
+    # bitorder-exempt: re-packs an already LSB-decoded bit array into bytes
+    # for zlib/lzma; any consistent convention gives the same ratio, and
+    # this is not a decode of a .bin file.
     return np.packbits(padded).tobytes()
 
 
@@ -173,6 +176,9 @@ def repear_compression_ratio(bits: np.ndarray, max_rounds: int = 50) -> dict:
     # Pack bits to bytes
     padded = np.zeros(((n_sample + 7) // 8) * 8, dtype=np.uint8)
     padded[:n_sample] = bits[:n_sample]
+    # bitorder-exempt: re-packs an already LSB-decoded bit array into
+    # byte symbols for the grammar pass; any consistent convention gives
+    # the same rule count, and this is not a decode of a .bin file.
     sequence = list(np.packbits(padded[:n_bytes * 8]).tolist())
 
     original_len = len(sequence)
