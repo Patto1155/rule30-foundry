@@ -1,0 +1,443 @@
+{
+  "artifact_type": "rule30.period_search_exact",
+  "artifact_version": 1,
+  "claim_level": "Certificate (exhaustive and exact over the stated range)",
+  "created_at": "2026-08-30T10:01:58Z",
+  "elapsed_s": 152.297,
+  "question": "Is any p <= n/2 a period of the first n center-column bits?",
+  "method": {
+    "exact": true,
+    "sampling": null,
+    "note": "A period is refuted by a single mismatch, so no statistical threshold and no multiple-testing correction is involved. Every p <= n - window is decided exactly.",
+    "headline_range": "p <= n/2, so at least n/2 positions confirm",
+    "supersedes": "experiments/period_search.py, which sampled 10,000 positions per period over p <= 10^6 and reported a Bonferroni z-score"
+  },
+  "source": {
+    "bitstream": "center_col_10M.bin",
+    "bits": 10000000,
+    "bitorder": "little (gpu/rule30_sim.py convention)"
+  },
+  "gate": {
+    "passed": true,
+    "checks": [
+      {
+        "check": "planted period 3 is found",
+        "passed": true,
+        "detail": "smallest found = 3"
+      },
+      {
+        "check": "planted period 1000 is found",
+        "passed": true,
+        "detail": "smallest found = 1000"
+      },
+      {
+        "check": "planted period 65536 is found",
+        "passed": true,
+        "detail": "smallest found = 65536"
+      },
+      {
+        "check": "one flipped bit refutes an otherwise perfect period",
+        "passed": true,
+        "detail": "0 confirmed"
+      },
+      {
+        "check": "bitstream decodes LSB-first to OEIS A051023",
+        "passed": true,
+        "detail": "110111001100010"
+      }
+    ]
+  },
+  "center": {
+    "n_bits": 10000000,
+    "window_bits": 64,
+    "periods_tested_exactly": 9999936,
+    "candidates_surviving_window": 0,
+    "candidates_checked": 0,
+    "candidate_check_truncated": false,
+    "confirmed_periods": [],
+    "confirmed_periods_up_to_half": [],
+    "timing_s": {
+      "window_build": 2.09,
+      "candidate_scan": 0.01
+    },
+    "overlap": {
+      "longest_self_overlap_bits": 26,
+      "longest_self_overlap_at_shift": 2085567,
+      "narrow_window_bits": 16,
+      "narrow_window_candidates": 149,
+      "candidates_examined": 149,
+      "truncated": false,
+      "elapsed_s": 1.82
+    }
+  },
+  "random_controls": [
+    {
+      "seed": 30,
+      "confirmed_periods": 0,
+      "candidates_surviving_window": 0,
+      "longest_self_overlap_bits": 23
+    },
+    {
+      "seed": 31,
+      "confirmed_periods": 0,
+      "candidates_surviving_window": 0,
+      "longest_self_overlap_bits": 22
+    },
+    {
+      "seed": 32,
+      "confirmed_periods": 0,
+      "candidates_surviving_window": 0,
+      "longest_self_overlap_bits": 22
+    },
+    {
+      "seed": 33,
+      "confirmed_periods": 0,
+      "candidates_surviving_window": 0,
+      "longest_self_overlap_bits": 23
+    },
+    {
+      "seed": 34,
+      "confirmed_periods": 0,
+      "candidates_surviving_window": 0,
+      "longest_self_overlap_bits": 22
+    },
+    {
+      "seed": 35,
+      "confirmed_periods": 0,
+      "candidates_surviving_window": 0,
+      "longest_self_overlap_bits": 22
+    },
+    {
+      "seed": 36,
+      "confirmed_periods": 0,
+      "candidates_surviving_window": 0,
+      "longest_self_overlap_bits": 21
+    },
+    {
+      "seed": 37,
+      "confirmed_periods": 0,
+      "candidates_surviving_window": 0,
+      "longest_self_overlap_bits": 22
+    },
+    {
+      "seed": 38,
+      "confirmed_periods": 0,
+      "candidates_surviving_window": 0,
+      "longest_self_overlap_bits": 25
+    },
+    {
+      "seed": 39,
+      "confirmed_periods": 0,
+      "candidates_surviving_window": 0,
+      "longest_self_overlap_bits": 22
+    },
+    {
+      "seed": 40,
+      "confirmed_periods": 0,
+      "candidates_surviving_window": 0,
+      "longest_self_overlap_bits": 29
+    },
+    {
+      "seed": 41,
+      "confirmed_periods": 0,
+      "candidates_surviving_window": 0,
+      "longest_self_overlap_bits": 23
+    },
+    {
+      "seed": 42,
+      "confirmed_periods": 0,
+      "candidates_surviving_window": 0,
+      "longest_self_overlap_bits": 22
+    },
+    {
+      "seed": 43,
+      "confirmed_periods": 0,
+      "candidates_surviving_window": 0,
+      "longest_self_overlap_bits": 21
+    },
+    {
+      "seed": 44,
+      "confirmed_periods": 0,
+      "candidates_surviving_window": 0,
+      "longest_self_overlap_bits": 25
+    },
+    {
+      "seed": 45,
+      "confirmed_periods": 0,
+      "candidates_surviving_window": 0,
+      "longest_self_overlap_bits": 22
+    },
+    {
+      "seed": 46,
+      "confirmed_periods": 0,
+      "candidates_surviving_window": 0,
+      "longest_self_overlap_bits": 24
+    },
+    {
+      "seed": 47,
+      "confirmed_periods": 0,
+      "candidates_surviving_window": 0,
+      "longest_self_overlap_bits": 22
+    },
+    {
+      "seed": 48,
+      "confirmed_periods": 0,
+      "candidates_surviving_window": 0,
+      "longest_self_overlap_bits": 21
+    },
+    {
+      "seed": 49,
+      "confirmed_periods": 0,
+      "candidates_surviving_window": 0,
+      "longest_self_overlap_bits": 24
+    },
+    {
+      "seed": 50,
+      "confirmed_periods": 0,
+      "candidates_surviving_window": 0,
+      "longest_self_overlap_bits": 23
+    },
+    {
+      "seed": 51,
+      "confirmed_periods": 0,
+      "candidates_surviving_window": 0,
+      "longest_self_overlap_bits": 24
+    },
+    {
+      "seed": 52,
+      "confirmed_periods": 0,
+      "candidates_surviving_window": 0,
+      "longest_self_overlap_bits": 28
+    },
+    {
+      "seed": 53,
+      "confirmed_periods": 0,
+      "candidates_surviving_window": 0,
+      "longest_self_overlap_bits": 24
+    },
+    {
+      "seed": 54,
+      "confirmed_periods": 0,
+      "candidates_surviving_window": 0,
+      "longest_self_overlap_bits": 22
+    },
+    {
+      "seed": 55,
+      "confirmed_periods": 0,
+      "candidates_surviving_window": 0,
+      "longest_self_overlap_bits": 22
+    },
+    {
+      "seed": 56,
+      "confirmed_periods": 0,
+      "candidates_surviving_window": 0,
+      "longest_self_overlap_bits": 22
+    },
+    {
+      "seed": 57,
+      "confirmed_periods": 0,
+      "candidates_surviving_window": 0,
+      "longest_self_overlap_bits": 20
+    },
+    {
+      "seed": 58,
+      "confirmed_periods": 0,
+      "candidates_surviving_window": 0,
+      "longest_self_overlap_bits": 24
+    },
+    {
+      "seed": 59,
+      "confirmed_periods": 0,
+      "candidates_surviving_window": 0,
+      "longest_self_overlap_bits": 26
+    },
+    {
+      "seed": 60,
+      "confirmed_periods": 0,
+      "candidates_surviving_window": 0,
+      "longest_self_overlap_bits": 22
+    },
+    {
+      "seed": 61,
+      "confirmed_periods": 0,
+      "candidates_surviving_window": 0,
+      "longest_self_overlap_bits": 24
+    },
+    {
+      "seed": 62,
+      "confirmed_periods": 0,
+      "candidates_surviving_window": 0,
+      "longest_self_overlap_bits": 21
+    },
+    {
+      "seed": 63,
+      "confirmed_periods": 0,
+      "candidates_surviving_window": 0,
+      "longest_self_overlap_bits": 22
+    },
+    {
+      "seed": 64,
+      "confirmed_periods": 0,
+      "candidates_surviving_window": 0,
+      "longest_self_overlap_bits": 23
+    },
+    {
+      "seed": 65,
+      "confirmed_periods": 0,
+      "candidates_surviving_window": 0,
+      "longest_self_overlap_bits": 24
+    },
+    {
+      "seed": 66,
+      "confirmed_periods": 0,
+      "candidates_surviving_window": 0,
+      "longest_self_overlap_bits": 22
+    },
+    {
+      "seed": 67,
+      "confirmed_periods": 0,
+      "candidates_surviving_window": 0,
+      "longest_self_overlap_bits": 22
+    },
+    {
+      "seed": 68,
+      "confirmed_periods": 0,
+      "candidates_surviving_window": 0,
+      "longest_self_overlap_bits": 24
+    },
+    {
+      "seed": 69,
+      "confirmed_periods": 0,
+      "candidates_surviving_window": 0,
+      "longest_self_overlap_bits": 23
+    },
+    {
+      "seed": 70,
+      "confirmed_periods": 0,
+      "candidates_surviving_window": 0,
+      "longest_self_overlap_bits": 25
+    },
+    {
+      "seed": 71,
+      "confirmed_periods": 0,
+      "candidates_surviving_window": 0,
+      "longest_self_overlap_bits": 22
+    },
+    {
+      "seed": 72,
+      "confirmed_periods": 0,
+      "candidates_surviving_window": 0,
+      "longest_self_overlap_bits": 23
+    },
+    {
+      "seed": 73,
+      "confirmed_periods": 0,
+      "candidates_surviving_window": 0,
+      "longest_self_overlap_bits": 25
+    },
+    {
+      "seed": 74,
+      "confirmed_periods": 0,
+      "candidates_surviving_window": 0,
+      "longest_self_overlap_bits": 21
+    },
+    {
+      "seed": 75,
+      "confirmed_periods": 0,
+      "candidates_surviving_window": 0,
+      "longest_self_overlap_bits": 22
+    },
+    {
+      "seed": 76,
+      "confirmed_periods": 0,
+      "candidates_surviving_window": 0,
+      "longest_self_overlap_bits": 26
+    },
+    {
+      "seed": 77,
+      "confirmed_periods": 0,
+      "candidates_surviving_window": 0,
+      "longest_self_overlap_bits": 25
+    },
+    {
+      "seed": 78,
+      "confirmed_periods": 0,
+      "candidates_surviving_window": 0,
+      "longest_self_overlap_bits": 22
+    },
+    {
+      "seed": 79,
+      "confirmed_periods": 0,
+      "candidates_surviving_window": 0,
+      "longest_self_overlap_bits": 22
+    }
+  ],
+  "control_summary": {
+    "longest_self_overlap_band": [
+      20,
+      21,
+      21,
+      21,
+      21,
+      21,
+      22,
+      22,
+      22,
+      22,
+      22,
+      22,
+      22,
+      22,
+      22,
+      22,
+      22,
+      22,
+      22,
+      22,
+      22,
+      22,
+      22,
+      22,
+      22,
+      22,
+      23,
+      23,
+      23,
+      23,
+      23,
+      23,
+      23,
+      24,
+      24,
+      24,
+      24,
+      24,
+      24,
+      24,
+      24,
+      25,
+      25,
+      25,
+      25,
+      25,
+      26,
+      26,
+      28,
+      29
+    ],
+    "control_min": 20,
+    "control_max": 29,
+    "control_median": 22,
+    "expected_max_is_about_log2n": 23.25,
+    "note": "The expected maximum is ~log2(n), not 2*log2(n): there are ~n shifts, not n^2 position pairs. 2*log2(n) is the longest common substring between two INDEPENDENT sequences.",
+    "center_longest_overlap": 26,
+    "seeds_reaching_center_value": 4,
+    "empirical_p_value": 0.098,
+    "union_bound_p_at_center_value": 0.1384,
+    "verdict": "consistent with chance"
+  },
+  "git": {
+    "git_branch": "claude/keen-sagan-21rzbr",
+    "git_head": "6be6a54331c0a7f37ccc8a5dbb3c09e8531b63c1"
+  }
+}
