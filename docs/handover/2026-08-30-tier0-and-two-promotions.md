@@ -11,11 +11,11 @@
 
 ## TL;DR
 
-Plan items **2–6** (Tier 0 tooling), **7** (`s*(n)` → Certificate) and **11**
-(`g(n)` grammar curve) are done. Item **1** is in flight. Items 8, 13, 14 were
-not attempted and could not be: see "Environment" below.
+Plan items **1, 2–6, 7, 8, 11 and 13** are done. Item **14** was landed in
+parallel by another session on this same branch. Only item **9**, item **10**,
+item **12** and item **15** remain untouched.
 
-Three findings that change what the next session should do:
+Five findings that change what the next session should do:
 
 1. **The plan's item-7 recipe is broken.** `Cadical153(with_proof=True)` emits
    proofs that `drat-trim` rejects. Following it as written would have shipped a
@@ -24,6 +24,13 @@ Three findings that change what the next session should do:
    on any machine without the gitignored `.bin` files — i.e. every fresh clone.
 3. **The SAT work is ~28x cheaper than assumed**, which re-costs item 10 from
    "blocked on solver time" to "probably minutes".
+4. **The 10M bitstream can be regenerated without a GPU.** The independent CPU
+   reference reproduces it byte-for-byte (145 min), which is how items 8 and 13
+   got unblocked on a GPU-less machine. Do not assume "needs the GPU box"
+   without checking whether the CPU reference suffices.
+5. **The I–L neural suite is blind to long-lag XOR structure** — the structure
+   class Rule 30 most plausibly has. The neural nulls are much narrower than
+   the README used to imply.
 
 ---
 
@@ -41,10 +48,16 @@ cupy**, cloned fresh from GitHub. Two consequences worth knowing in advance:
 `pip install` works (numpy, python-sat installed on demand), and outbound git
 clone works, so building a SAT toolchain from source is fine here.
 
-**Items 8, 13 and 14 belong on the machine with a GPU and the bitstreams.**
-Item 8's blocker is not only that `torch`/`sklearn` are missing — it is that the
-10M bitstream the I–L experiments were computed on is not something a fresh
-clone has.
+**Correction to an earlier draft of this file:** it said items 8, 13 and 14
+belong on the GPU box. That was wrong. `tools/gen_golden_reference.py` is a
+CPU-only implementation that regenerates the 10M center column in ~145 minutes
+and, as it turned out, reproduces the canonical artifact **byte-for-byte** — so
+`data/center_col_10M.bin` can be recreated anywhere, and items 8 and 13 were
+both completed here. `torch` and `sklearn` install fine from PyPI (though
+`download.pytorch.org` is blocked by the egress proxy — use plain PyPI).
+
+What genuinely still needs better hardware is the **46M** stream: extending the
+independent reference to it costs ~21x the 10M run, about **50 hours** of CPU.
 
 ---
 
@@ -121,6 +134,39 @@ Scope was widened twice, deliberately:
   `prize_lab.run_dfao` — the same module whose `dfao_sat_cnf` produced them, so
   a shared mis-encoding would validate itself.
 
+### Item 1 — golden reference extended to all 10M bits
+
+`docs/experiment-logs/2026-08-30-golden-reference-10M.md`. The CPU reference,
+sharing no code, no bit-order convention and no tape geometry with `gpu/`,
+regenerated all 10,000,000 bits and its LSB-first repacking is **byte-identical**
+to the canonical artifact (`6f8670b4…` both sides). The independent check is now
+a hash comparison over the whole stream instead of a diff over the first 10%.
+`verify_all.py` went from 7 passed / 2 skipped to 9 passed / 1 skipped.
+
+### Item 13 — exact exhaustive period search
+
+`docs/experiment-logs/2026-08-30-period-search-exact.md`. All **9,999,936**
+candidate periods decided **exactly**; zero survived even a 64-bit window. The
+plan framed this as VRAM-bound with a Bonferroni threshold to manage, but a
+period is refuted by one mismatch — so the sampled test was answering an exact
+question statistically. The scan took **2.1 s** on four CPU cores. Problem 1 is
+bound by the cost of *simulating* a longer column, not searching it.
+
+### Item 8 — I–L re-run, and a blind spot
+
+`docs/experiment-logs/2026-08-30-rerun-il-bitorder.md`. The bit-order bug
+changed nothing (largest paired difference 0.0024 across 24 configurations), so
+I–L are un-retracted. But the positive controls the originals never had turned
+up something worse than the bug: on `s[i] = s[i-13] ⊕ s[i-27]` — fully
+determined by 27 bits inside a 64-bit context — every model fails, across six
+budgets spanning 5x the parameters, more data, more epochs and short contexts.
+The same suite learns period-31 and `s[i-3] ⊕ s[i-5]` instantly.
+
+Rule 30 is left-permutive and Experiment S measured `L(n) = n/2`, so this blind
+spot covers the most plausible structure class. I, K and L are reinstated but
+**scoped down** in the README. Experiment J is exempt and stronger: its probe
+detects a 0.30→0.70 bias ramp at 57.7% against a 10% floor.
+
 ### Item 11 — `g(n)`, the smallest-grammar curve
 
 `docs/experiment-logs/2026-08-30-grammar-min-size-curve.md`,
@@ -159,8 +205,16 @@ worst-case logarithmic gap is not excluded.
 - **Six markdown files were cp1252**, not UTF-8 (`0x97` em dash). Converted, and
   a test now pins it. If you author docs on Windows, watch the encoding.
 - **`tools/gen_golden_reference.py` does not checkpoint.** It writes only after
-  the full loop, so a 2-hour run loses everything if interrupted. Worth fixing
-  before the next long generation.
+  the full loop — confirmed the hard way by a 145-minute run. A 46M run would be
+  ~50 hours and is not realistically attemptable until this is fixed.
+- **`periodic` is not a positive control for a non-stationarity probe.** A
+  periodic stream is stationary, so chance accuracy is the *correct* answer and
+  the control passes while testing nothing. Same shape of error as the DRAT
+  truncation control below: a control on an input where the trivial answer is
+  also the right answer measures nothing.
+- **`pkill -f <pattern>` matches your own shell.** It killed the running shell
+  twice in this session because the command line contained the pattern. Use
+  `ps -eo pid,args | grep "[p]attern"` or kill by PID.
 
 ---
 
@@ -183,8 +237,20 @@ worst-case logarithmic gap is not excluded.
    n <= 64 — the same design as `s*(n)`, and the same route to a Certificate —
    would close it. Given how cheap the DFAO instances proved to be, this looks
    tractable.
-4. **Item 8 (re-run I–L)** and **items 13/14** — all need the GPU box.
-5. **Report the pysat proof defect upstream.** Any project using
+4. **A parity-capable estimator on the center column.** This is the direct
+   consequence of item 8's blind spot. Berlekamp–Massey (already in Experiment
+   S) and GF(2) rank methods find exactly what the neural suite misses, and
+   they should be pointed at the column with the same control discipline. The
+   answer to a model-class blind spot is a different method, not a bigger
+   network.
+5. **Re-run the detection-power ladder at GPU scale** (5–7M bits, d_model 256,
+   context 1024). If a large model learns `lfsr_13_27`, the I/K/L caveat
+   weakens; if it still fails, the caveat hardens into a statement about what
+   this class of experiment can establish at all.
+6. **Extend the independent reference to 46M** (~50 h CPU), or state the 10M
+   horizon explicitly in the 46M ledger row rather than letting it inherit
+   confidence it has not earned.
+7. **Report the pysat proof defect upstream.** Any project using
    `with_proof=True` to certify UNSAT is certifying nothing.
 
 ## Do not
