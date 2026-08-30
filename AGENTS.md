@@ -5,8 +5,9 @@ Use this workspace as a disciplined scratchpad, not as an ad hoc notebook dump.
 **New here? Read
 [`docs/handover/2026-08-29-data-integrity-and-dfao-curve.md`](docs/handover/2026-08-29-data-integrity-and-dfao-curve.md)
 first** - it is the most recent state of play: what is verified, what was
-retracted and why, and what is open. Then `docs/AGENT_QUICKSTART.md`, then
-`docs/WORKFLOW.md`. The quickstart gives agents the tool map and prize-facing
+retracted and why, and what is open. Then the ordered work plan in
+[`docs/handover/2026-08-30-next-session-plan.md`](docs/handover/2026-08-30-next-session-plan.md).
+Then `docs/AGENT_QUICKSTART.md`, then `docs/WORKFLOW.md`. The quickstart gives agents the tool map and prize-facing
 triage rules; the workflow file is the operating manual for the GPU-accelerated,
 verification-first loop.
 
