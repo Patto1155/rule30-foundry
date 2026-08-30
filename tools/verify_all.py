@@ -8,6 +8,7 @@ on a byte-reversed bitstream.
 
 Stages, in order (each is independently runnable; see its own --help):
 
+  clone-integrity    no LF->CRLF corruption from git's initial checkout
   golden-self-test   naive == packed, OEIS A051023 prefix matches
   manifest+golden    every tracked artifact still hashes the same
   manifest-current   data/MANIFEST.sha256 is what make_manifest regenerates
@@ -53,6 +54,9 @@ class Stage:
 def build_stages() -> list[Stage]:
     py = sys.executable
     stages = [
+        # First: a bad checkout makes every later stage fail with hash
+        # mismatches that read like corrupted data rather than a git filter.
+        Stage("clone-integrity", [py, "tools/check_clone_integrity.py"]),
         Stage("golden-self-test",
               [py, "tools/gen_golden_reference.py", "--self-test"]),
         Stage("manifest+golden", [py, "tools/verify_data.py", "--all"]),

@@ -85,13 +85,20 @@ from prize_lab import (  # noqa: E402
     write_json,
 )
 
+PYSAT_HINT = "python-sat is required: pip install python-sat  (import name 'pysat')"
+
+# Do NOT raise at import time. This is an availability probe only -- the solver
+# is imported locally in the worker (see solve_cnf_worker). Raising SystemExit
+# here was a live defect: SystemExit does not inherit from Exception, so an
+# `except ImportError`/`except Exception` guard in an importing module cannot
+# catch it, and a SystemExit raised during `unittest discover` tears down the
+# whole test process, so every module later in discovery order is never
+# collected. main() turns the missing dependency into a clean CLI error.
 try:
-    import pysat
     from pysat.solvers import Cadical153  # noqa: F401  (availability check only)
-except ImportError as exc:  # pragma: no cover - environment guard
-    raise SystemExit(
-        "python-sat is required: pip install python-sat  (import name 'pysat')"
-    ) from exc
+    PYSAT_AVAILABLE = True
+except ImportError:  # pragma: no cover - environment guard
+    PYSAT_AVAILABLE = False
 
 
 SOLVER_NAME = "Cadical153"
@@ -608,6 +615,9 @@ def main() -> None:
     ap.add_argument("--skip-gate", action="store_true", help="skip the correctness gate (not recommended)")
     ap.add_argument("--out", help="JSON artifact path")
     args = ap.parse_args()
+
+    if not PYSAT_AVAILABLE:
+        raise SystemExit(PYSAT_HINT)
 
     if args.solve_cnf:
         raise SystemExit(solve_cnf_worker(args.solve_cnf, args.solve_result))
