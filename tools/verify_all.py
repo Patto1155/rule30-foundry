@@ -65,6 +65,12 @@ def build_stages() -> list[Stage]:
             [py, "tools/verify_data.py", "--bitstream", rel],
             skip_reason=None if present else
             "not present (gitignored; regenerate with gpu/rule30_sim.py)"))
+    toolchain = [REPO_ROOT / "third_party" / n for n in ("cadical", "drat-trim")]
+    stages.append(Stage(
+        "drat-toolchain",
+        [py, "experiments/dfao_drat_proofs.py", "--self-test"],
+        skip_reason=None if all(t.exists() for t in toolchain) else
+        "SAT toolchain absent (build it: bash tools/build_sat_toolchain.sh)"))
     stages += [
         Stage("lint-bitorder", [py, "tools/lint_bitorder.py"]),
         Stage("lint-ledger", [py, "tools/lint_ledger.py"]),

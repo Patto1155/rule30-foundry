@@ -4,9 +4,17 @@
 Three checks, each independently runnable:
 
   --manifest   every file listed in data/MANIFEST.sha256 still hashes the same
-  --golden     data/golden/center_col_golden_1M.bin matches its recorded hash
+  --golden     every data/golden/center_col_golden_*.bin matches its recorded hash
   --bitstream  a candidate center-column .bin agrees with the golden reference
-               over its first 1,000,000 bits
+               over as many bits as the widest reference on disk covers
+
+How far the independent check reaches is NOT hardcoded: it is however many bits
+the widest golden file holds, and that number is printed on every run. It is
+the honest measure of how much of the bitstream has been checked against an
+implementation that shares no code with gpu/. Above that horizon the only
+evidence is two runs of the same kernel family agreeing, which by construction
+cannot catch a bug they share -- and the June 2026 fixes were boundary and
+padding bugs, which surface late.
 
 Bit order matters and is not uniform in this repo: gpu/rule30_sim.py writes
 center-column dumps LSB-first while the golden reference is MSB-first. Reading
@@ -37,8 +45,34 @@ import numpy as np
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 MANIFEST = REPO_ROOT / "data" / "MANIFEST.sha256"
-GOLDEN = REPO_ROOT / "data" / "golden" / "center_col_golden_1M.bin"
-GOLDEN_BITS = 1_000_000
+GOLDEN_DIR = REPO_ROOT / "data" / "golden"
+GOLDEN_GLOB = "center_col_golden_*.bin"
+
+
+def golden_files() -> list[Path]:
+    """Golden references present on disk, widest last."""
+    if not GOLDEN_DIR.is_dir():
+        return []
+    return sorted(GOLDEN_DIR.glob(GOLDEN_GLOB), key=lambda p: p.stat().st_size)
+
+
+def widest_golden() -> tuple[Path | None, int]:
+    """The reference covering the most bits, and how many bits that is.
+
+    The horizon is not hardcoded: whatever independent reference is on disk
+    defines how far the independent check reaches. That number is the honest
+    statement of how much of the bitstream has been checked against an
+    implementation sharing no code with gpu/, so it is printed on every run
+    rather than assumed.
+    """
+    files = golden_files()
+    if not files:
+        return None, 0
+    widest = files[-1]
+    return widest, widest.stat().st_size * 8
+
+
+GOLDEN, GOLDEN_BITS = widest_golden()
 
 # Bit-packing convention. gen_golden_reference.py writes the golden file
 # MSB-first (numpy's default), but gpu/rule30_sim.py writes center-column
@@ -87,32 +121,43 @@ def check_manifest() -> bool:
 
 
 def check_golden() -> bool:
-    if not GOLDEN.exists():
-        print(f"FAIL  golden reference missing: {GOLDEN}")
+    files = golden_files()
+    if not files:
+        print(f"FAIL  no golden reference in {GOLDEN_DIR}")
         return False
     if not MANIFEST.exists():
         print("WARN  no manifest; cannot verify golden hash")
         return False
-    rel = GOLDEN.relative_to(REPO_ROOT).as_posix()
-    expected = None
+
+    recorded = {}
     for line in MANIFEST.read_text().splitlines():
         digest, _, name = line.strip().partition("  ")
-        if name == rel:
-            expected = digest
-    if expected is None:
-        print(f"FAIL  {rel} not listed in manifest")
-        return False
-    actual = sha256_file(GOLDEN)
-    if actual != expected:
-        print(f"FAIL  golden hash mismatch\n      expected {expected}\n"
-              f"      actual   {actual}")
-        return False
-    print(f"golden: {rel} OK ({GOLDEN_BITS:,} bits)")
-    return True
+        if digest and name and not digest.startswith("#"):
+            recorded[name] = digest
+
+    ok = True
+    for path in files:
+        rel = path.relative_to(REPO_ROOT).as_posix()
+        bits = path.stat().st_size * 8
+        expected = recorded.get(rel)
+        if expected is None:
+            print(f"FAIL  {rel} not listed in manifest")
+            ok = False
+            continue
+        actual = sha256_file(path)
+        if actual != expected:
+            print(f"FAIL  golden hash mismatch: {rel}\n"
+                  f"      expected {expected}\n      actual   {actual}")
+            ok = False
+            continue
+        print(f"golden: {rel} OK ({bits:,} bits)")
+    if ok:
+        print(f"golden: independent check reaches {GOLDEN_BITS:,} bits")
+    return ok
 
 
-def _decode(raw: np.ndarray, order: str) -> np.ndarray:
-    return np.unpackbits(raw, bitorder=order)[:GOLDEN_BITS]
+def _decode(raw: np.ndarray, order: str, n_bits: int) -> np.ndarray:
+    return np.unpackbits(raw, bitorder=order)[:n_bits]
 
 
 def check_bitstream(candidate: Path, bitorder: str = "auto") -> bool:
@@ -121,36 +166,46 @@ def check_bitstream(candidate: Path, bitorder: str = "auto") -> bool:
         print("      (raw .bin files are not tracked in git; regenerate with")
         print("       gpu/rule30_sim.py or point --bitstream at a local copy)")
         return False
-    if not GOLDEN.exists():
-        print(f"FAIL  golden reference missing: {GOLDEN}")
+    if GOLDEN is None or not GOLDEN.exists():
+        print(f"FAIL  no golden reference in {GOLDEN_DIR}")
         return False
 
     gold_bits = np.unpackbits(np.fromfile(GOLDEN, dtype=np.uint8),
                               bitorder=GOLDEN_BITORDER)[:GOLDEN_BITS]
 
-    need_bytes = GOLDEN_BITS // 8
+    # Compare over the overlap, and say how wide it was. A candidate shorter
+    # than the reference is not a failure -- but a check over fewer bits than
+    # the reference covers must never be reported as if it were the full one.
+    compare_bits = min(GOLDEN_BITS, candidate.stat().st_size * 8)
+    if compare_bits < GOLDEN_BITS:
+        print(f"note: {candidate.name} holds {compare_bits:,} bits; the "
+              f"reference covers {GOLDEN_BITS:,}. Comparing the overlap.")
+        gold_bits = gold_bits[:compare_bits]
+
+    need_bytes = compare_bits // 8
     raw = np.fromfile(candidate, dtype=np.uint8, count=need_bytes)
 
     # A center-column dump may be one byte per bit or bit-packed. Detect it.
     if raw.size >= need_bytes and set(np.unique(raw[:4096]).tolist()) <= {0, 1}:
         cands = [("byte-per-bit", None,
                   np.fromfile(candidate, dtype=np.uint8,
-                              count=GOLDEN_BITS)[:GOLDEN_BITS])]
+                              count=compare_bits)[:compare_bits])]
     else:
         orders = ORDERS if bitorder == "auto" else [BITORDER_ALIAS[bitorder]]
-        cands = [("bit-packed", o, _decode(raw, o)) for o in orders]
+        cands = [("bit-packed", o, _decode(raw, o, compare_bits))
+                 for o in orders]
 
     best = None
     for layout, order, bits in cands:
-        if bits.size < GOLDEN_BITS:
+        if bits.size < compare_bits:
             print(f"FAIL  {candidate.name} has only {bits.size:,} bits, "
-                  f"need {GOLDEN_BITS:,}")
+                  f"need {compare_bits:,}")
             return False
         ndiff = int(np.count_nonzero(bits != gold_bits))
         if ndiff == 0:
             how = f"{layout}, {ORDER_LABEL[order]}" if order else layout
-            print(f"bitstream: {candidate.name} ({how}) agrees with golden "
-                  f"over {GOLDEN_BITS:,} bits  OK")
+            print(f"bitstream: {candidate.name} ({how}) agrees with "
+                  f"{GOLDEN.name} over {compare_bits:,} bits  OK")
             return True
         if best is None or ndiff < best[2]:
             best = (layout, order, ndiff, bits)
@@ -160,8 +215,8 @@ def check_bitstream(candidate: Path, bitorder: str = "auto") -> bool:
     diff = np.flatnonzero(bits != gold_bits)
     print(f"FAIL  {candidate.name} ({how}) diverges from golden reference")
     print(f"      first divergence at bit {diff[0]:,}")
-    print(f"      {ndiff:,} of {GOLDEN_BITS:,} bits differ "
-          f"({ndiff / GOLDEN_BITS:.4%})")
+    print(f"      {ndiff:,} of {compare_bits:,} bits differ "
+          f"({ndiff / compare_bits:.4%})")
 
     if order is not None and bitorder == "auto":
         print("      both bit orders were tried; this is the closer of the two")
@@ -170,7 +225,7 @@ def check_bitstream(candidate: Path, bitorder: str = "auto") -> bool:
         print(f"      only {ORDER_LABEL[order]} was tried "
               f"(--bitorder {bitorder}); retry with --bitorder {other}")
 
-    if ndiff / GOLDEN_BITS > 0.4:
+    if ndiff / compare_bits > 0.4:
         print("      ~50% differing with divergence at bit 0 means the two")
         print("      streams are uncorrelated -- almost always a packing or")
         print("      seed mismatch, not a kernel bug")
