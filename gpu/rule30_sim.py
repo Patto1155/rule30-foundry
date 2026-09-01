@@ -14,6 +14,9 @@ import cupy as cp
 import numpy as np
 from tqdm import tqdm
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import tape_geometry
+
 # Rule 30 step + center bit extraction
 # Thread handling the center word also writes the center bit to output buffer
 rule30_with_center_kernel = cp.RawKernel(r'''
@@ -130,9 +133,28 @@ def verify_gpu_kernel():
         raise RuntimeError("GPU center extraction failed pre-step verification.")
 
 
-def simulate(n_cells, n_steps, extract_center=False, center_out_path=None):
-    """Run Rule 30 simulation on GPU with tqdm progress bar."""
+def simulate(n_cells, n_steps, extract_center=False, center_out_path=None,
+             allow_truncated_cone=False):
+    """Run Rule 30 simulation on GPU with tqdm progress bar.
+
+    Refuses to run unless the light cone stays inside the tape for every
+    step. Rule 30 spreads one cell per step, so N valid center bits need
+    ~2N cells; a short tape produces a bitstream that is correct at first
+    and wrong LATE, with the bit mean and the first-20-bit check both
+    still passing. See gpu/tape_geometry.py.
+    """
     verify_gpu_kernel()
+
+    if allow_truncated_cone:
+        geom = tape_geometry.describe(n_cells, n_steps)
+        if not geom["cone_fits"]:
+            print(f"WARNING: --allow-truncated-cone: only the first "
+                  f"{geom['max_safe_steps']:,} of {n_steps:,} steps are "
+                  f"exact. Do NOT anchor this output.")
+    else:
+        geom = tape_geometry.check(n_cells, n_steps)
+    print(f"Light cone: exact to {geom['max_safe_steps']:,} steps "
+          f"({geom['max_safe_steps'] - n_steps:,} steps of margin)")
 
     n_words = (n_cells + 63) // 64
     n_cells = n_words * 64
@@ -225,7 +247,13 @@ def simulate(n_cells, n_steps, extract_center=False, center_out_path=None):
         # Pack into bits: bit i of byte j = center_bits[j*8 + i]
         center_packed = np.packbits(center_bits, bitorder='little')
 
-        os.makedirs(os.path.dirname(center_out_path), exist_ok=True)
+        # A bare filename gives dirname '' and os.makedirs('') raises
+        # FileNotFoundError -- which would land here, after the entire
+        # simulation has run and the column has been packed. Guarded the
+        # same way --json-out already was.
+        out_dir = os.path.dirname(center_out_path)
+        if out_dir:
+            os.makedirs(out_dir, exist_ok=True)
         with open(center_out_path, 'wb') as f:
             f.write(center_packed)
         print(f"Center column saved: {center_out_path} ({len(center_packed):,} bytes = {n_steps:,} bits)")
@@ -253,6 +281,10 @@ def main():
     parser.add_argument("--center", action="store_true", help="Extract center column")
     parser.add_argument("--center-out", type=str, default=None, help="Path to save center column bits")
     parser.add_argument("--json-out", type=str, default=None, help="Save results as JSON")
+    parser.add_argument("--allow-truncated-cone", action="store_true",
+                        help="Run even though the light cone escapes the "
+                             "tape. The output will be wrong at large t; "
+                             "never anchor it.")
     args = parser.parse_args()
 
     results = simulate(
@@ -260,6 +292,7 @@ def main():
         n_steps=args.steps,
         extract_center=args.center,
         center_out_path=args.center_out,
+        allow_truncated_cone=args.allow_truncated_cone,
     )
 
     if args.json_out:
