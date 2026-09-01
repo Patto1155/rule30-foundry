@@ -60,6 +60,21 @@ This closes the March/June integrity question in the passing direction over the
 whole stream. The June boundary and padding fixes did not perturb the center
 column at any `t` up to 10^7.
 
+**It is one of three axes, and the combination is the point.** In parallel, the
+laptop session (`3aedad9`) regenerated the same bitstream on an **RTX 2050**
+(Ampere, compute capability 8.6, CUDA runtime 12.9) against the anchor recorded
+on a **GTX 1060** (Pascal, 6.1) — same sha256, 0 of 10,000,000 bits differ.
+
+| reproduction | what it can catch | what it cannot |
+|---|---|---|
+| second GPU, different architecture and CUDA major version | hardware, driver and toolchain-dependent bugs | a bug in shared source — it reproduces identically everywhere |
+| this CPU reference, no shared code, convention or geometry | shared-source bugs | nothing about GPU-specific execution, since it never runs any |
+
+Neither axis is sufficient alone and each covers the other's blind spot. No
+claim is made about the host OS of the original GTX 1060 run: it is not recorded
+in `data/center_col_10M_results.json`, `DATA_INTEGRITY.md` or `GPU_KERNELS.md`,
+and an earlier ledger row that asserted it was corrected in `a1a1f0e`.
+
 ### 2. Geometry cross-check
 
 The 1M reference was generated on a 2,000,130-cell tape, the 10M one on

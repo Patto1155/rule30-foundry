@@ -11,9 +11,16 @@
 
 ## TL;DR
 
-Plan items **1, 2–6, 7, 8, 11 and 13** are done. Item **14** was landed in
-parallel by another session on this same branch. Only item **9**, item **10**,
-item **12** and item **15** remain untouched.
+Plan items **1, 2–6, 7, 8, 11 and 13** are done, from a GPU-less Linux
+container. Item **14** was taken **in parallel from the owner's laptop**
+(session `01F8jNAdw6Lcn6dqQ5y2k5Cq`, commits `3aedad9`, `75c75da`, `a1a1f0e` on
+this branch) and is **partly** done — the tool exists and its gates pass, but
+the walk has not reached the prediction window and deliberately carries no
+ledger row yet. Items **9**, **10**, **12** and **15** are untouched.
+
+Read the "Work from the laptop session" section below before planning: it fixed
+a defect in this session's own code, added two verification stages, and left
+item 14 at a well-defined halfway point.
 
 Five findings that change what the next session should do:
 
@@ -41,7 +48,11 @@ cupy**, cloned fresh from GitHub. Two consequences worth knowing in advance:
 
 - `gpu/rule30_sim.py` cannot run at all. Anything needing the canonical
   bitstreams is impossible here. `data/center_col_10M.bin` and
-  `center_col_46M.bin` are gitignored and live only on the Windows box.
+  `center_col_46M.bin` are gitignored and are not in a fresh clone. (An earlier
+  draft of this file said they "live on the Windows box". That phrasing was an
+  inference, and `a1a1f0e` corrected a ledger row that had leaned on it to
+  assert the original run's host OS. Nothing in this repo records the host OS
+  of the GTX 1060 run. Do not re-introduce the claim.)
 - `verify_data.py` reports **165 verified, 2 absent** rather than 167. That is
   the correct fresh-clone state, not a failure.
 
@@ -141,7 +152,22 @@ sharing no code, no bit-order convention and no tape geometry with `gpu/`,
 regenerated all 10,000,000 bits and its LSB-first repacking is **byte-identical**
 to the canonical artifact (`6f8670b4…` both sides). The independent check is now
 a hash comparison over the whole stream instead of a diff over the first 10%.
-`verify_all.py` went from 7 passed / 2 skipped to 9 passed / 1 skipped.
+
+Those same bytes now have **three** independent reproductions, and they cover
+different failure modes, which is why the combination is worth more than any
+one of them:
+
+| reproduction | excludes |
+|---|---|
+| GTX 1060 (Pascal), original anchor | — the baseline |
+| RTX 2050 (Ampere, CUDA 12.9), laptop session `3aedad9` | hardware / driver / toolchain-dependent bugs |
+| CPU reference, no shared code or conventions | shared-source bugs, which reproduce identically on any hardware |
+
+The second axis alone cannot catch a bug in shared source; the third alone
+cannot catch a toolchain bug. Together they close both. The ledger row states
+this scoping explicitly and makes no claim about the original run's host OS,
+which is not recorded anywhere in the repo.
+`verify_all.py` went from 7 passed / 2 skipped to **9 passed / 1 skipped** (the count also grew by the laptop session's clone-integrity stage).
 
 ### Item 13 — exact exhaustive period search
 
@@ -190,6 +216,83 @@ worst-case logarithmic gap is not excluded.
 
 ---
 
+## Work from the laptop session (`3aedad9`, `75c75da`, `a1a1f0e`)
+
+Merged into this branch. Three things, and the first is a correction to work
+done in this session.
+
+### It found a live defect in this session's tests
+
+`experiments/dfao_min_states.py` raised `SystemExit` at **module scope** when
+pysat was absent. `SystemExit` inherits from `BaseException`, not `Exception`,
+so the `except Exception -> unittest.SkipTest` guards written here in
+`tests/test_dfao_drat_proofs.py` and `tests/test_grammar_min_size.py` could not
+catch it. Measured with pysat blocked: **65 tests ran instead of 88**, and the
+run printed `FAILED (errors=2)` — which reads as two broken tests, not
+twenty-three absent ones.
+
+The 23 that vanished are the ones checking *which* instances the `s*(n)`
+certificate must prove: the coverage logic that stops a certificate reporting
+"207/207 verified" over a silently smaller set. None of them need a solver.
+That is the worst possible 23 to lose silently, and the guards written here
+were the reason they were lost quietly rather than loudly.
+
+Fixed at source (a soft `PYSAT_AVAILABLE` flag, `SystemExit` moved into
+`main()`) and pinned by `tests/test_import_safety.py`, an AST scan forbidding
+`raise SystemExit` reachable at import time across `experiments/`, `tools/`
+and `gpu/`.
+
+**The generalisable lesson:** an `except Exception` guard around an optional
+import is not a guard. Catch `(Exception, SystemExit)` explicitly, or better,
+do not let an import decide to exit a process.
+
+### `tools/check_clone_integrity.py` — a Windows trap worth knowing
+
+`core.autocrlf=true` beats `.gitattributes` (`data/** -text`) during git
+clone's **initial checkout only**. So 162 tracked `data/` files land CRLF and
+fail their manifest anchors, while `git status` reports a clean tree because
+they round-trip. It presents as a wall of hash mismatches indistinguishable
+from corrupted data — the exact failure `.gitattributes` was added to prevent,
+arriving through a door it does not cover.
+
+Now `verify_all.py`'s first stage. It detects the `i/lf w/crlf` signature and
+prints the repair, and deliberately does not flag `i/crlf` files, which are
+CRLF in the index and therefore byte-identical everywhere.
+
+### Item 14 — the period-32 pattern-map walk, halfway
+
+`experiments/pattern_map_walk.py`. The ledger's stated promotion path for
+`period(d) ~ 2*log2(d)` is "confirm the 32->64 event predicted near
+`d ~ 8.6e9`", and `period16_walk.py` had rejected the map-walk route because
+the map is partial at a zero word.
+
+The commit dissolves that objection rather than working around it: in the
+one-period composite `x[t+1] = u[t] XOR (v[t] OR x[t])`, wherever `v[t] = 1`
+the update is constant in `x[t]`, so `v != 0` makes `w_d` unique — no branch.
+Only `v == 0` branches, and that is a collision, a ~`2^-32` per-diagonal event.
+Branch points and doubling events are therefore the *same* collisions separated
+by parity, so a walk to `d ~ 1e10` expects only a couple. Branches are
+**followed** rather than resolved: if every surviving branch doubles in the
+same window, the transient that cannot be computed did not matter.
+
+It also records a parity conflation caught mid-implementation, which is easy to
+repeat: **minimal-period** parity answers "does the period double?" (Lemma B),
+**full-p** parity answers "does a period-p solution still exist?" (the walk).
+At `d=87866` these disagree — odd on the minimal period, even over all 32 bits —
+so halting on the wrong one stops the walk at the known 16->32 event and
+reports it as terminal.
+
+Gates pass at `--diagonals 100000`: period histogram matches, first period-32
+diagonal is 87867 (agreeing with the direct-simulation refutation), Lemma A
+clean over 8,000 tests, map vs simulation clean over 8,000 consecutive
+diagonals. **Walk validated to `d = 5e7` at 7.7 M steps/s, 0 branch points, no
+doubling yet** — as expected for a `2^-32` event.
+
+**Not run to the prediction window, and deliberately no ledger row until it
+is.** That is the right call and should not be "tidied up" by writing a row.
+
+---
+
 ## Traps — new ones, in addition to the 2026-08-29 list
 
 - **`Cadical153(with_proof=True)` is not usable for certification.** Its proofs
@@ -212,6 +315,18 @@ worst-case logarithmic gap is not excluded.
   the control passes while testing nothing. Same shape of error as the DRAT
   truncation control below: a control on an input where the trivial answer is
   also the right answer measures nothing.
+- **`except Exception` does not catch `SystemExit`.** An optional-dependency
+  guard written that way silently deleted 23 tests here. See the laptop-session
+  section above. Catch `(Exception, SystemExit)`, and do not `raise SystemExit`
+  at import scope — `tests/test_import_safety.py` now forbids it.
+- **`core.autocrlf=true` beats `.gitattributes` on a fresh clone's first
+  checkout.** 162 tracked `data/` files land CRLF, fail their anchors, and
+  `git status` still reports clean. `tools/check_clone_integrity.py` is
+  `verify_all.py`'s first stage precisely because this looks like corruption.
+- **Minimal-period parity and full-period parity answer different questions.**
+  Lemma B uses the minimal period; the period-32 walk needs parity over all 32
+  bits. They disagree at `d=87866`, and using the wrong one halts the walk at
+  the already-known 16->32 event.
 - **`pkill -f <pattern>` matches your own shell.** It killed the running shell
   twice in this session because the command line contained the pattern. Use
   `ps -eo pid,args | grep "[p]attern"` or kill by PID.
@@ -220,7 +335,25 @@ worst-case logarithmic gap is not excluded.
 
 ## Now open, ranked
 
-1. **Item 10 — extend `s*(n)` past n=48, and it is much cheaper than the plan
+1. **Finish the item-14 walk — it is ~26 minutes of CPU from a ledger row.**
+   `experiments/pattern_map_walk.py` is validated to `d = 5e7` at 7.7 M steps/s
+   with 0 branch points; the prediction window is `d ~ 8.6e9` and the commit
+   measures reaching `d = 1.2e10` at about **26 min of CPU per branch**. This
+   is the cheapest open item in the repo by a wide margin, and it closes the
+   ledger's own stated promotion path for `period(d) ~ 2*log2(d)`.
+
+   Two cautions carried from that commit. Branches are *followed*, not
+   resolved, so the argument only holds if every surviving branch doubles in
+   the same window — check that, do not assume it. And halting must use
+   **full-32-bit** parity, not minimal-period parity, or the walk stops at the
+   already-known 16->32 event and reports it as the answer.
+
+   Keep in view what the ledger already says: left-edge structure is **disjoint
+   from the prize object** (`settle(T) ~ 1.34*T > T`), so this is beautiful
+   mathematics that cannot by itself yield a center-column shortcut. Cheap and
+   conclusive, but not prize-facing.
+
+2. **Item 10 — extend `s*(n)` past n=48, and it is much cheaper than the plan
    assumed.** The standalone solver did 207 solves in **133 s** where the pysat
    harness took **3747 s** for 105, with proof logging on. The 120 s
    per-instance timeout that stopped the curve at n=48 was substantially
@@ -228,29 +361,29 @@ worst-case logarithmic gap is not excluded.
    budgeting. **Keep the state budget growing with `n`** — raising `n` at fixed
    `--max-states` makes the negative more vacuous, which is how the original
    DFAO claim got retracted.
-2. **Item 9 — `s*(n)` in bases 3, 4, 5.** The new Certificate covers base 2
+3. **Item 9 — `s*(n)` in bases 3, 4, 5.** The new Certificate covers base 2
    only, and automaticity is base-dependent (Cobham), so the claim is narrower
    than it reads. `experiments/dfao_min_states.py` already takes `--base`; the
    counting null shifts with `b`, so re-derive the band per base.
-3. **Exact `g*(n)` at small n.** The counting null and Re-Pair bracket the true
+4. **Exact `g*(n)` at small n.** The counting null and Re-Pair bracket the true
    curve about 2.5x apart. Solving the exact smallest grammar via SAT/ILP at
    n <= 64 — the same design as `s*(n)`, and the same route to a Certificate —
    would close it. Given how cheap the DFAO instances proved to be, this looks
    tractable.
-4. **A parity-capable estimator on the center column.** This is the direct
+5. **A parity-capable estimator on the center column.** This is the direct
    consequence of item 8's blind spot. Berlekamp–Massey (already in Experiment
    S) and GF(2) rank methods find exactly what the neural suite misses, and
    they should be pointed at the column with the same control discipline. The
    answer to a model-class blind spot is a different method, not a bigger
    network.
-5. **Re-run the detection-power ladder at GPU scale** (5–7M bits, d_model 256,
+6. **Re-run the detection-power ladder at GPU scale** (5–7M bits, d_model 256,
    context 1024). If a large model learns `lfsr_13_27`, the I/K/L caveat
    weakens; if it still fails, the caveat hardens into a statement about what
    this class of experiment can establish at all.
-6. **Extend the independent reference to 46M** (~50 h CPU), or state the 10M
+7. **Extend the independent reference to 46M** (~50 h CPU), or state the 10M
    horizon explicitly in the 46M ledger row rather than letting it inherit
    confidence it has not earned.
-7. **Report the pysat proof defect upstream.** Any project using
+8. **Report the pysat proof defect upstream.** Any project using
    `with_proof=True` to certify UNSAT is certifying nothing.
 
 ## Do not

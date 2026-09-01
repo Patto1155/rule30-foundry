@@ -20,7 +20,12 @@ for _p in (REPO_ROOT, REPO_ROOT / "experiments"):
 
 try:
     import dfao_drat_proofs
-except Exception as exc:  # pragma: no cover - dependency-driven
+except (Exception, SystemExit) as exc:  # pragma: no cover - dependency-driven
+    # SystemExit inherits from BaseException, not Exception. A bare
+    # `except Exception` here silently deleted 23 tests when an optional
+    # dependency was absent and an imported module raised SystemExit at
+    # module scope -- see tests/test_import_safety.py, which now forbids that
+    # at source. This guard is the second line of defence, not the first.
     raise unittest.SkipTest(f"cannot import dfao_drat_proofs: {exc}")
 
 
