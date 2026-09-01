@@ -49,6 +49,18 @@ Then `docs/AGENT_QUICKSTART.md`, then `docs/WORKFLOW.md`. The quickstart gives a
 triage rules; the workflow file is the operating manual for the GPU-accelerated,
 verification-first loop.
 
+## Before Renting Compute
+
+Read [`docs/COMPUTE_PLAN.md`](docs/COMPUTE_PLAN.md) and run
+`python tools/plan_run.py --table`. The short version: the kernel is
+**memory-bandwidth bound**, and VRAM never binds anywhere reachable - the 46M
+run used **66 MB** of a 6 GB card. Select hardware on bandwidth, not FLOPS or
+VRAM, and check the light cone with `python gpu/tape_geometry.py --steps <N>`
+before launching: a tape too short for its step count does not crash, keeps a
+0.5 bit mean, passes the first-20-bit check, and is wrong *late*.
+
+Most of the highest-value work in that document costs nothing.
+
 ## Before Proposing Experiments
 
 Read these first, in order:

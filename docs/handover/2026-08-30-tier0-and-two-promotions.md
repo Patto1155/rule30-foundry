@@ -6,6 +6,7 @@
 (the plan this session executed), then `AGENTS.md` and `docs/CLAIM_LEDGER.md`.
 
 **Start here:** `python tools/verify_all.py` — one command, ~2 s.
+**Planning a paid run?** [`docs/COMPUTE_PLAN.md`](../COMPUTE_PLAN.md) first — the standing plan's VRAM premise is wrong, and most of the best work is free.
 
 ---
 
