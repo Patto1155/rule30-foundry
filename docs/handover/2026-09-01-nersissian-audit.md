@@ -10,6 +10,7 @@ Added:
 - `tests/test_nersissian_audit.py`
 - `docs/references/nersissian-rule30.md`
 - `docs/experiment-logs/2026-09-01-nersissian-end-to-end-audit.md`
+- `docs/handover/2026-09-01-high-value-directions.md`
 - this handover
 
 ## Source audit
@@ -61,6 +62,23 @@ No prize claim is established.
 The audit does establish the correct accounting framework and a reproducible baseline. It makes it impossible to cite a warm query cost as if it were an end-to-end random-access algorithm without also reporting how the required n-dependent support was obtained.
 
 The explicit baseline shows material preprocessing cost, but that does not imply the compressed representation has the same scaling.
+
+## Highest-value research roadmap
+
+The ranked programme is now documented in:
+
+`docs/handover/2026-09-01-high-value-directions.md`
+
+Current effort allocation:
+
+1. Nersissian compressed-representation audit — **30%**.
+2. Problem 1 periodicity-to-contradiction search — **25%**.
+3. Corrected circuit/index-function programme — **20%**.
+4. Cross-rule controls — **15%**.
+5. DFAO / grammar / GF(2) diagnostics — **7%**.
+6. Larger simulations / discrepancy — **3%**.
+
+The roadmap includes concrete deliverables, decision gates, stop conditions, and mandatory engineering gates before any paid compute.
 
 ## Highest-value next action
 
