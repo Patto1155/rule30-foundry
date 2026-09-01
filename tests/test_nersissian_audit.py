@@ -41,14 +41,17 @@ class LucasTest(unittest.TestCase):
 
 class CenterColumnValidationTest(unittest.TestCase):
     def test_explicit_support_method_matches_independent_center_engine(self):
-        expected = center_bits_int(40, margin=64)
+        # Keep unit tests small: explicit support construction is intentionally
+        # the uncompressed baseline whose growth this experiment is measuring.
+        max_n = 18
+        expected = center_bits_int(max_n, margin=64)
         state = na.SequentialSupport()
-        got = [state.center_bit(n)[0] for n in range(41)]
+        got = [state.center_bit(n)[0] for n in range(max_n + 1)]
         self.assertEqual(got, expected)
 
     def test_cold_and_warm_return_same_value(self):
         state = na.SequentialSupport()
-        for n in (0, 1, 2, 4, 8, 12, 16, 20):
+        for n in (0, 1, 2, 4, 8, 12, 16):
             with self.subTest(n=n):
                 cold = na.center_bit_cold(n)[0]
                 warm = state.center_bit(n)[0]
