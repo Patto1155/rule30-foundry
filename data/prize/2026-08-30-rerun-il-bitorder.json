@@ -1,0 +1,283 @@
+{
+  "artifact_type": "rule30.rerun_il_bitorder",
+  "artifact_version": 1,
+  "claim_level": "Robust observation (paired, controlled, reduced scale)",
+  "created_at": "2026-08-30T10:11:42Z",
+  "elapsed_s": 527.1,
+  "question": "Does correcting the LSB/MSB bit order change the I-L conclusions?",
+  "method": {
+    "design": "paired: identical budget, seed and architecture on both decodes of the same bytes",
+    "why_not_a_direct_reproduction": "The originals ran on a GPU with 5-7M training bits and contexts to 1024. This machine has no GPU, so comparing against their absolute numbers would confound bit order with scale - the one thing this re-run must separate.",
+    "positive_controls": "periodic and lfsr streams at the same budget. I-L are all 'the model learned nothing' results, which say something about Rule 30 only if the pipeline can learn something. The originals had no such control.",
+    "scale_is_reduced": true,
+    "device": "cpu"
+  },
+  "params": {
+    "seq_len": 64,
+    "train_bits": 200000,
+    "test_bits": 100000,
+    "train_stride": 4,
+    "test_stride": 8,
+    "epochs": 2,
+    "batch": 256,
+    "tf_batch": 128,
+    "cnn_window": 512,
+    "cnn_train": 10000,
+    "cnn_test": 3000,
+    "cnn_epochs": 2,
+    "cnn_classes": 10,
+    "lstm_hidden": [
+      32,
+      64
+    ],
+    "contexts": [
+      64
+    ],
+    "bits": 2000000,
+    "seed": 30
+  },
+  "recorded_originals": {
+    "I": "LSTM hidden 32-256: BPT = 1.000001 at all sizes",
+    "J": "CNN decile probe: 10.15% accuracy against a 10% floor",
+    "K": "Transformer context 64-1024: BPT flat at ~1.000",
+    "L": "ML scaling: BPT range < 0.001 across d_model 32-256, n_data 0.5-7M"
+  },
+  "results": {
+    "center_true": {
+      "lstm_h32": {
+        "bpt": 1.0002513036816296,
+        "accuracy": 0.500160102465578,
+        "test_predictions": 12492,
+        "params": 12961,
+        "elapsed_s": 18.5
+      },
+      "lstm_h64": {
+        "bpt": 1.0000882661111208,
+        "accuracy": 0.500160102465578,
+        "test_predictions": 12492,
+        "params": 50497,
+        "elapsed_s": 31.9
+      },
+      "transformer_c64": {
+        "bpt": 1.00381413636764,
+        "accuracy": 0.49503682356708295,
+        "test_predictions": 3123,
+        "params": 100161,
+        "elapsed_s": 33.3
+      },
+      "cnn_decile": {
+        "accuracy": 0.104,
+        "chance": 0.1,
+        "test_windows": 3000,
+        "params": 155594,
+        "elapsed_s": 4.3
+      }
+    },
+    "center_reversed": {
+      "lstm_h32": {
+        "bpt": 1.0000804451959426,
+        "accuracy": 0.4994396413704771,
+        "test_predictions": 12492,
+        "params": 12961,
+        "elapsed_s": 13.7
+      },
+      "lstm_h64": {
+        "bpt": 1.0000075796767391,
+        "accuracy": 0.49535702849823887,
+        "test_predictions": 12492,
+        "params": 50497,
+        "elapsed_s": 32.3
+      },
+      "transformer_c64": {
+        "bpt": 1.0062205853267,
+        "accuracy": 0.5081652257444764,
+        "test_predictions": 3123,
+        "params": 100161,
+        "elapsed_s": 41.9
+      },
+      "cnn_decile": {
+        "accuracy": 0.104,
+        "chance": 0.1,
+        "test_windows": 3000,
+        "params": 155594,
+        "elapsed_s": 4.8
+      }
+    },
+    "periodic31": {
+      "lstm_h32": {
+        "bpt": 0.23852257844910177,
+        "accuracy": 0.9677393531860391,
+        "test_predictions": 12492,
+        "params": 12961,
+        "elapsed_s": 13.1
+      },
+      "lstm_h64": {
+        "bpt": 0.06686546008432494,
+        "accuracy": 1.0,
+        "test_predictions": 12492,
+        "params": 50497,
+        "elapsed_s": 33.5
+      },
+      "transformer_c64": {
+        "bpt": 0.00012987089329426343,
+        "accuracy": 1.0,
+        "test_predictions": 3123,
+        "params": 100161,
+        "elapsed_s": 38.0
+      },
+      "cnn_decile": {
+        "accuracy": 0.10033333333333333,
+        "chance": 0.1,
+        "test_windows": 3000,
+        "params": 155594,
+        "elapsed_s": 4.5
+      }
+    },
+    "lfsr_3_5": {
+      "lstm_h32": {
+        "bpt": 0.7427973345546022,
+        "accuracy": 0.7742555235350624,
+        "test_predictions": 12492,
+        "params": 12961,
+        "elapsed_s": 12.0
+      },
+      "lstm_h64": {
+        "bpt": 0.5540676025066265,
+        "accuracy": 0.8387768171629844,
+        "test_predictions": 12492,
+        "params": 50497,
+        "elapsed_s": 32.9
+      },
+      "transformer_c64": {
+        "bpt": 8.928542708913643e-06,
+        "accuracy": 1.0,
+        "test_predictions": 3123,
+        "params": 100161,
+        "elapsed_s": 36.9
+      },
+      "cnn_decile": {
+        "accuracy": 0.104,
+        "chance": 0.1,
+        "test_windows": 3000,
+        "params": 155594,
+        "elapsed_s": 4.5
+      }
+    },
+    "lfsr_13_27": {
+      "lstm_h32": {
+        "bpt": 1.0001648964974124,
+        "accuracy": 0.49639769452449567,
+        "test_predictions": 12492,
+        "params": 12961,
+        "elapsed_s": 13.8
+      },
+      "lstm_h64": {
+        "bpt": 1.0001635466566356,
+        "accuracy": 0.49639769452449567,
+        "test_predictions": 12492,
+        "params": 50497,
+        "elapsed_s": 32.4
+      },
+      "transformer_c64": {
+        "bpt": 1.001906999467786,
+        "accuracy": 0.5094460454691002,
+        "test_predictions": 3123,
+        "params": 100161,
+        "elapsed_s": 37.5
+      },
+      "cnn_decile": {
+        "accuracy": 0.10033333333333333,
+        "chance": 0.1,
+        "test_windows": 3000,
+        "params": 155594,
+        "elapsed_s": 4.7
+      }
+    },
+    "random": {
+      "lstm_h32": {
+        "bpt": 1.0000600058591516,
+        "accuracy": 0.4939161063080371,
+        "test_predictions": 12492,
+        "params": 12961,
+        "elapsed_s": 11.7
+      },
+      "lstm_h64": {
+        "bpt": 0.9999922009969103,
+        "accuracy": 0.5012808197246238,
+        "test_predictions": 12492,
+        "params": 50497,
+        "elapsed_s": 29.5
+      },
+      "transformer_c64": {
+        "bpt": 1.004529936971682,
+        "accuracy": 0.494716618635927,
+        "test_predictions": 3123,
+        "params": 100161,
+        "elapsed_s": 36.6
+      },
+      "cnn_decile": {
+        "accuracy": 0.10033333333333333,
+        "chance": 0.1,
+        "test_windows": 3000,
+        "params": 155594,
+        "elapsed_s": 4.9
+      }
+    }
+  },
+  "bitorder_comparison": {
+    "lstm_h32": {
+      "metric": "bpt",
+      "center_true": 1.0002513036816296,
+      "center_reversed": 1.0000804451959426,
+      "abs_difference": 0.00017085848568698658
+    },
+    "lstm_h64": {
+      "metric": "bpt",
+      "center_true": 1.0000882661111208,
+      "center_reversed": 1.0000075796767391,
+      "abs_difference": 8.068643438163825e-05
+    },
+    "transformer_c64": {
+      "metric": "bpt",
+      "center_true": 1.00381413636764,
+      "center_reversed": 1.0062205853267,
+      "abs_difference": 0.002406448959059837
+    },
+    "cnn_decile": {
+      "metric": "accuracy",
+      "center_true": 0.104,
+      "center_reversed": 0.104,
+      "abs_difference": 0.0
+    }
+  },
+  "detection_power": {
+    "lstm_h32": {
+      "periodic31": 0.23852257844910177,
+      "lfsr_3_5": 0.7427973345546022,
+      "lfsr_13_27": 1.0001648964974124,
+      "random": 1.0000600058591516
+    },
+    "lstm_h64": {
+      "periodic31": 0.06686546008432494,
+      "lfsr_3_5": 0.5540676025066265,
+      "lfsr_13_27": 1.0001635466566356,
+      "random": 0.9999922009969103
+    },
+    "transformer_c64": {
+      "periodic31": 0.00012987089329426343,
+      "lfsr_3_5": 8.928542708913643e-06,
+      "lfsr_13_27": 1.001906999467786,
+      "random": 1.004529936971682
+    },
+    "cnn_decile": {
+      "periodic31": 0.10033333333333333,
+      "lfsr_3_5": 0.104,
+      "lfsr_13_27": 0.10033333333333333,
+      "random": 0.10033333333333333
+    }
+  },
+  "git": {
+    "git_branch": "claude/keen-sagan-21rzbr",
+    "git_head": "4d251b68a6b4b3b7105b8402cc9e59ff31591e79"
+  }
+}

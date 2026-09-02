@@ -216,6 +216,8 @@ def block_entropy_rate(bits: np.ndarray, k: int = 6) -> tuple[float, int]:
 
 
 def zlib_ratio(bits: np.ndarray) -> float:
+    # bitorder-exempt: re-packs an in-memory bit array into bytes for zlib;
+    # any consistent convention gives the same ratio.
     raw = np.packbits(bits.astype(np.uint8)).tobytes()
     return len(zlib.compress(raw, 9)) / max(1, len(raw))
 

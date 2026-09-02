@@ -2,14 +2,64 @@
 
 Use this workspace as a disciplined scratchpad, not as an ad hoc notebook dump.
 
-**New here? Read
-[`docs/handover/2026-08-29-data-integrity-and-dfao-curve.md`](docs/handover/2026-08-29-data-integrity-and-dfao-curve.md)
-first** - it is the most recent state of play: what is verified, what was
-retracted and why, and what is open. Then the ordered work plan in
-[`docs/handover/2026-08-30-next-session-plan.md`](docs/handover/2026-08-30-next-session-plan.md).
-Then `docs/AGENT_QUICKSTART.md`, then `docs/WORKFLOW.md`. The quickstart gives agents the tool map and prize-facing
-triage rules; the workflow file is the operating manual for the GPU-accelerated,
-verification-first loop.
+## Before you touch anything
+
+```bash
+python tools/verify_all.py
+```
+
+One command, ~2 s on a fresh clone. It runs the golden self-test, the hash
+manifest, the manifest-is-current check, each canonical bitstream against the
+independent reference, both lints, and the test suite, and prints PASS / FAIL /
+SKIP per stage. Run it before an experiment and again before you commit.
+
+`SKIP` is not `PASS`. The canonical bitstreams (`data/center_col_*.bin`) are
+gitignored, so on a machine that has not regenerated them those stages check
+nothing at all - which is exactly how a bad bitstream would go unnoticed.
+
+Two standing conventions the tooling now enforces, both of which cost this repo
+real months:
+
+- **`bitorder='little'` for every `data/center_col_*.bin`.** `gpu/rule30_sim.py`
+  writes LSB-first; NumPy defaults to MSB-first. A bare `np.unpackbits(data)`
+  returns the true stream with every 8-bit block reversed - 49.95% of positions
+  differ while the bit mean is *identical*, so no aggregate check catches it.
+  `tools/lint_bitorder.py` rejects a bare call; annotate a genuinely
+  order-agnostic one with `# bitorder-exempt: <reason>`.
+  `tools/gen_golden_reference.py` is MSB-first by deliberate, documented
+  exception - its independence is the whole point. Do not "fix" it.
+- **LF line endings for everything under `data/`.** `data/** -text` in
+  `.gitattributes` stops git normalising them for you, so `csv.writer` needs an
+  explicit `lineterminator="\n"` and `Path.write_text` needs `newline=""`.
+  `tests/test_manifest_determinism.py` fails the build if either is forgotten.
+
+A ~50% bit difference between two streams is **never** a kernel bug. It means
+they are uncorrelated: a packing or seed mismatch. A real kernel bug diverges
+*late*.
+
+**New here?** Read [`CLAUDE.md`](CLAUDE.md) (auto-loaded, ~1 min), then
+[`docs/STATUS.md`](docs/STATUS.md) for what is in flight, then
+[`docs/handover/CURRENT.md`](docs/handover/CURRENT.md) for the last session's
+detailed handover. Then `docs/AGENT_QUICKSTART.md` for the tool map and
+prize-facing triage, and `docs/WORKFLOW.md` for the operating manual of the
+GPU-accelerated, verification-first loop.
+
+This block used to name three specific dated handover files. It went stale
+every time a fourth was written, which is why handover is now one file
+overwritten in place, with the superseded ones in
+`docs/handover/archive/`.
+
+## Before Renting Compute
+
+Read [`docs/COMPUTE_PLAN.md`](docs/COMPUTE_PLAN.md) and run
+`python tools/plan_run.py --table`. The short version: the kernel is
+**memory-bandwidth bound**, and VRAM never binds anywhere reachable - the 46M
+run used **66 MB** of a 6 GB card. Select hardware on bandwidth, not FLOPS or
+VRAM, and check the light cone with `python gpu/tape_geometry.py --steps <N>`
+before launching: a tape too short for its step count does not crash, keeps a
+0.5 bit mean, passes the first-20-bit check, and is wrong *late*.
+
+Most of the highest-value work in that document costs nothing.
 
 ## Before Proposing Experiments
 
@@ -26,28 +76,36 @@ Key instinct: "Does this experiment answer a question that theory says is answer
 
 If it is the latter, step back and consult the theory docs before proposing anything.
 
-## Current Frontier
+## Frontier — moved
 
-Canonical frontier:
+**Current state lives in [`docs/STATUS.md`](docs/STATUS.md), and only there.**
 
-- `M`: causal sensitivity / dynamical geometry
-- `N`: column mutual information / transfer entropy
-- `O`: 2D fractal or spacetime-complexity analysis
-- `P`: invariant measure / entropy-rate work
+<!-- status-exempt: documents the banned pattern rather than declaring state -->
+This section used to carry its own frozen snapshot ("current state as of
+`2026-04-01`"). It went five months stale while remaining the second file every
+new agent was told to read — still listing `O` and `P` as the open frontier
+long after the work had moved to DFAO certification and exact period search.
 
-Current state as of `2026-04-01`:
+<!-- status-exempt: documents the banned pattern rather than declaring state -->
+`tools/lint_ledger.py` now fails the build if a "current state as of" section
+reappears outside `docs/STATUS.md`. If you have a genuine reason to write one —
+documenting the rule, as here — annotate it
+`<!-- status-exempt: <reason> -->`; the reason is mandatory.
 
-- `M` has been run with a corrected packed-bit implementation. See `docs/experiment-logs/M_causal_sensitivity.md`.
-- Column MI / TE has also been run via `experiments/column_mi.py`.
-- `O` (2D fractal) and `P` (invariant measure) are still open.
-- Auxiliary cleanup experiments `fft_autocorr.py` and `compress_probe.py` have also been run.
+The naming rules this section carried are durable, so they survive below.
 
-Important naming caveat:
+## Experiment Letters
 
-- A prior session introduced filename drift: `docs/experiment-logs/N_compress_probe.md` and `docs/experiment-logs/O_column_mi.md` do not match the original theory-driven `M/N/O/P` mapping.
+A prior session introduced filename drift:
+`docs/experiment-logs/N_compress_probe.md` and
+`docs/experiment-logs/O_column_mi.md` do not match the original theory-driven
+`M/N/O/P` mapping.
+
 - Do not assign new experiment letters casually.
-- Do not assume "next experiment is Q" unless the canonical mapping has been reconciled first.
-- If a session adds an auxiliary experiment, prefer a dated filename or an `aux_` slug instead of consuming a frontier letter.
+- Do not assume "next experiment is Q" unless the canonical mapping has been
+  reconciled first.
+- If a session adds an auxiliary experiment, prefer a dated filename or an
+  `aux_` slug instead of consuming a frontier letter.
 
 ## Defaults
 

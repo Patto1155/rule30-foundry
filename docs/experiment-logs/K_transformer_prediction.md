@@ -13,5 +13,5 @@
   - context=1024: accuracy=50.0161%, BPT=1.000027, time=2077s
 - Interpretation: Baseline BPT=1.0. Best BPT=1.000027, improvement=-0.000027 bits/token.
   Curve still decreasing at max context: False.
-  No improvement over random — computational irreducibility holds for transformer too
+  No improvement over random â€” computational irreducibility holds for transformer too
 - Next Step: If significant, increase d_model or n_layers; if flat, this is strong irreducibility evidence across all tested architectures

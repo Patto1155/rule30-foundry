@@ -20,5 +20,5 @@
   - n_data=2,000,000: BPT=1.000088
   - n_data=5,000,000: BPT=1.000070
   - n_data=7,000,000: BPT=1.000041
-- Interpretation: Flat scaling: BPT range = 0.000263 (model), 0.000539 (data). No improvement with scale — computational irreducibility is robust
+- Interpretation: Flat scaling: BPT range = 0.000263 (model), 0.000539 (data). No improvement with scale â€” computational irreducibility is robust
 - Next Step: If flat, the irreducibility evidence is now complete across architectures, scales, and data sizes

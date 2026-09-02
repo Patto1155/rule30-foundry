@@ -34,6 +34,7 @@ d5e88636ae3441383e424d2007ba3d1419d324c8020ffe34a3be70de52590aca  data/damage_ve
 e7d1008feb86939cd17ed9a2e33425bf0fb1cc107a988b2c325f4ea8d4733fa6  data/diagonal_te.json
 10cd1dd63229f2a7161d1ef15d6595b4966d281021f328bb63978e610896a139  data/fft_autocorr.json
 04aea879aa7b15839a71310500a33e9dbcdc9a40a92813cbbd48d793aa2da22a  data/fractal_dimension.json
+9c9e302620bab806c0f9e1b697d68ba93ca334c10ddea095ec7b8138c200c4e4  data/golden/center_col_golden_10M.bin
 4bf71a265b7a3b9847703f274c736c552825a859fd2251d8bfad75b1fe05b3e9  data/golden/center_col_golden_1M.bin
 140677ffb045e13ea8a9ab545c6ecebc75805c9fa005ed8472a185a5574a2242  data/invariant_measure.json
 4ca889e3daf1c0e519990c735b5c8b28f7b765a39cc4fcb091f7b03c87c9a34a  data/left_edge_cone.json
@@ -145,6 +146,11 @@ cef95863a6864d9c7d5c8c16b0afde2d06e2c3ba7e7ea864dc62baf472d29eb2  data/prize/202
 249ebd3d4d9445c3482a91608895ed225152429dd38c561d98f13308dc13f37a  data/prize/2026-08-15-random-seeds/seed5.json
 265d1371262ea2c92f1b0cd75305a1aaaf619cf66b64679cfd5a72f426b4496f  data/prize/2026-08-15-random-seeds/seed6.json
 2d4cde13bdb4f6a500a9d72bac80f2bfe9081cd90cb85f0cd9f6ca88441f6789  data/prize/2026-08-15-random-seeds/seed7.json
+c68e6d777f34cc569e1be2262874f31631973998c5e52ae8d9f4f0b07d55e14a  data/prize/2026-08-30-detection-power-probe.json
+0867476cd98c5c6233009d2b5a070642c54ef4841e37f88a954d1244d75a04a3  data/prize/2026-08-30-dfao-drat-proofs.json
+77511c20ebc8770199470b97a1876dc56b4239dbacea5322b8a03ba574bd2692  data/prize/2026-08-30-grammar-min-size-curve.json
+ff170c22c667cd672a8e07340911a0092d4feaaa5def128e75577cf0699c39c0  data/prize/2026-08-30-period-search-exact.json
+6804e2ba3e89db4e965508a9d7a2b7781453bf2944fad3137e7991d73fbae91e  data/prize/2026-08-30-rerun-il-bitorder.json
 ce6eb2788967a2d310f0fe7783207371f730c8535030f26cda9b90f93c8a7252  data/prize/center_prefix_n128_verified.json
 4a9818ba0812c2cb891d6abf7d0e898ad8c6cb002d38ceb1351f9440910d0d4b  data/prize/dfao_center_b2_lsd_n128_s4.json
 50846520ec57b428d003647770e722ffe949eb916b12a81278d15c8476340a2a  data/prize/dfao_center_b2_msd_n128_s4.json
@@ -170,6 +176,7 @@ f0408abde531588e381d3508222c89ac0deda0c7be90498acb6b31a486d27f67  data/wedge/wor
 dfa3c44382e6383a3f8f04c58b47077c5e7b4fb3eaba05383deea5d399a7b8db  data/wedge_verify_T65536.json
 #
 # Canonical bitstreams (not tracked in git; hashes anchored here).
-# Absent entries are expected on a fresh clone.
+# A bitstream absent from this machine keeps its previously anchored
+# hash -- regenerating the manifest must never drop an anchor.
 6f8670b4a89826c8228d6a165047792e91551dedfb2853b8f12572d466b7547e  data/center_col_10M.bin
 f281f11bb5d93132248213b3b353857814fd4b8dc754c606e846f3c2c3f67b5c  data/center_col_46M.bin

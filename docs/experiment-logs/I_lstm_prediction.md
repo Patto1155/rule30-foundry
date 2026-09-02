@@ -11,5 +11,5 @@
   - hidden=128: accuracy=50.0291%, BPT=1.000026, time=1423s
   - hidden=256: accuracy=50.0291%, BPT=1.000002, time=1394s
 - Interpretation: Baseline BPT=1.0 (fair coin). Best BPT=1.000001, improvement=-0.000001 bits/token.
-  No significant improvement over random — supports computational irreducibility
+  No significant improvement over random â€” supports computational irreducibility
 - Next Step: Run Experiment K (Transformer, larger context) for non-linear + long-range test

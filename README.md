@@ -14,7 +14,7 @@ Nobody knows. Wolfram is offering **$30,000 in prizes for 3 problems** to find o
 
 | # | Problem | This Project's Result |
 |---|---------|----------------------|
-| 1 | Does the center column ever **repeat** (become periodic)? | No period found up to 1,000,000 steps |
+| 1 | Does the center column ever **repeat** (become periodic)? | No period `p <= 5,000,000` in the first 10M bits — **decided exactly**, all 9,999,936 candidates, 0 survivors |
 | 2 | Is there a **faster algorithm** than running Rule 30 step by step? | No linear or Markov shortcut found |
 | 3 | Are 0s and 1s **equally distributed** in the long run? | Bias < 0.05% over 10M bits — consistent with yes |
 
@@ -22,38 +22,74 @@ Nobody knows. Wolfram is offering **$30,000 in prizes for 3 problems** to find o
 
 ## Experimental Results (10M bits, GTX 1060 GPU)
 
+> **These rows are a historical summary, not the repo's claim record.** Claim
+> levels live in [`docs/CLAIM_LEDGER.md`](docs/CLAIM_LEDGER.md); what is in
+> flight lives in [`docs/STATUS.md`](docs/STATUS.md). Where they disagree with
+> this table, they win.
+
 | Exp | Test | Result | Verdict |
 |-----|------|--------|---------|
 | A | Bit frequency bias | +0.044% bias, 1.4× noise floor | Fair coin ✓ |
 | B | Autocorrelation (lags 1–100K) | max \|r\| = 0.00138 | No linear structure ✓ |
 | C | k-bit block frequency (k=1..20) | 0/20 sizes deviate | Uniform distribution ✓ |
 | D | Markov predictor (order 1–20) | Best accuracy = 50.03% | Unpredictable ✓ |
-| E | Period search (p=1..1,000,000) | Best z = 4.66 < 5.61 (Bonferroni) | No period found ✓ |
+| E ‡ | Period search (p=1..1,000,000) | Best z = 4.66 < 5.61 (Bonferroni) | Superseded ‡ |
 | F | Cryptanalysis (NIST suite) | Passes monobit, runs, distinguishing attack | Indistinguishable from RNG ✓ |
 | G | GF(2) linear transform search | No significant entropy reduction | No algebraic shortcut ✓ |
 | H | Markov scaling laws (order 1–18) | Accuracy flat at ~50% across all orders | Computationally irreducible ✓ |
-| I ⚠ | LSTM predictor (hidden 32–256) | BPT=1.000001 at all sizes — no non-linear memory | No LSTM shortcut ✓ |
-| J ⚠ | CNN non-stationarity probe | 10.15% accuracy (chance=10%) — mode collapse | Stationary sequence ✓ |
-| K ⚠ | Transformer (context 64–1024) | BPT flat at ~1.000 across all context lengths | No long-range structure ✓ |
-| L ⚠ | ML scaling laws (model+data) | BPT range <0.001 across d_model=32–256 and n_data=500K–7M | No scaling improvement ✓ |
+| I † | LSTM predictor (hidden 32–256) | BPT=1.000001 at all sizes — no non-linear memory | No LSTM shortcut *within this model class* † |
+| J | CNN non-stationarity probe | 10.15% accuracy (chance=10%) | Stationary sequence ✓ (powered null — see below) |
+| K † | Transformer (context 64–1024) | BPT flat at ~1.000 across all context lengths | No long-range structure *within this model class* † |
+| L † | ML scaling laws (model+data) | BPT range <0.001 across d_model=32–256 and n_data=500K–7M | No scaling improvement † |
 
-> **Integrity note (2026-08-29).** The bitstream is now verified: the 10M center
-> column was regenerated on the post-fix kernel and is **byte-identical** to the
-> March artifact (sha256 `6f8670b4...`, 0 of 10,000,000 bits differ), so the
-> 2026-06-15 kernel fixes did not change it.
+> ‡ **Experiment E is superseded.** Its scan was *sampled* (10,000 positions
+> per period, Bonferroni-corrected). A period is refuted by a single mismatch,
+> so there was no null distribution to correct for. `experiments/period_search_exact.py`
+> now decides all 9,999,936 candidates exactly in 2.1 s on four CPU cores
+> ([log](docs/experiment-logs/2026-08-30-period-search-exact.md)).
+
+> **Integrity note (updated 2026-08-30).** The bitstream is verified twice over.
+> The 10M center column regenerates **byte-identically** on the post-fix kernel
+> (sha256 `6f8670b4...`), and an independent CPU implementation sharing no code,
+> no bit-order convention and no tape geometry with `gpu/` reproduces the same
+> file byte-for-byte over all 10,000,000 bits
+> ([log](docs/experiment-logs/2026-08-30-golden-reference-10M.md)).
 >
-> However, **I, J, K and L are known-bad and pending a re-run.** Those four
-> scripts read the LSB-first bitstream with numpy's MSB-first default, so they
-> were trained on the center column with every consecutive 8-bit block reversed
-> — a different sequence, though the bit mean is identical, which is why it
-> went unnoticed. A–H pass the correct `bitorder='little'` and are unaffected.
-> See [`docs/DATA_INTEGRITY.md`](docs/DATA_INTEGRITY.md).
+> **I–L have been re-run on the correct bit order and are no longer retracted.**
+> The four scripts had decoded the LSB-first bitstream with numpy's MSB-first
+> default, training on the center column with every 8-bit block reversed. Run as
+> a paired comparison — both decodes, identical budget, seed and architecture —
+> the largest difference across 24 configurations is **0.0024**. The bug did not
+> change the conclusions.
+> See [`docs/experiment-logs/2026-08-30-rerun-il-bitorder.md`](docs/experiment-logs/2026-08-30-rerun-il-bitorder.md).
 
-⚠ = computed on a byte-reversed stream; re-run pending (see integrity note).
+† **Detection-power caveat on I, K and L.** The re-run added positive controls
+the originals never had, and one failed. On `s[i] = s[i-13] ⊕ s[i-27]` — an
+LFSR *fully determined* by 27 bits, well inside a 64-bit context — every model
+in the suite scores exactly as it does on a fair coin, across **six** budgets
+spanning 5× the parameters, more data, more epochs and a short context where
+both taps are trivially visible. The same suite learns a period-31 stream and a
+short-lag XOR (`s[i-3] ⊕ s[i-5]`) to ~100% accuracy immediately, so the blind
+spot is specific to long-lag parity.
+
+That matters here: Rule 30 is **left-permutive**, so its update is XOR-like, and
+Experiment S measured linear complexity `L(n) = n/2`. The structure class most
+plausibly present in the center column is the one these models cannot see when
+it *is* present. I, K and L therefore report a real absence of learnable
+structure *for these architectures*, and cannot exclude XOR-type structure at
+moderate lags.
+
+J carries no such caveat: its probe detects a 0.30→0.70 bias ramp at **57.7%**
+against a 10% floor, and returns chance on a stationary stream, so its null is
+powered.
 
 **A–H are consistent with Rule 30 being computationally irreducible.** The
-neural results (I–L) point the same way but do not currently support that
-sentence, because they were not run on the center column. The reversal is a
+neural results (I–L) now run on the center column and point the same way, but
+they carry the detection-power caveat above: I, K and L are negatives over
+model classes that demonstrably miss long-lag XOR structure, which is the
+structure Rule 30 is most likely to have. The stronger evidence for
+irreducibility is the model-class curve work — `s*(n)` (Certificate) and `g(n)`
+— not the neural nulls. The reversal is a
 deterministic, position-local recoding rather than a randomisation, so the
 conclusions may well survive a re-run — but that has to be demonstrated, not
 assumed.

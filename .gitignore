@@ -40,3 +40,6 @@ __pycache__/
 *.pyc
 *.pyo
 .ipynb_checkpoints/
+
+# SAT toolchain built by tools/build_sat_toolchain.sh (rebuildable, not vendored).
+third_party/

@@ -1,7 +1,7 @@
 # Experiment Log
 
 - Date: 2026-03-27
-- Title: Cryptanalysis framing — Rule 30 as stream cipher
+- Title: Cryptanalysis framing â€” Rule 30 as stream cipher
 - Goal: Test whether Rule 30 center column is distinguishable from a true RNG using standard cryptanalytic tests
 - Setup: 10M center column bits from Rule 30, GTX 1060 GPU, Python/numpy/scipy
 - Method: NIST monobit test, runs test, longest run test, serial correlation (lags 1-1000), distinguishing attack at window sizes 1K-1M
