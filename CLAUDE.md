@@ -1,0 +1,58 @@
+# rule30-foundry — read this first
+
+GPU-backed empirical research on **Wolfram's three Rule 30 prize problems**.
+This is a verification-first research repo, not a notebook dump. Results here
+are graded, and the grade is enforced by tooling.
+
+## Health check — run before you start and before you commit
+
+```bash
+python tools/verify_all.py
+```
+
+~2 s on a fresh clone. Prints PASS / FAIL / SKIP per stage. **`SKIP` is not
+`PASS`** — the canonical bitstreams are gitignored, so on a machine that has
+not regenerated them those stages check nothing.
+
+## Where state lives — exactly two files
+
+| Question | File | Never elsewhere |
+|---|---|---|
+| What does the repo **know**? | `docs/CLAIM_LEDGER.md` | Do not restate claim levels in READMEs or logs. |
+| What is **in flight / next**? | `docs/STATUS.md` | Do not add a "current state" section to any other file. |
+
+Everything else — `AGENTS.md`, `docs/WORKFLOW.md`, `docs/theory/README.md` — is
+**stable reference**, not status. If those two files disagree with anything
+else in the repo, they win. `tools/lint_ledger.py` fails the build if a second
+file starts tracking current state.
+
+## Three rules that have each cost this repo months
+
+1. **Run the counting bound before any "we searched class `M`, found no fit"
+   experiment.** `python experiments/counting_bound.py --pretty`. If
+   `log2|M| < n` the negative is guaranteed and the run is worthless. A
+   certificate was retracted in 2026-08 for exactly this.
+2. **`bitorder='little'` for every `data/center_col_*.bin`.** A bare
+   `np.unpackbits` reverses each 8-bit block — 49.95% of positions differ while
+   the bit mean is *identical*, so no aggregate check catches it.
+   `tools/lint_bitorder.py` rejects bare calls.
+3. **Single seed only.** All three prizes concern the one deterministic
+   single-black-cell initial condition. An ensemble or random-IC quantity is
+   not prize progress. See `docs/theory/README.md` §0.
+
+A ~50% bit difference between two streams is **never** a kernel bug — it means
+a packing or seed mismatch. Real kernel bugs diverge *late*.
+
+## Deeper reference, in the order worth reading
+
+- `docs/STATUS.md` — what is in flight right now. **Start here.**
+- `docs/theory/README.md` — the theory gate: what is already proved (do not
+  re-measure it) and which routes are closed.
+- `AGENTS.md` — naming, logging standard, implementation guardrails.
+- `docs/WORKFLOW.md` — the operating loop.
+- `docs/AGENT_QUICKSTART.md` — tool map and prize-facing triage.
+
+## Branches
+
+Short version: **branch from `main`, one PR deep, delete after merge.**
+Full policy, including when stacking is allowed: `docs/BRANCHING.md`.

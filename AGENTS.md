@@ -37,17 +37,17 @@ A ~50% bit difference between two streams is **never** a kernel bug. It means
 they are uncorrelated: a packing or seed mismatch. A real kernel bug diverges
 *late*.
 
-**New here? Read
-[`docs/handover/2026-08-30-tier0-and-two-promotions.md`](docs/handover/2026-08-30-tier0-and-two-promotions.md)
-first** - it is the most recent state of play: what landed, what is still open,
-and the traps that have already bitten someone. Then
-[`docs/handover/2026-08-29-data-integrity-and-dfao-curve.md`](docs/handover/2026-08-29-data-integrity-and-dfao-curve.md)
-for how the integrity gap was closed and why experiments I-L were retracted,
-and the ordered work plan in
-[`docs/handover/2026-08-30-next-session-plan.md`](docs/handover/2026-08-30-next-session-plan.md).
-Then `docs/AGENT_QUICKSTART.md`, then `docs/WORKFLOW.md`. The quickstart gives agents the tool map and prize-facing
-triage rules; the workflow file is the operating manual for the GPU-accelerated,
-verification-first loop.
+**New here?** Read [`CLAUDE.md`](CLAUDE.md) (auto-loaded, ~1 min), then
+[`docs/STATUS.md`](docs/STATUS.md) for what is in flight, then
+[`docs/handover/CURRENT.md`](docs/handover/CURRENT.md) for the last session's
+detailed handover. Then `docs/AGENT_QUICKSTART.md` for the tool map and
+prize-facing triage, and `docs/WORKFLOW.md` for the operating manual of the
+GPU-accelerated, verification-first loop.
+
+This block used to name three specific dated handover files. It went stale
+every time a fourth was written, which is why handover is now one file
+overwritten in place, with the superseded ones in
+`docs/handover/archive/`.
 
 ## Before Renting Compute
 
@@ -76,28 +76,36 @@ Key instinct: "Does this experiment answer a question that theory says is answer
 
 If it is the latter, step back and consult the theory docs before proposing anything.
 
-## Current Frontier
+## Frontier — moved
 
-Canonical frontier:
+**Current state lives in [`docs/STATUS.md`](docs/STATUS.md), and only there.**
 
-- `M`: causal sensitivity / dynamical geometry
-- `N`: column mutual information / transfer entropy
-- `O`: 2D fractal or spacetime-complexity analysis
-- `P`: invariant measure / entropy-rate work
+<!-- status-exempt: documents the banned pattern rather than declaring state -->
+This section used to carry its own frozen snapshot ("current state as of
+`2026-04-01`"). It went five months stale while remaining the second file every
+new agent was told to read — still listing `O` and `P` as the open frontier
+long after the work had moved to DFAO certification and exact period search.
 
-Current state as of `2026-04-01`:
+<!-- status-exempt: documents the banned pattern rather than declaring state -->
+`tools/lint_ledger.py` now fails the build if a "current state as of" section
+reappears outside `docs/STATUS.md`. If you have a genuine reason to write one —
+documenting the rule, as here — annotate it
+`<!-- status-exempt: <reason> -->`; the reason is mandatory.
 
-- `M` has been run with a corrected packed-bit implementation. See `docs/experiment-logs/M_causal_sensitivity.md`.
-- Column MI / TE has also been run via `experiments/column_mi.py`.
-- `O` (2D fractal) and `P` (invariant measure) are still open.
-- Auxiliary cleanup experiments `fft_autocorr.py` and `compress_probe.py` have also been run.
+The naming rules this section carried are durable, so they survive below.
 
-Important naming caveat:
+## Experiment Letters
 
-- A prior session introduced filename drift: `docs/experiment-logs/N_compress_probe.md` and `docs/experiment-logs/O_column_mi.md` do not match the original theory-driven `M/N/O/P` mapping.
+A prior session introduced filename drift:
+`docs/experiment-logs/N_compress_probe.md` and
+`docs/experiment-logs/O_column_mi.md` do not match the original theory-driven
+`M/N/O/P` mapping.
+
 - Do not assign new experiment letters casually.
-- Do not assume "next experiment is Q" unless the canonical mapping has been reconciled first.
-- If a session adds an auxiliary experiment, prefer a dated filename or an `aux_` slug instead of consuming a frontier letter.
+- Do not assume "next experiment is Q" unless the canonical mapping has been
+  reconciled first.
+- If a session adds an auxiliary experiment, prefer a dated filename or an
+  `aux_` slug instead of consuming a frontier letter.
 
 ## Defaults
 
