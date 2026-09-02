@@ -21,6 +21,12 @@ Checks
    script exists.
 4. No file under docs/experiment-logs/ contains a placeholder token, and
    every one of them is valid UTF-8.
+5. docs/STATUS.md exists, carries no placeholder, and cites the newest dated
+   experiment log. Adding a log dated later than the one STATUS cites fails
+   the build until STATUS is updated.
+6. No file outside the allowlist declares its own current state. AGENTS.md
+   carried a "Current state as of `2026-04-01`" section that went five months
+   stale while remaining the second file every new agent was told to read.
 
 Usage:
     python tools/lint_ledger.py            # exit 1 on any finding
@@ -51,6 +57,31 @@ PLACEHOLDER = re.compile(r"\b[A-Z][A-Z0-9]*(?:_[A-Z0-9]+)*_SECTION\b|"
 # A path token: no spaces, and the characters a repo path is made of.
 PATH_TOKEN = re.compile(r"[A-Za-z0-9_./+-]+")
 CERT_LEVEL = re.compile(r"\*{0,2}Certificate\*{0,2}")
+
+# Files permitted to describe current state. docs/STATUS.md is the single
+# writable home for it; archived handovers and experiment logs are historical
+# records, so a frozen snapshot is correct there by definition.
+STATUS_ALLOWED = (
+    "docs/STATUS.md",
+    "docs/handover/archive/",
+    "docs/experiment-logs/",
+)
+
+# Narrow on purpose: this matches a section that *declares* frozen state, not
+# a row that records when something happened. "Refuted 2026-08-19" in the
+# ledger is a fact with a date and must not trip this.
+FROZEN_STATE = re.compile(
+    r"(?i)^(?:.*?\bcurrent\s+(?:state|status)\s+as\s+of\b.*"
+    r"|\s*#{1,6}\s*current\s+frontier\s*)$")
+
+DATED_LOG = re.compile(r"^(\d{4}-\d{2}-\d{2})-.+\.md$")
+
+# Prose that *documents* the rule has to be able to quote the banned phrase.
+# Same shape as lint_bitorder's `# bitorder-exempt: <reason>`: the marker is
+# cheap, and the mandatory reason is what stops it becoming a silencer.
+# The reason must start with an actual word: `<!-- status-exempt: -->`
+# has a non-space run after the colon (`-->`) and would otherwise pass.
+STATUS_EXEMPT = re.compile(r"(?i)status-exempt:\s*(?!-->)[A-Za-z0-9]")
 
 
 class Finding:
@@ -174,12 +205,81 @@ def check_logs(root: Path = REPO_ROOT) -> list[Finding]:
     return findings
 
 
+def newest_dated_log(root: Path) -> str | None:
+    """Filename of the most recent dated log, by the date in its name.
+
+    Filename dates, not mtime: a fresh clone gives every file the checkout
+    time, so mtime would make this check pass vacuously.
+    """
+    log_dir = root / "docs" / "experiment-logs"
+    if not log_dir.is_dir():
+        return None
+    dated = [p.name for p in log_dir.glob("*.md") if DATED_LOG.match(p.name)]
+    return max(dated) if dated else None
+
+
+def check_status(root: Path = REPO_ROOT) -> list[Finding]:
+    """docs/STATUS.md is the single home for current state, and is current."""
+    findings: list[Finding] = []
+    status = root / "docs" / "STATUS.md"
+
+    if not status.exists():
+        return [Finding("FAIL", 0, "docs/STATUS.md missing: the repo has no "
+                                   "single home for current state")]
+
+    text = status.read_text(encoding="utf-8")
+    for lineno, line in enumerate(text.splitlines(), 1):
+        for placeholder in PLACEHOLDER.findall(line):
+            findings.append(Finding(
+                "PLACEHOLDER", lineno, f"docs/STATUS.md: unfilled "
+                                       f"'{placeholder}'"))
+
+    newest = newest_dated_log(root)
+    if newest and newest not in text:
+        findings.append(Finding(
+            "STALE-STATUS", 0,
+            f"docs/STATUS.md does not cite the newest experiment log "
+            f"'{newest}'. Update STATUS.md when you add a log, or the repo's "
+            "stated state silently falls behind its results."))
+
+    return findings
+
+
+def check_single_status_home(root: Path = REPO_ROOT) -> list[Finding]:
+    """No file outside the allowlist may declare its own current state."""
+    findings: list[Finding] = []
+    for path in sorted(root.rglob("*.md")):
+        if ".git" in path.parts:
+            continue
+        rel = path.relative_to(root).as_posix()
+        if rel.startswith(STATUS_ALLOWED):
+            continue
+        try:
+            text = path.read_text(encoding="utf-8")
+        except (UnicodeDecodeError, OSError):
+            continue
+        lines = text.splitlines()
+        for lineno, line in enumerate(lines, 1):
+            if not FROZEN_STATE.match(line):
+                continue
+            prev = lines[lineno - 2] if lineno >= 2 else ""
+            if STATUS_EXEMPT.search(line) or STATUS_EXEMPT.search(prev):
+                continue
+            findings.append(Finding(
+                "DUPLICATE-STATUS", lineno,
+                f"{rel} declares its own current state "
+                f"({line.strip()[:60]!r}). Current state belongs in "
+                "docs/STATUS.md only - a second copy goes stale silently."))
+    return findings
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--quiet", action="store_true")
     args = ap.parse_args()
 
-    findings = check_ledger() + check_logs()
+    findings = (check_ledger() + check_logs() + check_status()
+                + check_single_status_home())
     if findings:
         if not args.quiet:
             print(f"lint_ledger: {len(findings)} finding(s)")

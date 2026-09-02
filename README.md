@@ -14,7 +14,7 @@ Nobody knows. Wolfram is offering **$30,000 in prizes for 3 problems** to find o
 
 | # | Problem | This Project's Result |
 |---|---------|----------------------|
-| 1 | Does the center column ever **repeat** (become periodic)? | No period found up to 1,000,000 steps |
+| 1 | Does the center column ever **repeat** (become periodic)? | No period `p <= 5,000,000` in the first 10M bits — **decided exactly**, all 9,999,936 candidates, 0 survivors |
 | 2 | Is there a **faster algorithm** than running Rule 30 step by step? | No linear or Markov shortcut found |
 | 3 | Are 0s and 1s **equally distributed** in the long run? | Bias < 0.05% over 10M bits — consistent with yes |
 
@@ -22,13 +22,18 @@ Nobody knows. Wolfram is offering **$30,000 in prizes for 3 problems** to find o
 
 ## Experimental Results (10M bits, GTX 1060 GPU)
 
+> **These rows are a historical summary, not the repo's claim record.** Claim
+> levels live in [`docs/CLAIM_LEDGER.md`](docs/CLAIM_LEDGER.md); what is in
+> flight lives in [`docs/STATUS.md`](docs/STATUS.md). Where they disagree with
+> this table, they win.
+
 | Exp | Test | Result | Verdict |
 |-----|------|--------|---------|
 | A | Bit frequency bias | +0.044% bias, 1.4× noise floor | Fair coin ✓ |
 | B | Autocorrelation (lags 1–100K) | max \|r\| = 0.00138 | No linear structure ✓ |
 | C | k-bit block frequency (k=1..20) | 0/20 sizes deviate | Uniform distribution ✓ |
 | D | Markov predictor (order 1–20) | Best accuracy = 50.03% | Unpredictable ✓ |
-| E | Period search (p=1..1,000,000) | Best z = 4.66 < 5.61 (Bonferroni) | No period found ✓ |
+| E ‡ | Period search (p=1..1,000,000) | Best z = 4.66 < 5.61 (Bonferroni) | Superseded ‡ |
 | F | Cryptanalysis (NIST suite) | Passes monobit, runs, distinguishing attack | Indistinguishable from RNG ✓ |
 | G | GF(2) linear transform search | No significant entropy reduction | No algebraic shortcut ✓ |
 | H | Markov scaling laws (order 1–18) | Accuracy flat at ~50% across all orders | Computationally irreducible ✓ |
@@ -36,6 +41,12 @@ Nobody knows. Wolfram is offering **$30,000 in prizes for 3 problems** to find o
 | J | CNN non-stationarity probe | 10.15% accuracy (chance=10%) | Stationary sequence ✓ (powered null — see below) |
 | K † | Transformer (context 64–1024) | BPT flat at ~1.000 across all context lengths | No long-range structure *within this model class* † |
 | L † | ML scaling laws (model+data) | BPT range <0.001 across d_model=32–256 and n_data=500K–7M | No scaling improvement † |
+
+> ‡ **Experiment E is superseded.** Its scan was *sampled* (10,000 positions
+> per period, Bonferroni-corrected). A period is refuted by a single mismatch,
+> so there was no null distribution to correct for. `experiments/period_search_exact.py`
+> now decides all 9,999,936 candidates exactly in 2.1 s on four CPU cores
+> ([log](docs/experiment-logs/2026-08-30-period-search-exact.md)).
 
 > **Integrity note (updated 2026-08-30).** The bitstream is verified twice over.
 > The 10M center column regenerates **byte-identically** on the post-fix kernel

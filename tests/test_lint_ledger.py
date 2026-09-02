@@ -163,3 +163,111 @@ class MarkdownEncodingTest(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class StatusIsCurrentTest(unittest.TestCase):
+    """docs/STATUS.md exists, is placeholder-free, and is not behind the logs."""
+
+    def test_repo_status_is_clean(self):
+        findings = lint_ledger.check_status(REPO_ROOT)
+        self.assertEqual(findings, [], "\n".join(str(f) for f in findings))
+
+    def test_newest_log_is_picked_by_filename_date_not_mtime(self):
+        """A fresh clone gives every file the same mtime; dates must come from
+        the filename or this check passes vacuously."""
+        with tempfile.TemporaryDirectory() as td:
+            root = pathlib.Path(td)
+            logs = root / "docs" / "experiment-logs"
+            logs.mkdir(parents=True)
+            # Written newest-first, so mtime order is the reverse of date order.
+            for name in ("2026-08-30-late.md", "2026-01-02-early.md",
+                         "S_linear_complexity.md"):
+                (logs / name).write_text("x", encoding="utf-8", newline="")
+            self.assertEqual(
+                lint_ledger.newest_dated_log(root), "2026-08-30-late.md")
+
+    def check(self, status_body, logs=("2026-08-30-newest.md",)):
+        with tempfile.TemporaryDirectory() as td:
+            root = pathlib.Path(td)
+            (root / "docs" / "experiment-logs").mkdir(parents=True)
+            for name in logs:
+                (root / "docs" / "experiment-logs" / name).write_text(
+                    "x", encoding="utf-8", newline="")
+            if status_body is not None:
+                (root / "docs" / "STATUS.md").write_text(
+                    status_body, encoding="utf-8", newline="")
+            return lint_ledger.check_status(root)
+
+    def test_flags_a_missing_status_file(self):
+        findings = self.check(None)
+        self.assertTrue(any(f.kind == "FAIL" for f in findings), findings)
+
+    def test_flags_a_status_that_is_behind_the_newest_log(self):
+        findings = self.check("Updated: whenever. Nothing cited here.\n")
+        self.assertTrue(
+            any(f.kind == "STALE-STATUS" for f in findings), findings)
+
+    def test_accepts_a_status_that_cites_the_newest_log(self):
+        findings = self.check(
+            "See `docs/experiment-logs/2026-08-30-newest.md`.\n")
+        self.assertEqual(findings, [], "\n".join(str(f) for f in findings))
+
+    def test_flags_a_placeholder_in_status(self):
+        findings = self.check(
+            "2026-08-30-newest.md\n\nRESULT_SECTION\n")
+        self.assertTrue(
+            any(f.kind == "PLACEHOLDER" for f in findings), findings)
+
+
+class SingleStatusHomeTest(unittest.TestCase):
+    """Only docs/STATUS.md may declare current state."""
+
+    def test_repo_has_exactly_one_status_home(self):
+        findings = lint_ledger.check_single_status_home(REPO_ROOT)
+        self.assertEqual(findings, [], "\n".join(str(f) for f in findings))
+
+    def check(self, rel, body):
+        with tempfile.TemporaryDirectory() as td:
+            root = pathlib.Path(td)
+            path = root / rel
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(body, encoding="utf-8", newline="")
+            return lint_ledger.check_single_status_home(root)
+
+    def test_flags_the_snapshot_that_actually_went_stale(self):
+        """The real defect: AGENTS.md, frozen at 2026-04-01 for five months."""
+        findings = self.check(
+            "AGENTS.md", "## Current Frontier\n\nCurrent state as of "
+                         "`2026-04-01`:\n\n- `O` and `P` are still open.\n")
+        self.assertEqual(len(findings), 2, findings)
+        self.assertTrue(all(f.kind == "DUPLICATE-STATUS" for f in findings))
+
+    def test_does_not_flag_status_itself(self):
+        self.assertEqual(
+            self.check("docs/STATUS.md", "Current state as of 2026-09-02\n"), [])
+
+    def test_does_not_flag_an_archived_handover(self):
+        self.assertEqual(
+            self.check("docs/handover/archive/2026-06-13-old.md",
+                       "Current state as of 2026-06-13\n"), [])
+
+    def test_does_not_flag_a_dated_fact(self):
+        """'Refuted 2026-08-19' is a fact with a date, not a frozen snapshot.
+        Flagging it would make the lint unusable in the ledger."""
+        self.assertEqual(
+            self.check("docs/CLAIM_LEDGER.md",
+                       "| Claim | **Refuted 2026-08-19** (was: Proof "
+                       "candidate) | Admission Rule (added 2026-08-15) |\n"), [])
+
+    def test_an_annotated_exemption_is_honoured(self):
+        self.assertEqual(
+            self.check("AGENTS.md",
+                       "<!-- status-exempt: documents the rule -->\n"
+                       "Do not write \"current state as of\" anywhere else.\n"),
+            [])
+
+    def test_a_bare_marker_with_no_reason_does_not_silence(self):
+        """The mandatory reason is what stops the marker becoming a silencer."""
+        findings = self.check(
+            "AGENTS.md", "<!-- status-exempt: -->\nCurrent state as of X\n")
+        self.assertTrue(findings, "bare marker should not exempt")
