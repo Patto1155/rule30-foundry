@@ -190,7 +190,7 @@ def main():
     # Save results
     csv_path = os.path.join(DATA_DIR, 'scaling_laws.csv')
     with open(csv_path, 'w', newline='') as f:
-        writer = csv.DictWriter(f, fieldnames=results[0].keys())
+        writer = csv.DictWriter(f, fieldnames=results[0].keys(), lineterminator="\n")
         writer.writeheader()
         writer.writerows(results)
     print(f"\nResults saved to {csv_path}")

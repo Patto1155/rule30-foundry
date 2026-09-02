@@ -6,6 +6,7 @@ center column, computes chi-squared deviation from uniform distribution,
 and records the most over/under-represented patterns.
 """
 
+from pathlib import Path
 import sys
 import os
 import csv
@@ -14,13 +15,15 @@ import datetime
 import numpy as np
 from tqdm import tqdm
 
+REPO_ROOT = Path(__file__).resolve().parent.parent
+
 # ---------------------------------------------------------------------------
 # Configuration
 # ---------------------------------------------------------------------------
-DATA_FILE = r"D:\APATPROJECTS\rule30-research\data\center_col_10M.bin"
-DATA_DIR = r"D:\APATPROJECTS\rule30-research\data"
+DATA_FILE = str(REPO_ROOT / "data" / "center_col_10M.bin")
+DATA_DIR = str(REPO_ROOT / "data")
 SUMMARY_CSV = os.path.join(DATA_DIR, "block_frequency_summary.csv")
-LOG_FILE = r"D:\APATPROJECTS\rule30-research\docs\experiment-logs\C_block_frequency.md"
+LOG_FILE = str(REPO_ROOT / "docs" / "experiment-logs" / "C_block_frequency.md")
 TOTAL_BITS = 10_000_000
 K_MIN = 1
 K_MAX = 20
@@ -155,7 +158,7 @@ def main():
         # Save per-k frequency table
         freq_csv = os.path.join(DATA_DIR, f"block_freq_k{k}.csv")
         with open(freq_csv, "w", newline="", encoding="utf-8") as f:
-            writer = csv.writer(f)
+            writer = csv.writer(f, lineterminator="\n")
             writer.writerow(["pattern_value", "pattern_bits", "count", "expected", "ratio"])
             for idx in range(n_patterns):
                 pat_str = format(idx, f'0{k}b')[::-1]
@@ -164,7 +167,7 @@ def main():
 
     # Save summary
     with open(SUMMARY_CSV, "w", newline="", encoding="utf-8") as f:
-        writer = csv.writer(f)
+        writer = csv.writer(f, lineterminator="\n")
         writer.writerow(["k", "n_patterns", "n_windows", "expected_per_pattern",
                           "chi2", "df", "p_value",
                           "max_pattern", "max_count", "max_ratio",

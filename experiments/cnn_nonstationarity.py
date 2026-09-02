@@ -28,7 +28,7 @@ print(f"Device: {device}")
 
 def load_bits():
     data = np.frombuffer(open(DATA_FILE, "rb").read(), dtype=np.uint8)
-    bits = np.unpackbits(data)[:10_000_000]
+    bits = np.unpackbits(data, bitorder='little')[:10_000_000]
     return bits
 
 

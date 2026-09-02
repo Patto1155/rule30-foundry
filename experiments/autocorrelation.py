@@ -6,6 +6,7 @@ accelerated FFT when available.  Any significant non-zero autocorrelation
 at any lag would be a major finding.
 """
 
+from pathlib import Path
 import sys
 import os
 import time
@@ -13,13 +14,15 @@ import datetime
 import numpy as np
 from tqdm import tqdm
 
+REPO_ROOT = Path(__file__).resolve().parent.parent
+
 # ---------------------------------------------------------------------------
 # Configuration
 # ---------------------------------------------------------------------------
-DATA_FILE = r"D:\APATPROJECTS\rule30-research\data\center_col_10M.bin"
-OUT_NPY = r"D:\APATPROJECTS\rule30-research\data\autocorrelation.npy"
-OUT_CSV = r"D:\APATPROJECTS\rule30-research\data\autocorrelation_top20.csv"
-LOG_FILE = r"D:\APATPROJECTS\rule30-research\docs\experiment-logs\B_autocorrelation.md"
+DATA_FILE = str(REPO_ROOT / "data" / "center_col_10M.bin")
+OUT_NPY = str(REPO_ROOT / "data" / "autocorrelation.npy")
+OUT_CSV = str(REPO_ROOT / "data" / "autocorrelation_top20.csv")
+LOG_FILE = str(REPO_ROOT / "docs" / "experiment-logs" / "B_autocorrelation.md")
 TOTAL_BITS = 10_000_000
 MAX_LAG = 100_000
 
@@ -139,7 +142,7 @@ def main():
     # Save top-20 CSV
     import csv
     with open(OUT_CSV, "w", newline="", encoding="utf-8") as f:
-        writer = csv.writer(f)
+        writer = csv.writer(f, lineterminator="\n")
         writer.writerow(["rank", "lag", "autocorrelation", "abs_autocorrelation"])
         for rank, (lag, val) in enumerate(top20, 1):
             writer.writerow([rank, lag, f"{val:.10f}", f"{abs(val):.10f}"])

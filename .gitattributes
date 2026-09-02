@@ -1,0 +1,8 @@
+# Data artifacts are hashed byte-for-byte by data/MANIFEST.sha256 and verified by
+# tools/verify_data.py, which reads raw bytes off disk. Git's EOL conversion
+# (core.autocrlf=true on Windows) rewrites text blobs to CRLF on checkout, which
+# makes every text entry in the manifest fail on a Windows clone even when the
+# stored content is bit-identical. Marking the data tree as non-text disables
+# that conversion, so these files check out identically on every platform and the
+# manifest means the same thing everywhere.
+data/** -text

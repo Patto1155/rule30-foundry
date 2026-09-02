@@ -16,6 +16,8 @@ import sys, os, json, time, datetime
 import numpy as np
 from pathlib import Path
 
+REPO_ROOT = Path(__file__).resolve().parent.parent
+
 try:
     import cupy as cp
     GPU = True
@@ -37,9 +39,9 @@ center_word = n_words // 2
 center_bit  = 32
 
 SUFFIX      = "200m" if N_STEPS == 200_000_000 else ("test" if N_STEPS < 1_000_000 else "100m")
-OUT_BIN     = Path(fr"D:\APATPROJECTS\rule30-research\data\center_col_{SUFFIX}.bin")
-OUT_JSON    = Path(fr"D:\APATPROJECTS\rule30-research\data\center_col_{SUFFIX}_results.json")
-PROG_LOG    = Path(r"D:\APATPROJECTS\rule30-research\data\sim_progress.log")
+OUT_BIN     = Path(fstr(REPO_ROOT / "data" / "center_col_{SUFFIX}.bin"))
+OUT_JSON    = Path(fstr(REPO_ROOT / "data" / "center_col_{SUFFIX}_results.json"))
+PROG_LOG    = (REPO_ROOT / "data" / "sim_progress.log")
 
 LOG_INTERVAL = max(1, N_STEPS // 1000)   # log every 0.1%
 # ─────────────────────────────────────────────────────────────────────────────

@@ -24,8 +24,10 @@ except ImportError:
 
 from rule30_open_utils import verify_spacetime_against_naive
 
+REPO_ROOT = Path(__file__).resolve().parent.parent
 
-ROOT = Path(r"D:\APATPROJECTS\rule30-research")
+
+ROOT = REPO_ROOT
 OUT_JSON = ROOT / "data" / "diagonal_te.json"
 PLOT_FILE = ROOT / "docs" / "plots" / "diagonal_te.png"
 PROG_LOG = ROOT / "data" / "diagonal_te.progress.log"

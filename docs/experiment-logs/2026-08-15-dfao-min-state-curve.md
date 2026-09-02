@@ -2,7 +2,10 @@
 
 - Date: 2026-08-15
 - Title: Minimal-DFAO-Size Curve s*(n) for the Rule 30 Center Column
-- Claim Level: Certificate (exact minima, per prefix, verified both ways)
+- Claim Level: Robust observation (exact minima vs a 7-seed null band and a
+  positive control). Not a Certificate: the SAT side ships a re-verified
+  witness, but the UNSAT lower bounds rest on trusting the solver.
+- Run date: 2026-08-29 (harness committed 2026-08-15; Rule 30 curve not run until now)
 
 ## Goal
 
@@ -101,19 +104,114 @@ prefix length, relative to a random string".
 
 ## Correctness gate (run before any science)
 
-GATE_SECTION
+All four checks pass (`"passed": true`):
+
+| Check | Result |
+|---|---|
+| Thue-Morse n=64 MSD s=2 is SAT **and** the decoded DFAO reproduces its own bits | PASS |
+| Thue-Morse n=64 LSD s=2 is SAT | PASS |
+| Thue-Morse n=64 MSD s=1 is UNSAT | PASS |
+| SAT vs exhaustive agree on 120 `(sequence,n,direction,s)` cells, s<=4 | PASS, 0 disagreements |
+
+The positive control matters most: Thue-Morse returns `s* = 2` at **every** prefix
+length in **both** digit directions. The method therefore does detect a genuine
+automatic sequence, so a null result below is not a detection-power failure.
 
 ## Result
 
-RESULT_SECTION
+Runtime 3747 s (62 min), CaDiCaL 1.5.3 via pysat 1.9.dev14, per-instance
+timeout 120 s. Exact minima were reached for n <= 48 (MSD); beyond that the
+solver times out and only bounds are available.
+
+```
+n    center:msd  center:lsd  random:msd  random:lsd  thue-morse  null_opt  null_cons
+8    3           4           2           2           2           3         3
+12   4           5           4           4           2           3         4
+16   5           6           4           5           2           4         4
+20   6           6           6           7           2           4         5
+24   8           7           6           7           2           5         6
+28   9           8           8           8           2           5         6
+32   10          9           10          9           2           6         7
+40   12          10          11          <=13 (>=11) 2           7         8
+48   12          <=12 (>=11) <=14 (>=12) >13 unknown 2           8         9
+56   <=13 (>=12) >13 unknown >14 unknown >13 unknown 2           8         10
+64   <=15 (>=13) >14 unknown >14 unknown >13 unknown 2           9         11
+```
+
+**Against the 7-seed empirical null** (`data/prize/2026-08-15-random-seeds/`,
+MSD, same budget). The center column sits **inside** the random band at every
+prefix length with an exact minimum, and never below it:
+
+```
+   n  center   null band over 7 seeds        verdict
+   8       3   [2, 3, 3, 4, 4, 4, 4]         inside
+  12       4   [4, 4, 4, 5, 5, 5, 5]         inside
+  16       5   [4, 5, 5, 5, 6, 6, 6]         inside
+  20       6   [5, 5, 6, 6, 6, 8, 8]         inside
+  24       8   [6, 6, 7, 8, 8, 8, 9]         inside
+  28       9   [7, 8, 8, 9, 9, 9, 11]        inside
+  32      10   [7, 9, 9, 9, 10, 10, 11]      inside
+  40      12   [9, 10, 10, 10, 10, 11, 13]   inside
+  48      12   [11, 12, 12, 12, 13, 13, 13]  inside
+```
+
+9 of 9 inside, 0 below.
 
 ## Interpretation
 
-INTERPRETATION_SECTION
+**No DFAO shortcut, and this time the negative is not vacuous.**
+
+The retracted claim asked "does a tiny DFAO fit a long prefix?" - guaranteed no,
+by counting, for any sequence whatsoever. This asks instead how the *minimum*
+DFAO size grows with prefix length, and compares that curve against a matched
+random control. That is the quantity `docs/theory/finite-prefix-counting-bound.md`
+identifies as the informative one, and it is the same design as Experiment S
+(`L(n) = n/2`), which the theory doc calls the template for a sound negative.
+
+Three things have to hold together for this to mean anything, and all three do:
+
+1. **Detection power.** Thue-Morse returns `s* = 2` flat, at every n, in both
+   directions. A real automatic sequence is found immediately.
+2. **The measurement is in the informative regime.** Measured minima (10 at
+   n=32) sit above the counting-null threshold (6-7 at n=32), so these are
+   genuine minima rather than an artefact of the class being too small to fit
+   anything.
+3. **The center column is not special.** Its `s*(n)` lands inside the 7-seed
+   random band at 9 of 9 exact points and never below. Where it deviates it
+   deviates *upward* (n=24: 8 vs a band median of 8; n=8: 3 vs a seed-30 value
+   of 2).
+
+Note the Admission Rule's warning that "a matching negative from the random
+control is a red flag that the experiment is vacuous". That warning is about a
+*negative* matching - both returning "nothing fits". It does not apply here,
+because both return **finite exact minima**, and it is the agreement of two
+measured curves that carries the content. A vacuous design could not produce
+`s* = 2` for Thue-Morse and `s* = 10` for Rule 30 from the same harness.
+
+So: on prefixes up to n=48, the Rule 30 center column has essentially maximal
+automatic complexity - indistinguishable from random, and far above what any
+small DFAO could express. This is evidence against a base-2 automatic-sequence
+shortcut for Prize Problem 2.
+
+Scope, stated plainly: n <= 48 is short. This says nothing about shortcuts
+outside the DFAO class, nothing about bases other than 2, and nothing about
+prefixes beyond 64. It replaces a vacuous claim with a small, honest one.
 
 ## Next Step
 
-NEXT_STEP_SECTION
+**To promote to Certificate:** emit DRAT proofs for the UNSAT verdicts. The
+SAT side already ships a re-verified witness DFAO, so the *upper* bounds are
+certificate-grade today; the *lower* bounds currently rest on trusting CaDiCaL.
+With DRAT, `s*(n)` becomes independently checkable and the row can be promoted.
+
+**To extend the curve:** n=56 and n=64 need more than 120 s per instance. Either
+raise the timeout, or exploit monotonicity harder - the run already prunes via
+"no <k-state DFAO fits the shorter prefix", which collapsed 8 of 10 state levels
+to `UNSAT_IMPLIED` at n=32 for free.
+
+**Do not** simply push n higher at fixed state budget. That makes the negative
+*more* vacuous, not less, which is the mistake the counting bound exists to
+prevent.
 
 ## Commands
 
@@ -121,7 +219,7 @@ NEXT_STEP_SECTION
 python experiments/dfao_min_states.py --gate-only --timeout-s 120
 python experiments/dfao_min_states.py --timeout-s 120 --max-states 20 \
   --out data/prize/2026-08-15-dfao-min-state-curve.json
-MULTISEED_COMMAND
+python experiments/dfao_min_states.py --timeout-s 300 --max-states 20 \n  --sequences random --random-seed <k> --directions msd \n  --out data/prize/2026-08-15-random-seeds/seed<k>.json
 ```
 
 ## Artifacts
@@ -129,4 +227,5 @@ MULTISEED_COMMAND
 - `data/prize/2026-08-15-dfao-min-state-curve.json` - full curve, per-state
   verdicts and solve times, verified SAT witnesses, input-sequence sha256s,
   solver metadata, and the counting-null table.
-- MULTISEED_ARTIFACT
+- `data/prize/2026-08-15-random-seeds/seed1..7.json` - the 7-seed empirical
+  null band, MSD, run before the Rule 30 curve.

@@ -2,8 +2,12 @@
 
 Use this workspace as a disciplined scratchpad, not as an ad hoc notebook dump.
 
-**New here? Read `docs/AGENT_QUICKSTART.md` first**, then
-`docs/WORKFLOW.md`. The quickstart gives agents the tool map and prize-facing
+**New here? Read
+[`docs/handover/2026-08-29-data-integrity-and-dfao-curve.md`](docs/handover/2026-08-29-data-integrity-and-dfao-curve.md)
+first** - it is the most recent state of play: what is verified, what was
+retracted and why, and what is open. Then the ordered work plan in
+[`docs/handover/2026-08-30-next-session-plan.md`](docs/handover/2026-08-30-next-session-plan.md).
+Then `docs/AGENT_QUICKSTART.md`, then `docs/WORKFLOW.md`. The quickstart gives agents the tool map and prize-facing
 triage rules; the workflow file is the operating manual for the GPU-accelerated,
 verification-first loop.
 
@@ -120,6 +124,11 @@ For bit-packed Rule 30 code, treat these as mandatory:
 - In a radius-1 cellular automaton, `first_divergence < distance` is impossible. Treat that as a hard failure.
 - "Never reached within N steps" is right-censored. Do not report it as "never" without qualification.
 - If a metric is near zero, define a noise floor or baseline before calling it asymmetric or structured.
+- Do not cite a number from `data/` without checking `docs/DATA_INTEGRITY.md` first. The March-vs-June kernel gap is CLOSED (the 10M bitstream is byte-identical across the fix), but experiments **I-L are known-bad** and pending a re-run.
+- **Always pass `bitorder='little'` when unpacking `center_col_*.bin`.** `gpu/rule30_sim.py` writes LSB-first; numpy's default is MSB-first. Omitting it silently returns the stream with every 8-bit block reversed - ~50% of bit positions differ while the bit mean is unchanged, so aggregate checks will not catch it. This bug invalidated experiments I-L. The golden reference is MSB-first by deliberate, documented exception.
+- Verify new packed kernels against `data/golden/center_col_golden_1M.bin` via `python tools/verify_data.py --bitstream <file>`, not only against a 20-bit prefix.
+- If you add a file under `data/`, add it to `.gitignore` as an explicit `!` exception and rerun `python tools/make_manifest.py`. Do not `git add -f`.
+- Do not hardcode absolute paths. 16 scripts under `experiments/` hardcode a path into `D:/APATPROJECTS/rule30-research/`, which is a **stale checkout of this same repository** (same git remote; its HEAD is a strict ancestor of ours). Make paths repo-relative; do not add a seventeenth.
 - One-step TE at distance 1 may just restate the update rule. Do not oversell it as a novel discovery without literature support.
 
 ## Good Behavior

@@ -166,7 +166,7 @@ def main():
     OUT_CSV.parent.mkdir(parents=True, exist_ok=True)
     import csv
     with open(str(OUT_CSV), "w", newline="", encoding="utf-8") as f:
-        writer = csv.writer(f)
+        writer = csv.writer(f, lineterminator="\n")
         writer.writerow(["rank", "lag", "acf", "z_score", "above_threshold"])
         for row in top20_rows:
             writer.writerow([row["rank"], row["lag"], row["acf"],
