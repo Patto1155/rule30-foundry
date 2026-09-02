@@ -8,6 +8,12 @@ This is a decision document. It exists because "rent a bigger GPU" is the most
 expensive way this project can be wrong, and because the standing plan's
 premise for renting does not survive contact with the measured numbers.
 
+> **Companion document.** `docs/handover/2026-09-01-high-value-directions.md`
+> (PR #20) ranks the *research* directions and is the authority on what to
+> work on. This file is the authority on what hardware to buy and what a run
+> costs. Where they overlap they agree, with one exception: that document
+> corrects D11 below, and the correction is applied here. Read both.
+
 ---
 
 ## 1. The premise for renting was wrong
@@ -127,28 +133,56 @@ weakens it. Either way the README changes.
 
 ## 4. A genuinely new direction worth designing before buying
 
-### D11 — Circuit-size curve `c(n)`
+### D11 — Circuit-size curve `C(k)`
+
+> **Corrected 2026-09-02.** The first version of this section defined
+> `c(n)` as "the smallest circuit computing center bit `n`". That is
+> **vacuous**: for a *fixed* `n` the answer is a hard-coded constant, size
+> O(1), for any sequence whatsoever — the same failure mode as the retracted
+> 1–4 state DFAO certificate. Caught in
+> `docs/handover/2026-09-01-high-value-directions.md` §3. The definition below
+> replaces it.
 
 The repo has measured minimal-description curves over three model classes:
 LFSRs (`L(n) = n/2`), DFAOs (`s*(n)`, Certificate), and straight-line grammars
-(`g(n)`). The natural fourth is the one closest to Problem 2's actual wording:
+(`g(n)`). The natural fourth is the one closest to Problem 2's actual wording —
+but it has to quantify over the whole index function, not one index:
 
-    c(n) = size of the smallest boolean circuit computing center bit n
-           from the binary representation of n
+    C(k) = size of the smallest boolean circuit that, given the k binary
+           digits of i, outputs c_i correctly for EVERY 0 <= i < 2^k
 
 This matters because Rule 30's update **is** a circuit — its ANF is
 `a(t,i-1) ⊕ a(t,i) ⊕ a(t,i+1) ⊕ a(t,i)·a(t,i+1)`, two gates. "A faster
-algorithm for the nth cell" is, formally, a small circuit family. And the
-counting bound applies cleanly: circuits of size `s` over `k` inputs number at
-most `2^{O(s log s)}`, so the admissible region is statable *before* running,
-exactly as the Admission Rule requires.
+algorithm for the nth cell" is, formally, a small circuit family. It also
+connects to D6: this is the model class that *contains* the XOR structure the
+neural suite is blind to, so it probes precisely the gap item 8 exposed.
 
-It also connects to D6: a circuit-size curve is the model class that *contains*
-the XOR structure the neural suite is blind to, so it probes precisely the gap
-item 8 exposed.
+**Admission Rule, before running.** With 2-input gates, gate `j` chooses an
+ordered pair from the `k` inputs plus the `j-1` earlier gates and one of 16
+types, so `|M(s)| <= (16 (k+s)^2)^s` and
+`log2|M(s)| ≈ s(4 + 2 log2(k+s))`. The function being fitted is a truth table
+of `2^k` bits, so a negative is informative only once that exceeds `2^k`:
 
-Exact synthesis is SAT-shaped and small-`n`-bounded, like `s*(n)` — so it is
-cheap to prototype for free and only then worth scaling.
+| k | bits to fit | counting threshold | Shannon expectation `~2^k/k` |
+|---|---|---|---|
+| 5 | 32 | s ≈ 4–5 | ≈ 6.4 gates |
+| 6 | 64 | s ≈ 6 | ≈ 10.7 gates |
+
+Measured minima should sit *above* the threshold, as they do for `s*(n)`.
+
+**The honest limitation, stated before anyone spends on it.** Exact circuit
+synthesis is bounded by the truth table, not by a prefix: `k = 6` already means
+minimising over a 64-bit function, and the cost grows doubly. So the reachable
+curve is roughly `C(1..6)` — which covers only the **first 64 center bits**,
+*less reach than the 128-bit DFAO claim that was retracted for vacuity*. It is
+not vacuous here, because the counting bound is satisfied, but a six-point
+curve is thin evidence next to `s*(n)` to n=48 or `g(n)` to n=65536.
+
+It is also **non-uniform** complexity: a finite circuit lower bound does not
+imply a uniform `Ω(n)`-time lower bound for Problem 3.
+
+Prototype it for free at `k <= 5` and let the result decide whether it deserves
+more. Do not budget it as a headline direction before that.
 
 ---
 
