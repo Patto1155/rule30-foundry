@@ -6,7 +6,7 @@ lives here. Overwrite this file in place; git history keeps the old versions.
 No other file may carry a "current state as of" section —
 `tools/lint_ledger.py` enforces it.
 
-Updated: 2026-09-02 · Newest log: `docs/experiment-logs/2026-08-30-rerun-il-bitorder.md`
+Updated: 2026-09-02 · Newest log: `docs/experiment-logs/2026-09-01-nersissian-end-to-end-audit.md`
 
 ## Where the three prize problems stand
 
@@ -14,7 +14,7 @@ Updated: 2026-09-02 · Newest log: `docs/experiment-logs/2026-08-30-rerun-il-bit
 |---|---|---|---|
 | 1 | Does the center column repeat? | No period `p <= 5,000,000` in the first 10M bits — **decided exactly**, all 9,999,936 candidates, 0 survivors. Cannot resolve the problem: eventual periodicity is asymptotic. | Certificate |
 | 2 | Is there a shortcut for the nth bit? | None found. `s*(n)` minimal-DFAO curve certified to n=48 with DRAT proofs. ML routes (I/K/L) are **scoped down** — blind to long-lag XOR structure. | Certificate (s*(n)) |
-| 3 | Are 0s and 1s equidistributed? | Bias < 0.05% over 10M bits. Uniform Bernoulli(1/2) is invariant (proved, left-permutivity). | Theorem + Observation |
+| 3 | Are 0s and 1s equidistributed? | Bias < 0.05% over 10M bits. Uniform Bernoulli(1/2) is invariant (proved, left-permutivity) — which is *not* the same as the single seed's limiting frequency, the actual question. A published shortcut claim is now under audit, with the warm query separated from the cold `n -> c_n` cost. | Theorem + Observation |
 
 ## Open work, ranked
 
@@ -23,7 +23,7 @@ and the full option analysis: [`handover/CURRENT.md`](handover/CURRENT.md).
 
 | # | Work | Kind | Cost | Blocks |
 |---|---|---|---|---|
-| A1 | **Land the PR stack** (#18 first, then #19, #20, #21) | Infra | Review time | Everything |
+| A1 | **Land the PR stack** — #20 and #21 are now merged *into* #19, so the stack is 2 deep: land #18, then #19 | Infra | Review time | Everything |
 | A2 | **Add CI running `tools/verify_all.py`** — there is no `.github/` at all | Infra | ~1 h | — |
 | A3 | **Make bitstreams reachable** (Release asset or committed prefix) | Infra | ~½ day | B2 |
 | C2 | **Algebraic annihilator search** — low-degree GF(2) relations over `w`-bit windows, via monomial-matrix rank | Research | Days | — |
@@ -47,13 +47,26 @@ grades left-edge structure as disjoint from the prize object.
 | PR | Branch | State |
 |---|---|---|
 | #18 | `fix/data-hygiene` | Open, based on `main`. |
-| #19 | `claude/keen-sagan-21rzbr` | Open, based on #18. Tier 0 tooling + items 1, 7, 8, 11, 13. |
-| #20 | `research/nersissian-audit` | Open, based on #19. |
-| #21 | `claude/agent-context-bootstrap` | Open, based on #19 — **sibling of #20**, not a fourth layer. Agent-context bootstrap. |
+| #19 | `claude/keen-sagan-21rzbr` | Open, based on #18. Tier 0 tooling + items 1, 7, 8, 11, 13, **and now #20 and #21 merged in**. |
+| #20 | `research/nersissian-audit` | **Merged into #19** on 2026-09-02. |
+| #21 | `claude/agent-context-bootstrap` | **Merged into #19** on 2026-09-02. |
 
-This stack is 3 deep, which is over the limit set in
-[`BRANCHING.md`](BRANCHING.md). Land #18 before opening anything further from
-`main`.
+The stack is now **2 deep** (#18 → #19), inside the limit set in
+[`BRANCHING.md`](BRANCHING.md). Land #18, then #19.
+
+### Why #20 and #21 were merged rather than left open
+
+They were siblings on the same base, and each was green on its own — but
+**together they failed**, and nothing either branch could run would have shown
+it. `lint_ledger`'s `STALE-STATUS` check (added by #21) requires this file to
+name the newest dated experiment log; #20 added a newer one. Two green PRs, a
+red merge.
+
+That is a standing hazard, not a one-off: *any* PR adding an experiment log
+will red-line *any* concurrent PR that touches this file. The check is right
+to exist — it is what stops STATUS drifting behind results — so it was kept as
+is and the merge was resolved by updating this file, which is what should have
+happened anyway. See [`BRANCHING.md`](BRANCHING.md).
 
 ## Recently closed
 
@@ -67,3 +80,10 @@ This stack is 3 deep, which is over the limit set in
   ([log](experiment-logs/2026-08-30-rerun-il-bitorder.md)).
 - New `g(n)` smallest-grammar curve
   ([log](experiment-logs/2026-08-30-grammar-min-size-curve.md)).
+- Nersissian shortcut claim audited end-to-end, separating the advertised warm
+  `O(log n)` query from the cold-start `n -> c_n` cost that Problem 3 actually
+  asks about ([log](experiment-logs/2026-09-01-nersissian-end-to-end-audit.md)).
+  No `Omega(n)` established for the compressed representation yet — the next
+  step is reconstructing it faithfully.
+- `docs/COMPUTE_PLAN.md` D11 corrected: the fixed-`n` circuit definition was
+  vacuous (a hard-coded constant), replaced by the whole index function `C(k)`.

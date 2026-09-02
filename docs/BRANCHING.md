@@ -85,6 +85,36 @@ A branch with no commits for 14 days is either landed or abandoned. Open a PR
 or delete it. `research/` branches are exempt while their PR is open and has a
 stated next step.
 
+### 7. Two green PRs can still merge red
+
+Observed on 2026-09-02 between #20 and #21, which were siblings on the same
+base. Each passed `verify_all` alone. Merged together they failed:
+
+```
+FAIL  STALE-STATUS: docs/STATUS.md does not cite the newest experiment log
+      '2026-09-01-nersissian-end-to-end-audit.md'
+```
+
+`lint_ledger`'s `STALE-STATUS` check requires `docs/STATUS.md` to name the
+newest dated experiment log. One branch added the check; the other added a
+newer log. Neither branch could have detected it, because the invariant is
+global and each branch only ever saw its own half.
+
+This is **not specific to those two PRs**. Any branch that adds an experiment
+log will red-line any concurrent branch that touches `docs/STATUS.md`, in
+either merge order.
+
+The check is correct and stays — it is what stops the repo's stated state
+falling behind its results. What follows for you:
+
+- **Test-merge siblings before landing either**, not just each against the
+  base. `git merge --no-commit --no-ff <other>` into a scratch worktree, run
+  `python tools/verify_all.py`, then abort.
+- The fix is always the same one line: update `docs/STATUS.md` to cite the
+  newest log. Do it in whichever branch lands second, or in the merge commit.
+- Prefer merging siblings into their shared base yourself over asking a
+  reviewer to land them in an order nobody has verified.
+
 ## Checking before you branch
 
 ```bash
