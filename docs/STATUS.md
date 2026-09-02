@@ -18,20 +18,29 @@ Updated: 2026-09-02 · Newest log: `docs/experiment-logs/2026-08-30-rerun-il-bit
 
 ## Open work, ranked
 
-1. **Finish the item-14 pattern-map walk** — ~26 min of CPU from a ledger row.
-   `experiments/pattern_map_walk.py` is validated to `d = 5e7`, 0 branch
-   points; not yet run to the prediction window and deliberately has no ledger
-   row. Verify every surviving branch doubles in the same window; halt on full
-   32-bit parity, not minimal-period parity. Not prize-facing.
-2. **Extend `s*(n)` past n=48** — re-costed: the standalone-solver path is ~28×
-   cheaper than the original plan assumed (207 solves in 133 s vs 105 in
-   3747 s under the pysat harness).
-3. **A parity-capable estimator** (Berlekamp–Massey, GF(2) rank) — the direct
-   answer to the I/K/L blind spot. Do not add more neural experiments; the
-   ceiling there is partly the models'.
-4. **Extend the independent CPU reference to 46M** (~50 h CPU), or state the
-   10M horizon explicitly in that ledger row rather than letting it inherit
-   confidence from the 10M result.
+Sequence approved 2026-09-02: **A1 → A2 → C2**, with B3 as filler. Reasoning
+and the full option analysis: [`handover/CURRENT.md`](handover/CURRENT.md).
+
+| # | Work | Kind | Cost | Blocks |
+|---|---|---|---|---|
+| A1 | **Land the PR stack** (#18 first, then #19, #20, #21) | Infra | Review time | Everything |
+| A2 | **Add CI running `tools/verify_all.py`** — there is no `.github/` at all | Infra | ~1 h | — |
+| A3 | **Make bitstreams reachable** (Release asset or committed prefix) | Infra | ~½ day | B2 |
+| C2 | **Algebraic annihilator search** — low-degree GF(2) relations over `w`-bit windows, via monomial-matrix rank | Research | Days | — |
+| B3 | Extend `s*(n)` past n=48 — re-costed ~28× cheaper | Research | Hours | — |
+| E1 | Write up the eight Theorem rows; `s*(n)` is citable | Writing | Days | — |
+| B2 | Exact period search on 46M — no code change, extends to `p <= 2.3e7` | Research | Minutes | A3 |
+| B1 | Item 14 pattern-map walk — palate cleanser, **not prize progress** | Research | ~26 min CPU | — |
+
+**De-prioritised:** more neural experiments (the ceiling is partly the models'
+— I/K/L are blind to long-lag XOR). Item 14 is worth closing but the ledger
+grades left-edge structure as disjoint from the prize object.
+
+## Chores
+
+- **Delete 7 merged branches** — verified safe, blocked from the container by
+  an egress `HTTP 403`. Command in [`handover/CURRENT.md`](handover/CURRENT.md).
+  Then enable auto-delete head branches.
 
 ## In-flight branches
 
@@ -40,6 +49,7 @@ Updated: 2026-09-02 · Newest log: `docs/experiment-logs/2026-08-30-rerun-il-bit
 | #18 | `fix/data-hygiene` | Open, based on `main`. |
 | #19 | `claude/keen-sagan-21rzbr` | Open, based on #18. Tier 0 tooling + items 1, 7, 8, 11, 13. |
 | #20 | `research/nersissian-audit` | Open, based on #19. |
+| #21 | `claude/agent-context-bootstrap` | Open, based on #19 — **sibling of #20**, not a fourth layer. Agent-context bootstrap. |
 
 This stack is 3 deep, which is over the limit set in
 [`BRANCHING.md`](BRANCHING.md). Land #18 before opening anything further from
