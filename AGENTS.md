@@ -76,6 +76,26 @@ Key instinct: "Does this experiment answer a question that theory says is answer
 
 If it is the latter, step back and consult the theory docs before proposing anything.
 
+## Before Trusting Your Own Review
+
+Every expensive bug here was silent and survived its author's own re-reading:
+the byte-reversed bitstream, the vacuous counting bound, the Certificate row
+citing a template. When a result is about to be graded, or a negative is about
+to be believed, get a reader that does not share your assumptions:
+
+```bash
+python tools/council.py roles                       # who is available
+python tools/council.py ask math briefs/<slug>.md --repo --out briefs/out/<slug>.md
+```
+
+`docs/COUNCIL.md` covers the roles, the cloud-environment wiring, and the
+failure table; `briefs/TEMPLATE.md` is the brief format. Two standing rules: the
+reviewer sees only the brief, so inline the evidence and never telegraph the
+answer you expect; and a reply is a hypothesis, not evidence - it has not run
+`tools/verify_all.py`. A reply worth keeping gets promoted into
+`docs/experiment-logs/` under the logging standard below. Nothing in `briefs/`
+is tracked.
+
 ## Frontier — moved
 
 **Current state lives in [`docs/STATUS.md`](docs/STATUS.md), and only there.**
