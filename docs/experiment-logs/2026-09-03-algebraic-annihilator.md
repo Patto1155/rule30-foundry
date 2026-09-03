@@ -49,8 +49,9 @@ right kernel. The whole question is the GF(2) rank of `M`.
 - Input: `data/golden/center_col_golden_10M.bin` (10,000,000 bits, bit mean
   0.500222). The golden reference is **tracked in git**, so this experiment runs
   on a fresh clone and does not wait on A3.
-- Grid: `w in {20, 22, 24, 26, 28, 32}`, `d in {2, 3}`. A degree-4
-  extension is in flight; see *Next step*.
+- Grid: `w in {20, 22, 24, 26, 28, 32, 40, 48, 56, 64}`, `d in {2, 3, 4}` —
+  24 cells, of which 20 clear both gates. Run as four grids and merged; each
+  row records its own parameters, rank and timing.
 - Rank is computed by bitset Gaussian elimination over `uint64` words.
 
 Rank is at most `D`, so `D + 64` distinct windows settle the question. **Full
@@ -103,26 +104,40 @@ recorded — but only because verification was in the path.
 
 ## Result
 
-Full rank at every informative parameter. **No annihilator of degree `<= 3` over
-windows of up to 32 bits.**
+Full rank at all 20 informative cells. **No annihilator of degree `<= 3` over
+windows of up to 64 bits, nor of degree `<= 4` over windows of up to 32 bits.**
 
-| `w` | `d` | `D` | rank | deficiency | verdict |
-|---:|---:|---:|---:|---:|---|
-| 24 | 2 | 301 | 301 | 0 | no annihilator |
-| 24 | 3 | 2,325 | 2,325 | 0 | no annihilator |
-| 26 | 2 | 352 | 352 | 0 | no annihilator |
-| 26 | 3 | 2,952 | 2,952 | 0 | no annihilator |
-| 28 | 2 | 407 | 407 | 0 | no annihilator |
-| 28 | 3 | 3,683 | 3,683 | 0 | no annihilator |
-| 32 | 2 | 529 | 529 | 0 | no annihilator |
-| 32 | 3 | 5,489 | 5,489 | 0 | no annihilator |
+| `w` | `d=2` | `d=3` | `d=4` |
+|---:|---|---|---|
+| 20 | *vacuous* | *vacuous* | — |
+| 22 | *vacuous* | *vacuous* | — |
+| 24 | 301 | 2,325 | 12,951 |
+| 26 | 352 | 2,952 | 17,902 |
+| 28 | 407 | 3,683 | 24,158 |
+| 32 | 529 | 5,489 | 41,449 |
+| 40 | 821 | 10,701 | — |
+| 48 | 1,177 | 18,473 | — |
+| 56 | 1,597 | 29,317 | — |
+| 64 | 2,081 | 43,745 | — |
 
-`w <= 22` was refused at every degree by the Reed–Muller gate and is reported as
-`skipped_vacuous` rather than as a clean negative.
+Each entry is `D`, the monomial count. **Rank equals `D` in every one of them**,
+so the deficiency is 0 throughout and no annihilator exists at any tested
+parameter. `w <= 22` was refused at every degree by the Reed–Muller gate and is
+reported as `skipped_vacuous` rather than as a clean negative.
 
-Every row above is in the artifact. The degree-4 grid is a separate run and is
-deliberately **not** summarised here until its artifact exists — `w = 24, d = 4`
-(`D = 12,951`) has come back full rank, but a partial grid is not a result.
+The largest cell settled is `w = 64, d = 3` at `D = 43,745`.
+
+### Width is the cheap axis
+
+The Reed–Muller ceiling grows as `2^w` while `D` grows polynomially, so widening
+is gated far more loosely than deepening. `w = 64, d = 2` needs `D = 2,081` and
+runs in 12 s; `w = 32, d = 4` needs `D = 41,449`, twenty times the columns for a
+strictly narrower reach. Widen before deepening — recorded in
+`docs/theory/README.md` §5 so the next agent does not rediscover it.
+
+The `uint64` window code caps `w` at 64. Going wider needs multi-word codes,
+which is the natural next increment and was mis-scoped in this log's first
+draft as being needed for `w = 64` itself.
 
 ## Controls
 
@@ -154,7 +169,8 @@ The algebraic route to Problem 2 is now closed two degrees further than it was.
 Combined with Experiment S:
 
 - degree 1 (LFSR / linear recurrence): closed, maximal linear complexity.
-- degrees 2–3 over windows to 32 bits: closed, full monomial rank.
+- degrees 2–3 over windows to **64** bits: closed, full monomial rank.
+- degree 4 over windows to 32 bits: closed, full monomial rank.
 
 This is a genuine constraint on Rule 30 rather than a restatement of its
 randomness, because the gate proves a relation *could* have been detected at
@@ -167,18 +183,26 @@ the space-time field rather than the column; or any non-polynomial form.
 
 ## Next step
 
-**Degree 4 is running** over `w in {24, 26, 28, 32}` and will land as a separate
-artifact and a ledger amendment. `D = 41,449` at `w = 32`, so it costs roughly
-30x the `d = 3` grid; `w = 24` is already confirmed full rank.
+**Space-time is not it, and that is now settled.** Rule 30's update is itself
+degree 2 over a 2-row patch, so an annihilator search there is guaranteed to
+succeed and what it finds is the rule. On a 2x8 patch it recovers all 6
+instances of the ANF with 0 violations, plus ideal multiples — the second kernel
+vector is the rule times `a(t,i+1)`. Neither gate catches this: the vacuity is
+not dimensional, it is that the answer is fixed by the definition of the object.
+Reopening it means ideal membership modulo the rule, not a rank computation.
+Reproduce with `python experiments/algebraic_annihilator.py --space-time 8`;
+recorded as closed in `docs/theory/README.md` §4.
 
-Beyond that, the cheapest strengthening is width, not degree. The Reed–Muller headroom grows
-as `2^w` while `D` grows polynomially, so wider windows are gated far more
-loosely than deeper ones — but window codes are packed into `uint64`, capping
-`w` at 32. Lifting that cap to multi-word codes is a contained change and would
-let `w` run to 64 at `d = 2` (`D = 2,081`), a much larger class than anything
-tested here at a comparable cost.
+What is left, in cost order:
 
-Second, the 46M stream would raise every distinct-window count and with it the
-gate headroom, but it does not change which parameters are informative — the
-ceiling is set by `w` and `d`, not by stream length. It is a lower priority than
-width for this experiment, though A3 still blocks it.
+1. **Multi-word window codes**, lifting `w` past 64. Contained, and width is the
+   cheap axis.
+2. **Non-consecutive bit selections.** Every window here is a run of adjacent
+   center-column bits. A relation over a strided or sparse index set would be
+   invisible to this search, and the I/K/L failure on `s[i-13] XOR s[i-27]`
+   is a hint that long-lag structure is exactly what nothing here probes.
+3. **Degree 5+**, which the table above shows is the expensive direction.
+
+The 46M stream raises every distinct-window count but does **not** change which
+parameters are informative — the ceiling is set by `w` and `d`, not by stream
+length. Low priority for this experiment, and still blocked on A3.
