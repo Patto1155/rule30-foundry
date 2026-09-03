@@ -6,7 +6,7 @@ lives here. Overwrite this file in place; git history keeps the old versions.
 No other file may carry a "current state as of" section —
 `tools/lint_ledger.py` enforces it.
 
-Updated: 2026-09-03 · Newest log: `docs/experiment-logs/2026-09-01-nersissian-end-to-end-audit.md`
+Updated: 2026-09-03 · Newest log: `docs/experiment-logs/2026-09-03-algebraic-annihilator.md`
 
 ## Where the three prize problems stand
 
@@ -20,12 +20,13 @@ Updated: 2026-09-03 · Newest log: `docs/experiment-logs/2026-09-01-nersissian-e
 
 Sequence approved 2026-09-02: **A1 → A2 → C2**, with B3 as filler. Reasoning
 and the full option analysis: [`handover/CURRENT.md`](handover/CURRENT.md).
-A1 and A2 are done (see *Recently closed*); **C2 is next**.
+A1, A2, C2 and C2b are done (see *Recently closed*); **B3 is next**.
 
 | # | Work | Kind | Cost | Blocks |
 |---|---|---|---|---|
 | A3 | **Make bitstreams reachable** (Release asset or committed prefix) | Infra | ~½ day | B2 |
-| C2 | **Algebraic annihilator search** — low-degree GF(2) relations over `w`-bit windows, via monomial-matrix rank | Research | Days | — |
+| C2c | **Annihilators over non-consecutive bit selections** — every window searched so far is a run of adjacent bits, so long-lag structure (the I/K/L blind spot) is untested | Research | Days | — |
+| C2d | **Multi-word window codes**, lifting `w` past the `uint64` cap of 64 | Research | ~½ day | — |
 | B3 | Extend `s*(n)` past n=48 — re-costed ~28× cheaper | Research | Hours | — |
 | E1 | Write up the eight Theorem rows; `s*(n)` is citable | Writing | Days | — |
 | B2 | Exact period search on 46M — no code change, extends to `p <= 2.3e7` | Research | Minutes | A3 |
@@ -45,7 +46,7 @@ grades left-edge structure as disjoint from the prize object.
 
 | PR | Branch | State |
 |---|---|---|
-| — | `claude/rule-30-foundry-env-tlbr9x` | Open, based on `main`. A2: the `verify` workflow. |
+| — | `claude/rule-30-foundry-env-tlbr9x` | Open, based on `main`. C2: the algebraic annihilator search. |
 
 The #18 → #19 stack landed on 2026-09-02; #20 and #21 had already been merged
 into #19. Nothing is stacked. The 7 merged branches listed in
@@ -67,6 +68,21 @@ happened anyway. See [`BRANCHING.md`](BRANCHING.md).
 
 ## Recently closed
 
+- **C2 + C2b**: algebraic annihilator search — no GF(2) relation of degree
+  `<= 3` over windows up to 64 bits, nor degree `<= 4` up to 32 bits, in all 20
+  of 24 cells that clear both gates
+  ([log](experiment-logs/2026-09-03-algebraic-annihilator.md)). The gate is the
+  result worth remembering: this model class is vacuous in *both* directions,
+  and the Reed–Muller ceiling `2^w - 2^(w-d)` voids every search at `w <= 22`
+  regardless of the sequence. A first pass reported an apparent shortcut at
+  `w = 20` that was a sorted-subsample artifact at parameters that were vacuous
+  anyway; full-stream verification caught it. A second, worse defect was caught in **review**, not here: the golden input was decoded LSB-first when the golden files are MSB-first by documented exception, so the whole first grid ran on a byte-block-reversed stream at an unchanged bit mean of 0.500222. Reranked verdicts: none — every rank was full before and after. `load_bits` now verifies the decode against a naive center column instead of trusting a convention. Two routes closed alongside it:
+  **space-time patches**, where the local rule is itself a degree-2 relation so
+  the search succeeds by construction — all 6 rule instances lie in the kernel
+  (0 violations), a forced positive. Whether the kernel is *only* the rule
+  ideal is undetermined and no longer claimed, and
+  **`w <= 22`** for any degree. Width turned out to be the cheap axis — `w=64`
+  at `d=2` costs `D=2081` and 12 s, against `D=41449` for `w=32` at `d=4`.
 - **A1**: the #18 → #19 stack landed on 2026-09-02. `main` carries Tier 0
   tooling, the Nersissian audit, and the agent context bootstrap.
 - **A2**: CI added — `.github/workflows/verify.yml` runs

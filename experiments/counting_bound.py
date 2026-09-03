@@ -117,6 +117,102 @@ def verdict(states: int, n_bits: int, base: int) -> dict:
     }
 
 
+def log2_annihilator_space(window: int, degree: int) -> float:
+    """log2 of the number of GF(2) polynomials of degree <= d in w variables.
+
+    The monomial basis has D = sum_{k<=d} C(w,k) elements, so the class has
+    2^D members. D itself is the number the rank test cares about; it is
+    returned separately by `annihilator_dimension`.
+    """
+    return float(annihilator_dimension(window, degree))
+
+
+def annihilator_dimension(window: int, degree: int) -> int:
+    """D = sum_{k=0..d} C(w,k): the monomial-matrix column count."""
+    return sum(math.comb(window, k) for k in range(degree + 1))
+
+
+def max_zeros_of_degree(window: int, degree: int) -> int:
+    """Most zeros a NONZERO degree-<=d polynomial in w variables can have.
+
+    The minimum distance of the Reed-Muller code RM(d, w) is 2^(w-d), so any
+    nonzero f of degree <= d takes the value 1 at least 2^(w-d) times and
+    therefore vanishes at most 2^w - 2^(w-d) times. This is a theorem, not an
+    estimate, and it is what makes the annihilator gate exact.
+    """
+    if degree >= window:
+        return (1 << window) - 1
+    return (1 << window) - (1 << (window - degree))
+
+
+def annihilator_verdict(window: int, degree: int, n_distinct: int,
+                        margin_bits: int = 64) -> dict:
+    """Is an annihilator search at these parameters informative?
+
+    This model class fails in *both* directions, unlike the DFAO class, so
+    there are two independent gates.
+
+    Forced-negative gate. An annihilator must vanish on every observed window,
+    so the observed windows all lie in its zero set. By the Reed-Muller bound
+    above, a nonzero degree-<=d polynomial has at most 2^w - 2^(w-d) zeros. So
+    if we observe MORE than that many distinct windows, no such polynomial can
+    exist -- whatever the sequence is. "No annihilator found" is then a
+    restatement of "the stream is varied enough", and says nothing about Rule
+    30. Measured on the golden 10M stream this rules out w <= 22 at d = 2, and
+    w <= 18 is the extreme case where the windows cover GF(2)^w outright.
+
+    Forced-positive gate. The monomial matrix has D columns. Fewer than D
+    independent rows leaves a kernel by dimension alone, so an "annihilator"
+    would be an artifact of sampling. Requiring n_distinct >= D + margin_bits
+    puts the chance that random data clears the bar at about 2^-margin_bits.
+
+    The window between the two gates is where the experiment can say something:
+    few enough distinct windows that a relation is not excluded by counting,
+    and many more than D so that finding one is not automatic.
+    """
+    dim = annihilator_dimension(window, degree)
+    max_zeros = max_zeros_of_degree(window, degree)
+    covers = n_distinct >= (1 << window)
+    surplus = n_distinct - (dim + margin_bits)
+
+    if n_distinct > max_zeros:
+        informative, reading = False, (
+            f"VACUOUS: {n_distinct} distinct windows exceeds the {max_zeros} "
+            f"zeros a nonzero degree-{degree} polynomial in {window} variables "
+            "can have (Reed-Muller bound), so no annihilator can exist for any "
+            "sequence. This negative is forced."
+            + (" The windows cover GF(2)^w outright." if covers else "")
+        )
+    elif surplus < 0:
+        informative, reading = False, (
+            f"VACUOUS: {n_distinct} distinct windows against D={dim} monomials "
+            f"leaves a kernel by dimension alone (need >= {dim + margin_bits}). "
+            "Any sequence gives this positive."
+        )
+    else:
+        informative, reading = True, (
+            f"informative: D={dim} monomials, {n_distinct} distinct windows -- "
+            f"{surplus} beyond the D+{margin_bits} bar, and {max_zeros - n_distinct} "
+            "below the Reed-Muller ceiling. Full rank here is a real negative; "
+            "a confirmed kernel vector is a real shortcut candidate."
+        )
+
+    return {
+        "window_bits": window,
+        "degree": degree,
+        "monomial_dimension": dim,
+        "log2_class_size": round(log2_annihilator_space(window, degree), 3),
+        "max_zeros_reed_muller": max_zeros,
+        "n_distinct_windows": n_distinct,
+        "covers_window_space": bool(covers),
+        "margin_bits": margin_bits,
+        "surplus_rows": surplus,
+        "headroom_below_ceiling": max_zeros - n_distinct,
+        "informative": informative,
+        "reading": reading,
+    }
+
+
 def parse_verdict(spec: str) -> tuple[int, int]:
     try:
         a, b = spec.split(":")
