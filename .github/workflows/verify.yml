@@ -1,0 +1,92 @@
+# CI for a verification-first repo.
+#
+# The whole point is `tools/verify_all.py`, which this workflow runs twice
+# under different amounts of available evidence:
+#
+#   verify  fast, CPU-only, no build. Everything a fresh clone can check.
+#   drat    additionally builds the SAT toolchain, so the DRAT stage that
+#           backs the s*(n) certificate actually runs instead of skipping.
+#
+# Both pass `--allow-skip` with an explicit list. That is the load-bearing
+# detail: without it a stage whose input quietly vanished would report SKIP,
+# verify_all would exit 0, and CI would go green having checked less than it
+# did yesterday. With it, only the named stages may skip and any other SKIP
+# fails the build. See CLAUDE.md: "SKIP is not PASS".
+name: verify
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: verify-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    name: verify_all (CPU)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+          cache-dependency-path: requirements-ci.txt
+
+      - name: Install dependencies
+        run: pip install -r requirements-ci.txt
+
+      # The canonical bitstreams are gitignored and the SAT toolchain is not
+      # built in this job, so those three stages cannot run here. Every other
+      # stage must PASS.
+      - name: verify_all
+        run: |
+          python tools/verify_all.py --verbose \
+            --allow-skip 'bitstream:*' \
+            --allow-skip drat-toolchain
+
+  drat:
+    name: verify_all + DRAT toolchain
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+          cache-dependency-path: requirements-ci.txt
+
+      - name: Install dependencies
+        run: pip install -r requirements-ci.txt
+
+      # cadical is cloned from upstream and drat-trim compiled from source, on
+      # purpose: a DRAT certificate is only worth anything if the checker
+      # shares no code with the solver and neither is a binary committed by
+      # whoever wrote the claim. Cached because that argument does not require
+      # rebuilding both on every push.
+      - name: Cache SAT toolchain
+        uses: actions/cache@v4
+        with:
+          path: third_party
+          key: sat-toolchain-${{ runner.os }}-${{ hashFiles('tools/build_sat_toolchain.sh') }}
+
+      - name: Build SAT toolchain
+        run: bash tools/build_sat_toolchain.sh
+
+      # Only the gitignored bitstreams may skip here. If `drat-toolchain`
+      # skips in this job the build fails, which is correct: it would mean the
+      # toolchain build silently produced nothing.
+      - name: verify_all
+        run: |
+          python tools/verify_all.py --verbose \
+            --allow-skip 'bitstream:*'
