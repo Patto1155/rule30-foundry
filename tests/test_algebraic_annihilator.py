@@ -197,6 +197,84 @@ class TestControls(unittest.TestCase):
         self.assertNotIn("rank", rec)
 
 
+class TestSpaceTimeIsAClosedRoute(unittest.TestCase):
+    """Pin the reason the space-time framing is not worth running.
+
+    Rule 30's update is itself degree 2 over a space-time patch, so an
+    annihilator search there is guaranteed to succeed and what it finds is the
+    rule. Neither counting-bound gate catches this: the vacuity is not
+    dimensional, it is that the answer is fixed by the definition of the
+    object. These tests keep the demonstration honest, so the route stays
+    closed by evidence rather than by an argument someone can forget.
+    """
+
+    def test_field_obeys_the_rule(self):
+        """The generated space-time must actually be Rule 30."""
+        f = aa.rule30_field(60, 200)
+        nxt = f[:-1]
+        expect = np.roll(nxt, 1, axis=1) ^ (nxt | np.roll(nxt, -1, axis=1))
+        self.assertTrue(np.array_equal(expect, f[1:]))
+
+    def test_field_starts_from_the_single_seed(self):
+        """All three prizes concern the one single-black-cell IC."""
+        f = aa.rule30_field(3, 101)
+        self.assertEqual(int(f[0].sum()), 1)
+        self.assertEqual(int(np.flatnonzero(f[0])[0]), 50)
+
+    def test_patch_codes_place_both_rows(self):
+        f = aa.rule30_field(4, 40)
+        codes = aa.spacetime_codes(f, 5)
+        self.assertTrue(codes.size > 0)
+        self.assertTrue(np.all(codes != 0), "quiescent patches must be dropped")
+
+    def test_patch_wider_than_the_code_is_rejected(self):
+        f = aa.rule30_field(4, 200)
+        with self.assertRaises(ValueError):
+            aa.spacetime_codes(f, aa.MAX_WINDOW // 2 + 1)
+
+    def test_search_recovers_every_instance_of_the_local_rule(self):
+        """The whole point: the kernel is the rule, so the search is vacuous."""
+        rec = aa.spacetime_demo(k=8, steps=600, width=1600)
+        self.assertEqual(rec["status"], "recovers_local_rule")
+        self.assertEqual(rec["rule_instances_recovered"],
+                         rec["rule_instances_possible"])
+        for hit in rec["recovered"]:
+            self.assertEqual(hit["violations"], 0,
+                             "a recovered rule instance must hold everywhere")
+
+    def test_recovered_relation_is_the_anf_from_the_theory_doc(self):
+        """a(t+1,i+1) = a(t,i) + a(t,i+1) + a(t,i+2) + a(t,i+1)*a(t,i+2)."""
+        rec = aa.spacetime_demo(k=8, steps=600, width=1600)
+        supports = [set(map(tuple, hit["support"])) for hit in rec["recovered"]]
+        k = 8
+        expected = {(0,), (1,), (2,), (k + 1,), (1, 2)}
+        self.assertIn(expected, supports)
+
+
+class TestWideWindows(unittest.TestCase):
+    """w=64 is the hard cap of a uint64 code, and it must round-trip."""
+
+    def test_max_window_is_the_uint64_cap(self):
+        self.assertEqual(aa.MAX_WINDOW, 64)
+
+    def test_widest_window_round_trips(self):
+        """An off-by-one in the shift would silently corrupt the top bit."""
+        bits = np.random.default_rng(3).integers(0, 2, 500).astype(np.uint8)
+        w = aa.MAX_WINDOW
+        codes = aa.window_codes(bits, w)
+        n = codes.size
+        for j in (0, 1, w // 2, w - 2, w - 1):
+            got = ((codes >> np.uint64(j)) & np.uint64(1)).astype(np.uint8)
+            with self.subTest(bit=j):
+                self.assertTrue(np.array_equal(got, bits[j:j + n]))
+
+    def test_wide_window_is_informative_at_degree_two(self):
+        """Width is the cheap axis: the ceiling grows as 2^w, D polynomially."""
+        v = cb.annihilator_verdict(64, 2, 9_999_937)
+        self.assertTrue(v["informative"])
+        self.assertEqual(v["monomial_dimension"], 2081)
+
+
 class TestWindowCodes(unittest.TestCase):
 
     def test_codes_are_little_endian_within_the_window(self):

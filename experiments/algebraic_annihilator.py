@@ -86,7 +86,11 @@ ARTIFACT_TYPE = "rule30.algebraic_annihilator"
 # clone. center_col_10M.bin is gitignored and identical where present.
 DEFAULT_INPUT = REPO_ROOT / "data" / "golden" / "center_col_golden_10M.bin"
 
-MAX_WINDOW = 32  # window codes are packed into uint64 with room to spare
+# A window code is one uint64, so 64 bits is the hard cap, not a chosen one.
+# The Reed-Muller ceiling grows as 2^w while D grows polynomially, so width is
+# gated far more loosely than degree: w=64 at d=2 needs only D=2081 columns,
+# cheaper than the d=3 grid. Width is the cheap axis; use it before degree.
+MAX_WINDOW = 64
 
 
 # --------------------------------------------------------------------------
@@ -365,6 +369,114 @@ def random_control_bits(n: int, seed: int = 30) -> np.ndarray:
 
 
 # --------------------------------------------------------------------------
+# space-time: a closed route, demonstrated rather than asserted
+# --------------------------------------------------------------------------
+
+def rule30_field(steps: int, width: int) -> np.ndarray:
+    """Rule 30 space-time from the single black cell, as a (steps, width) array."""
+    row = np.zeros(width, dtype=np.uint8)
+    row[width // 2] = 1
+    field = np.empty((steps, width), dtype=np.uint8)
+    for t in range(steps):
+        field[t] = row
+        row = np.roll(row, 1) ^ (row | np.roll(row, -1))
+    return field
+
+
+def spacetime_codes(field: np.ndarray, k: int) -> np.ndarray:
+    """Every 2-row x k-column patch, packed into a 2k-bit code.
+
+    Bits 0..k-1 are row t, columns i..i+k-1; bits k..2k-1 are row t+1 over the
+    same columns. All-zero patches (the quiescent region outside the light cone)
+    are dropped: they are not part of the object and would dominate the sample.
+    """
+    if 2 * k > MAX_WINDOW:
+        raise ValueError(f"2*{k} exceeds the {MAX_WINDOW}-bit code")
+    top, bot = field[:-1, :], field[1:, :]
+    n_i = field.shape[1] - k + 1
+    codes = np.zeros((top.shape[0], n_i), dtype=np.uint64)
+    for j in range(k):
+        codes |= top[:, j:j + n_i].astype(np.uint64) << np.uint64(j)
+        codes |= bot[:, j:j + n_i].astype(np.uint64) << np.uint64(k + j)
+    flat = codes.ravel()
+    return flat[flat != 0]
+
+
+def spacetime_demo(k: int = 8, steps: int = 3000, width: int = 7000,
+                   margin_bits: int = 64) -> dict:
+    """Show that a space-time annihilator search only recovers the local rule.
+
+    Rule 30's own update is degree 2 over a space-time patch:
+
+        a(t+1,i) = a(t,i-1) XOR a(t,i) XOR a(t,i+1) XOR a(t,i)*a(t,i+1)
+
+    so an annihilator search over 2-row patches is guaranteed to succeed, and
+    what it finds is the rule and its ideal multiples. That is a forced
+    positive of a kind neither counting-bound gate catches: the vacuity is not
+    dimensional, it is that the answer is fixed in advance by the definition of
+    the object.
+
+    This function is a demonstration, not a search. It exists so the route is
+    closed with evidence in the repo rather than by an argument in a PR
+    comment, and so nobody re-opens it.
+    """
+    field = rule30_field(steps, width)
+    codes = spacetime_codes(field, k)
+    w = 2 * k
+    uniq = np.unique(codes)
+    n_distinct = int(uniq.size)
+    gate = counting_bound.annihilator_verdict(w, 2, n_distinct,
+                                              margin_bits=margin_bits)
+
+    out = {
+        "patch": f"2x{k}",
+        "window_bits": w,
+        "n_patches": int(codes.size),
+        "n_distinct_patches": n_distinct,
+        "gate": gate,
+    }
+    if not gate["informative"]:
+        out["status"] = "skipped_vacuous"
+        return out
+
+    monos = monomials(w, 2)
+    dim = len(monos)
+    rng = np.random.default_rng(30)
+    take = min(n_distinct, dim + margin_bits)
+    rows = build_matrix(rng.choice(uniq, size=take, replace=False), monos)
+    pivots = gf2_rref(rows, dim)
+    rank = len(pivots)
+
+    # The rule, written in this patch's variable numbering: for offset i,
+    # a(t,i) + a(t,i+1) + a(t,i+2) + a(t+1,i+1) + a(t,i+1)*a(t,i+2).
+    expected = []
+    for i in range(k - 2):
+        expected.append(frozenset({(i,), (i + 1,), (i + 2,),
+                                   (k + i + 1,), (i + 1, i + 2)}))
+
+    found_rule = []
+    for vec in kernel_basis(rows, pivots, dim):
+        support = frozenset(monos[c] for c in np.flatnonzero(vec))
+        if support in expected:
+            viol = int(evaluate(codes, monos, vec).sum())
+            found_rule.append({
+                "support": sorted(list(m) for m in support),
+                "violations": viol,
+            })
+
+    out.update({
+        "monomial_dimension": dim,
+        "rank": rank,
+        "rank_deficiency": dim - rank,
+        "rule_instances_recovered": len(found_rule),
+        "rule_instances_possible": len(expected),
+        "recovered": found_rule[:3],
+        "status": "recovers_local_rule" if found_rule else "no_rule_found",
+    })
+    return out
+
+
+# --------------------------------------------------------------------------
 # self-test
 # --------------------------------------------------------------------------
 
@@ -424,6 +536,9 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--controls", action="store_true",
                     help="also run the positive and random controls")
     ap.add_argument("--self-test", action="store_true")
+    ap.add_argument("--space-time", type=int, metavar="K", default=None,
+                    help="demonstrate that a 2xK space-time patch search only "
+                         "recovers the local rule, then exit")
     ap.add_argument("--pretty", action="store_true",
                     help="human table on stderr")
     ap.add_argument("--out", type=Path, default=None,
@@ -432,6 +547,17 @@ def main(argv: list[str] | None = None) -> int:
 
     if args.self_test:
         return self_test()
+
+    if args.space_time is not None:
+        rec = spacetime_demo(args.space_time)
+        if args.pretty:
+            print(f"2x{args.space_time} patch: rank {rec.get('rank')} of "
+                  f"{rec.get('monomial_dimension')}, recovered "
+                  f"{rec.get('rule_instances_recovered')} of "
+                  f"{rec.get('rule_instances_possible')} rule instances "
+                  f"-> {rec.get('status')}", file=sys.stderr)
+        print(json.dumps(rec, indent=2))
+        return 0
 
     if not args.input.exists():
         print(f"input not found: {args.input}", file=sys.stderr)
