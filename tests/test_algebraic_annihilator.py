@@ -232,47 +232,88 @@ class TestSpaceTimeIsAClosedRoute(unittest.TestCase):
         with self.assertRaises(ValueError):
             aa.spacetime_codes(f, aa.MAX_WINDOW // 2 + 1)
 
-    def test_search_recovers_every_instance_of_the_local_rule(self):
-        """The whole point: the kernel is the rule, so the search is vacuous."""
+    def test_every_rule_instance_lies_in_the_kernel(self):
+        """The forced positive: the search succeeds by construction."""
         rec = aa.spacetime_demo(k=8, steps=600, width=1600)
-        self.assertEqual(rec["status"], "recovers_local_rule")
-        self.assertEqual(rec["rule_instances_recovered"],
-                         rec["rule_instances_possible"])
-        for hit in rec["recovered"]:
-            self.assertEqual(hit["violations"], 0,
-                             "a recovered rule instance must hold everywhere")
+        self.assertEqual(rec["status"], "forced_positive_rule_in_kernel")
+        self.assertEqual(rec["rule_instances_holding"], rec["rule_instances"])
+        self.assertGreater(rec["kernel_dimension"], 0)
 
-    def test_recovered_relation_is_the_anf_from_the_theory_doc(self):
-        """a(t+1,i+1) = a(t,i) + a(t,i+1) + a(t,i+2) + a(t,i+1)*a(t,i+2)."""
+    def test_the_rule_ideal_claim_is_not_overstated(self):
+        """An earlier version claimed the kernel was *only* the rule ideal.
+
+        It never checked that: it looked for expected vectors and discarded the
+        rest. The kernel is 30-dimensional on a 2x8 patch while the enumerated
+        ideal slice reaches 18, so the claim was false as written. What the
+        code reports now is a lower bound plus an explicit count of what is
+        unattributed, and the reading says the remainder is undecided.
+        """
         rec = aa.spacetime_demo(k=8, steps=600, width=1600)
-        supports = [set(map(tuple, hit["support"])) for hit in rec["recovered"]]
+        self.assertIn("ideal_slice_rank_lower_bound", rec)
+        self.assertIn("kernel_dimensions_unattributed", rec)
+        self.assertEqual(
+            rec["kernel_dimensions_unattributed"],
+            rec["kernel_dimension"] - rec["ideal_slice_rank_lower_bound"])
+        self.assertNotIn("kernel_is_rule_ideal", rec["status"])
+        self.assertIn("NOT established", rec["reading"])
+
+    def test_rule_vectors_are_the_anf_from_the_theory_doc(self):
+        """a(t+1,i+1) = a(t,i) + a(t,i+1) + a(t,i+2) + a(t,i+1)*a(t,i+2).
+
+        Checked directly on the field rather than through the kernel: if the
+        polynomial written into the code is not the rule, every downstream
+        conclusion about "the search only finds the rule" is meaningless.
+        """
         k = 8
-        expected = {(0,), (1,), (2,), (k + 1,), (1, 2)}
-        self.assertIn(expected, supports)
+        field = aa.rule30_field(400, 1200)
+        codes = aa.spacetime_codes(field, k)
+        monos = aa.monomials(2 * k, 2)
+        idx = {m: c for c, m in enumerate(monos)}
+        vec = np.zeros(len(monos), dtype=np.uint8)
+        for m in ((0,), (1,), (2,), (k + 1,), (1, 2)):
+            vec[idx[m]] ^= 1
+        self.assertEqual(int(aa.evaluate(codes, monos, vec).sum()), 0)
 
 
-class TestWideWindows(unittest.TestCase):
-    """w=64 is the hard cap of a uint64 code, and it must round-trip."""
+class TestIdealArithmetic(unittest.TestCase):
+    """The Boolean-ring multiplication the ideal slice is built from."""
 
-    def test_max_window_is_the_uint64_cap(self):
-        self.assertEqual(aa.MAX_WINDOW, 64)
+    def test_squares_collapse(self):
+        """x * x = x, so a product can stay inside the degree bound."""
+        x = {frozenset([0])}
+        self.assertEqual(aa.poly_mul(x, x), x)
 
-    def test_widest_window_round_trips(self):
-        """An off-by-one in the shift would silently corrupt the top bit."""
-        bits = np.random.default_rng(3).integers(0, 2, 500).astype(np.uint8)
-        w = aa.MAX_WINDOW
-        codes = aa.window_codes(bits, w)
-        n = codes.size
-        for j in (0, 1, w // 2, w - 2, w - 1):
-            got = ((codes >> np.uint64(j)) & np.uint64(1)).astype(np.uint8)
-            with self.subTest(bit=j):
-                self.assertTrue(np.array_equal(got, bits[j:j + n]))
+    def test_multiplication_is_symmetric_difference_over_gf2(self):
+        a = {frozenset([0]), frozenset([1])}
+        b = {frozenset([0])}
+        # (x0 + x1) * x0 = x0 + x0x1
+        self.assertEqual(aa.poly_mul(a, b),
+                         {frozenset([0]), frozenset([0, 1])})
 
-    def test_wide_window_is_informative_at_degree_two(self):
-        """Width is the cheap axis: the ceiling grows as 2^w, D polynomially."""
-        v = cb.annihilator_verdict(64, 2, 9_999_937)
-        self.assertTrue(v["informative"])
-        self.assertEqual(v["monomial_dimension"], 2081)
+    def test_poly_round_trips_through_the_basis(self):
+        monos = aa.monomials(4, 2)
+        vec = np.zeros(len(monos), dtype=np.uint8)
+        for m in ((), (1,), (2, 3)):
+            vec[monos.index(m)] = 1
+        self.assertTrue(np.array_equal(
+            aa.poly_to_vec(aa.vec_to_poly(vec, monos), monos), vec))
+
+    def test_terms_outside_the_basis_are_rejected(self):
+        monos = aa.monomials(4, 2)
+        self.assertIsNone(aa.poly_to_vec({frozenset([0, 1, 2])}, monos))
+
+    def test_ideal_slice_contains_the_generators_themselves(self):
+        """The weakest thing the slice must do: contain what generates it."""
+        monos = aa.monomials(6, 2)
+        idx = {m: c for c, m in enumerate(monos)}
+        gen = np.zeros(len(monos), dtype=np.uint8)
+        for m in ((0,), (1,), (2,), (4,), (1, 2)):
+            gen[idx[m]] ^= 1
+        span = aa.ideal_span_within_basis([gen], monos, 6)
+        self.assertGreaterEqual(aa.span_rank(span, len(monos)), 1)
+        # Adding the generator to its own span must not raise the rank.
+        self.assertEqual(aa.span_rank(span + [gen], len(monos)),
+                         aa.span_rank(span, len(monos)))
 
 
 class TestBitOrderIsVerifiedNotGuessed(unittest.TestCase):

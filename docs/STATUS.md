@@ -78,7 +78,9 @@ happened anyway. See [`BRANCHING.md`](BRANCHING.md).
   `w = 20` that was a sorted-subsample artifact at parameters that were vacuous
   anyway; full-stream verification caught it. A second, worse defect was caught in **review**, not here: the golden input was decoded LSB-first when the golden files are MSB-first by documented exception, so the whole first grid ran on a byte-block-reversed stream at an unchanged bit mean of 0.500222. Reranked verdicts: none — every rank was full before and after. `load_bits` now verifies the decode against a naive center column instead of trusting a convention. Two routes closed alongside it:
   **space-time patches**, where the local rule is itself a degree-2 relation so
-  the search only recovers Rule 30 (6 of 6 instances, 0 violations), and
+  the search succeeds by construction — all 6 rule instances lie in the kernel
+  (0 violations), a forced positive. Whether the kernel is *only* the rule
+  ideal is undetermined and no longer claimed, and
   **`w <= 22`** for any degree. Width turned out to be the cheap axis — `w=64`
   at `d=2` costs `D=2081` and 12 s, against `D=41449` for `w=32` at `d=4`.
 - **A1**: the #18 → #19 stack landed on 2026-09-02. `main` carries Tier 0

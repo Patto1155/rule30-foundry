@@ -221,12 +221,22 @@ the space-time field rather than the column; or any non-polynomial form.
 ## Next step
 
 **Space-time is not it, and that is now settled.** Rule 30's update is itself
-degree 2 over a 2-row patch, so an annihilator search there is guaranteed to
-succeed and what it finds is the rule. On a 2x8 patch it recovers all 6
-instances of the ANF with 0 violations, plus ideal multiples — the second kernel
-vector is the rule times `a(t,i+1)`. Neither gate catches this: the vacuity is
-not dimensional, it is that the answer is fixed by the definition of the object.
-Reopening it means ideal membership modulo the rule, not a rank computation.
+degree 2 over a 2-row patch, so an annihilator search there **succeeds by
+construction**. On a 2x8 patch all 6 instances of the ANF lie in the kernel with
+0 violations. Neither gate catches this: the vacuity is not dimensional, it is
+that the answer is fixed by the definition of the object. A search guaranteed to
+return something measures nothing, and that alone closes the route.
+
+What is **not** established — and an earlier draft of this log wrongly claimed —
+is that the kernel is *only* the rule ideal. The kernel is 30-dimensional on the
+2x8 patch and the enumerated ideal slice reaches 18, leaving 12 unattributed.
+Those 12 are not evidence of new structure either: the enumeration is a lower
+bound (it misses sums `sum m_i * r_i` whose terms exceed degree 2 while the sum
+collapses back), and the realisable patches are themselves restricted — a 2xk
+patch is fixed by its top row plus the two edge bits the rule cannot reach, so
+at most `2^(k+2)` of `2^(2k)` occur. Settling it is ideal membership modulo the
+rule: a Groebner basis problem, not a rank computation, and precisely the work
+reopening this route would demand. Caught in review.
 Reproduce with `python experiments/algebraic_annihilator.py --space-time 8`;
 recorded as closed in `docs/theory/README.md` §4.
 
