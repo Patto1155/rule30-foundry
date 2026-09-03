@@ -47,8 +47,9 @@ window gives a matrix `M` with `D` columns, and `f` exists iff `M` has a nonzero
 right kernel. The whole question is the GF(2) rank of `M`.
 
 - Input: `data/golden/center_col_golden_10M.bin` (10,000,000 bits, bit mean
-  0.500222). The golden reference is **tracked in git**, so this experiment runs
-  on a fresh clone and does not wait on A3.
+  0.500222), decoded MSB-first and **verified against a naive center column
+  before use** — see the bit-order section below. The golden reference is
+  tracked in git, so this runs on a fresh clone and does not wait on A3.
 - Grid: `w in {20, 22, 24, 26, 28, 32, 40, 48, 56, 64}`, `d in {2, 3, 4}` —
   24 cells, of which 20 clear both gates. Run as four grids and merged; each
   row records its own parameters, rank and timing.
@@ -79,12 +80,13 @@ This is a theorem, not an estimate. Measured coverage against it:
 
 | `w` | distinct windows | `2^w - 2^(w-2)` ceiling | verdict at `d=2` |
 |---:|---:|---:|---|
-| 20 | 1,048,499 | 786,432 | **VACUOUS — forced negative** |
-| 22 | 3,807,262 | 3,145,728 | **VACUOUS — forced negative** |
-| 24 | 7,531,795 | 12,582,912 | informative |
-| 26 | 9,290,394 | 50,331,648 | informative |
-| 28 | 9,815,389 | 201,326,592 | informative |
-| 32 | 9,987,988 | 3,221,225,472 | informative |
+| 20 | 1,048,480 | 786,432 | **VACUOUS — forced negative** |
+| 22 | 3,806,484 | 3,145,728 | **VACUOUS — forced negative** |
+| 24 | 7,529,936 | 12,582,912 | informative |
+| 26 | 9,289,850 | 50,331,648 | informative |
+| 28 | 9,816,117 | 201,326,592 | informative |
+| 32 | 9,988,129 | 3,221,225,472 | informative |
+| 64 | 9,999,937 | 1.38e19 | informative |
 
 At `w <= 18` the extreme case holds outright: every one of the `2^w` windows
 occurs, so only the zero polynomial can vanish on them. A "no annihilator"
@@ -139,6 +141,41 @@ The `uint64` window code caps `w` at 64. Going wider needs multi-word codes,
 which is the natural next increment and was mis-scoped in this log's first
 draft as being needed for `w = 64` itself.
 
+## The bit order was wrong on the first run
+
+The first version of this experiment decoded `center_col_golden_10M.bin` with
+`bitorder='little'`. The golden files are **MSB-first**, by the deliberate
+documented exception in `AGENTS.md` — their independence from the GPU kernel is
+the entire point of having them. So every number in the first published grid was
+computed on a stream with each 8-bit block reversed: not the Rule 30 center
+column.
+
+Checked against `naive_center_column`, which builds the column straight from the
+rule:
+
+```
+bitorder='little'    51.70% agreement
+bitorder='big'      100.00% agreement
+```
+
+The 51.7% is the signature `CLAUDE.md` rule 2 describes. Nothing in the run
+looked wrong, because nothing can: **the bit mean was 0.500222 both before and
+after the fix**, and every distinct-window count stayed within 0.03% of its
+wrong value. The idiom was copied from `experiments/gf2_representation.py`,
+where it is correct — that reads a GPU dump.
+
+The verdicts did not change. Every rank was full before and after, so the
+headline negative survives. That is a fact established by rerunning, not a
+reason the defect was harmless: the published numbers were wrong, and had the
+answer been rank-deficient anywhere the reported relation would have been a
+relation of a transformed stream.
+
+`load_bits` no longer accepts a convention. It decodes both ways, keeps
+whichever reproduces `naive_center_column`, and rejects a file that matches
+neither — so the artifact records a *verified* bit order rather than an assumed
+one. Found in review, not by anything in this experiment; that gap is now
+closed by test.
+
 ## Controls
 
 A negative control that passes while testing nothing is worse than none, so the
@@ -160,7 +197,7 @@ load-bearing control here is a **positive** one.
 Note that the random control returning the same negative as Rule 30 at `w >= 24`
 is **not** reassurance — per the Admission Rule it would be a red flag if the
 counting bound had not been cleared independently. It has been: the Reed–Muller
-headroom at `w = 24` is 5,051,117 windows, so a Rule 30 stream carrying a
+headroom at `w = 24` is 5,052,976 windows, so a Rule 30 stream carrying a
 degree-2 relation would have had room to show one.
 
 ## Interpretation

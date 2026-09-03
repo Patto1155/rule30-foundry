@@ -76,7 +76,7 @@ happened anyway. See [`BRANCHING.md`](BRANCHING.md).
   and the Reed–Muller ceiling `2^w - 2^(w-d)` voids every search at `w <= 22`
   regardless of the sequence. A first pass reported an apparent shortcut at
   `w = 20` that was a sorted-subsample artifact at parameters that were vacuous
-  anyway; full-stream verification caught it. Two routes closed alongside it:
+  anyway; full-stream verification caught it. A second, worse defect was caught in **review**, not here: the golden input was decoded LSB-first when the golden files are MSB-first by documented exception, so the whole first grid ran on a byte-block-reversed stream at an unchanged bit mean of 0.500222. Reranked verdicts: none — every rank was full before and after. `load_bits` now verifies the decode against a naive center column instead of trusting a convention. Two routes closed alongside it:
   **space-time patches**, where the local rule is itself a degree-2 relation so
   the search only recovers Rule 30 (6 of 6 instances, 0 violations), and
   **`w <= 22`** for any degree. Width turned out to be the cheap axis — `w=64`
