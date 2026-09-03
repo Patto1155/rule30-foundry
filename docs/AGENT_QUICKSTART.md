@@ -50,6 +50,7 @@ toward checkable artifacts.
 | Batch old experiments | `run_all.py --test` | Smoke-test runner; now self-relative to this checkout. |
 | Prize center-column artifacts | `prize_lab.py` | Exact prefix, GF(2) recurrences, finite kernel lower bounds, DFAO SAT encodings. |
 | Counting bound for a search class | `experiments/counting_bound.py` | Run BEFORE any "no fit found" experiment. `--verdict S:N` evaluates a specific claim. |
+| Second reader on a claim or diff | `python tools/council.py ask <role> <brief.md>` | Dispatches a brief to an external (non-Claude) model. Roles and cloud setup: `docs/COUNCIL.md`. A reply is a hypothesis, not evidence. |
 | Settled-wedge decomposition | `experiments/wedge_profile.py` | Single-seed cone structure; settling law, entropy split, cap invariance. |
 | Diagonal recursion + period-16 | `experiments/diagonal_recursion.py` | Bit-exact identity check, period histogram, O(1) pattern map. |
 
