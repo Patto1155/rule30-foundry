@@ -1,0 +1,18 @@
+# Dependencies for the CPU-only CI run (tools/verify_all.py).
+#
+# Deliberately minimal. Measured on 2026-09-03: with numpy alone installed,
+# `python -m unittest discover -s tests` runs the same 136 tests with the same
+# 7 skips as a machine with scipy, matplotlib and tqdm present, and every
+# verify_all stage reaches the same verdict. Adding packages CI does not need
+# would only slow the run and hide which imports are actually load-bearing.
+#
+# If a future test starts skipping because a package is absent, that is a
+# finding, not a reason to widen this file silently: tests/test_import_safety.py
+# exists because a missing optional dependency once deleted 23 tests without
+# reporting a single failure. Add the package here AND say why.
+#
+# Not here on purpose:
+#   cupy, torch, numba  - GPU only; CI has no GPU and must not pretend to.
+#   pysat               - guarded; its absence skips no test (verified above).
+#   scipy, matplotlib   - used by individual experiments, not by any CI stage.
+numpy>=1.24

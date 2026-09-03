@@ -6,7 +6,7 @@ lives here. Overwrite this file in place; git history keeps the old versions.
 No other file may carry a "current state as of" section —
 `tools/lint_ledger.py` enforces it.
 
-Updated: 2026-09-02 · Newest log: `docs/experiment-logs/2026-09-01-nersissian-end-to-end-audit.md`
+Updated: 2026-09-03 · Newest log: `docs/experiment-logs/2026-09-01-nersissian-end-to-end-audit.md`
 
 ## Where the three prize problems stand
 
@@ -20,11 +20,10 @@ Updated: 2026-09-02 · Newest log: `docs/experiment-logs/2026-09-01-nersissian-e
 
 Sequence approved 2026-09-02: **A1 → A2 → C2**, with B3 as filler. Reasoning
 and the full option analysis: [`handover/CURRENT.md`](handover/CURRENT.md).
+A1 and A2 are done (see *Recently closed*); **C2 is next**.
 
 | # | Work | Kind | Cost | Blocks |
 |---|---|---|---|---|
-| A1 | **Land the PR stack** — #20 and #21 are now merged *into* #19, so the stack is 2 deep: land #18, then #19 | Infra | Review time | Everything |
-| A2 | **Add CI running `tools/verify_all.py`** — there is no `.github/` at all | Infra | ~1 h | — |
 | A3 | **Make bitstreams reachable** (Release asset or committed prefix) | Infra | ~½ day | B2 |
 | C2 | **Algebraic annihilator search** — low-degree GF(2) relations over `w`-bit windows, via monomial-matrix rank | Research | Days | — |
 | B3 | Extend `s*(n)` past n=48 — re-costed ~28× cheaper | Research | Hours | — |
@@ -46,13 +45,11 @@ grades left-edge structure as disjoint from the prize object.
 
 | PR | Branch | State |
 |---|---|---|
-| #18 | `fix/data-hygiene` | Open, based on `main`. |
-| #19 | `claude/keen-sagan-21rzbr` | Open, based on #18. Tier 0 tooling + items 1, 7, 8, 11, 13, **and now #20 and #21 merged in**. |
-| #20 | `research/nersissian-audit` | **Merged into #19** on 2026-09-02. |
-| #21 | `claude/agent-context-bootstrap` | **Merged into #19** on 2026-09-02. |
+| — | `claude/rule-30-foundry-env-tlbr9x` | Open, based on `main`. A2: the `verify` workflow. |
 
-The stack is now **2 deep** (#18 → #19), inside the limit set in
-[`BRANCHING.md`](BRANCHING.md). Land #18, then #19.
+The #18 → #19 stack landed on 2026-09-02; #20 and #21 had already been merged
+into #19. Nothing is stacked. The 7 merged branches listed in
+[`BRANCHING.md`](BRANCHING.md) are still awaiting deletion (see *Chores*).
 
 ### Why #20 and #21 were merged rather than left open
 
@@ -70,6 +67,17 @@ happened anyway. See [`BRANCHING.md`](BRANCHING.md).
 
 ## Recently closed
 
+- **A1**: the #18 → #19 stack landed on 2026-09-02. `main` carries Tier 0
+  tooling, the Nersissian audit, and the agent context bootstrap.
+- **A2**: CI added — `.github/workflows/verify.yml` runs
+  `tools/verify_all.py` on every push to `main` and every PR. Two jobs: a
+  CPU-only run, and a second that builds the SAT toolchain so the DRAT stage
+  behind `s*(n)` genuinely runs (8 stages PASS there, against 7 without it).
+  Both pass `--allow-skip` with an explicit stage list, so a stage that starts
+  skipping because its input vanished fails the build instead of going green —
+  the repo's "SKIP is not PASS" rule, enforced rather than documented.
+  CI's dependencies are pinned in `requirements-ci.txt`: numpy alone, measured,
+  not guessed.
 - Golden reference closed byte-for-byte at 10M bits, three independent
   reproductions ([log](experiment-logs/2026-08-30-golden-reference-10M.md)).
 - `s*(n)` promoted to Certificate, 207/207 DRAT-verified

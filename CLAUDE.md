@@ -14,6 +14,12 @@ python tools/verify_all.py
 `PASS`** — the canonical bitstreams are gitignored, so on a machine that has
 not regenerated them those stages check nothing.
 
+CI (`.github/workflows/verify.yml`) runs the same command on every PR, passing
+`--allow-skip` with an explicit list of the stages whose inputs are genuinely
+absent. Any *other* SKIP fails the build. So if you add a stage, add it to that
+list or make it runnable — CI will not accept a stage that quietly checks
+nothing.
+
 ## Where state lives — exactly two files
 
 | Question | File | Never elsewhere |

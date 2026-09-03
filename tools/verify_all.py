@@ -22,14 +22,22 @@ bitstreams are gitignored, so a fresh clone legitimately cannot run them. SKIP
 is printed loudly rather than hidden, because "everything passed" on a machine
 that checked nothing is the failure mode this tool exists to prevent.
 
+SKIP is honest but it is not evidence. In CI, where nobody reads the log, an
+unexpected SKIP is indistinguishable from a pass -- so `--allow-skip` names the
+stages whose inputs are known to be absent and turns every *other* SKIP into a
+failure. A stage that starts skipping because its input quietly vanished then
+breaks the build instead of going green.
+
 Usage:
     python tools/verify_all.py
     python tools/verify_all.py --verbose     # stream each stage's output
+    python tools/verify_all.py --allow-skip 'bitstream:*' --allow-skip drat-toolchain
 """
 
 from __future__ import annotations
 
 import argparse
+import fnmatch
 import subprocess
 import sys
 import time
@@ -83,6 +91,20 @@ def build_stages() -> list[Stage]:
     return stages
 
 
+def skip_permitted(name: str, allowed: tuple[str, ...] | None) -> bool:
+    """Is this stage allowed to SKIP without failing the run?
+
+    `allowed is None` means --allow-skip was never passed: the permissive
+    interactive default, where every SKIP is fine. Otherwise only stage names
+    matching one of the globs may skip. Kept separate from main() so it can be
+    tested without re-entering verify_all, which would recurse through its own
+    unittest stage.
+    """
+    if allowed is None:
+        return True
+    return any(fnmatch.fnmatch(name, pat) for pat in allowed)
+
+
 def run_stage(stage: Stage, verbose: bool) -> tuple[str, float, str]:
     if stage.skip_reason:
         return SKIP, 0.0, stage.skip_reason
@@ -98,12 +120,22 @@ def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--verbose", action="store_true",
                     help="stream each stage's output instead of capturing it")
+    ap.add_argument("--allow-skip", action="append", metavar="GLOB",
+                    help="stage name (fnmatch glob) that is permitted to SKIP. "
+                         "Passing this at all switches on strict mode: a SKIP "
+                         "by any stage NOT matching one of these globs becomes "
+                         "a failure. Repeatable.")
     args = ap.parse_args()
+
+    # None means the flag was never passed -> permissive, the interactive
+    # default. Anything else, including an empty list, means strict.
+    allowed = None if args.allow_skip is None else tuple(args.allow_skip)
 
     stages = build_stages()
     width = max(len(s.name) for s in stages)
     results = []
     failures = []
+    unexpected_skips = []
 
     for stage in stages:
         if args.verbose:
@@ -111,7 +143,12 @@ def main() -> int:
         status, elapsed, output = run_stage(stage, args.verbose)
         results.append((stage.name, status, elapsed))
         if status == SKIP:
-            print(f"{SKIP}  {stage.name:<{width}}  {output}", flush=True)
+            permitted = skip_permitted(stage.name, allowed)
+            marker = SKIP if permitted else "SKIP!"
+            print(f"{marker:<{len(SKIP)}}  {stage.name:<{width}}  {output}",
+                  flush=True)
+            if not permitted:
+                unexpected_skips.append(stage.name)
         else:
             print(f"{status}  {stage.name:<{width}}  {elapsed:6.1f}s",
                   flush=True)
@@ -128,16 +165,23 @@ def main() -> int:
         print(output.rstrip() or "(no output)")
         print(f"--- rerun: {' '.join(stage.argv)}")
 
-    verdict = "FAIL" if n_fail else "OK"
-    print(f"\nverify_all: {n_pass} passed, {n_skip} skipped, "
-          f"{n_fail} failed  {verdict}")
-    if n_skip and not n_fail:
+    if unexpected_skips:
+        print("\n--- unexpected SKIP ---")
+        for name in unexpected_skips:
+            print(f"  {name} skipped, and --allow-skip does not cover it.")
+        print("  Either restore the stage's input or say so explicitly with "
+              "--allow-skip.")
+
+    verdict = "FAIL" if (n_fail or unexpected_skips) else "OK"
+    print(f"\nverify_all: {n_pass} passed, {n_skip} skipped "
+          f"({len(unexpected_skips)} unexpected), {n_fail} failed  {verdict}")
+    if n_skip and not n_fail and not unexpected_skips:
         print("  Note: skipped stages checked nothing. The canonical "
               "bitstreams are")
         print("  the artifacts the prize-facing claims rest on; run this on a "
               "machine")
         print("  that has them before treating the repo as verified.")
-    return 1 if n_fail else 0
+    return 1 if (n_fail or unexpected_skips) else 0
 
 
 if __name__ == "__main__":
