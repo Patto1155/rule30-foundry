@@ -1,0 +1,626 @@
+{
+  "artifact_type": "rule30.algebraic_annihilator",
+  "input": "data/golden/center_col_golden_10M.bin",
+  "n_bits": 10000000,
+  "bit_mean": 0.500222,
+  "margin_bits": 64,
+  "results": [
+    {
+      "label": "rule30-center",
+      "window_bits": 20,
+      "degree": 2,
+      "n_windows": 9999981,
+      "n_distinct_windows": 1048499,
+      "covers_window_space": false,
+      "gate": {
+        "window_bits": 20,
+        "degree": 2,
+        "monomial_dimension": 211,
+        "log2_class_size": 211.0,
+        "max_zeros_reed_muller": 786432,
+        "n_distinct_windows": 1048499,
+        "covers_window_space": false,
+        "margin_bits": 64,
+        "surplus_rows": 1048224,
+        "headroom_below_ceiling": -262067,
+        "informative": false,
+        "reading": "VACUOUS: 1048499 distinct windows exceeds the 786432 zeros a nonzero degree-2 polynomial in 20 variables can have (Reed-Muller bound), so no annihilator can exist for any sequence. This negative is forced."
+      },
+      "status": "skipped_vacuous",
+      "elapsed_s": 3.046
+    },
+    {
+      "label": "rule30-center",
+      "window_bits": 20,
+      "degree": 3,
+      "n_windows": 9999981,
+      "n_distinct_windows": 1048499,
+      "covers_window_space": false,
+      "gate": {
+        "window_bits": 20,
+        "degree": 3,
+        "monomial_dimension": 1351,
+        "log2_class_size": 1351.0,
+        "max_zeros_reed_muller": 917504,
+        "n_distinct_windows": 1048499,
+        "covers_window_space": false,
+        "margin_bits": 64,
+        "surplus_rows": 1047084,
+        "headroom_below_ceiling": -130995,
+        "informative": false,
+        "reading": "VACUOUS: 1048499 distinct windows exceeds the 917504 zeros a nonzero degree-3 polynomial in 20 variables can have (Reed-Muller bound), so no annihilator can exist for any sequence. This negative is forced."
+      },
+      "status": "skipped_vacuous",
+      "elapsed_s": 2.175
+    },
+    {
+      "label": "rule30-center",
+      "window_bits": 22,
+      "degree": 2,
+      "n_windows": 9999979,
+      "n_distinct_windows": 3807262,
+      "covers_window_space": false,
+      "gate": {
+        "window_bits": 22,
+        "degree": 2,
+        "monomial_dimension": 254,
+        "log2_class_size": 254.0,
+        "max_zeros_reed_muller": 3145728,
+        "n_distinct_windows": 3807262,
+        "covers_window_space": false,
+        "margin_bits": 64,
+        "surplus_rows": 3806944,
+        "headroom_below_ceiling": -661534,
+        "informative": false,
+        "reading": "VACUOUS: 3807262 distinct windows exceeds the 3145728 zeros a nonzero degree-2 polynomial in 22 variables can have (Reed-Muller bound), so no annihilator can exist for any sequence. This negative is forced."
+      },
+      "status": "skipped_vacuous",
+      "elapsed_s": 6.09
+    },
+    {
+      "label": "rule30-center",
+      "window_bits": 22,
+      "degree": 3,
+      "n_windows": 9999979,
+      "n_distinct_windows": 3807262,
+      "covers_window_space": false,
+      "gate": {
+        "window_bits": 22,
+        "degree": 3,
+        "monomial_dimension": 1794,
+        "log2_class_size": 1794.0,
+        "max_zeros_reed_muller": 3670016,
+        "n_distinct_windows": 3807262,
+        "covers_window_space": false,
+        "margin_bits": 64,
+        "surplus_rows": 3805404,
+        "headroom_below_ceiling": -137246,
+        "informative": false,
+        "reading": "VACUOUS: 3807262 distinct windows exceeds the 3670016 zeros a nonzero degree-3 polynomial in 22 variables can have (Reed-Muller bound), so no annihilator can exist for any sequence. This negative is forced."
+      },
+      "status": "skipped_vacuous",
+      "elapsed_s": 6.467
+    },
+    {
+      "label": "rule30-center",
+      "window_bits": 24,
+      "degree": 2,
+      "n_windows": 9999977,
+      "n_distinct_windows": 7531795,
+      "covers_window_space": false,
+      "gate": {
+        "window_bits": 24,
+        "degree": 2,
+        "monomial_dimension": 301,
+        "log2_class_size": 301.0,
+        "max_zeros_reed_muller": 12582912,
+        "n_distinct_windows": 7531795,
+        "covers_window_space": false,
+        "margin_bits": 64,
+        "surplus_rows": 7531430,
+        "headroom_below_ceiling": 5051117,
+        "informative": true,
+        "reading": "informative: D=301 monomials, 7531795 distinct windows -- 7531430 beyond the D+64 bar, and 5051117 below the Reed-Muller ceiling. Full rank here is a real negative; a confirmed kernel vector is a real shortcut candidate."
+      },
+      "monomial_dimension": 301,
+      "rows_used": 365,
+      "rank": 301,
+      "rank_deficiency": 0,
+      "status": "no_annihilator",
+      "annihilators": [],
+      "elapsed_s": 9.931
+    },
+    {
+      "label": "rule30-center",
+      "window_bits": 24,
+      "degree": 3,
+      "n_windows": 9999977,
+      "n_distinct_windows": 7531795,
+      "covers_window_space": false,
+      "gate": {
+        "window_bits": 24,
+        "degree": 3,
+        "monomial_dimension": 2325,
+        "log2_class_size": 2325.0,
+        "max_zeros_reed_muller": 14680064,
+        "n_distinct_windows": 7531795,
+        "covers_window_space": false,
+        "margin_bits": 64,
+        "surplus_rows": 7529406,
+        "headroom_below_ceiling": 7148269,
+        "informative": true,
+        "reading": "informative: D=2325 monomials, 7531795 distinct windows -- 7529406 beyond the D+64 bar, and 7148269 below the Reed-Muller ceiling. Full rank here is a real negative; a confirmed kernel vector is a real shortcut candidate."
+      },
+      "monomial_dimension": 2325,
+      "rows_used": 2389,
+      "rank": 2325,
+      "rank_deficiency": 0,
+      "status": "no_annihilator",
+      "annihilators": [],
+      "elapsed_s": 9.087
+    },
+    {
+      "label": "rule30-center",
+      "window_bits": 26,
+      "degree": 2,
+      "n_windows": 9999975,
+      "n_distinct_windows": 9290394,
+      "covers_window_space": false,
+      "gate": {
+        "window_bits": 26,
+        "degree": 2,
+        "monomial_dimension": 352,
+        "log2_class_size": 352.0,
+        "max_zeros_reed_muller": 50331648,
+        "n_distinct_windows": 9290394,
+        "covers_window_space": false,
+        "margin_bits": 64,
+        "surplus_rows": 9289978,
+        "headroom_below_ceiling": 41041254,
+        "informative": true,
+        "reading": "informative: D=352 monomials, 9290394 distinct windows -- 9289978 beyond the D+64 bar, and 41041254 below the Reed-Muller ceiling. Full rank here is a real negative; a confirmed kernel vector is a real shortcut candidate."
+      },
+      "monomial_dimension": 352,
+      "rows_used": 416,
+      "rank": 352,
+      "rank_deficiency": 0,
+      "status": "no_annihilator",
+      "annihilators": [],
+      "elapsed_s": 10.85
+    },
+    {
+      "label": "rule30-center",
+      "window_bits": 26,
+      "degree": 3,
+      "n_windows": 9999975,
+      "n_distinct_windows": 9290394,
+      "covers_window_space": false,
+      "gate": {
+        "window_bits": 26,
+        "degree": 3,
+        "monomial_dimension": 2952,
+        "log2_class_size": 2952.0,
+        "max_zeros_reed_muller": 58720256,
+        "n_distinct_windows": 9290394,
+        "covers_window_space": false,
+        "margin_bits": 64,
+        "surplus_rows": 9287378,
+        "headroom_below_ceiling": 49429862,
+        "informative": true,
+        "reading": "informative: D=2952 monomials, 9290394 distinct windows -- 9287378 beyond the D+64 bar, and 49429862 below the Reed-Muller ceiling. Full rank here is a real negative; a confirmed kernel vector is a real shortcut candidate."
+      },
+      "monomial_dimension": 2952,
+      "rows_used": 3016,
+      "rank": 2952,
+      "rank_deficiency": 0,
+      "status": "no_annihilator",
+      "annihilators": [],
+      "elapsed_s": 10.444
+    },
+    {
+      "label": "rule30-center",
+      "window_bits": 28,
+      "degree": 2,
+      "n_windows": 9999973,
+      "n_distinct_windows": 9815389,
+      "covers_window_space": false,
+      "gate": {
+        "window_bits": 28,
+        "degree": 2,
+        "monomial_dimension": 407,
+        "log2_class_size": 407.0,
+        "max_zeros_reed_muller": 201326592,
+        "n_distinct_windows": 9815389,
+        "covers_window_space": false,
+        "margin_bits": 64,
+        "surplus_rows": 9814918,
+        "headroom_below_ceiling": 191511203,
+        "informative": true,
+        "reading": "informative: D=407 monomials, 9815389 distinct windows -- 9814918 beyond the D+64 bar, and 191511203 below the Reed-Muller ceiling. Full rank here is a real negative; a confirmed kernel vector is a real shortcut candidate."
+      },
+      "monomial_dimension": 407,
+      "rows_used": 471,
+      "rank": 407,
+      "rank_deficiency": 0,
+      "status": "no_annihilator",
+      "annihilators": [],
+      "elapsed_s": 10.647
+    },
+    {
+      "label": "rule30-center",
+      "window_bits": 28,
+      "degree": 3,
+      "n_windows": 9999973,
+      "n_distinct_windows": 9815389,
+      "covers_window_space": false,
+      "gate": {
+        "window_bits": 28,
+        "degree": 3,
+        "monomial_dimension": 3683,
+        "log2_class_size": 3683.0,
+        "max_zeros_reed_muller": 234881024,
+        "n_distinct_windows": 9815389,
+        "covers_window_space": false,
+        "margin_bits": 64,
+        "surplus_rows": 9811642,
+        "headroom_below_ceiling": 225065635,
+        "informative": true,
+        "reading": "informative: D=3683 monomials, 9815389 distinct windows -- 9811642 beyond the D+64 bar, and 225065635 below the Reed-Muller ceiling. Full rank here is a real negative; a confirmed kernel vector is a real shortcut candidate."
+      },
+      "monomial_dimension": 3683,
+      "rows_used": 3747,
+      "rank": 3683,
+      "rank_deficiency": 0,
+      "status": "no_annihilator",
+      "annihilators": [],
+      "elapsed_s": 12.073
+    },
+    {
+      "label": "rule30-center",
+      "window_bits": 32,
+      "degree": 2,
+      "n_windows": 9999969,
+      "n_distinct_windows": 9987988,
+      "covers_window_space": false,
+      "gate": {
+        "window_bits": 32,
+        "degree": 2,
+        "monomial_dimension": 529,
+        "log2_class_size": 529.0,
+        "max_zeros_reed_muller": 3221225472,
+        "n_distinct_windows": 9987988,
+        "covers_window_space": false,
+        "margin_bits": 64,
+        "surplus_rows": 9987395,
+        "headroom_below_ceiling": 3211237484,
+        "informative": true,
+        "reading": "informative: D=529 monomials, 9987988 distinct windows -- 9987395 beyond the D+64 bar, and 3211237484 below the Reed-Muller ceiling. Full rank here is a real negative; a confirmed kernel vector is a real shortcut candidate."
+      },
+      "monomial_dimension": 529,
+      "rows_used": 593,
+      "rank": 529,
+      "rank_deficiency": 0,
+      "status": "no_annihilator",
+      "annihilators": [],
+      "elapsed_s": 10.697
+    },
+    {
+      "label": "rule30-center",
+      "window_bits": 32,
+      "degree": 3,
+      "n_windows": 9999969,
+      "n_distinct_windows": 9987988,
+      "covers_window_space": false,
+      "gate": {
+        "window_bits": 32,
+        "degree": 3,
+        "monomial_dimension": 5489,
+        "log2_class_size": 5489.0,
+        "max_zeros_reed_muller": 3758096384,
+        "n_distinct_windows": 9987988,
+        "covers_window_space": false,
+        "margin_bits": 64,
+        "surplus_rows": 9982435,
+        "headroom_below_ceiling": 3748108396,
+        "informative": true,
+        "reading": "informative: D=5489 monomials, 9987988 distinct windows -- 9982435 beyond the D+64 bar, and 3748108396 below the Reed-Muller ceiling. Full rank here is a real negative; a confirmed kernel vector is a real shortcut candidate."
+      },
+      "monomial_dimension": 5489,
+      "rows_used": 5553,
+      "rank": 5489,
+      "rank_deficiency": 0,
+      "status": "no_annihilator",
+      "annihilators": [],
+      "elapsed_s": 14.726
+    }
+  ],
+  "controls": [
+    {
+      "label": "positive-control",
+      "window_bits": 21,
+      "degree": 2,
+      "n_windows": 299980,
+      "n_distinct_windows": 299980,
+      "covers_window_space": false,
+      "gate": {
+        "window_bits": 21,
+        "degree": 2,
+        "monomial_dimension": 232,
+        "log2_class_size": 232.0,
+        "max_zeros_reed_muller": 1572864,
+        "n_distinct_windows": 299980,
+        "covers_window_space": false,
+        "margin_bits": 64,
+        "surplus_rows": 299684,
+        "headroom_below_ceiling": 1272884,
+        "informative": true,
+        "reading": "informative: D=232 monomials, 299980 distinct windows -- 299684 beyond the D+64 bar, and 1272884 below the Reed-Muller ceiling. Full rank here is a real negative; a confirmed kernel vector is a real shortcut candidate."
+      },
+      "monomial_dimension": 232,
+      "rows_used": 2368,
+      "rank": 229,
+      "rank_deficiency": 3,
+      "annihilators": [
+        {
+          "support": [
+            [
+              0
+            ],
+            [
+              3
+            ],
+            [
+              17
+            ],
+            [
+              20
+            ],
+            [
+              1,
+              11
+            ]
+          ],
+          "n_terms": 5,
+          "violations_on_full_stream": 0,
+          "holds_everywhere": true
+        },
+        {
+          "support": [
+            [
+              0
+            ],
+            [
+              3
+            ],
+            [
+              17
+            ],
+            [
+              20
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              3
+            ],
+            [
+              1,
+              17
+            ],
+            [
+              1,
+              20
+            ]
+          ],
+          "n_terms": 8,
+          "violations_on_full_stream": 0,
+          "holds_everywhere": true
+        },
+        {
+          "support": [
+            [
+              0
+            ],
+            [
+              3
+            ],
+            [
+              17
+            ],
+            [
+              20
+            ],
+            [
+              0,
+              11
+            ],
+            [
+              3,
+              11
+            ],
+            [
+              11,
+              17
+            ],
+            [
+              11,
+              20
+            ]
+          ],
+          "n_terms": 8,
+          "violations_on_full_stream": 0,
+          "holds_everywhere": true
+        }
+      ],
+      "status": "annihilator_found",
+      "elapsed_s": 0.14
+    },
+    {
+      "label": "random-control",
+      "window_bits": 20,
+      "degree": 2,
+      "n_windows": 9999981,
+      "n_distinct_windows": 1048492,
+      "covers_window_space": false,
+      "gate": {
+        "window_bits": 20,
+        "degree": 2,
+        "monomial_dimension": 211,
+        "log2_class_size": 211.0,
+        "max_zeros_reed_muller": 786432,
+        "n_distinct_windows": 1048492,
+        "covers_window_space": false,
+        "margin_bits": 64,
+        "surplus_rows": 1048217,
+        "headroom_below_ceiling": -262060,
+        "informative": false,
+        "reading": "VACUOUS: 1048492 distinct windows exceeds the 786432 zeros a nonzero degree-2 polynomial in 20 variables can have (Reed-Muller bound), so no annihilator can exist for any sequence. This negative is forced."
+      },
+      "status": "skipped_vacuous",
+      "elapsed_s": 2.563
+    },
+    {
+      "label": "random-control",
+      "window_bits": 22,
+      "degree": 2,
+      "n_windows": 9999979,
+      "n_distinct_windows": 3808181,
+      "covers_window_space": false,
+      "gate": {
+        "window_bits": 22,
+        "degree": 2,
+        "monomial_dimension": 254,
+        "log2_class_size": 254.0,
+        "max_zeros_reed_muller": 3145728,
+        "n_distinct_windows": 3808181,
+        "covers_window_space": false,
+        "margin_bits": 64,
+        "surplus_rows": 3807863,
+        "headroom_below_ceiling": -662453,
+        "informative": false,
+        "reading": "VACUOUS: 3808181 distinct windows exceeds the 3145728 zeros a nonzero degree-2 polynomial in 22 variables can have (Reed-Muller bound), so no annihilator can exist for any sequence. This negative is forced."
+      },
+      "status": "skipped_vacuous",
+      "elapsed_s": 5.43
+    },
+    {
+      "label": "random-control",
+      "window_bits": 24,
+      "degree": 2,
+      "n_windows": 9999977,
+      "n_distinct_windows": 7535478,
+      "covers_window_space": false,
+      "gate": {
+        "window_bits": 24,
+        "degree": 2,
+        "monomial_dimension": 301,
+        "log2_class_size": 301.0,
+        "max_zeros_reed_muller": 12582912,
+        "n_distinct_windows": 7535478,
+        "covers_window_space": false,
+        "margin_bits": 64,
+        "surplus_rows": 7535113,
+        "headroom_below_ceiling": 5047434,
+        "informative": true,
+        "reading": "informative: D=301 monomials, 7535478 distinct windows -- 7535113 beyond the D+64 bar, and 5047434 below the Reed-Muller ceiling. Full rank here is a real negative; a confirmed kernel vector is a real shortcut candidate."
+      },
+      "monomial_dimension": 301,
+      "rows_used": 365,
+      "rank": 301,
+      "rank_deficiency": 0,
+      "status": "no_annihilator",
+      "annihilators": [],
+      "elapsed_s": 8.373
+    },
+    {
+      "label": "random-control",
+      "window_bits": 26,
+      "degree": 2,
+      "n_windows": 9999975,
+      "n_distinct_windows": 9292044,
+      "covers_window_space": false,
+      "gate": {
+        "window_bits": 26,
+        "degree": 2,
+        "monomial_dimension": 352,
+        "log2_class_size": 352.0,
+        "max_zeros_reed_muller": 50331648,
+        "n_distinct_windows": 9292044,
+        "covers_window_space": false,
+        "margin_bits": 64,
+        "surplus_rows": 9291628,
+        "headroom_below_ceiling": 41039604,
+        "informative": true,
+        "reading": "informative: D=352 monomials, 9292044 distinct windows -- 9291628 beyond the D+64 bar, and 41039604 below the Reed-Muller ceiling. Full rank here is a real negative; a confirmed kernel vector is a real shortcut candidate."
+      },
+      "monomial_dimension": 352,
+      "rows_used": 416,
+      "rank": 352,
+      "rank_deficiency": 0,
+      "status": "no_annihilator",
+      "annihilators": [],
+      "elapsed_s": 10.127
+    },
+    {
+      "label": "random-control",
+      "window_bits": 28,
+      "degree": 2,
+      "n_windows": 9999973,
+      "n_distinct_windows": 9816310,
+      "covers_window_space": false,
+      "gate": {
+        "window_bits": 28,
+        "degree": 2,
+        "monomial_dimension": 407,
+        "log2_class_size": 407.0,
+        "max_zeros_reed_muller": 201326592,
+        "n_distinct_windows": 9816310,
+        "covers_window_space": false,
+        "margin_bits": 64,
+        "surplus_rows": 9815839,
+        "headroom_below_ceiling": 191510282,
+        "informative": true,
+        "reading": "informative: D=407 monomials, 9816310 distinct windows -- 9815839 beyond the D+64 bar, and 191510282 below the Reed-Muller ceiling. Full rank here is a real negative; a confirmed kernel vector is a real shortcut candidate."
+      },
+      "monomial_dimension": 407,
+      "rows_used": 471,
+      "rank": 407,
+      "rank_deficiency": 0,
+      "status": "no_annihilator",
+      "annihilators": [],
+      "elapsed_s": 10.41
+    },
+    {
+      "label": "random-control",
+      "window_bits": 32,
+      "degree": 2,
+      "n_windows": 9999969,
+      "n_distinct_windows": 9988378,
+      "covers_window_space": false,
+      "gate": {
+        "window_bits": 32,
+        "degree": 2,
+        "monomial_dimension": 529,
+        "log2_class_size": 529.0,
+        "max_zeros_reed_muller": 3221225472,
+        "n_distinct_windows": 9988378,
+        "covers_window_space": false,
+        "margin_bits": 64,
+        "surplus_rows": 9987785,
+        "headroom_below_ceiling": 3211237094,
+        "informative": true,
+        "reading": "informative: D=529 monomials, 9988378 distinct windows -- 9987785 beyond the D+64 bar, and 3211237094 below the Reed-Muller ceiling. Full rank here is a real negative; a confirmed kernel vector is a real shortcut candidate."
+      },
+      "monomial_dimension": 529,
+      "rows_used": 593,
+      "rank": 529,
+      "rank_deficiency": 0,
+      "status": "no_annihilator",
+      "annihilators": [],
+      "elapsed_s": 10.437
+    }
+  ]
+}

@@ -6,7 +6,7 @@ lives here. Overwrite this file in place; git history keeps the old versions.
 No other file may carry a "current state as of" section —
 `tools/lint_ledger.py` enforces it.
 
-Updated: 2026-09-03 · Newest log: `docs/experiment-logs/2026-09-01-nersissian-end-to-end-audit.md`
+Updated: 2026-09-03 · Newest log: `docs/experiment-logs/2026-09-03-algebraic-annihilator.md`
 
 ## Where the three prize problems stand
 
@@ -20,12 +20,13 @@ Updated: 2026-09-03 · Newest log: `docs/experiment-logs/2026-09-01-nersissian-e
 
 Sequence approved 2026-09-02: **A1 → A2 → C2**, with B3 as filler. Reasoning
 and the full option analysis: [`handover/CURRENT.md`](handover/CURRENT.md).
-A1 and A2 are done (see *Recently closed*); **C2 is next**.
+A1, A2 and C2 are done (see *Recently closed*); **B3 is next**, with C2's
+degree-4 extension finishing alongside it.
 
 | # | Work | Kind | Cost | Blocks |
 |---|---|---|---|---|
 | A3 | **Make bitstreams reachable** (Release asset or committed prefix) | Infra | ~½ day | B2 |
-| C2 | **Algebraic annihilator search** — low-degree GF(2) relations over `w`-bit windows, via monomial-matrix rank | Research | Days | — |
+| C2b | **Widen the annihilator search past 32 bits** — window codes are packed into one `uint64`; multi-word codes would reach `w=64` at `d=2` | Research | ~½ day | — |
 | B3 | Extend `s*(n)` past n=48 — re-costed ~28× cheaper | Research | Hours | — |
 | E1 | Write up the eight Theorem rows; `s*(n)` is citable | Writing | Days | — |
 | B2 | Exact period search on 46M — no code change, extends to `p <= 2.3e7` | Research | Minutes | A3 |
@@ -45,7 +46,7 @@ grades left-edge structure as disjoint from the prize object.
 
 | PR | Branch | State |
 |---|---|---|
-| — | `claude/rule-30-foundry-env-tlbr9x` | Open, based on `main`. A2: the `verify` workflow. |
+| — | `claude/rule-30-foundry-env-tlbr9x` | Open, based on `main`. C2: the algebraic annihilator search. |
 
 The #18 → #19 stack landed on 2026-09-02; #20 and #21 had already been merged
 into #19. Nothing is stacked. The 7 merged branches listed in
@@ -67,6 +68,14 @@ happened anyway. See [`BRANCHING.md`](BRANCHING.md).
 
 ## Recently closed
 
+- **C2**: algebraic annihilator search — no GF(2) relation of degree `<= 3`
+  over windows up to 32 bits
+  ([log](experiment-logs/2026-09-03-algebraic-annihilator.md)). The gate is the
+  result worth remembering: this model class is vacuous in *both* directions,
+  and the Reed–Muller ceiling `2^w - 2^(w-d)` voids every search at `w <= 22`
+  regardless of the sequence. A first pass reported an apparent shortcut at
+  `w = 20` that was a sorted-subsample artifact at parameters that were vacuous
+  anyway; full-stream verification caught it.
 - **A1**: the #18 → #19 stack landed on 2026-09-02. `main` carries Tier 0
   tooling, the Nersissian audit, and the agent context bootstrap.
 - **A2**: CI added — `.github/workflows/verify.yml` runs
