@@ -275,6 +275,168 @@ class TestWideWindows(unittest.TestCase):
         self.assertEqual(v["monomial_dimension"], 2081)
 
 
+class TestBitOrderIsVerifiedNotGuessed(unittest.TestCase):
+    """The bug this experiment actually shipped, pinned so it cannot recur.
+
+    The first run read data/golden/center_col_golden_10M.bin as little-endian.
+    That file is MSB-first by deliberate exception (AGENTS.md), so every 8-bit
+    block was reversed and the whole grid was computed on a transformed stream.
+    The bit mean was 0.500222 either way -- the defect is invisible to every
+    aggregate statistic, which is precisely why the loader must verify against
+    the rule rather than trust a convention.
+    """
+
+    def test_naive_column_matches_oeis_a051023(self):
+        """The reference must be right, or it validates nothing.
+
+        Checked against the repo's own OEIS A051023 constant rather than a
+        prefix retyped here, so there is one source of truth for what the
+        center column is.
+        """
+        golden = _load("gen_golden_reference", "tools/gen_golden_reference.py")
+        expected = golden.OEIS_A051023_PREFIX
+        got = "".join(map(str, aa.naive_center_column(len(expected))))
+        self.assertEqual(got, expected)
+
+    def test_golden_file_is_msb_first(self):
+        """If this flips, the golden generator changed and claims need rerunning."""
+        if not aa.DEFAULT_INPUT.exists():
+            self.skipTest("golden reference absent")
+        _, order = aa.load_bits(aa.DEFAULT_INPUT, max_bits=4096)
+        self.assertEqual(order, "big")
+
+    def test_loaded_stream_really_is_the_center_column(self):
+        if not aa.DEFAULT_INPUT.exists():
+            self.skipTest("golden reference absent")
+        bits, _ = aa.load_bits(aa.DEFAULT_INPUT, max_bits=4096)
+        self.assertTrue(np.array_equal(bits[:2000], aa.naive_center_column(2000)))
+
+    def test_bit_mean_cannot_distinguish_the_two_packings(self):
+        """Why a verifying loader is needed at all.
+
+        Reversing each 8-bit block is exactly the other convention, and it
+        leaves the bit mean untouched. The real run's mean was 0.500222 both
+        before and after the fix, so no aggregate check could have caught it.
+        """
+        ref = aa.naive_center_column(8192)
+        big = np.unpackbits(np.packbits(ref, bitorder="big"), bitorder="big")
+        wrong = np.unpackbits(np.packbits(ref, bitorder="big"), bitorder="little")
+        self.assertAlmostEqual(float(big.mean()), float(wrong.mean()), places=12)
+        self.assertLess(float((big == wrong).mean()), 0.6,
+                        "the two decodes should disagree at roughly half the bits")
+
+    def test_a_file_that_is_not_the_center_column_is_refused(self):
+        """Neither convention decodes it, so it must be rejected, not analysed."""
+        import tempfile
+        rng = np.random.default_rng(11)
+        junk = rng.integers(0, 256, 4096, dtype=np.uint8)
+        with tempfile.NamedTemporaryFile(suffix=".bin", delete=False) as fh:
+            junk.tofile(fh.name)
+            path = pathlib.Path(fh.name)
+        try:
+            with self.assertRaises(ValueError):
+                aa.load_bits(path)
+        finally:
+            path.unlink()
+
+    def test_a_truncated_file_is_refused(self):
+        import tempfile
+        with tempfile.NamedTemporaryFile(suffix=".bin", delete=False) as fh:
+            np.zeros(4, dtype=np.uint8).tofile(fh.name)
+            path = pathlib.Path(fh.name)
+        try:
+            with self.assertRaises(ValueError):
+                aa.load_bits(path)
+        finally:
+            path.unlink()
+
+    def test_a_correctly_packed_file_loads_under_either_convention(self):
+        import tempfile
+        ref = aa.naive_center_column(8192)
+        for order in ("little", "big"):
+            with self.subTest(order=order):
+                with tempfile.NamedTemporaryFile(suffix=".bin",
+                                                 delete=False) as fh:
+                    np.packbits(ref, bitorder=order).tofile(fh.name)
+                    path = pathlib.Path(fh.name)
+                try:
+                    bits, got = aa.load_bits(path)
+                    self.assertEqual(got, order)
+                    self.assertTrue(np.array_equal(bits[:ref.size], ref))
+                finally:
+                    path.unlink()
+
+
+class TestCombinationsAreConfirmed(unittest.TestCase):
+    """A true annihilator can be a COMBINATION of sampled-kernel basis vectors.
+
+    Each basis vector may violate somewhere while their sum vanishes
+    everywhere, so checking the basis element-wise misses exactly the relation
+    the experiment is for.
+    """
+
+    def test_combination_is_found_when_no_basis_vector_holds(self):
+        """The case element-wise checking gets wrong.
+
+        Restrict the data to windows with x2 = 0. Then x0 and x0 + x2 evaluate
+        identically, so each violates wherever x0 = 1 -- but their sum is x2,
+        which vanishes on every one of these windows and is a genuine nonzero
+        annihilator. Testing the basis one vector at a time reports nothing.
+        """
+        monos = aa.monomials(3, 2)
+        codes = np.array([0, 1, 2, 3], dtype=np.uint64)   # x2 == 0 throughout
+
+        def poly(*terms):
+            v = np.zeros(len(monos), dtype=np.uint8)
+            for t in terms:
+                v[monos.index(t)] ^= 1
+            return v
+
+        b1, b2 = poly((0,)), poly((0,), (2,))
+
+        # Neither basis vector holds on its own.
+        for b in (b1, b2):
+            self.assertGreater(int(aa.evaluate(codes, monos, b).sum()), 0)
+
+        found = aa.confirm_on_full_stream(codes, monos, [b1, b2])
+        self.assertEqual(len(found), 1, "the combination b1+b2 = x2 was missed")
+        self.assertEqual(found[0]["violations_on_full_stream"], 0)
+        self.assertEqual(found[0]["support"], [[2]])
+        self.assertEqual(found[0]["n_basis_vectors_combined"], 2)
+
+    def test_no_combination_is_invented_when_none_exists(self):
+        """Over the full cube, distinct polynomials have distinct evaluations."""
+        monos = aa.monomials(3, 2)
+        codes = np.arange(8, dtype=np.uint64)
+
+        def poly(*terms):
+            v = np.zeros(len(monos), dtype=np.uint8)
+            for t in terms:
+                v[monos.index(t)] ^= 1
+            return v
+
+        self.assertEqual(
+            aa.confirm_on_full_stream(codes, monos, [poly((0,)), poly((1,))]),
+            [])
+
+    def test_planted_relation_survives_the_combination_path(self):
+        """End to end: the positive control still resolves to a real relation."""
+        bits = aa.positive_control_bits(120_000)
+        rec = aa.search(bits, aa.CONTROL_WINDOW, 2, margin_bits=64)
+        self.assertEqual(rec["status"], "annihilator_found")
+        for a in rec["annihilators"]:
+            self.assertTrue(a["holds_everywhere"])
+            self.assertEqual(a["violations_on_full_stream"], 0)
+
+    def test_only_confirmed_annihilators_are_reported(self):
+        """Nothing with violations may appear in the annihilators list."""
+        bits = aa.positive_control_bits(120_000)
+        rec = aa.search(bits, aa.CONTROL_WINDOW, 2, margin_bits=64)
+        self.assertTrue(rec["annihilators"])
+        self.assertTrue(all(a["violations_on_full_stream"] == 0
+                            for a in rec["annihilators"]))
+
+
 class TestWindowCodes(unittest.TestCase):
 
     def test_codes_are_little_endian_within_the_window(self):

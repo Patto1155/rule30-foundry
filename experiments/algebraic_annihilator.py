@@ -97,19 +97,71 @@ MAX_WINDOW = 64
 # data
 # --------------------------------------------------------------------------
 
-def load_bits(path: Path, max_bits: int | None = None) -> np.ndarray:
-    """Load a packed center-column dump as a 0/1 uint8 array.
+# A reversed 8-bit block disagrees at ~50% of positions, so a few hundred bits
+# make a wrong decode impossible to miss.
+VERIFY_BITS = 512
 
-    bitorder='little' is mandatory here: gpu/rule30_sim.py writes LSB-first and
-    NumPy defaults to MSB-first. A bare call reverses each 8-bit block, which
-    changes 49.95% of positions while leaving every aggregate statistic - the
-    bit mean included - identical. See tools/lint_bitorder.py.
+
+def naive_center_column(n: int) -> np.ndarray:
+    """The center column straight from the rule, no packing involved.
+
+    Deliberately independent of every packed path in this repo: it is the
+    reference that decides whether a loaded file really is the center column.
+    """
+    width = 2 * n + 5
+    row = np.zeros(width, dtype=np.uint8)
+    row[width // 2] = 1
+    out = np.empty(n, dtype=np.uint8)
+    for t in range(n):
+        out[t] = row[width // 2]
+        row = np.roll(row, 1) ^ (row | np.roll(row, -1))
+    return out
+
+
+def load_bits(path: Path,
+              max_bits: int | None = None) -> tuple[np.ndarray, str]:
+    """Load a packed center-column dump, *verifying* it really is one.
+
+    This repo has two packing conventions and both are correct:
+    `gpu/rule30_sim.py` writes LSB-first, and `tools/gen_golden_reference.py`
+    writes MSB-first by deliberate documented exception (AGENTS.md - its
+    independence from the kernel is the whole point, do not "fix" it). Picking
+    the wrong one reverses every 8-bit block: 49.95% of positions differ while
+    the bit mean is *identical*, so no aggregate check catches it.
+
+    This experiment shipped exactly that bug on its first run. It read the
+    golden file as little-endian, analysed a byte-block-reversed stream for the
+    whole grid, and reported a perfectly healthy bit mean of 0.500222 while
+    doing it. Caught in review, not by any check here.
+
+    So this does not guess, and does not trust a caller's flag either. It
+    decodes both ways and keeps whichever reproduces `naive_center_column`. A
+    file matching neither is rejected rather than silently analysed. Returns
+    the bits and the confirmed convention, so the artifact can record it.
     """
     raw = np.fromfile(path, dtype=np.uint8)
-    bits = np.unpackbits(raw, bitorder='little')
+    if raw.size * 8 < VERIFY_BITS:
+        raise ValueError(f"{path} holds fewer than {VERIFY_BITS} bits")
+
+    reference = naive_center_column(VERIFY_BITS)
+    head = raw[:(VERIFY_BITS + 7) // 8]
+    confirmed = None
+    for order in ("little", "big"):
+        probe = np.unpackbits(head, bitorder=order)[:VERIFY_BITS]
+        if np.array_equal(probe, reference):
+            confirmed = order
+            break
+
+    if confirmed is None:
+        raise ValueError(
+            f"{path} does not decode to the Rule 30 center column under "
+            "either bit order: it is not the single-seed center column, or it "
+            "is corrupt. Refusing to analyse it.")
+
+    bits = np.unpackbits(raw, bitorder=confirmed)
     if max_bits is not None:
         bits = bits[:max_bits]
-    return bits.astype(np.uint8)
+    return bits.astype(np.uint8), confirmed
 
 
 def window_codes(bits: np.ndarray, w: int) -> np.ndarray:
@@ -232,6 +284,52 @@ def kernel_basis(rows: np.ndarray, pivots: list[int],
 # the search
 # --------------------------------------------------------------------------
 
+def confirm_on_full_stream(codes: np.ndarray, monos: list[tuple[int, ...]],
+                           basis: list[np.ndarray]) -> list[dict]:
+    """Return the annihilators holding at EVERY window, not just the sample.
+
+    `basis` spans the kernel of the sampled matrix. A true annihilator vanishes
+    on the sample too, so it lies in that span -- but as a combination
+    `sum c_j b_j`, and each `b_j` alone may violate somewhere. Checking the
+    basis element-wise therefore misses relations this experiment exists to
+    find.
+
+    So change coordinates: residual column j is `b_j` evaluated at every
+    window, and a combination annihilates the stream exactly when `c` lies in
+    the kernel of that residual matrix. Duplicate residual rows carry no extra
+    constraint, which collapses 10^7 windows to at most 2^k of them.
+    """
+    if not basis:
+        return []
+    k = len(basis)
+    residual = np.stack([evaluate(codes, monos, b) for b in basis], axis=1)
+
+    packed = np.zeros((residual.shape[0], (k + 63) // 64), dtype=np.uint64)
+    for j in range(k):
+        packed[:, j >> 6] |= residual[:, j].astype(np.uint64) << np.uint64(j & 63)
+    rows = np.unique(packed, axis=0)
+
+    pivots = gf2_rref(rows, k)
+    out = []
+    for combo in kernel_basis(rows, pivots, k):
+        vec = np.zeros(len(monos), dtype=np.uint8)
+        for j in np.flatnonzero(combo):
+            vec ^= basis[j]
+        if not vec.any():
+            continue
+        violations = int(evaluate(codes, monos, vec).sum())
+        if violations:
+            continue
+        out.append({
+            "support": [list(monos[c]) for c in np.flatnonzero(vec)][:64],
+            "n_terms": int(vec.sum()),
+            "n_basis_vectors_combined": int(combo.sum()),
+            "violations_on_full_stream": 0,
+            "holds_everywhere": True,
+        })
+    return out
+
+
 def search(bits: np.ndarray, w: int, d: int, margin_bits: int = 64,
            label: str = "stream", verbose: bool = False, seed: int = 30) -> dict:
     """Full gated search at one (w, d). Returns a JSON-ready record."""
@@ -299,21 +397,14 @@ def search(bits: np.ndarray, w: int, d: int, margin_bits: int = 64,
         record["status"] = "no_annihilator"
         record["annihilators"] = []
     else:
-        # Rank deficiency on the subset is only a candidate. Confirm against
-        # every window in the stream before calling it a relation.
-        confirmed = []
-        for vec in kernel_basis(rows, pivots, dim):
-            resid = evaluate(codes, monos, vec)
-            viol = int(resid.sum())
-            confirmed.append({
-                "support": [list(monos[c]) for c in np.flatnonzero(vec)][:64],
-                "n_terms": int(vec.sum()),
-                "violations_on_full_stream": viol,
-                "holds_everywhere": viol == 0,
-            })
-        record["annihilators"] = confirmed
+        # Rank deficiency on the subset is only a candidate, and a true
+        # annihilator need not be one of the basis vectors -- it can be a
+        # combination whose individual parts each violate somewhere. Testing
+        # the basis element-wise would miss it.
+        record["annihilators"] = confirm_on_full_stream(
+            codes, monos, kernel_basis(rows, pivots, dim))
         record["status"] = ("annihilator_found"
-                            if any(a["holds_everywhere"] for a in confirmed)
+                            if record["annihilators"]
                             else "subset_artifact_only")
 
     record["elapsed_s"] = round(time.time() - t0, 3)
@@ -563,7 +654,7 @@ def main(argv: list[str] | None = None) -> int:
         print(f"input not found: {args.input}", file=sys.stderr)
         return 2
 
-    bits = load_bits(args.input, args.max_bits)
+    bits, bitorder = load_bits(args.input, args.max_bits)
     windows = [int(x) for x in args.windows.split(",") if x]
     degrees = [int(x) for x in args.degrees.split(",") if x]
 
@@ -588,6 +679,8 @@ def main(argv: list[str] | None = None) -> int:
         "input": str(args.input.relative_to(REPO_ROOT)),
         "n_bits": int(bits.size),
         "bit_mean": round(float(bits.mean()), 6),
+        "bitorder": bitorder,
+        "bitorder_verified_against": "naive_center_column",
         "margin_bits": args.margin_bits,
         "results": results,
         "controls": controls,
@@ -608,7 +701,10 @@ def main(argv: list[str] | None = None) -> int:
     text = json.dumps(artifact, indent=2)
     if args.out:
         args.out.parent.mkdir(parents=True, exist_ok=True)
-        args.out.write_text(text + "\n")
+        # data/** is excluded from git normalisation and hashed byte-for-byte
+        # in data/MANIFEST.sha256, so newline translation would make the
+        # artifact platform-dependent and invalidate the manifest. AGENTS.md.
+        args.out.write_text(text + "\n", newline="")
     print(text)
     return 0
 
