@@ -354,3 +354,35 @@ class TestCLIAndManifests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TestCensoringPerClause(unittest.TestCase):
+    """Review finding on #27 (P2). The qualifier must sit in the same clause
+    as the claim it qualifies, or an unrelated bounded phrase elsewhere in the
+    sentence suppresses an absolute claim -- exactly the unqualified
+    right-censored statement this gate exists to reject."""
+
+    COMPOUND = "Within 10 steps the seed settled; the sequence never repeats."
+
+    def test_compound_sentence_no_longer_slips_through(self):
+        r = gates.postflight(good_result(conclusions=[self.COMPOUND]))
+        g = by_name(r, "censoring")
+        self.assertEqual(g["status"], "FAIL")
+        self.assertIn("never repeats", g["reason"])
+
+    def test_the_offending_clause_is_named_not_the_whole_sentence(self):
+        bad = gates.unqualified_clauses(self.COMPOUND)
+        self.assertEqual(bad, ["the sequence never repeats"])
+
+    def test_genuinely_qualified_clauses_still_pass(self):
+        for c in ("No period p <= 5,000,000 in the first 10M bits.",
+                  "The sequence does not repeat up to n = 10^7.",
+                  "Checked to d = 1e9; no period below 5,000,000 was found."):
+            with self.subTest(c=c):
+                self.assertEqual(gates.unqualified_clauses(c), [], c)
+
+    def test_multiple_bad_clauses_are_all_reported(self):
+        bad = gates.unqualified_clauses(
+            "The column never repeats. Within 10 steps it is aperiodic.")
+        self.assertEqual(len(bad), 1)
+        self.assertIn("never repeats", bad[0])

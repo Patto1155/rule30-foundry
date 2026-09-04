@@ -135,9 +135,17 @@ Schema is documented at the top of `tools/gates.py`. The minimum:
   "theory_gate": "OPEN",
   "script": "experiments/pattern_map_walk.py",
   "argv": ["--max-d", "12000000000"],
+  "outputs": ["data/wedge/pattern_map_walk32.json"],
   "budget": {"minutes": 30, "device": "cpu"}
 }
 ```
+
+`outputs` names files the run produces outside `runs/`. They are copied into
+`runs/<name>/outputs/` and hashed, so the PR carries the result it reports.
+Anything a run leaves untracked fails the run and is named on stderr: an
+untracked file blocks the *next* run, which refuses to start on a dirty tree,
+and the remedy (a `.gitignore` `!` exception plus `make_manifest`) is a
+decision for a person rather than something to `add -f` past.
 
 `kind: "search"` with `"claims": ["negative"]` additionally requires `search`
 with either DFAO parameters or a declared `log2_size` — a guess there defeats

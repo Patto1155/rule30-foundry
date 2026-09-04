@@ -153,3 +153,63 @@ class TestList(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TestReviewFindings(unittest.TestCase):
+    """Regressions for the five findings on #27."""
+
+    def setUp(self):
+        self.tmp = Path(tempfile.mkdtemp())
+
+    def test_script_conclusions_reach_postflight(self):
+        """P1. conclusions/metrics/divergence printed by a script were left
+        buried under stdout_json, so postflight never saw them: a script could
+        report an unqualified 'never' and still be handed postflight: PASS.
+        That defeated the validation layer for the DEFAULT execution mode."""
+        emitter = REPO / "tests" / "fixtures" / "emit_bad_conclusion.py"
+        p = write_manifest(self.tmp, name="t-lift",
+                           script="tests/fixtures/emit_bad_conclusion.py", argv=[])
+        self.assertTrue(emitter.exists())
+        r = workhorse("run", str(p), "--dry-run")
+        s = json.loads(r.stdout)
+        self.assertEqual(s["postflight"], "FAIL")
+        self.assertEqual(s["status"], "needs-attention")
+        self.assertEqual(r.returncode, 1)
+        res = json.loads((Path(s["out"]) / "result.json").read_text())
+        self.assertTrue(res["conclusions"], "conclusions were not lifted")
+
+    def test_declared_outputs_are_copied_into_the_run(self):
+        """P1. A script's primary result usually lands outside runs/; staging
+        only runs/<name> would push a PR without the result it reports."""
+        p = write_manifest(self.tmp, name="t-out",
+                           script="tests/fixtures/write_output.py", argv=[],
+                           outputs=["data/wedge/workhorse_test_output.json"])
+        produced = REPO / "data" / "wedge" / "workhorse_test_output.json"
+        try:
+            s = json.loads(workhorse("run", str(p), "--dry-run").stdout)
+            copied = Path(s["out"]) / "outputs" / "workhorse_test_output.json"
+            self.assertTrue(copied.exists(), "declared output was not preserved")
+            hashes = json.loads((Path(s["out"]) / "hashes.json").read_text())
+            self.assertIn("outputs/workhorse_test_output.json", hashes)
+        finally:
+            produced.unlink(missing_ok=True)
+
+    def test_a_declared_output_that_never_appeared_is_flagged(self):
+        p = write_manifest(self.tmp, name="t-missing",
+                           outputs=["data/wedge/never_written.json"])
+        s = json.loads(workhorse("run", str(p), "--dry-run").stdout)
+        self.assertTrue((Path(s["out"]) / "outputs" / "never_written.json.MISSING").exists())
+
+    def test_branch_is_created_from_origin_main(self):
+        """P1. `checkout -b` from HEAD stacked each run on the previous one,
+        carrying unrelated commits into the PR (BRANCHING.md §1)."""
+        src = (REPO / "tools" / "workhorse.py").read_text()
+        self.assertIn('_git("checkout", "-B", f"feat/{name}", "origin/main")', src)
+        self.assertNotIn('_git("checkout", "-b", f"feat/{name}")', src)
+
+    def test_summary_status_is_recomputed_after_verify_all(self):
+        """P2. status was computed before verify_all ran, so a failed
+        verification could return nonzero while stdout still said ok."""
+        src = (REPO / "tools" / "workhorse.py").read_text()
+        after_va = src.split('summary["verify_all"]')[1]
+        self.assertIn('summary["status"] =', after_va)

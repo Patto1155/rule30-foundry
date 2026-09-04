@@ -298,13 +298,29 @@ def preflight(m: dict, run_external: bool = True) -> dict:
 # postflight
 # --------------------------------------------------------------------------
 
+def unqualified_clauses(text: str) -> list[str]:
+    """Clauses that assert 'never' without a horizon, judged per clause.
+
+    Matching over a whole conclusion lets an unrelated bounded phrase suppress
+    an absolute claim later in the same string: "Within 10 steps the seed
+    settled; the sequence never repeats." would pass, which is exactly the
+    unqualified right-censored claim this gate exists to reject. Compound
+    prose of that shape is natural for a result writer, so the qualifier has
+    to sit in the same clause as the claim it qualifies.
+    """
+    bad = []
+    for clause in re.split(r"[.;]+\s*", text):
+        if UNQUALIFIED_NEVER.search(clause) and not CENSOR_QUALIFIERS.search(clause):
+            bad.append(clause.strip())
+    return bad
+
+
 def gate_censoring(r: dict) -> Gate:
     """AGENTS.md: 'Never reached within N steps' is right-censored. Do not
     report it as 'never' without qualification."""
     bad = []
     for c in r.get("conclusions") or []:
-        if UNQUALIFIED_NEVER.search(c) and not CENSOR_QUALIFIERS.search(c):
-            bad.append(c)
+        bad.extend(unqualified_clauses(c))
     if bad:
         return Gate("censoring", FAIL,
                     "unqualified 'never'/'no period' in: "

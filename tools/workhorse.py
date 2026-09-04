@@ -157,7 +157,7 @@ def run_script(m: dict, out: Path, timeout: int) -> dict:
         stdout_json = json.loads(so)
     except ValueError:
         stdout_json = None
-    return {
+    result = {
         "manifest": m,
         "agent": "script",
         "argv": argv[1:],
@@ -165,12 +165,24 @@ def run_script(m: dict, out: Path, timeout: int) -> dict:
         "timed_out": timed_out,
         "duration_s": round(time.time() - started, 2),
         "stdout_json": stdout_json,
-        # Filled by whoever writes the result up. A script that does not
-        # emit conclusions has made no claims, so postflight has nothing to
-        # reject; the claims come later, in the PR, where they are reviewed.
+        # A script that emits none of these has made no claims, so postflight
+        # has nothing to reject and the claims come later, in the PR.
         "conclusions": [],
         "metrics": {},
     }
+    # Lift the postflight-relevant fields out of the script's own JSON.
+    # Leaving them buried under stdout_json meant postflight never saw a
+    # script's conclusions, metrics, divergence or stream comparison: a
+    # script could report an unqualified "never", omit a baseline, or print
+    # an impossible divergence and still be handed postflight: PASS. That
+    # defeats the validation layer for the DEFAULT execution mode, which is
+    # worse than having none, because the runner then vouches for it.
+    if isinstance(stdout_json, dict):
+        for key in ("conclusions", "metrics", "divergence", "stream_comparison",
+                    "horizon"):
+            if key in stdout_json:
+                result[key] = stdout_json[key]
+    return result
 
 
 CODEX_PROMPT = """\
@@ -268,7 +280,18 @@ def run(path: Path, agent: str, dry_run: bool, no_branch: bool, no_push: bool,
                   "Provenance requires a known starting commit.", file=sys.stderr)
             return 2
         if not no_branch:
-            _git("checkout", "-b", f"feat/{name}")
+            # From origin/main, not from whatever is checked out. After a
+            # successful run the checkout is left on feat/<previous>, so
+            # branching from HEAD would stack each experiment on the last --
+            # carrying unrelated commits into the PR and comparing against
+            # the wrong base. BRANCHING.md §1: branch from main, one PR deep.
+            try:
+                _git("fetch", "origin", "main")
+            except RuntimeError as exc:
+                print(f"workhorse: cannot fetch origin/main ({exc}); refusing "
+                      "to branch from an unknown base.", file=sys.stderr)
+                return 2
+            _git("checkout", "-B", f"feat/{name}", "origin/main")
         out = RUNS / name
         out.mkdir(parents=True, exist_ok=True)
     head = _git("rev-parse", "HEAD")
@@ -295,9 +318,31 @@ def run(path: Path, agent: str, dry_run: bool, no_branch: bool, no_push: bool,
     if pretty:
         print(gates.pretty(post), file=sys.stderr)
 
-    # 5. hashes of everything the run left behind, so the PR can be checked
+    # 5. preserve the run's declared outputs.
+    #
+    # A script's primary result usually lands outside runs/ -- B1 writes
+    # data/wedge/pattern_map_walk32.json. Staging only runs/<name> would push
+    # a PR without the result it exists to report, and leave that file
+    # untracked, which dirties the tree and blocks the next run. Copying into
+    # runs/<name>/outputs/ keeps the artifact in the PR without an
+    # `add -f`, which AGENTS.md forbids, or an automatic .gitignore edit.
+    declared = [Path(o) for o in (m.get("outputs") or [])]
+    if declared:
+        odir = out / "outputs"
+        odir.mkdir(exist_ok=True)
+        for rel in declared:
+            src = REPO_ROOT / rel
+            if src.is_file():
+                dest = odir / rel.name
+                shutil.copy2(src, dest)
+            else:
+                (odir / f"{rel.name}.MISSING").write_text(
+                    f"declared output not produced: {rel}\n", encoding="utf-8")
+
+    # 6. hashes of everything the run left behind, so the PR can be checked
     #    against what was actually produced.
-    hashes = {p.name: _sha256(p) for p in sorted(out.iterdir())
+    hashes = {str(p.relative_to(out)): _sha256(p)
+              for p in sorted(out.rglob("*"))
               if p.is_file() and p.name != "hashes.json"}
     (out / "hashes.json").write_text(json.dumps(hashes, indent=2) + "\n", encoding="utf-8")
 
@@ -313,15 +358,20 @@ def run(path: Path, agent: str, dry_run: bool, no_branch: bool, no_push: bool,
         print(json.dumps(summary, indent=2))
         return 0 if ok else 1
 
-    # 6. verify_all on the post-run tree. This is where a script that wrote
+    # 7. verify_all on the post-run tree. This is where a script that wrote
     #    under data/ without a manifest regen gets caught (manifest-current).
     va = subprocess.run([sys.executable, "tools/verify_all.py"], cwd=REPO_ROOT,
                         capture_output=True, text=True)
     (out / "verify_all.txt").write_text(va.stdout + va.stderr, encoding="utf-8")
     summary["verify_all"] = "PASS" if va.returncode == 0 else "FAIL"
     ok = ok and va.returncode == 0
+    # Recomputed, not left at its step-6 value: a verify_all failure here
+    # would otherwise return nonzero and tag the commit while stdout still
+    # said "ok", so a scheduler reading the documented JSON would treat a
+    # failed verification as a successful run.
+    summary["status"] = "ok" if ok else "needs-attention"
 
-    # 7. commit. The manifest moves out of the queue and into the run, so
+    # 8. commit. The manifest moves out of the queue and into the run, so
     #    merging the PR drains the queue.
     if in_repo(path):
         _git("mv", _rel(path), _rel(out / "manifest.json"))
@@ -336,7 +386,24 @@ def run(path: Path, agent: str, dry_run: bool, no_branch: bool, no_push: bool,
          f"head={head}")
     summary["commit"] = _git("rev-parse", "--short", "HEAD")
 
-    # 8. push, and say where the PR goes.
+    # 9. the tree must be clean now. Anything the run wrote and nobody
+    #    tracked -- a result under data/ with no .gitignore exception, say --
+    #    would sit untracked and make the NEXT run refuse to start on a dirty
+    #    tree, long after this one looked successful. Name the files; the
+    #    remedy is AGENTS.md's explicit `!` exception plus make_manifest, and
+    #    that is a decision for a person, not something to `add -f` past.
+    leftover = _git("status", "--porcelain")
+    if leftover:
+        summary["status"] = "needs-attention"
+        summary["untracked_after_run"] = leftover.splitlines()
+        print("workhorse: the run left files the commit did not capture:\n"
+              + leftover + "\n  Declare them in the manifest's `outputs`, or "
+              "add a .gitignore `!` exception and rerun "
+              "`python tools/make_manifest.py` (AGENTS.md). Not doing so "
+              "blocks the next run.", file=sys.stderr)
+        ok = False
+
+    # 10. push, and say where the PR goes.
     if not no_push:
         branch = _git("rev-parse", "--abbrev-ref", "HEAD")
         _git("push", "-u", "origin", branch)
