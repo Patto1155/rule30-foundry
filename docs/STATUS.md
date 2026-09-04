@@ -29,7 +29,7 @@ A1 and A2 are done (see *Recently closed*); **C2 is next**.
 | B3 | Extend `s*(n)` past n=48 — re-costed ~28× cheaper | Research | Hours | — |
 | E1 | Write up the eight Theorem rows; `s*(n)` is citable | Writing | Days | — |
 | B2 | Exact period search on 46M — no code change, extends to `p <= 2.3e7` | Research | Minutes | A3 |
-| B1 | Item 14 pattern-map walk — palate cleanser, **not prize progress** | Research | ~26 min CPU | — |
+| B1 | Item 14 pattern-map walk — palate cleanser, **not prize progress**. Queued as `queue/b1-pattern-map-walk.json`; passes preflight | Research | ~26 min CPU | — |
 
 **De-prioritised:** more neural experiments (the ceiling is partly the models'
 — I/K/L are blind to long-lag XOR). Item 14 is worth closing but the ledger
@@ -46,6 +46,7 @@ grades left-edge structure as disjoint from the prize object.
 | PR | Branch | State |
 |---|---|---|
 | — | `claude/rule-30-foundry-env-tlbr9x` | Open, based on `main`. A2: the `verify` workflow. |
+| [#27](https://github.com/Patto1155/rule30-foundry/pull/27) | `claude/codex-tool-availability-3fbc2z` | Open, based on `main`. The workhorse: `tools/gates.py` turns CLAUDE.md's rules into executable preflight/postflight checks, `tools/workhorse.py` is a pull-based runner that cannot execute what the gates refuse. New `gates-trap` stage in `verify_all`. **No hardware bought and none justified yet** — see [`WORKHORSE.md`](WORKHORSE.md) and [`COMPUTE_PLAN.md`](COMPUTE_PLAN.md) §1. |
 
 The #18 → #19 stack landed on 2026-09-02; #20 and #21 had already been merged
 into #19. Nothing is stacked. The 7 merged branches listed in
