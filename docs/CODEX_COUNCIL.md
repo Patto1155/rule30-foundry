@@ -33,9 +33,20 @@ an SSH-specific or port-specific block. Two consequences:
   layer.
 - **The dispatcher host must be added to the environment's network policy**
   before anything below matters. That is a change to the environment (see
-  <https://code.claude.com/docs/en/claude-code-on-the-web>), and a session
-  keeps the policy it started with — so it takes effect in a **new** session,
-  not the one you are in.
+  <https://code.claude.com/docs/en/claude-code-on-the-web>).
+
+  The two halves of that change do *not* land together, which is worth knowing
+  before you debug the gap. The **allowlist updates live**: policy is enforced
+  by the egress proxy, not baked into the container, so an already-running
+  session starts reaching the host without being restarted. The **environment
+  variables do not**: a process reads its environment once at start, so
+  `CODEX_COUNCIL_URL` and `CODEX_COUNCIL_TOKEN` only appear after the container
+  restarts — which is what starting a new session gets you.
+
+  So a session that can `curl` the host while `council.py` still exits 2 with
+  "not configured" is half-updated, not broken. Measured on 2026-09-04: the
+  same host went 403 → 200 inside one session, while the variables stayed
+  absent until the container was reprovisioned.
 
 Do not attempt to tunnel through an already-allowlisted host. The proxy's own
 README is explicit that policy denials are reported, not routed around.
@@ -182,8 +193,8 @@ codex-dispatcher` when you are not using it.
 
 | Symptom | Cause |
 |---|---|
-| `council.py` exits 2, "not configured" | env vars not set, or set in a different environment than the session |
-| 403, no `X-Dispatcher` header | host not on the egress allowlist, or you did not start a new session |
+| `council.py` exits 2, "not configured" | env vars not set, set on a different environment, or set after this container started — they need a restart, unlike the allowlist |
+| 403, no `X-Dispatcher` header | host not on the egress allowlist (this one *does* apply to a running session, so a 403 here is the entry itself, not staleness) |
 | 401/403 **with** `X-Dispatcher: codex` | token mismatch — the dispatcher was reached |
 | 502 on every request | `codex login` was done as the wrong user; check `~/.codex/auth.json` for the service user |
 | 504 after ~60s | nginx `proxy_read_timeout` left at its default; it must exceed `CODEX_TIMEOUT_S` |

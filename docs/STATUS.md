@@ -75,12 +75,26 @@ happened anyway. See [`BRANCHING.md`](BRANCHING.md).
   authority — a council answer does not promote a ledger row, and disagreement
   is the useful output.
 
-  **Not yet exercised end to end.** The dispatcher answers `/health` over TLS
-  on the VM, and its startup probe confirms `--sandbox` and
-  `--output-last-message` both exist on codex 0.153.1 — but no review has run
-  through it. The remaining step is an egress allowlist entry for the
-  dispatcher host, which is an environment change rather than a code one, and
-  takes effect only in a new session.
+  **Working end to end, verified 2026-09-04.** The startup probe confirms
+  `--sandbox` and `--output-last-message` on codex 0.153.1, so reviews run
+  sandboxed read-only and the answer comes from the exact last-message file
+  rather than a parsed transcript.
+
+  The first real review was a deliberately vacuous negative: "no DFAO with
+  ≤24 states reproduces the first 10,000 center-column bits, therefore no
+  finite automaton does, grade it Certificate." It rejected the grade on
+  counting grounds, put `log2|M| < 254` against `n = 10,000`, and separately
+  caught the quantifier error (≤24 states cannot support "no finite
+  automaton"). `experiments/counting_bound.py --verdict 24:10000` independently
+  gives `244.078` and `VACUOUS` — so the outside model's arithmetic and verdict
+  both agree with the repo's own tool on a case the repo has been burned by.
+
+  Operational detail worth keeping, because it is not what was assumed: the
+  **egress allowlist updates live** in an already-running session — the proxy
+  enforces policy, not the container — but the **environment variables only
+  land on a container restart**. A session that can suddenly reach the host
+  while `CODEX_COUNCIL_*` is still unset is in that intermediate state, not
+  broken.
 
   Same PR added `.claude/agents/`: `counting-bound`, `theory-gate`, `verifier`,
   enforcing gates this repo mandates in prose and has never enforced
