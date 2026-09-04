@@ -19,6 +19,17 @@ ENV_FILE=/etc/codex-dispatcher.env
 APP_DIR=/opt/codex-dispatcher
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
+# The token is generated early and printed at the very end. Under `set -e` any
+# failure in between -- a certbot problem, say -- aborts before that print and
+# leaves the operator with a token they have never seen. Say where it lives.
+trap 'st=$?; if [[ $st -ne 0 && -f "$ENV_FILE" ]]; then
+  echo >&2
+  echo "install did not complete (exit $st)." >&2
+  echo "The token was already generated. Read it with:" >&2
+  echo "  sudo grep CODEX_COUNCIL_TOKEN $ENV_FILE" >&2
+  echo "Re-running this script is safe and keeps that token." >&2
+fi' EXIT
+
 if [[ -z "$HOST" ]]; then
   echo "usage: sudo bash install.sh <public-hostname> [codex-user]" >&2
   exit 2
@@ -86,23 +97,46 @@ echo "==> installing nginx site for $HOST"
 apt-get install -y -qq nginx certbot python3-certbot-nginx >/dev/null
 sed "s/__CODEX_HOST__/$HOST/g" "$HERE/nginx.conf.example" \
   > /etc/nginx/sites-available/codex-dispatcher
-ln -sf /etc/nginx/sites-available/codex-dispatcher \
-       /etc/nginx/sites-enabled/codex-dispatcher
 rm -f /etc/nginx/sites-enabled/default
 
-# certbot needs :443 to exist before it can rewrite the ssl_* lines, but the
-# cert it points at does not exist yet -- so bring nginx up on :80 only first.
+# Two constraints that together dictate the order here, and that an earlier
+# version of this script got wrong in a way that cost a run:
+#
+#   - The real site cannot be enabled before the certificate exists. Its
+#     server block names ssl_certificate paths, and nginx refuses to start
+#     when they are absent.
+#   - The ACME challenge needs something actually listening on :80. The
+#     earlier version disabled the default site AND moved the dispatcher site
+#     out of sites-enabled before calling certbot, which left nginx serving
+#     no server blocks at all -- so Let's Encrypt got "Connection refused"
+#     and the whole install aborted under `set -e`, before printing the token.
+#
+# So: stand up a challenge-only :80 site, get the cert, then swap in the real
+# one. "Connection refused" here means nothing is listening; a *timeout* would
+# mean the firewall rule or the network tag is missing instead.
 if [[ ! -d "/etc/letsencrypt/live/$HOST" ]]; then
   echo "==> obtaining a certificate for $HOST"
-  mv /etc/nginx/sites-enabled/codex-dispatcher /tmp/codex-site.bak
-  systemctl reload nginx || systemctl start nginx
+  install -d -m 755 /var/www/html
+  cat > /etc/nginx/sites-available/codex-acme <<ACMEEOF
+server {
+    listen 80 default_server;
+    server_name $HOST;
+    root /var/www/html;
+}
+ACMEEOF
+  ln -sf /etc/nginx/sites-available/codex-acme \
+         /etc/nginx/sites-enabled/codex-acme
+  nginx -t
+  systemctl restart nginx
   certbot certonly --webroot -w /var/www/html -d "$HOST" \
     --non-interactive --agree-tos --register-unsafely-without-email
-  mv /tmp/codex-site.bak /etc/nginx/sites-enabled/codex-dispatcher
+  rm -f /etc/nginx/sites-enabled/codex-acme
 fi
 
+ln -sf /etc/nginx/sites-available/codex-dispatcher \
+       /etc/nginx/sites-enabled/codex-dispatcher
 nginx -t
-systemctl reload nginx
+systemctl restart nginx
 
 echo
 echo "==> done. Verify from outside:"
