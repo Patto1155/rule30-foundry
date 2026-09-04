@@ -61,9 +61,12 @@ known, expensive failure modes. Check for them explicitly, and say so when \
 one applies:
 
 1. Negative results from an underpowered search class. Before any "we searched
-   class M and found no fit" conclusion, log2|M| must exceed n; otherwise the
-   negative is guaranteed by counting alone and carries no information. A
-   certificate was retracted in 2026-08 for exactly this.
+   class M and found no fit" conclusion, log2|M| >= n must hold; strictly below
+   that the negative is guaranteed by counting alone and carries no
+   information. Equality is informative, not vacuous -- at log2|M| = n the
+   class has 2^n members and a no-fit outcome is not forced by cardinality, so
+   do not reject boundary-case evidence. A certificate was retracted in 2026-08
+   for running an experiment strictly below the threshold.
 2. Bit order. Packed center-column bitstreams are written LSB-first; NumPy's
    default unpack is MSB-first. A bare np.unpackbits reverses every 8-bit block
    -- ~49.95% of positions differ while the bit mean is identical, so no
@@ -161,6 +164,41 @@ def _ssl_context() -> ssl.SSLContext:
     return ssl.create_default_context()
 
 
+class NoRedirect(urllib.request.HTTPRedirectHandler):
+    """Refuse every redirect rather than forwarding the bearer token.
+
+    urllib's default redirect handler rebuilds the request for the new URL and
+    copies every header across except content-length and content-type -- see
+    CONTENT_HEADERS in urllib.request.HTTPRedirectHandler.redirect_request.
+    Authorization is not in that list, so a 302 pointing anywhere at all hands
+    CODEX_COUNCIL_TOKEN to whatever answers, no warning and no error.
+
+    Checking that the origin is unchanged would be enough, but nothing in this
+    protocol has any business redirecting: the client talks to one endpoint it
+    was configured with, and nginx's only redirect is :80 -> :443, which a
+    correctly configured CODEX_COUNCIL_URL never hits. So refuse the lot; a
+    redirect here means something is wrong and should be read, not followed.
+    """
+
+    def redirect_request(self, req, fp, code, msg, headers, newurl):
+        raise urllib.error.HTTPError(
+            req.full_url, code,
+            f"refusing to follow a {code} redirect to {newurl}: urllib would "
+            "forward the bearer token to that origin",
+            headers, fp)
+
+
+def _opener() -> urllib.request.OpenerDirector:
+    """Opener with redirects refused and the proxy handling left intact.
+
+    build_opener keeps its default handlers -- ProxyHandler among them, which
+    is what routes this through HTTPS_PROXY -- and swaps in the handlers passed
+    here for those of the same class.
+    """
+    return urllib.request.build_opener(
+        NoRedirect(), urllib.request.HTTPSHandler(context=_ssl_context()))
+
+
 def explain_http_error(err: urllib.error.HTTPError) -> str:
     if err.code in (401, 403) and err.headers.get("X-Dispatcher") == "codex":
         return ("dispatcher rejected the token (HTTP %d). CODEX_COUNCIL_TOKEN "
@@ -183,8 +221,7 @@ def explain_http_error(err: urllib.error.HTTPError) -> str:
 def ask(url: str, token: str, role: str, body: str, model: str | None,
         timeout: int) -> dict:
     req = build_request(url, token, role, body, model)
-    with urllib.request.urlopen(req, timeout=timeout,
-                                context=_ssl_context()) as resp:
+    with _opener().open(req, timeout=timeout) as resp:
         return json.loads(resp.read().decode("utf-8"))
 
 
@@ -208,8 +245,7 @@ def health(url: str, timeout: int = 30) -> dict:
     which otherwise fail in ways that look alike.
     """
     req = urllib.request.Request(health_url(url), method="GET")
-    with urllib.request.urlopen(req, timeout=timeout,
-                                context=_ssl_context()) as resp:
+    with _opener().open(req, timeout=timeout) as resp:
         return json.loads(resp.read().decode("utf-8"))
 
 
