@@ -46,7 +46,6 @@ grades left-edge structure as disjoint from the prize object.
 | PR | Branch | State |
 |---|---|---|
 | — | `claude/rule-30-foundry-env-tlbr9x` | Open, based on `main`. A2: the `verify` workflow. |
-| [#25](https://github.com/Patto1155/rule30-foundry/pull/25) | `claude/codex-tool-availability-3fbc2z` | Open, based on `main`. The Codex council + three subagent definitions. **Blocked on an environment change, not on review** — the dispatcher host must be added to the egress allowlist before any request leaves the container. See [`CODEX_COUNCIL.md`](CODEX_COUNCIL.md). |
 
 The #18 → #19 stack landed on 2026-09-02; #20 and #21 had already been merged
 into #19. Nothing is stacked. The 7 merged branches listed in
@@ -68,6 +67,40 @@ happened anyway. See [`BRANCHING.md`](BRANCHING.md).
 
 ## Recently closed
 
+- **Codex council**: #25 landed on 2026-09-04. `main` carries
+  `tools/council.py`, the VM-side dispatcher under `tools/codex_dispatcher/`,
+  and [`CODEX_COUNCIL.md`](CODEX_COUNCIL.md). The point is independence: every
+  grade in the ledger is currently produced and checked by one agent lineage,
+  and this puts a differently trained model on the same claim. It is not
+  authority — a council answer does not promote a ledger row, and disagreement
+  is the useful output.
+
+  **Working end to end, verified 2026-09-04.** The startup probe confirms
+  `--sandbox` and `--output-last-message` on codex 0.153.1, so reviews run
+  sandboxed read-only and the answer comes from the exact last-message file
+  rather than a parsed transcript.
+
+  The first real review was a deliberately vacuous negative: "no DFAO with
+  ≤24 states reproduces the first 10,000 center-column bits, therefore no
+  finite automaton does, grade it Certificate." It rejected the grade on
+  counting grounds, put `log2|M| < 254` against `n = 10,000`, and separately
+  caught the quantifier error (≤24 states cannot support "no finite
+  automaton"). `experiments/counting_bound.py --verdict 24:10000` independently
+  gives `244.078` and `VACUOUS` — so the outside model's arithmetic and verdict
+  both agree with the repo's own tool on a case the repo has been burned by.
+
+  Operational detail worth keeping, because it is not what was assumed: the
+  **egress allowlist updates live** in an already-running session — the proxy
+  enforces policy, not the container — but the **environment variables only
+  land on a container restart**. A session that can suddenly reach the host
+  while `CODEX_COUNCIL_*` is still unset is in that intermediate state, not
+  broken.
+
+  Same PR added `.claude/agents/`: `counting-bound`, `theory-gate`, `verifier`,
+  enforcing gates this repo mandates in prose and has never enforced
+  mechanically. `CLAUDE.md` authorises their use and records why they are not a
+  substitute for the council — they share a model lineage with whoever spawns
+  them, so agreement among them is not corroboration.
 - **A1**: the #18 → #19 stack landed on 2026-09-02. `main` carries Tier 0
   tooling, the Nersissian audit, and the agent context bootstrap.
 - **A2**: CI added — `.github/workflows/verify.yml` runs
