@@ -58,6 +58,29 @@ a packing or seed mismatch. Real kernel bugs diverge *late*.
 - `docs/WORKFLOW.md` — the operating loop.
 - `docs/AGENT_QUICKSTART.md` — tool map and prize-facing triage.
 
+## Subagents
+
+Spawning subagents is **authorised** in this repo — you do not need to ask
+first. Three are defined in `.claude/agents/`, each enforcing a gate this repo
+already mandates in prose but has never enforced mechanically:
+
+| Agent | Gate it enforces | Run it before |
+|---|---|---|
+| `counting-bound` | Rule 1 above — `log2\|M\| >= n`, or the negative is vacuous | any searched-and-found-no-fit experiment |
+| `theory-gate` | `AGENTS.md` "Before Proposing Experiments" | proposing any experiment |
+| `verifier` | "SKIP is not PASS" | an experiment, and a commit |
+
+Each starts cold and re-derives context, so use one where the isolation is
+worth that cost — an independent check, or a search wide enough that the
+findings matter more than the transcript. Do not fan out across subagents for
+work that is faster done directly.
+
+**Subagents give throughput, not independence.** They share a model lineage
+with whoever spawned them, and therefore share its blind spots. They are not a
+substitute for `tools/council.py`, whose whole purpose is to put a differently
+trained model on the same claim. Never cite agreement among subagents as
+corroboration.
+
 ## Branches
 
 Short version: **branch from `main`, one PR deep, delete after merge.**

@@ -6,7 +6,7 @@ lives here. Overwrite this file in place; git history keeps the old versions.
 No other file may carry a "current state as of" section —
 `tools/lint_ledger.py` enforces it.
 
-Updated: 2026-09-03 · Newest log: `docs/experiment-logs/2026-09-01-nersissian-end-to-end-audit.md`
+Updated: 2026-09-04 · Newest log: `docs/experiment-logs/2026-09-01-nersissian-end-to-end-audit.md`
 
 ## Where the three prize problems stand
 
@@ -46,6 +46,7 @@ grades left-edge structure as disjoint from the prize object.
 | PR | Branch | State |
 |---|---|---|
 | — | `claude/rule-30-foundry-env-tlbr9x` | Open, based on `main`. A2: the `verify` workflow. |
+| [#25](https://github.com/Patto1155/rule30-foundry/pull/25) | `claude/codex-tool-availability-3fbc2z` | Open, based on `main`. The Codex council + three subagent definitions. **Blocked on an environment change, not on review** — the dispatcher host must be added to the egress allowlist before any request leaves the container. See [`CODEX_COUNCIL.md`](CODEX_COUNCIL.md). |
 
 The #18 → #19 stack landed on 2026-09-02; #20 and #21 had already been merged
 into #19. Nothing is stacked. The 7 merged branches listed in
