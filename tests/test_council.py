@@ -13,11 +13,14 @@ tests inspect, which is why it is separate from `ask`.
 from __future__ import annotations
 
 import json
+import os
 import sys
 import unittest
 import urllib.error
+import urllib.request
 from email.message import Message
 from pathlib import Path
+from unittest import mock
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "tools"))
 
@@ -188,19 +191,34 @@ class TestNoRedirect(unittest.TestCase):
         self.assertIn("attacker.invalid", text)
         self.assertIn("bearer token", text)
 
-    def test_the_opener_installs_it(self):
-        opener = council._opener()
-        self.assertTrue(
-            any(isinstance(h, council.NoRedirect) for h in opener.handlers))
+    def test_the_opener_installs_it_with_or_without_a_proxy(self):
+        """The security property must not depend on the environment."""
+        for env in ({}, {"https_proxy": "http://127.0.0.1:9"}):
+            with self.subTest(env=sorted(env)):
+                with mock.patch.dict(os.environ, env, clear=True):
+                    opener = council._opener()
+                self.assertTrue(any(isinstance(h, council.NoRedirect)
+                                    for h in opener.handlers))
 
-    def test_the_opener_keeps_proxy_support(self):
+    def test_the_opener_uses_a_configured_proxy(self):
         """build_opener's defaults include ProxyHandler, which is what routes
-        this through HTTPS_PROXY. Replacing the redirect handler must not cost
-        us that."""
-        import urllib.request as ur
-        opener = council._opener()
-        self.assertTrue(
-            any(isinstance(h, ur.ProxyHandler) for h in opener.handlers))
+        this through HTTPS_PROXY. Swapping the redirect handler must not cost
+        us that.
+
+        The proxy is set explicitly here rather than inherited from the
+        environment. ProxyHandler grows its `<scheme>_open` methods from
+        getproxies(), and with no proxy configured it has none -- so
+        OpenerDirector.add_handler, which skips the bare `proxy_open`, never
+        registers it at all. Asserting on the inherited environment therefore
+        passes in a container that sets HTTPS_PROXY and fails in CI, which
+        sets none. That is exactly how this test failed after its first push.
+        """
+        with mock.patch.dict(os.environ,
+                             {"https_proxy": "http://127.0.0.1:9"},
+                             clear=True):
+            opener = council._opener()
+        self.assertTrue(any(isinstance(h, urllib.request.ProxyHandler)
+                            for h in opener.handlers))
 
 
 class TestLimits(unittest.TestCase):

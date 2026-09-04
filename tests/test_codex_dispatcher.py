@@ -116,10 +116,23 @@ class TestBuildCodexArgv(unittest.TestCase):
 class TestTokenOk(unittest.TestCase):
     def test_fails_closed_when_the_server_has_no_token(self):
         """No credential configured must mean "reject everything", never
-        "accept anything". Under CI, server.TOKEN is exactly that case."""
-        self.assertEqual(server.TOKEN, "")
-        self.assertFalse(server.token_ok("Bearer anything"))
-        self.assertFalse(server.token_ok(None))
+        "accept anything".
+
+        The empty token is set explicitly rather than read from the ambient
+        environment. server.TOKEN is populated from CODEX_COUNCIL_TOKEN at
+        import, so an assertion that it is empty holds only while nobody has
+        configured a council -- and step 5 of docs/CODEX_COUNCIL.md tells the
+        operator to set exactly that variable. This test would then start
+        failing on the machine that had just been set up correctly.
+        """
+        original = server.TOKEN
+        server.TOKEN = ""
+        try:
+            self.assertFalse(server.token_ok("Bearer anything"))
+            self.assertFalse(server.token_ok(None))
+            self.assertFalse(server.token_ok("Bearer "))
+        finally:
+            server.TOKEN = original
 
     def test_matches_only_the_exact_bearer_value(self):
         original = server.TOKEN
