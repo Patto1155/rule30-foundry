@@ -1,0 +1,42 @@
+# systemd unit for the Codex dispatcher. Installed to
+# /etc/systemd/system/codex-dispatcher.service by install.sh.
+#
+# It must run as the user that ran `codex login`: the credential lives in that
+# user's ~/.codex/auth.json, and a service running as anyone else authenticates
+# as nobody. This is the single most common way to get a dispatcher that starts
+# cleanly and then fails every request.
+#
+# ProtectHome is deliberately NOT set. codex reads auth.json and writes session
+# state under ~/.codex, so hiding the home directory would break it. The
+# hardening below is what remains available given that constraint.
+
+[Unit]
+Description=Codex dispatcher (council endpoint)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=__CODEX_USER__
+Group=__CODEX_USER__
+WorkingDirectory=/home/__CODEX_USER__
+Environment=HOME=/home/__CODEX_USER__
+EnvironmentFile=/etc/codex-dispatcher.env
+ExecStart=/usr/bin/python3 /opt/codex-dispatcher/server.py
+Restart=on-failure
+RestartSec=5
+
+NoNewPrivileges=yes
+PrivateTmp=yes
+ProtectSystem=full
+ProtectKernelTunables=yes
+ProtectControlGroups=yes
+RestrictSUIDSGID=yes
+RestrictRealtime=yes
+LockPersonality=yes
+
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
