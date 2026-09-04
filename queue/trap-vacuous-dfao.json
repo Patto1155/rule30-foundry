@@ -1,0 +1,13 @@
+{
+  "name": "TRAP-vacuous-dfao-24",
+  "kind": "search",
+  "seed": "single-black-cell",
+  "theory_gate": "OPEN",
+  "script": "experiments/counting_bound.py",
+  "argv": [],
+  "claims": ["negative"],
+  "reads_packed_bitstream": false,
+  "search": {"class": "dfao", "states": 24, "base": 2, "prefix_bits": 10000},
+  "budget": {"minutes": 5, "device": "cpu"},
+  "notes": "DELIBERATE TRAP. This is the exact shape of the experiment whose certificate was retracted in 2026-08: a DFAO class far too small for the prefix it is tested against. log2|M| ~ 244 against n = 10,000. preflight MUST refuse it. verify_all checks that it still does; if this manifest ever passes, a gate has stopped gating."
+}

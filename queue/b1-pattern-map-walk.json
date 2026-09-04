@@ -1,0 +1,13 @@
+{
+  "name": "b1-pattern-map-walk-32",
+  "kind": "measurement",
+  "seed": "single-black-cell",
+  "theory_gate": "OPEN",
+  "theory_gate_citation": "docs/CLAIM_LEDGER.md names this as the stated promotion route for the period(d) ~ 2*log2(d) row: confirm the 32->64 doubling near d ~ 8.6e9 via the generalized pattern map. docs/STATUS.md B1.",
+  "script": "experiments/pattern_map_walk.py",
+  "argv": ["--max-d", "12000000000", "--out", "data/wedge/pattern_map_walk32.json", "--pretty"],
+  "claims": [],
+  "reads_packed_bitstream": false,
+  "budget": {"minutes": 30, "device": "cpu"},
+  "notes": "STATUS.md B1: ~26 min CPU, palate cleanser, explicitly NOT prize progress. Ledger grades left-edge structure as disjoint from the prize object. Run it to close Item 14, not to advance a prize."
+}
