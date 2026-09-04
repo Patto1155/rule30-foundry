@@ -46,7 +46,6 @@ grades left-edge structure as disjoint from the prize object.
 | PR | Branch | State |
 |---|---|---|
 | — | `claude/rule-30-foundry-env-tlbr9x` | Open, based on `main`. A2: the `verify` workflow. |
-| [#25](https://github.com/Patto1155/rule30-foundry/pull/25) | `claude/codex-tool-availability-3fbc2z` | Open, based on `main`. The Codex council + three subagent definitions. **Blocked on an environment change, not on review** — the dispatcher host must be added to the egress allowlist before any request leaves the container. See [`CODEX_COUNCIL.md`](CODEX_COUNCIL.md). |
 
 The #18 → #19 stack landed on 2026-09-02; #20 and #21 had already been merged
 into #19. Nothing is stacked. The 7 merged branches listed in
@@ -68,6 +67,26 @@ happened anyway. See [`BRANCHING.md`](BRANCHING.md).
 
 ## Recently closed
 
+- **Codex council**: #25 landed on 2026-09-04. `main` carries
+  `tools/council.py`, the VM-side dispatcher under `tools/codex_dispatcher/`,
+  and [`CODEX_COUNCIL.md`](CODEX_COUNCIL.md). The point is independence: every
+  grade in the ledger is currently produced and checked by one agent lineage,
+  and this puts a differently trained model on the same claim. It is not
+  authority — a council answer does not promote a ledger row, and disagreement
+  is the useful output.
+
+  **Not yet exercised end to end.** The dispatcher answers `/health` over TLS
+  on the VM, and its startup probe confirms `--sandbox` and
+  `--output-last-message` both exist on codex 0.153.1 — but no review has run
+  through it. The remaining step is an egress allowlist entry for the
+  dispatcher host, which is an environment change rather than a code one, and
+  takes effect only in a new session.
+
+  Same PR added `.claude/agents/`: `counting-bound`, `theory-gate`, `verifier`,
+  enforcing gates this repo mandates in prose and has never enforced
+  mechanically. `CLAUDE.md` authorises their use and records why they are not a
+  substitute for the council — they share a model lineage with whoever spawns
+  them, so agreement among them is not corroboration.
 - **A1**: the #18 → #19 stack landed on 2026-09-02. `main` carries Tier 0
   tooling, the Nersissian audit, and the agent context bootstrap.
 - **A2**: CI added — `.github/workflows/verify.yml` runs
