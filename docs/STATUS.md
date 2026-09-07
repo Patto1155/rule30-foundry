@@ -6,7 +6,7 @@ lives here. Overwrite this file in place; git history keeps the old versions.
 No other file may carry a "current state as of" section —
 `tools/lint_ledger.py` enforces it.
 
-Updated: 2026-09-04 · Newest log: `docs/experiment-logs/2026-09-01-nersissian-end-to-end-audit.md`
+Updated: 2026-09-07 · Newest log: `docs/experiment-logs/2026-09-01-nersissian-end-to-end-audit.md`
 
 ## Where the three prize problems stand
 
@@ -47,9 +47,13 @@ grades left-edge structure as disjoint from the prize object.
 |---|---|---|
 | — | `claude/rule-30-foundry-env-tlbr9x` | Open, based on `main`. A2: the `verify` workflow. |
 | [#27](https://github.com/Patto1155/rule30-foundry/pull/27) | `claude/codex-tool-availability-3fbc2z` | Open, based on `main`. The workhorse: `tools/gates.py` turns CLAUDE.md's rules into executable preflight/postflight checks, `tools/workhorse.py` is a pull-based runner that cannot execute what the gates refuse. New `gates-trap` stage in `verify_all`. **No hardware bought and none justified yet** — see [`WORKHORSE.md`](WORKHORSE.md) and [`COMPUTE_PLAN.md`](COMPUTE_PLAN.md) §1. |
+| — | `claude/codex-worker-integration-8pd8ls` | Open, **stacked on #27** (it edits `workhorse.py` and reuses `gates.py`). `tools/codex_worker.py` makes Codex a general callable worker — six task modes, isolated `git worktree` per task, a structured result contract, and verification the harness runs itself rather than believing. Review becomes one mode of six. Exercised end to end against the live dispatcher on 2026-09-07; transcript in [`CODEX_WORKER.md`](CODEX_WORKER.md). |
 
 The #18 → #19 stack landed on 2026-09-02; #20 and #21 had already been merged
-into #19. Nothing is stacked. The 7 merged branches listed in
+into #19. One branch is stacked, one level deep: `codex-worker-integration` on
+#27, which is what [`BRANCHING.md`](BRANCHING.md) §2 permits — it edits
+`tools/workhorse.py` and imports `tools/gates.py`, neither of which exists on
+`main`. Land #27 first. The 7 merged branches listed in
 [`BRANCHING.md`](BRANCHING.md) are still awaiting deletion (see *Chores*).
 
 ### Why #20 and #21 were merged rather than left open

@@ -52,6 +52,9 @@ toward checkable artifacts.
 | Counting bound for a search class | `experiments/counting_bound.py` | Run BEFORE any "no fit found" experiment. `--verdict S:N` evaluates a specific claim. |
 | Settled-wedge decomposition | `experiments/wedge_profile.py` | Single-seed cone structure; settling law, entropy split, cap invariance. |
 | Diagonal recursion + period-16 | `experiments/diagonal_recursion.py` | Bit-exact identity check, period histogram, O(1) pattern map. |
+| Delegate coding, debugging, testing | `tools/codex_worker.py` | Codex on an isolated branch; returns a reviewable branch plus a structured report. `docs/CODEX_WORKER.md`. Not for scripts that already exist. |
+| Run a queued experiment | `tools/workhorse.py --agent script` | Gated runner. The default is no agent, on purpose. `docs/WORKHORSE.md`. |
+| Outside opinion on a claim | `tools/council.py`, or `codex_worker.py --mode review` | A different model lineage. Claude subagents are throughput, not independence. |
 
 ## Prize-Facing Filter
 

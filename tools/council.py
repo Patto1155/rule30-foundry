@@ -54,12 +54,12 @@ DEFAULT_TIMEOUT_S = 900
 # this repo months (CLAUDE.md, AGENTS.md "Implementation Guardrails"). A
 # reviewer who does not know them re-derives generic advice; one who does can
 # check the specific things that went wrong before.
-REPO_GUARDRAILS = """\
-Context on the repository whose work you are reviewing (rule30-foundry, \
-empirical work on Wolfram's three Rule 30 prize problems). These are its \
-known, expensive failure modes. Check for them explicitly, and say so when \
-one applies:
-
+#
+# Kept without a lead-in so tools/codex_worker.py can send the same list to an
+# agent that is *doing* the work rather than reviewing it -- see guardrails()
+# below. Two copies of this list would drift, and the drifted copy is always
+# the one that gets sent.
+REPO_FAILURE_MODES = """\
 1. Negative results from an underpowered search class. Before any "we searched
    class M and found no fit" conclusion, log2|M| >= n must hold; strictly below
    that the negative is guaranteed by counting alone and carries no
@@ -87,6 +87,19 @@ one applies:
 Do not defer to the framing you were given. If the claim is fine, say it is
 fine and say what would falsify it. If it is not, name the specific step that
 fails rather than listing generic caveats."""
+
+
+def guardrails(activity: str = "reviewing") -> str:
+    """The failure-mode list under a lead-in that names what the reader is
+    doing. `reviewing` for the council, `doing` for a delegated worker."""
+    return (f"Context on the repository whose work you are {activity} "
+            "(rule30-foundry, empirical work on Wolfram's three Rule 30 prize "
+            "problems). These are its known, expensive failure modes. Check "
+            "for them explicitly, and say so when one applies:\n\n"
+            + REPO_FAILURE_MODES)
+
+
+REPO_GUARDRAILS = guardrails("reviewing")
 
 ROLE_PREAMBLES = {
     "review": """\
