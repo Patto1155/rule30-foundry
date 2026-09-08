@@ -182,11 +182,17 @@ class TestEndToEnd(unittest.TestCase):
 
     # ---- report-only modes -------------------------------------------------
 
-    def test_investigate_returns_findings_and_an_empty_branch(self):
+    def test_investigate_commits_its_report_and_nothing_else(self):
+        # An investigate task must not touch what it audits -- but it must
+        # still leave its findings on the branch. Committing nothing at all
+        # was the old behaviour, and it silently discarded three audits from
+        # a 15-task pool run: the report lived only in the gitignored runs/
+        # tree, which does not survive the container.
         result = self.submit("What does gates.py enforce?", mode="investigate")
         self.assertEqual(result["verdict"], "READY-FOR-REVIEW")
-        self.assertIsNone(result["patch"])
-        self.assertEqual(result["files_changed"], [])
+        self.assertEqual(result["files_changed"],
+                         [f"A\tqueue/results/{result['task_id']}.json"])
+        self.assertIsNotNone(result["patch"])
         self.assertTrue(result["report"]["summary"])
 
     # ---- verification is not optional by accident -------------------------

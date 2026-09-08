@@ -6,32 +6,32 @@ lives here. Overwrite this file in place; git history keeps the old versions.
 No other file may carry a "current state as of" section —
 `tools/lint_ledger.py` enforces it.
 
-Updated: 2026-09-08 · Newest log: `docs/experiment-logs/2026-09-01-nersissian-end-to-end-audit.md`
+Updated: 2026-09-08 · Newest log: `docs/experiment-logs/2026-09-03-algebraic-annihilator.md`
 
 ## Where the three prize problems stand
 
 | # | Problem | Best current result | Grade |
 |---|---|---|---|
 | 1 | Does the center column repeat? | No period `p <= 5,000,000` in the first 10M bits — **decided exactly**, all 9,999,936 candidates, 0 survivors. Cannot resolve the problem: eventual periodicity is asymptotic. | Certificate |
-| 2 | Is there a shortcut for the nth bit? | None found. `s*(n)` minimal-DFAO curve certified to n=48 with DRAT proofs. ML routes (I/K/L) are **scoped down** — blind to long-lag XOR structure. | Certificate (s*(n)) |
+| 2 | Is there a shortcut for the nth bit? | None found. `s*(n)` minimal-DFAO curve certified to n=48 with DRAT proofs. No GF(2) annihilator of degree `<= 3` over windows to 64 bits, nor degree `<= 4` to 32 bits — three degrees past Experiment S's linear result, with a self-verifying certificate. ML routes (I/K/L) are **scoped down** — blind to long-lag XOR structure, and so is every annihilator window searched so far, which is C2c. | Certificate (s*(n)) |
 | 3 | Are 0s and 1s equidistributed? | Bias < 0.05% over 10M bits. Uniform Bernoulli(1/2) is invariant (proved, left-permutivity) — which is *not* the same as the single seed's limiting frequency, the actual question. A published shortcut claim is now under audit, with the warm query separated from the cold `n -> c_n` cost. | Theorem + Observation |
 
 ## Open work, ranked
 
 Sequence approved 2026-09-02: **A1 → A2 → C2**, with B3 as filler. Reasoning
 and the full option analysis: [`handover/CURRENT.md`](handover/CURRENT.md).
-A1 and A2 are done (see *Recently closed*). **C2 has an open PR** — [#23](https://github.com/Patto1155/rule30-foundry/pull/23) claims to
-close C2 *and* C2b — so the next decision is reviewing and landing that, not
-starting the work.
+A1, A2, C2 and C2b are done (see *Recently closed*); **B3 is next**.
 
 | # | Work | Kind | Cost | Blocks |
 |---|---|---|---|---|
 | A3 | **Make bitstreams reachable** (Release asset or committed prefix) | Infra | ~½ day | B2 |
-| C2 | **Algebraic annihilator search** — low-degree GF(2) relations over `w`-bit windows, via monomial-matrix rank. **Open as [#23](https://github.com/Patto1155/rule30-foundry/pull/23)**, awaiting review, not awaiting work | Research | Days | — |
+| C2c | **Annihilators over non-consecutive bit selections** — every window searched so far is a run of adjacent bits, so long-lag structure (the I/K/L blind spot) is untested | Research | Days | — |
+| C2d | **Multi-word window codes**, lifting `w` past the `uint64` cap of 64 | Research | ~½ day | — |
 | B3 | Extend `s*(n)` past n=48 — re-costed ~28× cheaper | Research | Hours | — |
 | E1 | Write up the eight Theorem rows; `s*(n)` is citable | Writing | Days | — |
 | B2 | Exact period search on 46M — no code change, extends to `p <= 2.3e7` | Research | Minutes | A3 |
 | B1 | Item 14 pattern-map walk — palate cleanser, **not prize progress**. Queued as `queue/b1-pattern-map-walk.json` and passes preflight, but **has never been run**: it is the cheapest thing that would show the gates working on a real task | Research | ~26 min CPU | — |
+| G1 | **Wire C2's annihilator gates into `preflight`** — `counting_bound.py` has `annihilator_dimension`, `max_zeros_of_degree` and `annihilator_verdict`, but #23 predates `tools/gates.py`, so `gate_counting_bound` has no annihilator branch and nothing calls them. Note the class is vacuous in *both* directions and the DFAO rule (`log2\|M\| >= n`) is the wrong way round for it, so the branch must call these functions rather than a second derivation | Infra | Hours | C2c, C2d |
 
 **De-prioritised:** more neural experiments (the ceiling is partly the models'
 — I/K/L are blind to long-lag XOR). Item 14 is worth closing but the ledger
@@ -39,26 +39,36 @@ grades left-edge structure as disjoint from the prize object.
 
 ## Chores
 
-- **Delete 7 merged branches** — verified safe, blocked from the container by
-  an egress `HTTP 403`. Command in [`handover/CURRENT.md`](handover/CURRENT.md).
-  Then enable auto-delete head branches.
+- **Delete merged branches** — the original 7, plus `claude/codex-tool-availability-3fbc2z`,
+  `claude/codex-worker-integration-8pd8ls`, `claude/deepseek-parallel-experiments-hu5ue3`,
+  `claude/rule-30-foundry-env-tlbr9x` and `claude/recent-prs-review-llfk1b` once
+  this PR lands. Verified safe, blocked from the container by an egress
+  `HTTP 403`. Command in [`handover/CURRENT.md`](handover/CURRENT.md). Then
+  enable auto-delete head branches.
+- **Triage 12 unreviewed `codex/test-*` branches** from the 15-task pool run.
+  Each adds one `tests/test_<module>.py` and none has a PR. **Do not merge
+  `codex/test-add-unit-tests-for-experiments-orbit-cyc-aacc346f` as it stands**:
+  it edited `experiments/orbit_cycle_structure.py`, which its spec forbade, and
+  the edit is wrong. It changes Floyd phase 2 from `tortoise = start` to
+  `tortoise = step(start)`; measured against known `mu` and `lambda` the
+  original is correct in all 12 cases while the edit is off by one at
+  `lambda = 1` and does not terminate at `lambda > 1`, because the two pointers
+  hold a constant offset around the cycle. The test file itself may be worth
+  keeping; the source edit is not.
 
 ## In-flight branches
 
 | PR | Branch | State |
 |---|---|---|
-| [#23](https://github.com/Patto1155/rule30-foundry/pull/23) | `claude/rule-30-foundry-env-tlbr9x` | Open. **C2 + C2b**, not A2 — this row said "A2: the `verify` workflow" long after A2 landed. Claims no GF(2) annihilator of degree <= 3 over 64-bit windows, nor degree <= 4 over 32-bit, with a self-verifying certificate. Based on `c64ff83`, which `main` is now five commits past, so it needs the base merged in before it can land. |
-| [#24](https://github.com/Patto1155/rule30-foundry/pull/24) | `claude/rule-30-annihilators-phvmz7` | Open since 2026-09-03, based on `c64ff83`. "Add the council: dispatch briefs to external reviewer models" — **apparently superseded by #25**, which landed the council on 2026-09-04. Worth closing rather than rebasing, but that is the author's call. Note the branch name and the title disagree, so check which it actually is first. |
-| [#30](https://github.com/Patto1155/rule30-foundry/pull/30) | `claude/recent-prs-review-llfk1b` | Open, based on current `main`. Commits every delegated task's report into its own branch. **If it also edits this file, it and this PR will collide** — the standing hazard in *Why #20 and #21 were merged* below. |
+| [#31](https://github.com/Patto1155/rule30-foundry/pull/31) | `claude/codex-tool-availability-3fbc2z` | This PR. Reconciles this file after #23, #27–#30 landed. |
+| [#24](https://github.com/Patto1155/rule30-foundry/pull/24) | `claude/rule-30-annihilators-phvmz7` | Open. Reduced from a competing council implementation to `briefs/` alone — the brief template, which #25 has no equivalent of. Everything it shared with #25 is dropped. |
 
-The #18 -> #19 stack landed on 2026-09-02; #20 and #21 had already been merged
-into #19. **The three-deep stack is gone**: #27, #28 and #29 all landed within
-thirty seconds on 2026-09-08, in bottom-up order, which is what
-[`BRANCHING.md`](BRANCHING.md) §2's remedy prescribes. Nothing is stacked now
-— the three open PRs are siblings on `main`, though #23 and #24 are based on a
-commit five behind it. The 7 merged branches listed in
+The #18 → #19 stack landed on 2026-09-02; #20 and #21 had already been merged
+into #19. The three-deep delegation stack is gone: #27, #28 and #29 landed on
+2026-09-08 in bottom-up order, which is [`BRANCHING.md`](BRANCHING.md) §2's own
+remedy. Nothing is stacked. The merged branches listed in
 [`BRANCHING.md`](BRANCHING.md) are still awaiting deletion (see *Chores*), and
-#27-#29's branches now join them.
+#27–#29's branches now join them.
 
 ### Why #20 and #21 were merged rather than left open
 
@@ -76,34 +86,62 @@ happened anyway. See [`BRANCHING.md`](BRANCHING.md).
 
 ## Recently closed
 
-- **The delegation stack**: #27, #28 and #29 all landed on 2026-09-08. `main`
-  now carries `tools/gates.py`, `tools/workhorse.py`, `tools/codex_worker.py`,
-  `tools/providers.py`, `tools/worker_pool.py` and `tools/agent_loop.py`, with
-  [`WORKHORSE.md`](WORKHORSE.md), [`CODEX_WORKER.md`](CODEX_WORKER.md),
-  [`WORKER_POOL.md`](WORKER_POOL.md) and [`AGENT_LOOP.md`](AGENT_LOOP.md).
-  `CLAUDE.md` gained the *Delegation* section that routes work between them.
+- **The delegation stack**: #27, #28 and #29 landed on 2026-09-08 in bottom-up
+  order. `main` carries `tools/gates.py`, `tools/workhorse.py`,
+  `tools/codex_worker.py`, `tools/providers.py`, `tools/worker_pool.py` and
+  `tools/agent_loop.py`, with [`WORKHORSE.md`](WORKHORSE.md),
+  [`CODEX_WORKER.md`](CODEX_WORKER.md), [`WORKER_POOL.md`](WORKER_POOL.md) and
+  [`AGENT_LOOP.md`](AGENT_LOOP.md).
 
   The through-line is that **grunt work goes to an outside model and the
-  repo's rules are enforced as code, not as prose**. `gates.py` turns
-  CLAUDE.md's three expensive rules into preflight and postflight checks a
-  runner cannot bypass; the `gates-trap` stage in `verify_all` asserts the
-  counting-bound gate still refuses a known-vacuous manifest, so a gate that
-  stops gating breaks the build rather than going quiet.
+  repo's rules are enforced as code, not prose**. The `gates-trap` stage in
+  `verify_all` asserts the counting-bound gate still refuses a known-vacuous
+  manifest, so a gate that stops gating breaks the build rather than going
+  quiet.
 
   **What has and has not been exercised.** The council answered a real review
   on 2026-09-04 and reproduced `counting_bound.py`'s own verdict on a planted
-  vacuous negative. The worker pool ran live against both providers. But
-  `workhorse.py --agent codex` has still never implemented an experiment, and
-  `queue/b1-pattern-map-walk.json` — the one queued real task — has not been
-  run. The pilot that would settle whether any of this is trustworthy is B1
-  and B2 on hardware already owned, with traps planted, checking the
-  validation layer catches every invalid result. Until that runs, the
-  machinery is built and argued for rather than demonstrated.
+  vacuous negative. The pool has run live against both providers and two model
+  families. But `workhorse.py --agent codex` has still never implemented an
+  experiment, and `queue/b1-pattern-map-walk.json` — the one queued real task —
+  **has never been run**. The pilot that would settle whether any of this is
+  trustworthy is B1 and B2 on hardware already owned, with traps planted,
+  checking the validation layer catches every invalid result. Until that runs
+  the machinery is argued for rather than demonstrated. No hardware bought and
+  none justified: [`COMPUTE_PLAN.md`](COMPUTE_PLAN.md) §1 is titled *"The
+  premise for renting was wrong"*, and the GPU simulator still does not
+  checkpoint, which makes spot instances actively wrong.
+- **#30**: three defects that each silently discarded paid-for work, all found
+  by pointing the pool at a model family it had never run against. A task that
+  changed nothing committed nothing, so `investigate` mode — which is forbidden
+  from touching what it audits — left its report only in the gitignored `runs/`
+  tree; three audits from the 15-task run were lost that way and are not
+  recoverable. `max_tokens` was never sent, so OpenRouter defaulted it from the
+  advertised context and the backend refused with HTTP 400 on turn zero. And
+  the provider's real error was discarded in favour of a routing-level generic.
+  Every task branch now carries `queue/results/<task_id>.json`.
 
-  **No hardware bought, and none justified.**
-  [`COMPUTE_PLAN.md`](COMPUTE_PLAN.md) §1 is titled *"The premise for renting
-  was wrong"* and §5 puts all of §3 under about $20; the GPU simulator still
-  does not checkpoint, which makes spot instances actively wrong.
+  **Known limitation, unfixed:** `agent_loop.py` reads only `message.content`.
+  A thinking model returns `reasoning`/`reasoning_details` as well, and
+  OpenRouter wants the latter echoed back across tool-calling turns. One audit
+  made 12 successful tool calls over 13 turns with every turn's `content`
+  empty — the work was done and thrown away. Prefer non-thinking models for
+  pool work until that is handled.
+- **C2 + C2b**: algebraic annihilator search — no GF(2) relation of degree
+  `<= 3` over windows up to 64 bits, nor degree `<= 4` up to 32 bits, in all 20
+  of 24 cells that clear both gates
+  ([log](experiment-logs/2026-09-03-algebraic-annihilator.md)). The gate is the
+  result worth remembering: this model class is vacuous in *both* directions,
+  and the Reed–Muller ceiling `2^w - 2^(w-d)` voids every search at `w <= 22`
+  regardless of the sequence. A first pass reported an apparent shortcut at
+  `w = 20` that was a sorted-subsample artifact at parameters that were vacuous
+  anyway; full-stream verification caught it. A second, worse defect was caught in **review**, not here: the golden input was decoded LSB-first when the golden files are MSB-first by documented exception, so the whole first grid ran on a byte-block-reversed stream at an unchanged bit mean of 0.500222. Reranked verdicts: none — every rank was full before and after. `load_bits` now verifies the decode against a naive center column instead of trusting a convention. Two routes closed alongside it:
+  **space-time patches**, where the local rule is itself a degree-2 relation so
+  the search succeeds by construction — all 6 rule instances lie in the kernel
+  (0 violations), a forced positive. Whether the kernel is *only* the rule
+  ideal is undetermined and no longer claimed, and
+  **`w <= 22`** for any degree. Width turned out to be the cheap axis — `w=64`
+  at `d=2` costs `D=2081` and 12 s, against `D=41449` for `w=32` at `d=4`.
 - **Codex council**: #25 landed on 2026-09-04. `main` carries
   `tools/council.py`, the VM-side dispatcher under `tools/codex_dispatcher/`,
   and [`CODEX_COUNCIL.md`](CODEX_COUNCIL.md). The point is independence: every

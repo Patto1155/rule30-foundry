@@ -211,7 +211,37 @@ Note the numerical coincidence with the ensemble damage velocity
 | Any bounded-period claim for the left diagonals | **Closed - the period is UNBOUNDED.** `period(d) ~ 2*log2(d)`; period 32 first appears at d=87867. | `2026-08-19-period16-refuted.md` |
 | Finite-orbit / Floyd cycle certificate for period-16 | **Closed** — the state map is *partial*: the orbit leaves the deterministic region at every zero word (rate `2^-16`), so there is no cycle to find. `P[a trajectory survives long enough to cycle] ~ 10^-14231`. | `2026-08-19-orbit-cycle-structure.md` |
 | Exhaustive `2^32` state-graph reachability sweep for period-16 | **Closed** — same flaw: assumes a total map on `(w_{d-2}, w_{d-1})`, which is not a complete state. | `2026-08-19-orbit-cycle-structure.md` |
+| Low-degree GF(2) annihilator over center-column windows, `d <= 3`, `w <= 64` | **Closed** — full monomial rank at every parameter that clears both gates. Extends the LFSR row two degrees. | `2026-09-03-algebraic-annihilator.md` |
+| Annihilator search at `w <= 22` (10M prefix) | **Vacuous by construction** — more distinct windows than the `2^w - 2^(w-d)` zeros a nonzero degree-`d` polynomial can have (Reed–Muller minimum distance). The negative is forced for *any* sequence. At `w <= 18` the windows cover `GF(2)^w` outright. | §5 below |
+| Annihilator search over **space-time** patches | **Vacuous by construction — a forced positive.** The local rule is itself a degree-2 relation on a 2-row patch, so all 6 of its instances lie in the kernel on a 2x8 patch (0 violations) and the search succeeds whatever else is true. A search whose success is guaranteed by the definition of the object measures nothing. **Not** established: that the kernel is *only* the rule ideal — the kernel is 30-dimensional there and only 18 dimensions are attributed, the enumerated ideal slice being a lower bound. Deciding the rest is ideal membership, a Groebner problem, not a rank computation. `python experiments/algebraic_annihilator.py --space-time 8` | §5 below |
 | "Every left diagonal is eventually periodic" as a shortcut | **Closed** — settling time grows linearly, centre column never settles | §3 above |
+
+---
+
+## 5. The annihilator gate (do not re-derive this)
+
+An annihilator of a bit stream is a nonzero polynomial `f` of degree `<= d` over
+a `w`-bit sliding window with `f(s[i..i+w-1]) = 0` at every position. Searching
+for one is a rank computation, and it can be vacuous in **both** directions.
+
+**Forced positive.** The monomial basis has `D = sum_{k<=d} C(w,k)` elements.
+Fewer than `D` independent rows leaves a kernel by dimension alone. This is the
+Admission Rule with `log2|M| = D` against the number of distinct windows.
+
+**Forced negative.** The minimum distance of the Reed-Muller code `RM(d, w)` is
+`2^(w-d)`, so a nonzero polynomial of degree `<= d` takes the value 1 at least
+`2^(w-d)` times and therefore vanishes **at most `2^w - 2^(w-d)` times**. An
+annihilator must vanish on every observed window, so if the stream shows more
+distinct windows than that, no annihilator can exist *whatever the sequence is*.
+
+This is a theorem, not an estimate, and on the 10M prefix it is the binding one:
+it voids every search at `w <= 22`. Both gates live in
+`experiments/counting_bound.py` (`annihilator_verdict`, `max_zeros_of_degree`).
+
+**Width is the cheap axis.** The ceiling grows as `2^w` while `D` grows
+polynomially, so widening a search is gated far more loosely than deepening it:
+`w=64, d=2` needs `D=2081` columns and runs in seconds, while `w=32, d=4` needs
+`D=41449`. Widen before you deepen.
 
 ---
 
