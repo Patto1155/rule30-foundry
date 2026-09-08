@@ -13,7 +13,7 @@ Updated: 2026-09-08 · Newest log: `docs/experiment-logs/2026-09-03-algebraic-an
 | # | Problem | Best current result | Grade |
 |---|---|---|---|
 | 1 | Does the center column repeat? | No period `p <= 5,000,000` in the first 10M bits — **decided exactly**, all 9,999,936 candidates, 0 survivors. Cannot resolve the problem: eventual periodicity is asymptotic. | Certificate |
-| 2 | Is there a shortcut for the nth bit? | None found. `s*(n)` minimal-DFAO curve certified to n=48 with DRAT proofs. ML routes (I/K/L) are **scoped down** — blind to long-lag XOR structure. | Certificate (s*(n)) |
+| 2 | Is there a shortcut for the nth bit? | None found. `s*(n)` minimal-DFAO curve certified to n=48 with DRAT proofs. No GF(2) annihilator of degree `<= 3` over windows to 64 bits, nor degree `<= 4` to 32 bits — three degrees past Experiment S's linear result, with a self-verifying certificate. ML routes (I/K/L) are **scoped down** — blind to long-lag XOR structure, and so is every annihilator window searched so far, which is C2c. | Certificate (s*(n)) |
 | 3 | Are 0s and 1s equidistributed? | Bias < 0.05% over 10M bits. Uniform Bernoulli(1/2) is invariant (proved, left-permutivity) — which is *not* the same as the single seed's limiting frequency, the actual question. A published shortcut claim is now under audit, with the warm query separated from the cold `n -> c_n` cost. | Theorem + Observation |
 
 ## Open work, ranked
@@ -30,7 +30,8 @@ A1, A2, C2 and C2b are done (see *Recently closed*); **B3 is next**.
 | B3 | Extend `s*(n)` past n=48 — re-costed ~28× cheaper | Research | Hours | — |
 | E1 | Write up the eight Theorem rows; `s*(n)` is citable | Writing | Days | — |
 | B2 | Exact period search on 46M — no code change, extends to `p <= 2.3e7` | Research | Minutes | A3 |
-| B1 | Item 14 pattern-map walk — palate cleanser, **not prize progress**. Queued as `queue/b1-pattern-map-walk.json`; passes preflight | Research | ~26 min CPU | — |
+| B1 | Item 14 pattern-map walk — palate cleanser, **not prize progress**. Queued as `queue/b1-pattern-map-walk.json` and passes preflight, but **has never been run**: it is the cheapest thing that would show the gates working on a real task | Research | ~26 min CPU | — |
+| G1 | **Wire C2's annihilator gates into `preflight`** — `counting_bound.py` has `annihilator_dimension`, `max_zeros_of_degree` and `annihilator_verdict`, but #23 predates `tools/gates.py`, so `gate_counting_bound` has no annihilator branch and nothing calls them. Note the class is vacuous in *both* directions and the DFAO rule (`log2\|M\| >= n`) is the wrong way round for it, so the branch must call these functions rather than a second derivation | Infra | Hours | C2c, C2d |
 
 **De-prioritised:** more neural experiments (the ceiling is partly the models'
 — I/K/L are blind to long-lag XOR). Item 14 is worth closing but the ledger
@@ -38,15 +39,30 @@ grades left-edge structure as disjoint from the prize object.
 
 ## Chores
 
-- **Delete 7 merged branches** — verified safe, blocked from the container by
-  an egress `HTTP 403`. Command in [`handover/CURRENT.md`](handover/CURRENT.md).
-  Then enable auto-delete head branches.
+- **Delete merged branches** — the original 7, plus `claude/codex-tool-availability-3fbc2z`,
+  `claude/codex-worker-integration-8pd8ls`, `claude/deepseek-parallel-experiments-hu5ue3`,
+  `claude/rule-30-foundry-env-tlbr9x` and `claude/recent-prs-review-llfk1b` once
+  this PR lands. Verified safe, blocked from the container by an egress
+  `HTTP 403`. Command in [`handover/CURRENT.md`](handover/CURRENT.md). Then
+  enable auto-delete head branches.
+- **Triage 12 unreviewed `codex/test-*` branches** from the 15-task pool run.
+  Each adds one `tests/test_<module>.py` and none has a PR. **Do not merge
+  `codex/test-add-unit-tests-for-experiments-orbit-cyc-aacc346f` as it stands**:
+  it edited `experiments/orbit_cycle_structure.py`, which its spec forbade, and
+  the edit is wrong. It changes Floyd phase 2 from `tortoise = start` to
+  `tortoise = step(start)`; measured against known `mu` and `lambda` the
+  original is correct in all 12 cases while the edit is off by one at
+  `lambda = 1` and does not terminate at `lambda > 1`, because the two pointers
+  hold a constant offset around the cycle. The test file itself may be worth
+  keeping; the source edit is not.
 
 ## In-flight branches
 
 | PR | Branch | State |
 |---|---|---|
-| [#23](https://github.com/Patto1155/rule30-foundry/pull/23) | `claude/rule-30-foundry-env-tlbr9x` | This PR. C2 + C2b: the algebraic annihilator search. |
+| [#31](https://github.com/Patto1155/rule30-foundry/pull/31) | `claude/codex-tool-availability-3fbc2z` | This PR, and the last one open. Reconciles this file after #23, #24 and #27–#30 landed. |
+
+Nothing else is in flight.
 
 The #18 → #19 stack landed on 2026-09-02; #20 and #21 had already been merged
 into #19. The three-deep delegation stack is gone: #27, #28 and #29 landed on
@@ -71,6 +87,55 @@ happened anyway. See [`BRANCHING.md`](BRANCHING.md).
 
 ## Recently closed
 
+- **The delegation stack**: #27, #28 and #29 landed on 2026-09-08 in bottom-up
+  order. `main` carries `tools/gates.py`, `tools/workhorse.py`,
+  `tools/codex_worker.py`, `tools/providers.py`, `tools/worker_pool.py` and
+  `tools/agent_loop.py`, with [`WORKHORSE.md`](WORKHORSE.md),
+  [`CODEX_WORKER.md`](CODEX_WORKER.md), [`WORKER_POOL.md`](WORKER_POOL.md) and
+  [`AGENT_LOOP.md`](AGENT_LOOP.md).
+
+  The through-line is that **grunt work goes to an outside model and the
+  repo's rules are enforced as code, not prose**. The `gates-trap` stage in
+  `verify_all` asserts the counting-bound gate still refuses a known-vacuous
+  manifest, so a gate that stops gating breaks the build rather than going
+  quiet.
+
+  **What has and has not been exercised.** The council answered a real review
+  on 2026-09-04 and reproduced `counting_bound.py`'s own verdict on a planted
+  vacuous negative. The pool has run live against both providers and two model
+  families. But `workhorse.py --agent codex` has still never implemented an
+  experiment, and `queue/b1-pattern-map-walk.json` — the one queued real task —
+  **has never been run**. The pilot that would settle whether any of this is
+  trustworthy is B1 and B2 on hardware already owned, with traps planted,
+  checking the validation layer catches every invalid result. Until that runs
+  the machinery is argued for rather than demonstrated. No hardware bought and
+  none justified: [`COMPUTE_PLAN.md`](COMPUTE_PLAN.md) §1 is titled *"The
+  premise for renting was wrong"*, and the GPU simulator still does not
+  checkpoint, which makes spot instances actively wrong.
+- **#30**: three defects that each silently discarded paid-for work, all found
+  by pointing the pool at a model family it had never run against. A task that
+  changed nothing committed nothing, so `investigate` mode — which is forbidden
+  from touching what it audits — left its report only in the gitignored `runs/`
+  tree; three audits from the 15-task run were lost that way and are not
+  recoverable. `max_tokens` was never sent, so OpenRouter defaulted it from the
+  advertised context and the backend refused with HTTP 400 on turn zero. And
+  the provider's real error was discarded in favour of a routing-level generic.
+  Every task branch now carries `queue/results/<task_id>.json`.
+
+  **Known limitation, unfixed:** `agent_loop.py` reads only `message.content`.
+  A thinking model returns `reasoning`/`reasoning_details` as well, and
+  OpenRouter wants the latter echoed back across tool-calling turns. One audit
+  made 12 successful tool calls over 13 turns with every turn's `content`
+  empty — the work was done and thrown away. Prefer non-thinking models for
+  pool work until that is handled.
+- **#24**: reduced from a competing council implementation to `briefs/` alone
+  and landed. It and #25 built the council independently; #25's client won the
+  add/add conflict, having been exercised end to end. What survived is the
+  brief template, which `main` had no equivalent of and which states the
+  failure that makes an outside reviewer worthless: *state the claim, not your
+  confidence in it* — a brief asserting that a bound was correctly applied buys
+  agreement, not review. That is `CLAUDE.md`'s independence argument about
+  subagents, applied to the brief rather than the model.
 - **C2 + C2b**: algebraic annihilator search — no GF(2) relation of degree
   `<= 3` over windows up to 64 bits, nor degree `<= 4` up to 32 bits, in all 20
   of 24 cells that clear both gates
