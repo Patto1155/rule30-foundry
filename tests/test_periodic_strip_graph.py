@@ -1,5 +1,6 @@
 import unittest
-from experiments.periodic_strip_graph import analyze, build_graph, components
+import copy
+from experiments.periodic_strip_graph import analyze, build_graph, components, output_loops, verify_output_loops
 
 
 class StripGraphTests(unittest.TestCase):
@@ -50,6 +51,48 @@ class StripGraphTests(unittest.TestCase):
                 path = witness["mismatch_path"]
                 self.assertEqual(len(path), len(word) + 1)
                 self.assertEqual(((path[0][1] ^ path[-1][1]) >> (width//2-1)) & 1, 1)
+
+    def test_nonperiodic_output_construction(self):
+        # Distinct equal-length output blocks may be spliced at a common full
+        # state. A non-eventually-periodic selector then gives such an output.
+        for width in (3, 5, 9, 15):
+            result = output_loops(width, "01")
+            self.assertTrue(result["found"])
+            self.assertTrue(verify_output_loops(result)["verified"])
+            paths = result["closed_walks"]
+            self.assertEqual(paths[0][0], paths[1][0])
+            graph = build_graph(width, "01")
+            for path, block in zip(paths, result["output_blocks"]):
+                self.assertEqual(path[0], path[-1])
+                self.assertEqual(len(path)-1, result["block_length"])
+                for a, b in zip(path, path[1:]):
+                    self.assertIn(b, graph[a])
+                self.assertEqual(block, [(v[1] >> (width//2-1)) & 1 for v in path[:-1]])
+            self.assertNotEqual(*result["output_blocks"])
+            encoded = set()
+            for choices in range(16):
+                bits = []
+                for j in range(4):
+                    bits.extend(result["output_blocks"][(choices >> j) & 1])
+                encoded.add(tuple(bits))
+            self.assertEqual(len(encoded), 16)
+
+    def test_reject_tampered_output_certificate(self):
+        original = output_loops(5, "01")
+        changed = copy.deepcopy(original)
+        changed["output_blocks"][0][0] ^= 1
+        with self.assertRaises(ValueError):
+            verify_output_loops(changed)
+        changed = copy.deepcopy(original)
+        phase, row = changed["closed_walks"][0][1]
+        changed["closed_walks"][0][1] = (phase, row ^ 2)
+        with self.assertRaises(ValueError):
+            verify_output_loops(changed)
+
+    def test_no_branching_output_for_constant_centers(self):
+        for word in ("0", "1"):
+            for width in (5, 9):
+                self.assertFalse(output_loops(width, word)["found"])
 
 
 if __name__ == "__main__":
