@@ -10,7 +10,7 @@ reference and does not count against that. This file is context and reasoning
 the claim record (`docs/CLAIM_LEDGER.md`) and not the work queue
 (`docs/STATUS.md`).
 
-Last updated: 2026-09-08 · Branch: `codex/periodic-boundary-followup`
+Last updated: 2026-09-08 · Branch: `codex/period-word-sieve`
 
 ---
 
@@ -35,6 +35,13 @@ still in the ledger as warnings). Assume any impressive-sounding number you
 find in a README is historical until the ledger confirms its grade.
 
 ## Why the work is sequenced this way
+
+The bounded period-word sieve found no nonconstant exclusion: all 21 primitive
+nonconstant words of lengths 2..6 have nonperiodic-neighbor loop certificates
+at widths 3,5,7,9. Only constant controls synchronize. See
+`docs/experiment-logs/2026-09-08-periodic-word-sieve.md` for the independent
+audit and coverage. This supplies no composition law for an infinite family;
+do not turn the finite method obstruction into a claim about the actual seed.
 
 The September 2 plan prioritized merging the PR stack, adding CI, and then
 running the annihilator search. Those steps landed; historical directions to
