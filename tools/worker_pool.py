@@ -113,14 +113,51 @@ def queue_paths(explicit: list[str]) -> list[Path]:
     return sorted(TASK_QUEUE.glob("*.json")) if TASK_QUEUE.is_dir() else []
 
 
+# Keys agent_loop.Budget actually accepts. A spec naming anything else is a
+# budget the run will silently ignore -- which on a metered fan-out means a
+# cap the author believes is in force and is not.
+LIMIT_KEYS = {"max_turns", "max_tool_calls", "max_cost_usd", "wall_clock_s"}
+
+
 def validate(spec: dict, worker) -> list[str]:
-    """Cheap checks before any worktree or token is spent."""
+    """Cheap checks before any worktree or token is spent.
+
+    Everything here is checked against the modules that will consume it, not
+    against a copy of their rules: a mistyped tool name or budget key is worth
+    catching now rather than fifteen worktrees later, and both are the kind of
+    typo that otherwise fails silently -- an unknown budget key is dropped, and
+    an unknown tool name used to select nothing.
+    """
     problems = []
     if spec.get("mode") not in worker.MODES:
         problems.append(f"mode must be one of {sorted(worker.MODES)}, "
                         f"got {spec.get('mode')!r}")
     if not str(spec.get("task", "")).strip():
         problems.append("task is empty")
+
+    tools = spec.get("tools")
+    if tools is not None:
+        try:
+            _load("agent_loop", "tools/agent_loop.py").tool_schemas(tools)
+        except (ValueError, TypeError) as exc:
+            problems.append(f"tools: {exc}")
+
+    limits = spec.get("limits")
+    if limits is not None:
+        if not isinstance(limits, dict):
+            problems.append("limits must be an object")
+        else:
+            unknown = sorted(set(limits) - LIMIT_KEYS)
+            if unknown:
+                problems.append(
+                    f"limits: unknown key(s) {', '.join(unknown)}; "
+                    f"expected {', '.join(sorted(LIMIT_KEYS))}")
+            for k, v in limits.items():
+                if k in LIMIT_KEYS and (isinstance(v, bool)
+                                        or not isinstance(v, (int, float))
+                                        or v <= 0):
+                    problems.append(f"limits.{k} must be a positive number, "
+                                    f"got {v!r}")
     return problems
 
 
@@ -221,11 +258,17 @@ def main(argv: list[str] | None = None) -> int:
     rn.add_argument("--provider", default="auto",
                     help="openrouter, codex-dispatcher, or auto")
     rn.add_argument("--model", help="override the provider's default model")
-    rn.add_argument("--backend", choices=("auto", "local", "remote"),
-                    default="remote",
-                    help="remote (a completion provider) is the default here: "
-                         "the local codex CLI is one process per task and does "
-                         "not fan out")
+    rn.add_argument("--backend",
+                    choices=("auto", "local", "remote", "agent"),
+                    default="agent",
+                    help="agent (default) = the tool-using loop "
+                         "(tools/agent_loop.py), which reads, greps and runs "
+                         "inside its own worktree -- the only backend that can "
+                         "do research rather than answer from the prompt. "
+                         "remote = one completion, no tools, and works with "
+                         "the codex-dispatcher too. local = the codex CLI, one "
+                         "process per task, which does not fan out; auto "
+                         "prefers it, so auto is a poor pool default.")
     rn.add_argument("--verify", choices=("full", "fast", "none"),
                     default="full", dest="verify_level")
     rn.add_argument("--base", help="branch tasks from this instead of origin/main")

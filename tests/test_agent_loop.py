@@ -430,3 +430,45 @@ class TestSystemPrompt(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TestToolSelection(unittest.TestCase):
+    """`tools` in a task spec is JSON, so it arrives as a string or a list.
+
+    Both must select the same set, and a name that is not a tool must fail
+    loudly. The string form used to be accepted and then matched with `in`,
+    so "run" selected `run` out of "grep,run" by substring -- right answer,
+    wrong reason, and wrong the moment one tool's name contains another's.
+    """
+
+    def names(self, arg):
+        return sorted(t["function"]["name"] for t in al.tool_schemas(arg))
+
+    def test_none_selects_every_tool(self):
+        self.assertEqual(self.names(None), sorted(al.TOOLS))
+
+    def test_a_comma_string_selects_the_same_set_as_a_list(self):
+        wanted = ["grep", "list_dir", "read_file", "run"]
+        self.assertEqual(self.names("list_dir,read_file,grep,run"), wanted)
+        self.assertEqual(self.names(wanted), wanted)
+
+    def test_whitespace_and_empty_entries_are_tolerated(self):
+        self.assertEqual(self.names(" read_file , run ,"), ["read_file", "run"])
+
+    def test_a_substring_of_a_tool_name_is_not_a_tool(self):
+        # "read" is a substring of "read_file"; under the old `in` test
+        # against a joined string it would have matched.
+        with self.assertRaises(ValueError):
+            al.tool_schemas("read")
+
+    def test_an_unknown_name_is_refused_and_says_what_exists(self):
+        with self.assertRaises(ValueError) as cm:
+            al.tool_schemas(["read_file", "nope"])
+        msg = str(cm.exception)
+        self.assertIn("nope", msg)
+        self.assertIn("read_file", msg)
+
+    def test_a_read_only_selection_really_excludes_the_writers(self):
+        got = self.names("list_dir,read_file,grep,run")
+        for writer in ("write_file", "edit_file", "fetch_url"):
+            self.assertNotIn(writer, got)

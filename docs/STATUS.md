@@ -6,7 +6,7 @@ lives here. Overwrite this file in place; git history keeps the old versions.
 No other file may carry a "current state as of" section —
 `tools/lint_ledger.py` enforces it.
 
-Updated: 2026-09-07 · Newest log: `docs/experiment-logs/2026-09-01-nersissian-end-to-end-audit.md`
+Updated: 2026-09-08 · Newest log: `docs/experiment-logs/2026-09-01-nersissian-end-to-end-audit.md`
 
 ## Where the three prize problems stand
 
@@ -48,12 +48,15 @@ grades left-edge structure as disjoint from the prize object.
 | — | `claude/rule-30-foundry-env-tlbr9x` | Open, based on `main`. A2: the `verify` workflow. |
 | [#27](https://github.com/Patto1155/rule30-foundry/pull/27) | `claude/codex-tool-availability-3fbc2z` | Open, based on `main`. The workhorse: `tools/gates.py` turns CLAUDE.md's rules into executable preflight/postflight checks, `tools/workhorse.py` is a pull-based runner that cannot execute what the gates refuse. New `gates-trap` stage in `verify_all`. **No hardware bought and none justified yet** — see [`WORKHORSE.md`](WORKHORSE.md) and [`COMPUTE_PLAN.md`](COMPUTE_PLAN.md) §1. |
 | [#28](https://github.com/Patto1155/rule30-foundry/pull/28) | `claude/codex-worker-integration-8pd8ls` | Open, **stacked on #27** (it edits `workhorse.py` and reuses `gates.py`). A general callable worker — six task modes, isolated `git worktree` per task, a structured result contract, verification the harness runs itself rather than believing — plus a provider layer (`tools/providers.py`: OpenRouter, the Codex dispatcher) and `tools/worker_pool.py`, which runs a queue of tasks concurrently. Review is one mode of six. Exercised against the live dispatcher on 2026-09-07, single and two-up; see [`CODEX_WORKER.md`](CODEX_WORKER.md) and [`WORKER_POOL.md`](WORKER_POOL.md). Both providers are exercised: the dispatcher on 2026-09-07, and OpenRouter (`deepseek/deepseek-v4-flash-0731`) on 2026-09-08 — three concurrent tasks, 311s wall against 658s serial, ~$0.002 each. Two prompt defects that run exposed are fixed and written up in `WORKER_POOL.md`, *Live*. `tools/agent_loop.py` adds a tool-using worker (read/grep/run/fetch, budgets, transcript, untrusted-content boundary) — first live research task made 38 tool calls for $0.014, found a real bug in this repo's test suite, and disclosed that it had removed its own worktree; both are fixed and written up in `AGENT_LOOP.md`. |
+| — | `claude/deepseek-parallel-experiments-hu5ue3` | Open, **stacked on #28** — it needs `tools/worker_pool.py` and `tools/agent_loop.py`, which exist on no other branch. That makes it **two levels from `main`**, which [`BRANCHING.md`](BRANCHING.md) §2 forbids; the fix is to land #27 and #28 rather than to restructure this branch, and until they land it should not be merged. Makes the pool able to reach the tool-using loop at all (`--backend agent` was missing from `worker_pool.py`'s choices, so the one backend that can investigate was unreachable through the fan-out), validates `tools`/`limits` in a spec before a worktree is created, and ships fifteen file-disjoint task specs in `queue/tasks/`. Adds a `SessionStart` hook: a web container had no `numpy`, so `verify_all` came up FAIL on a clean checkout of `main` and every delegated worker's verification would have been red for a reason that had nothing to do with its work. |
 
 The #18 → #19 stack landed on 2026-09-02; #20 and #21 had already been merged
-into #19. One branch is stacked, one level deep: `codex-worker-integration` on
-#27, which is what [`BRANCHING.md`](BRANCHING.md) §2 permits — it edits
-`tools/workhorse.py` and imports `tools/gates.py`, neither of which exists on
-`main`. Land #27 first. The 7 merged branches listed in
+into #19. The stack is now **three deep** — `main` ← #27 ← #28 ←
+`deepseek-parallel-experiments` — which is one level more than
+[`BRANCHING.md`](BRANCHING.md) §2 permits. §2's own remedy applies: land the
+bottom of the stack rather than reshape the top. **Land #27, then #28**; the
+third branch cannot be rebased onto `main` because every tool it changes
+exists only above it. The 7 merged branches listed in
 [`BRANCHING.md`](BRANCHING.md) are still awaiting deletion (see *Chores*).
 
 ### Why #20 and #21 were merged rather than left open
