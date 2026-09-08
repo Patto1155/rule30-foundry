@@ -108,7 +108,11 @@ class TestPool(unittest.TestCase):
                  for i in range(3)]
         s = self.run_pool(*specs, concurrency=3)
         for i, row in enumerate(s["results"]):
-            self.assertEqual(row["files_changed"], [f"A\ttools/_pi_{i}.py"], row)
+            # Its own edit and its own report, filed under its own task id --
+            # nothing from the two tasks running beside it.
+            self.assertEqual(row["files_changed"],
+                             [f"A\tqueue/results/{row['task_id']}.json",
+                              f"A\ttools/_pi_{i}.py"], row)
 
     def test_tasks_actually_overlap_rather_than_running_one_at_a_time(self):
         """Concurrency the pool claims but nothing else here proves. Four

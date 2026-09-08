@@ -200,6 +200,10 @@ def run_pool(specs: list[tuple[Path, dict]], *, concurrency: int,
                     "reason": f"{exc.__class__.__name__}: {exc}",
                     "duration_s": round(time.time() - started, 2)}
         return {"task": path.name, "verdict": r["verdict"],
+                # The id links this row to runs/<id>/ and to the branch's own
+                # queue/results/<id>.json, so a summary row is traceable to
+                # the report even after the run directory is gone.
+                "task_id": r.get("task_id"),
                 "branch": r.get("branch"), "patch": r.get("patch"),
                 "model": r.get("model"), "provider": r.get("provider"),
                 "files_changed": r.get("files_changed") or [],
