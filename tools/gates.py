@@ -164,10 +164,39 @@ def gate_counting_bound(m: dict) -> Gate:
     tool's own threshold is `margin >= 0`, and Experiment S sits there."""
     if m.get("kind") != "search":
         return Gate("counting-bound", SKIP, "not a search")
-    if "negative" not in (m.get("claims") or []):
-        return Gate("counting-bound", SKIP, "search does not claim a negative")
     s = m.get("search") or {}
     n = s.get("prefix_bits")
+
+    # Checked before the negative-claim skip below, because this class fails
+    # the other way round: its kernel is nonempty by dimension counting
+    # whenever m >= n, so what needs gating is a vacuous POSITIVE. Skipping
+    # on "no negative claimed" would wave exactly that through.
+    if s.get("class") == "annihilator":
+        if not isinstance(n, int) or n < 1:
+            return Gate("counting-bound", FAIL,
+                        "search.prefix_bits (n) is missing")
+        w, d = s.get("width"), s.get("degree")
+        if not isinstance(w, int) or not isinstance(d, int):
+            return Gate("counting-bound", FAIL,
+                        "an annihilator search needs search.width and "
+                        "search.degree to count its monomials")
+        cb = _load("experiments/counting_bound.py")
+        mono = cb.monomial_count(w, d)
+        margin = cb.log2_expected_annihilators(w, d, n)
+        if margin < 0:
+            return Gate("counting-bound", PASS,
+                        f"m = {mono} monomials < n = {n} windows "
+                        f"(expected annihilators 2^{margin:.1f})")
+        return Gate("counting-bound", FAIL,
+                    f"VACUOUS: m = {mono} monomials >= n = {n} windows for "
+                    f"width {w} degree {d}, so nullity >= {mono - n} and an "
+                    "annihilator exists for EVERY sequence, random included. "
+                    "Widen n or narrow the class. Note the DFAO rule "
+                    "(log2|M| >= n) runs the other way and must not be "
+                    "applied here -- it would demand this exact regime.")
+
+    if "negative" not in (m.get("claims") or []):
+        return Gate("counting-bound", SKIP, "search does not claim a negative")
     if not isinstance(n, int) or n < 1:
         return Gate("counting-bound", FAIL, "search.prefix_bits (n) is missing")
 

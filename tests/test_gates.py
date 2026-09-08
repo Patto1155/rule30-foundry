@@ -116,6 +116,50 @@ class TestCountingBound(unittest.TestCase):
         r = gates.preflight(self._search(24, 200), run_external=False)
         self.assertEqual(by_name(r, "counting-bound")["status"], "PASS")
 
+    # ---- the annihilator class runs the other way round -------------------
+
+    def _annihilator(self, w, d, n, claims=("positive",)):
+        return good_manifest(kind="search", claims=list(claims),
+                             search={"class": "annihilator", "width": w,
+                                     "degree": d, "prefix_bits": n})
+
+    def test_a_vacuous_positive_is_refused_though_no_negative_is_claimed(self):
+        """C2's failure mode, which the DFAO rule cannot see.
+
+        The kernel of the n x m monomial matrix has nullity >= m - n by
+        dimension counting, so at m >= n an annihilator exists for EVERY
+        sequence. The gate must therefore fire on a positive claim -- the
+        DFAO branch skips unless a negative is claimed, and skipping here
+        would wave through a result that is guaranteed on coin flips.
+        """
+        r = gates.preflight(self._annihilator(10, 2, 40), run_external=False)
+        g = by_name(r, "counting-bound")
+        self.assertEqual(g["status"], "FAIL")
+        self.assertIn("VACUOUS", g["reason"])
+        self.assertIn("56", g["reason"])          # sum_{i<=2} C(10,i)
+        self.assertEqual(r["verdict"], "FAIL")
+
+    def test_equality_is_vacuous_here_unlike_the_dfao_class(self):
+        """m = n = 56 is the DFAO branch's PASS boundary and is wrong for
+        this class: measured against a known-random sequence the nullity at
+        m = n is already nonzero. The two rules point opposite ways, so
+        applying the DFAO threshold here would demand the vacuous regime."""
+        r = gates.preflight(self._annihilator(10, 2, 56), run_external=False)
+        self.assertEqual(by_name(r, "counting-bound")["status"], "FAIL")
+
+    def test_enough_windows_is_informative(self):
+        r = gates.preflight(self._annihilator(10, 2, 200), run_external=False)
+        self.assertEqual(by_name(r, "counting-bound")["status"], "PASS")
+
+    def test_the_monomial_count_is_not_guessed(self):
+        r = gates.preflight(
+            good_manifest(kind="search", claims=["positive"],
+                          search={"class": "annihilator", "prefix_bits": 200}),
+            run_external=False)
+        g = by_name(r, "counting-bound")
+        self.assertEqual(g["status"], "FAIL")
+        self.assertIn("width", g["reason"])
+
     def test_equality_is_informative_not_vacuous(self):
         """The tool marks margin >= 0 informative. A strict > here would reject
         boundary-case evidence for a mathematically false reason -- the P2
