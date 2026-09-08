@@ -64,34 +64,43 @@ You are the lead researcher. You decide what is worth doing, judge whether a
 result is real, and own every grade in `docs/CLAIM_LEDGER.md`. That does not
 mean you type everything.
 
-**Grunt work goes to Codex, not to a Claude subagent.** Coding, debugging,
-writing tests, refactoring, tracing something through the tree, implementing
-an experiment that does not exist yet — delegate it with
-`tools/codex_worker.py` and review what comes back. It runs on an isolated
-branch in its own `git worktree`, the harness re-runs every test it claims to
-have passed, and the output is a reviewable branch plus a structured report.
-Full documentation: `docs/CODEX_WORKER.md`.
+**Grunt work goes to an outside model, not to a Claude subagent.** Coding,
+debugging, writing tests, refactoring, tracing something through the tree,
+implementing an experiment that does not exist yet — delegate it and review
+what comes back. Each task runs on an isolated branch in its own `git
+worktree`, the harness re-runs every test the worker claims to have passed,
+and the output is a reviewable branch plus a structured report. Nothing
+merges.
 
 ```bash
 python tools/codex_worker.py modes            # implement debug test refactor
                                               # investigate review
 python tools/codex_worker.py submit --mode debug \
     --task "..." --context path/to/file.py --acceptance "python -m unittest ..."
+
+python tools/worker_pool.py run --concurrency 10   # a queue of them at once
+python tools/providers.py check                    # who can answer right now
 ```
 
-Codex is not a Claude subagent, and that is the point. **Subagents give
-throughput, not independence** — they share a model lineage with whoever
+One task: `docs/CODEX_WORKER.md`. Many at once, and which provider answers
+(OpenRouter, the Codex dispatcher): `docs/WORKER_POOL.md`.
+
+An outside model is not a Claude subagent, and that is the point. **Subagents
+give throughput, not independence** — they share a model lineage with whoever
 spawned them, and therefore share its blind spots. Never cite agreement among
-subagents as corroboration. Codex is the only worker here whose disagreement
-is worth something, which is also why `--mode review` and `tools/council.py`
-exist. Delegating a build to Codex and then citing Codex's own "it works" is
-the same mistake in a different costume: read the `verification` field, which
-the harness produced, not the `tests` field, which the agent wrote.
+subagents as corroboration. **Nor between workers in one pool**: ten calls to
+one model is one prior sampled ten times. A fan-out buys throughput; only a
+*different* provider buys disagreement, which is why `--mode review` and
+`tools/council.py` exist. And delegating a build and then citing the worker's
+own "it works" is the same mistake in a third costume: read the `verification`
+field, which the harness produced, not the `tests` field, which the worker
+wrote.
 
 | The work is… | Route |
 |---|---|
 | an experiment that already has a script | `tools/workhorse.py --agent script` — **not an agent** |
 | code that needs writing, fixing, or testing | `codex_worker.py` |
+| ten independent chores | `worker_pool.py run --concurrency 10` |
 | "does the repo do X, and where" | `codex_worker.py --mode investigate` |
 | a claim that needs an outside opinion | `codex_worker.py --mode review`, or `tools/council.py` |
 | deciding what any of it means | you |

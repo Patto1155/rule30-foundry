@@ -28,12 +28,15 @@ Directives are read from the task text in the prompt, one per line:
     FAKE-BLOCKER <text>              report a blocker
     FAKE-NO-JSON                     print prose only, no report at all
     FAKE-EXIT <n>                    exit with status <n>
+    FAKE-SLEEP <seconds>             take that long, so a pool test can show
+                                     that tasks actually overlap
 """
 
 from __future__ import annotations
 
 import json
 import sys
+import time
 from pathlib import Path
 
 
@@ -95,6 +98,8 @@ def main(argv: list[str]) -> int:
             report["blockers"].append(rest)
         elif name == "FAKE-NO-JSON":
             no_json = True
+        elif name == "FAKE-SLEEP":
+            time.sleep(float(rest))
         elif name == "FAKE-EXIT":
             exit_code = int(rest)
 

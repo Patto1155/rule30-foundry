@@ -1,15 +1,25 @@
-# Codex as a callable worker
+# A callable worker
+
+> **Scope.** This file is one task, one worker. For running ten at once, and
+> for switching who answers (OpenRouter, the Codex dispatcher), see
+> [`WORKER_POOL.md`](WORKER_POOL.md). Everything below applies either way:
+> same isolation, same contract, same gates.
+
 
 Claude is the lead researcher in this repository. It decides what is worth
 doing, judges whether a result is real, and owns every grade in
 `CLAIM_LEDGER.md`. This document is about how it stops doing its own grunt
 work.
 
-`tools/codex_worker.py` makes Codex a **worker Claude can call**: coding,
-debugging, writing tests, refactoring, tracing something through the tree,
-implementing an experiment that does not exist yet. What comes back is a
+`tools/codex_worker.py` makes an outside model a **worker Claude can call**:
+coding, debugging, writing tests, refactoring, tracing something through the
+tree, implementing an experiment that does not exist yet. What comes back is a
 reviewable branch plus a structured report. Nothing is merged, and nothing
 reaches the lead's working tree.
+
+*Which* outside model is a configuration detail — `tools/providers.py` supplies
+the text, and `--provider` chooses. Codex is one supplier, not the
+architecture.
 
 ## Why not the alternatives
 
@@ -85,8 +95,8 @@ the claim.
 
 | | `local` | `remote` |
 |---|---|---|
-| Where | wherever `codex` is installed and logged in | the dispatcher VM, over HTTPS |
-| Codex has | a writable checkout, and can run things | the quoted files, and nothing else |
+| Runs | `codex exec` where the CLI is installed | a completion provider (`--provider`) |
+| The worker has | a writable checkout, and can run things | the quoted files, and nothing else |
 | Edits travel as | edits | a unified diff, applied here |
 | `commands_run` | real | required to be empty |
 
@@ -94,9 +104,14 @@ the claim.
 `remote`. In the Claude container there is no `codex`, so it is `remote`; on
 the dispatcher VM it is `local`. The same task spec works either way.
 
-Remote mode is honest about its limits rather than papering over them: Codex
-cannot run anything, so it is told to return empty `commands_run` and `tests`,
-and every test in the result is one this process ran after applying the patch.
+`--provider` selects who answers the remote backend — `openrouter`,
+`codex-dispatcher`, or `auto` for the first one configured. See
+[`WORKER_POOL.md`](WORKER_POOL.md).
+
+Remote mode is honest about its limits rather than papering over them: a
+completion endpoint cannot run anything, so the worker is told to return empty
+`commands_run` and `tests`, and every test in the result is one this process
+ran after applying the patch.
 
 ### Applying a hand-written diff
 

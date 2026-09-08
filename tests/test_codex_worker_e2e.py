@@ -197,6 +197,17 @@ class TestEndToEnd(unittest.TestCase):
         self.assertIsNone(result["verification"]["ok"])
         self.assertIn("no evidence", result["verification"]["note"])
 
+    def test_verification_does_not_inherit_the_delegation_config(self):
+        """CODEX_BIN is set for this whole test file, so if verification
+        inherited the environment wholesale this acceptance command would
+        fail. A checker that can itself delegate is not a checker -- and a
+        nested tests/test_workhorse case asserting "codex is not on PATH"
+        found the stand-in binary on it and went red."""
+        result = self.submit("Do it.\nFAKE-WRITE tools/_e2e_env.py :: E = 1\n",
+                             "--acceptance", 'test -z "$CODEX_BIN"')
+        self.assertTrue(result["verification"]["ok"],
+                        "CODEX_BIN leaked into the verification subprocess")
+
     def test_full_verification_runs_verify_all_in_the_worktree(self):
         result = self.submit("Do it.\nFAKE-WRITE tools/_e2e_s.py :: S = 1\n",
                              verify="full")

@@ -1,20 +1,25 @@
 #!/usr/bin/env python
-"""Codex as a general callable worker, with repository access and gates.
+"""One delegated task: an outside model, an isolated worktree, and gates.
 
 Claude is the lead researcher here: it decides what is worth doing, judges
 whether a result is real, and owns every grade in `docs/CLAIM_LEDGER.md`.
 This module is how it stops doing its own grunt work. Coding, debugging,
 writing tests, refactoring, tracing a bug through the tree -- that is work
-delegated to Codex, a differently trained model on the dispatcher VM, and
-what comes back is a **reviewable branch plus a structured report**, never a
-merged change.
+delegated to a model outside Claude's lineage, and what comes back is a
+**reviewable branch plus a structured report**, never a merged change.
+
+*Which* outside model is a configuration detail. `tools/providers.py`
+supplies the text: a DeepSeek worker through OpenRouter, Codex on the
+dispatcher VM, or `codex exec` locally with a writable checkout. Everything
+here is the same either way -- the same isolation, contract, and gates.
 
 Why not a Claude subagent? CLAUDE.md already says it: subagents give
 throughput, not independence -- they share a model lineage with whoever
 spawned them, and therefore share its blind spots. For grunt work that is
 usually fine, but it means a Claude subagent's "I checked it" is worth
-exactly what the parent's would be. Codex is the only worker in this repo
-whose agreement is evidence.
+exactly what the parent's would be. An outside model is the only worker here
+whose agreement is evidence -- and ten copies of one outside model is still
+one model's blind spots, so a fan-out buys throughput, not a panel.
 
 Why not the council client? `tools/council.py` asks a question and reads an
 answer. It is read-only by design and it has no repository, so it cannot fix
@@ -88,14 +93,21 @@ Usage:
         --context tools/lint_ledger.py --acceptance "python tools/lint_ledger.py"
     python tools/codex_worker.py submit --spec task.json --pretty
 
-Configuration (environment, never a flag -- a token in argv is a token in
-`ps` output):
+Configuration (environment, never a flag -- a key in argv is a key in `ps`
+output). Which provider answers the remote backend is `tools/providers.py`'s
+business, not this file's:
 
-    CODEX_COUNCIL_URL     dispatcher endpoint, remote backend
+    OPENROUTER_API_KEY    openrouter provider
+    OPENROUTER_MODEL      its default model slug
+    CODEX_COUNCIL_URL     codex-dispatcher provider
     CODEX_COUNCIL_TOKEN   its bearer token
     CODEX_BIN             codex executable for the local backend (default
                           `codex`). Substitutable so the end-to-end test
                           drives the real pipeline with a stand-in binary.
+
+One task per invocation. To run many at once -- ten cheap workers over a
+queue -- use `tools/worker_pool.py`, which calls submit() concurrently and
+holds the git lock this module accepts.
 """
 
 from __future__ import annotations
@@ -111,7 +123,6 @@ import subprocess
 import sys
 import tempfile
 import time
-import urllib.request
 import uuid
 from pathlib import Path
 
@@ -261,6 +272,14 @@ def _repo_guardrails() -> str:
 def _gates():
     spec = importlib.util.spec_from_file_location(
         "gates", REPO_ROOT / "tools" / "gates.py")
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod
+
+
+def _providers():
+    spec = importlib.util.spec_from_file_location(
+        "providers", REPO_ROOT / "tools" / "providers.py")
     mod = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(mod)
     return mod
@@ -443,6 +462,17 @@ def validate_result(obj: object) -> list[str]:
 # isolation
 # --------------------------------------------------------------------------
 
+class _NullLock:
+    """Stand-in for the pool's lock when a task runs alone. Cheaper to read
+    than `if lock:` at four call sites."""
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *exc):
+        return False
+
+
 def _git(*args: str, cwd: Path = REPO_ROOT, check: bool = True) -> str:
     r = subprocess.run(["git", *args], cwd=cwd, capture_output=True, text=True)
     if check and r.returncode != 0:
@@ -598,43 +628,29 @@ def apply_patch(patch_path: Path, worktree: Path
     return False, None, errors
 
 
-def run_remote(spec: dict, worktree: Path, timeout: int, out: Path) -> dict:
-    """The dispatcher endpoint: no checkout, so edits travel as a patch.
+def run_remote(spec: dict, worktree: Path, timeout: int, out: Path,
+               provider: str = "auto", model: str | None = None) -> dict:
+    """A completion provider: no checkout, so edits travel as a patch.
 
-    Codex is sandboxed read-only on the VM and has no copy of this tree, so it
-    cannot run anything. That is a real limitation and it is recorded rather
-    than papered over: `commands_run` comes back empty and every test in the
-    result is one this process ran itself, after applying the patch here.
+    Whoever answers -- a DeepSeek worker through OpenRouter, Codex on the
+    dispatcher VM -- cannot run anything, because a completion endpoint has no
+    shell and no copy of this tree. That is a real limitation and it is
+    recorded rather than papered over: `commands_run` comes back empty by
+    instruction, and every test in the result is one this process ran itself,
+    after applying the patch here.
     """
-    council = _council()
-
-    url = os.environ.get("CODEX_COUNCIL_URL", "").strip()
-    token = os.environ.get("CODEX_COUNCIL_TOKEN", "").strip()
-    missing = [n for n, v in (("CODEX_COUNCIL_URL", url),
-                              ("CODEX_COUNCIL_TOKEN", token)) if not v]
-    if missing:
-        raise RuntimeError(
-            f"remote backend needs {', '.join(missing)}; see docs/CODEX_WORKER.md")
+    prov = _providers().get(provider, model=model)
+    ok, why = prov.available()
+    if not ok:
+        raise RuntimeError(f"provider {prov.name!r} is not usable: {why}")
 
     context, ctx_problems = gather_context(spec.get("context_files") or [])
     prompt = render_prompt(spec, context, has_repo=False)
     (out / "prompt.txt").write_text(prompt, encoding="utf-8")
 
-    started = time.time()
-    # The dispatcher takes {role, prompt}. council.build_request would wrap the
-    # body in the council's own review preamble, which is the wrong framing for
-    # five of the six modes, so the request is built here and only the transport
-    # -- the opener that refuses redirects rather than forwarding the bearer
-    # token -- is reused from council.py.
-    body = json.dumps({"role": spec["mode"], "prompt": prompt}).encode("utf-8")
-    req = urllib.request.Request(
-        url, data=body, method="POST",
-        headers={"Content-Type": "application/json",
-                 "Authorization": f"Bearer {token}",
-                 "Accept": "application/json"})
-    with council._opener().open(req, timeout=timeout) as resp:
-        envelope = json.loads(resp.read().decode("utf-8"))
-    answer = envelope.get("answer", "")
+    kw = {"role": spec["mode"]} if prov.name == "codex-dispatcher" else {}
+    completion = prov.complete(prompt, timeout, **kw)
+    answer = completion.text
     (out / "raw.txt").write_text(answer, encoding="utf-8")
 
     patch_applied, strategy = None, None
@@ -646,12 +662,12 @@ def run_remote(spec: dict, worktree: Path, timeout: int, out: Path) -> dict:
         if not patch_applied:
             (out / "patch-apply-error.txt").write_text(
                 "\n\n".join(errors), encoding="utf-8")
-    return {"backend": "remote", "exit_code": 0 if envelope.get("ok") else 1,
-            "raw": answer, "duration_s": round(time.time() - started, 2),
+    return {"backend": "remote", "provider": prov.name, "exit_code": 0,
+            "raw": answer, "duration_s": round(completion.duration_s, 2),
             "report": extract_json(answer), "patch_applied": patch_applied,
             "patch_apply_strategy": strategy,
             "context_problems": ctx_problems,
-            "model": envelope.get("model")}
+            "model": completion.model, "usage": completion.usage}
 
 
 # --------------------------------------------------------------------------
@@ -684,6 +700,12 @@ def verify(spec: dict, worktree: Path, level: str, out: Path) -> dict:
                 "note": "verification disabled with --verify none; this result "
                         "carries no evidence beyond the agent's own testimony"}
     env = dict(os.environ, **{NESTED_ENV: "1"})
+    # Verification checks the repository; it must not inherit this process's
+    # delegation config. Leaving CODEX_BIN set leaks the caller's worker into
+    # the verification subprocess -- which is how a nested tests/test_workhorse
+    # case that asserts "codex is not on PATH" found a stand-in binary on it
+    # and failed. A checker that can itself delegate is not a checker.
+    env.pop("CODEX_BIN", None)
     checks = []
     log = []
     for argv in verification_commands(spec, level):
@@ -740,7 +762,9 @@ def decide(report_problems: list[str], verification: dict, blockers: list,
 
 def submit(spec: dict, *, backend: str = "auto", base: str | None = None,
            verify_level: str = "full", out_dir: Path | None = None,
-           keep_worktree: bool = False, timeout: int | None = None) -> dict:
+           keep_worktree: bool = False, timeout: int | None = None,
+           provider: str = "auto", model: str | None = None,
+           git_lock=None) -> dict:
     """Run one delegated task and return the structured result."""
     gates = _gates()
     if spec.get("mode") not in MODES:
@@ -780,15 +804,22 @@ def submit(spec: dict, *, backend: str = "auto", base: str | None = None,
     # Resolved once: resolve_base fetches, and calling it twice would fetch
     # twice and could straddle a push, branching from one commit while the
     # result recorded another.
-    base_ref = resolve_base(base)
-    worktree = add_worktree(branch, base_ref)
+    lock = git_lock or _NullLock()
+    with lock:
+        # git serialises through .git/index.lock and the worktree registry.
+        # Concurrent `worktree add` calls race there, so the pool passes a
+        # lock and everything that touches the MAIN repo takes it. Work inside
+        # a worktree has its own index and needs no lock, which is what makes
+        # the fan-out worth having.
+        base_ref = resolve_base(base)
+        worktree = add_worktree(branch, base_ref)
     result["branch"] = branch
     result["base"] = base_ref
 
     try:
         try:
             raw = (run_local(spec, worktree, seconds, out) if chosen == "local"
-                   else run_remote(spec, worktree, seconds, out))
+                   else run_remote(spec, worktree, seconds, out, provider, model))
         except subprocess.TimeoutExpired:
             raw = {"backend": chosen, "exit_code": None, "raw": "",
                    "duration_s": seconds, "report": None, "patch_applied": None,
@@ -836,7 +867,8 @@ def submit(spec: dict, *, backend: str = "auto", base: str | None = None,
         if keep_worktree:
             result["worktree"] = str(worktree)
         else:
-            remove_worktree(worktree)
+            with lock:
+                remove_worktree(worktree)
 
     (out / "result.json").write_text(json.dumps(result, indent=2) + "\n",
                                      encoding="utf-8")
@@ -849,7 +881,8 @@ def submit(spec: dict, *, backend: str = "auto", base: str | None = None,
 
 def summarise(result: dict) -> str:
     r = result.get("report") or {}
-    lines = [f"{result['verdict']}  [{result['mode']} · {result.get('backend')} · "
+    who = result.get("model") or result.get("provider") or result.get("backend")
+    lines = [f"{result['verdict']}  [{result['mode']} · {who} · "
              f"{result.get('duration_s', 0)}s]"]
     if result.get("branch"):
         lines.append(f"  branch      {result['branch']}"
@@ -918,6 +951,10 @@ def main(argv: list[str] | None = None) -> int:
     s.add_argument("--manifest", help="experiment manifest; gates run around it")
     s.add_argument("--budget", type=int, metavar="MIN")
     s.add_argument("--backend", choices=("auto", "local", "remote"), default="auto")
+    s.add_argument("--provider", default="auto",
+                   help="remote backend only: openrouter, codex-dispatcher, "
+                        "or auto (first one configured). See tools/providers.py.")
+    s.add_argument("--model", help="override the provider's default model")
     s.add_argument("--base", help="branch from this instead of origin/main")
     s.add_argument("--verify", choices=("full", "fast", "none"), default="full",
                    dest="verify_level")
@@ -941,17 +978,16 @@ def main(argv: list[str] | None = None) -> int:
 
     if args.cmd == "check":
         local = shutil.which(codex_bin())
-        url = os.environ.get("CODEX_COUNCIL_URL", "").strip()
-        token = os.environ.get("CODEX_COUNCIL_TOKEN", "").strip()
+        provs = _providers().status()
         state = {
             "codex_bin": codex_bin(),
             "local_available": bool(local),
             "local_path": local,
-            "remote_configured": bool(url and token),
-            "chosen": choose_backend("auto"),
+            "providers": provs,
+            "chosen_backend": choose_backend("auto"),
         }
         print(json.dumps(state, indent=2))
-        return 0 if (local or (url and token)) else 1
+        return 0 if (local or any(p["available"] for p in provs)) else 1
 
     spec = load_spec(args)
     if not str(spec.get("task", "")).strip():
@@ -971,7 +1007,8 @@ def main(argv: list[str] | None = None) -> int:
         result = submit(spec, backend=args.backend, base=args.base,
                         verify_level=args.verify_level,
                         out_dir=Path(args.out) if args.out else None,
-                        keep_worktree=args.keep_worktree, timeout=args.timeout)
+                        keep_worktree=args.keep_worktree, timeout=args.timeout,
+                        provider=args.provider, model=args.model)
     except (RuntimeError, ValueError) as exc:
         print(f"codex_worker: {exc}", file=sys.stderr)
         return 2

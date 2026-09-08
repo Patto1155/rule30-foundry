@@ -49,3 +49,4 @@ third_party/
 # output is the codex/<task> branch, which git already keeps. Distinct from
 # runs/<name>/, which workhorse.py commits because it IS the experiment record.
 runs/codex/
+runs/pool/
