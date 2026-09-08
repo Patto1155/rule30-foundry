@@ -1,0 +1,204 @@
+{
+  "experiment": "pattern_map_walk32",
+  "period": 32,
+  "simulation": {
+    "steps": 298654,
+    "diagonals": 200000,
+    "keep": 512,
+    "base_row": 298112,
+    "elapsed_s": 13.44,
+    "period_histogram": {
+      "1": 16,
+      "2": 10,
+      "4": 56,
+      "8": 668,
+      "16": 87119,
+      "32": 112131
+    },
+    "unsettled": 0,
+    "first_period32_diagonal": 87867
+  },
+  "seed": {
+    "d0": 88867,
+    "u": "0x761f998d",
+    "v": "0x0c9b5379"
+  },
+  "gates": {
+    "lemma_a": {
+      "tested": 50000,
+      "violations": 0,
+      "ok": true
+    },
+    "map_vs_simulation": {
+      "checked": 50000,
+      "requested": 50000,
+      "mismatches": 0,
+      "first_mismatch_d": null,
+      "ok": true
+    },
+    "seed": {
+      "d0": 88867,
+      "period_at_d0_minus_2": 32,
+      "period_at_d0_minus_1": 32,
+      "ok": true
+    },
+    "all_ok": true
+  },
+  "walk": {
+    "events": [
+      {
+        "branch": "root1",
+        "d": 2107985255,
+        "collision_pair": [
+          2107985253,
+          2107985254
+        ],
+        "predecessor_word": "0xed91e45c",
+        "minimal_period_of_predecessor": 32,
+        "popcount_at_minimal_period": 17,
+        "period_before": 32,
+        "period_after": 64
+      },
+      {
+        "branch": "root00100",
+        "d": 9958700505,
+        "collision_pair": [
+          9958700503,
+          9958700504
+        ],
+        "predecessor_word": "0x744e00bf",
+        "minimal_period_of_predecessor": 32,
+        "popcount_at_minimal_period": 15,
+        "period_before": 32,
+        "period_after": 64
+      }
+    ],
+    "exhausted": [
+      {
+        "branch": "root0111",
+        "reached_d": 12000000000
+      },
+      {
+        "branch": "root0110",
+        "reached_d": 12000000000
+      },
+      {
+        "branch": "root010",
+        "reached_d": 12000000000
+      },
+      {
+        "branch": "root0011",
+        "reached_d": 12000000000
+      },
+      {
+        "branch": "root001011",
+        "reached_d": 12000000000
+      },
+      {
+        "branch": "root001010",
+        "reached_d": 12000000000
+      },
+      {
+        "branch": "root0001",
+        "reached_d": 12000000000
+      },
+      {
+        "branch": "root0000",
+        "reached_d": 12000000000
+      }
+    ],
+    "branch_points": [
+      {
+        "branch": "root",
+        "d": 1420878969,
+        "predecessor_word": "0xdae372fa",
+        "continuations": [
+          "0x93425cac",
+          "0x6cbda353"
+        ]
+      },
+      {
+        "branch": "root0",
+        "d": 3340408060,
+        "predecessor_word": "0x4e27c559",
+        "continuations": [
+          "0x743a866e",
+          "0x8bc57991"
+        ]
+      },
+      {
+        "branch": "root01",
+        "d": 8429393531,
+        "predecessor_word": "0x5d3bd0b6",
+        "continuations": [
+          "0x69d29f24",
+          "0x962d60db"
+        ]
+      },
+      {
+        "branch": "root011",
+        "d": 11477974328,
+        "predecessor_word": "0xc788e0c5",
+        "continuations": [
+          "0x850f4086",
+          "0x7af0bf79"
+        ]
+      },
+      {
+        "branch": "root00",
+        "d": 4989445008,
+        "predecessor_word": "0x2c52d13c",
+        "continuations": [
+          "0x379c9e28",
+          "0xc86361d7"
+        ]
+      },
+      {
+        "branch": "root001",
+        "d": 8754486432,
+        "predecessor_word": "0xa2ca6d09",
+        "continuations": [
+          "0xc373b60e",
+          "0x3c8c49f1"
+        ]
+      },
+      {
+        "branch": "root0010",
+        "d": 9595980364,
+        "predecessor_word": "0x41cc3635",
+        "continuations": [
+          "0x7e882426",
+          "0x8177dbd9"
+        ]
+      },
+      {
+        "branch": "root00101",
+        "d": 11728892142,
+        "predecessor_word": "0x2e2ccce5",
+        "continuations": [
+          "0x34377746",
+          "0xcbc888b9"
+        ]
+      },
+      {
+        "branch": "root000",
+        "d": 11711978560,
+        "predecessor_word": "0x17b8a7c8",
+        "continuations": [
+          "0x1ad0c570",
+          "0xe52f3a8f"
+        ]
+      }
+    ],
+    "steps": 36617159481,
+    "elapsed_s": 1582.76
+  },
+  "conclusion": {
+    "doubling_branches": 2,
+    "undoubled_branches_at_max_d": 8,
+    "branch_independent_doubling_by_max_d": false,
+    "actual_diagonal_resolved": false,
+    "note": "The real diagonal transient selects one continuation at each branch point. A doubling on only some admissible branches does not establish a doubling on the actual diagonal."
+  },
+  "max_d": 12000000000
+}

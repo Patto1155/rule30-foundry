@@ -6,7 +6,7 @@ lives here. Overwrite this file in place; git history keeps the old versions.
 No other file may carry a "current state as of" section —
 `tools/lint_ledger.py` enforces it.
 
-Updated: 2026-09-08 · Newest log: `docs/experiment-logs/2026-09-03-algebraic-annihilator.md`
+Updated: 2026-09-08 · Newest log: `docs/experiment-logs/2026-09-08-periodic-trace-constraints.md`
 
 ## Where the three prize problems stand
 
@@ -30,7 +30,8 @@ A1, A2, C2 and C2b are done (see *Recently closed*); **B3 is next**.
 | B3 | Extend `s*(n)` past n=48 — re-costed ~28× cheaper | Research | Hours | — |
 | E1 | Write up the eight Theorem rows; `s*(n)` is citable | Writing | Days | — |
 | B2 | Exact period search on 46M — no code change, extends to `p <= 2.3e7` | Research | Minutes | A3 |
-| B1 | Item 14 pattern-map walk — palate cleanser, **not prize progress**. Queued as `queue/b1-pattern-map-walk.json` and passes preflight, but **has never been run**: it is the cheapest thing that would show the gates working on a real task | Research | ~26 min CPU | — |
+| B1 | Historical full walk recovered, with fresh seed/local-algebra checks; two abstract branches double, eight reach the exclusive cutoff. Actual diagonal unresolved. See `docs/experiment-logs/2026-09-08-b1-recovery.md`. Full trajectory replay and workhorse execution have not been newly validated. Next useful step is the transient branch selector. | Research | Unknown | — |
+| P1-local | Periodic-trace and defect controls pass. Alternating-center strips through width 15 admit neighbors violating period 2. Seek a seed-derived constraint or allow a larger neighbor period; extending the finite prefix scan adds no mechanism. | Research | Unknown | — |
 | G1 | **Wire C2's annihilator gates into `preflight`** — `counting_bound.py` has `annihilator_dimension`, `max_zeros_of_degree` and `annihilator_verdict`, but #23 predates `tools/gates.py`, so `gate_counting_bound` has no annihilator branch and nothing calls them. Note the class is vacuous in *both* directions and the DFAO rule (`log2\|M\| >= n`) is the wrong way round for it, so the branch must call these functions rather than a second derivation | Infra | Hours | C2c, C2d |
 
 **De-prioritised:** more neural experiments (the ceiling is partly the models'
@@ -39,12 +40,11 @@ grades left-edge structure as disjoint from the prize object.
 
 ## Chores
 
-- **Delete merged branches** — the original 7, plus `claude/codex-tool-availability-3fbc2z`,
-  `claude/codex-worker-integration-8pd8ls`, `claude/deepseek-parallel-experiments-hu5ue3`,
-  `claude/rule-30-foundry-env-tlbr9x` and `claude/recent-prs-review-llfk1b` once
-  this PR lands. Verified safe, blocked from the container by an egress
-  `HTTP 403`. Command in [`handover/CURRENT.md`](handover/CURRENT.md). Then
-  enable auto-delete head branches.
+- **Merged-branch cleanup completed 2026-09-08.** The original seven refs were
+  already absent. All nine remaining merged refs were verified against live
+  remote tips and removed atomically with exact-tip leases. Automatic deletion
+  after merge is enabled. The twelve unmerged test branches and unmerged
+  `fix/rule110-showcase` remain untouched.
 - **Triage 12 unreviewed `codex/test-*` branches** from the 15-task pool run.
   Each adds one `tests/test_<module>.py` and none has a PR. **Do not merge
   `codex/test-add-unit-tests-for-experiments-orbit-cyc-aacc346f` as it stands**:
@@ -60,16 +60,16 @@ grades left-edge structure as disjoint from the prize object.
 
 | PR | Branch | State |
 |---|---|---|
-| [#31](https://github.com/Patto1155/rule30-foundry/pull/31) | `claude/codex-tool-availability-3fbc2z` | This PR, and the last one open. Reconciles this file after #23, #24 and #27–#30 landed. |
+| Local | `codex/periodic-defect-constraints` | Based on merged #31 (`372c505`): trace/defect controls, finite-strip witnesses, B1 recovery, and completed branch-cleanup documentation. |
 
-Nothing else is in flight.
+PR #31 is merged. No changes were made to the older checkout's unrelated edits.
 
 The #18 → #19 stack landed on 2026-09-02; #20 and #21 had already been merged
 into #19. The three-deep delegation stack is gone: #27, #28 and #29 landed on
 2026-09-08 in bottom-up order, which is [`BRANCHING.md`](BRANCHING.md) §2's own
-remedy. Nothing is stacked. The merged branches listed in
-[`BRANCHING.md`](BRANCHING.md) are still awaiting deletion (see *Chores*), and
-#27–#29's branches now join them.
+remedy. Nothing is stacked. The merged-branch backlog has been cleared (see
+*Chores*); historical branch names in [`BRANCHING.md`](BRANCHING.md) are not a
+live deletion list.
 
 ### Why #20 and #21 were merged rather than left open
 

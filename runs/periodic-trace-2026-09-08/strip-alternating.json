@@ -1,0 +1,345 @@
+[
+  {
+    "width": 11,
+    "center_word": "01",
+    "states": 2048,
+    "recurrent_sccs": 1,
+    "recurrent_states": 46,
+    "left_eventually_has_word_period": false,
+    "witness": {
+      "mismatch_path": [
+        [
+          0,
+          16
+        ],
+        [
+          1,
+          56
+        ],
+        [
+          0,
+          1100
+        ]
+      ],
+      "return_path": [
+        [
+          0,
+          1100
+        ],
+        [
+          1,
+          759
+        ],
+        [
+          0,
+          528
+        ],
+        [
+          1,
+          824
+        ],
+        [
+          0,
+          1485
+        ],
+        [
+          1,
+          117
+        ],
+        [
+          0,
+          148
+        ],
+        [
+          1,
+          1527
+        ],
+        [
+          0,
+          16
+        ]
+      ],
+      "closed_walk": [
+        [
+          0,
+          16
+        ],
+        [
+          1,
+          56
+        ],
+        [
+          0,
+          1100
+        ],
+        [
+          1,
+          759
+        ],
+        [
+          0,
+          528
+        ],
+        [
+          1,
+          824
+        ],
+        [
+          0,
+          1485
+        ],
+        [
+          1,
+          117
+        ],
+        [
+          0,
+          148
+        ],
+        [
+          1,
+          1527
+        ],
+        [
+          0,
+          16
+        ]
+      ]
+    },
+    "scope": "open finite strip; no single-seed or infinite-plane counterexample"
+  },
+  {
+    "width": 13,
+    "center_word": "01",
+    "states": 8192,
+    "recurrent_sccs": 1,
+    "recurrent_states": 84,
+    "left_eventually_has_word_period": false,
+    "witness": {
+      "mismatch_path": [
+        [
+          0,
+          32
+        ],
+        [
+          1,
+          4208
+        ],
+        [
+          0,
+          2201
+        ]
+      ],
+      "return_path": [
+        [
+          0,
+          2201
+        ],
+        [
+          1,
+          3567
+        ],
+        [
+          0,
+          1056
+        ],
+        [
+          1,
+          3697
+        ],
+        [
+          0,
+          922
+        ],
+        [
+          1,
+          1258
+        ],
+        [
+          0,
+          3882
+        ],
+        [
+          1,
+          490
+        ],
+        [
+          0,
+          554
+        ],
+        [
+          1,
+          1899
+        ],
+        [
+          0,
+          2345
+        ],
+        [
+          1,
+          4079
+        ],
+        [
+          0,
+          32
+        ]
+      ],
+      "closed_walk": [
+        [
+          0,
+          32
+        ],
+        [
+          1,
+          4208
+        ],
+        [
+          0,
+          2201
+        ],
+        [
+          1,
+          3567
+        ],
+        [
+          0,
+          1056
+        ],
+        [
+          1,
+          3697
+        ],
+        [
+          0,
+          922
+        ],
+        [
+          1,
+          1258
+        ],
+        [
+          0,
+          3882
+        ],
+        [
+          1,
+          490
+        ],
+        [
+          0,
+          554
+        ],
+        [
+          1,
+          1899
+        ],
+        [
+          0,
+          2345
+        ],
+        [
+          1,
+          4079
+        ],
+        [
+          0,
+          32
+        ]
+      ]
+    },
+    "scope": "open finite strip; no single-seed or infinite-plane counterexample"
+  },
+  {
+    "width": 15,
+    "center_word": "01",
+    "states": 32768,
+    "recurrent_sccs": 1,
+    "recurrent_states": 150,
+    "left_eventually_has_word_period": false,
+    "witness": {
+      "mismatch_path": [
+        [
+          0,
+          65
+        ],
+        [
+          1,
+          227
+        ],
+        [
+          0,
+          309
+        ]
+      ],
+      "return_path": [
+        [
+          0,
+          309
+        ],
+        [
+          1,
+          981
+        ],
+        [
+          0,
+          1108
+        ],
+        [
+          1,
+          3798
+        ],
+        [
+          0,
+          4690
+        ],
+        [
+          1,
+          16351
+        ],
+        [
+          0,
+          65
+        ]
+      ],
+      "closed_walk": [
+        [
+          0,
+          65
+        ],
+        [
+          1,
+          227
+        ],
+        [
+          0,
+          309
+        ],
+        [
+          1,
+          981
+        ],
+        [
+          0,
+          1108
+        ],
+        [
+          1,
+          3798
+        ],
+        [
+          0,
+          4690
+        ],
+        [
+          1,
+          16351
+        ],
+        [
+          0,
+          65
+        ]
+      ]
+    },
+    "scope": "open finite strip; no single-seed or infinite-plane counterexample"
+  }
+]
