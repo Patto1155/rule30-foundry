@@ -1,0 +1,23 @@
+{
+  "mode": "investigate",
+  "task": "tools/verify_all.py builds its stage list in build_stages(). CLAUDE.md says CI passes --allow-skip with an explicit list and that any OTHER skip fails the build. Read .github/workflows/verify.yml and tools/verify_all.py, then determine whether the workflow's allow-list still matches the stages that actually skip on a fresh clone. Run verify_all yourself to see which stages skip here. Report any stage that is allow-listed but no longer skips (a stale exemption now hiding a real skip), or that skips but is not listed. Cite file:line. CHANGE NO FILES.",
+  "context_files": [
+    "CLAUDE.md",
+    "tools/lint_bitorder.py",
+    "tools/verify_all.py"
+  ],
+  "acceptance": [],
+  "budget_minutes": 20,
+  "tools": [
+    "list_dir",
+    "read_file",
+    "grep",
+    "run"
+  ],
+  "limits": {
+    "max_turns": 30,
+    "max_tool_calls": 60,
+    "max_cost_usd": 0.25,
+    "wall_clock_s": 1200
+  }
+}

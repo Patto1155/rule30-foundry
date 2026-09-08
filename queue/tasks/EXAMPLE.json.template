@@ -1,0 +1,7 @@
+{
+  "mode": "implement",
+  "task": "What to do, in prose, with enough detail to act on. Say what done looks like.",
+  "context_files": ["tools/lint_ledger.py"],
+  "acceptance": ["python tools/lint_ledger.py"],
+  "budget_minutes": 20
+}

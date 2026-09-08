@@ -1,0 +1,57 @@
+# TLS front for the Codex dispatcher.
+#
+# Install to /etc/nginx/sites-available/codex-dispatcher and symlink into
+# sites-enabled. certbot rewrites the ssl_* lines when it issues the cert.
+#
+# Two settings here are load-bearing and easy to get wrong:
+#
+#   proxy_read_timeout   nginx defaults to 60s. A codex review routinely runs
+#                        for minutes, so the default silently returns 504 on
+#                        every non-trivial request while the dispatcher log
+#                        shows the run completing normally. Keep this above
+#                        CODEX_TIMEOUT_S.
+#   limit_req            the dispatcher does no rate limiting of its own. This
+#                        is the only thing between a leaked token and an
+#                        unbounded bill.
+
+limit_req_zone $binary_remote_addr zone=codex:10m rate=10r/m;
+
+server {
+    listen 443 ssl http2;
+    server_name __CODEX_HOST__;
+
+    # certbot fills these in; a self-signed cert will NOT work, because the
+    # caller's egress proxy re-terminates TLS and validates this certificate.
+    ssl_certificate     /etc/letsencrypt/live/__CODEX_HOST__/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/__CODEX_HOST__/privkey.pem;
+    ssl_protocols       TLSv1.2 TLSv1.3;
+
+    client_max_body_size 256k;
+
+    # Unauthenticated on purpose: it reveals nothing and it is the probe that
+    # separates "the allowlist now permits this host" from "the token is wrong".
+    location = /health {
+        proxy_pass http://127.0.0.1:8080;
+        access_log off;
+    }
+
+    location = /ask {
+        limit_req zone=codex burst=3 nodelay;
+        proxy_pass http://127.0.0.1:8080;
+        proxy_read_timeout 960s;
+        proxy_send_timeout 960s;
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+
+    # Everything else is not part of the API surface.
+    location / { return 404; }
+}
+
+server {
+    listen 80;
+    server_name __CODEX_HOST__;
+    # certbot needs :80 for the ACME challenge; nothing else belongs here.
+    location /.well-known/acme-challenge/ { root /var/www/html; }
+    location / { return 301 https://$host$request_uri; }
+}

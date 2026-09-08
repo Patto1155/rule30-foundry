@@ -18,10 +18,20 @@ import lint_bitorder
 
 class RepoIsCleanTest(unittest.TestCase):
     def test_no_bare_packbits_calls_in_repo(self):
-        findings = lint_bitorder.scan_repo(REPO_ROOT)
+        findings, unparseable = lint_bitorder.scan_repo(REPO_ROOT)
         self.assertEqual(
             findings, [],
             "bare packbits/unpackbits:\n" + "\n".join(str(f) for f in findings))
+        self.assertEqual(unparseable, [])
+
+    def test_a_syntax_error_is_a_named_failure_not_a_traceback(self):
+        """The lint is run as a gate against code a delegated agent just
+        wrote (tools/codex_worker.py). An unparseable file used to escape as
+        a SyntaxError traceback, which a harness reads as a nonzero exit with
+        no finding -- indistinguishable from a bit-order hit."""
+        with self.assertRaises(lint_bitorder.Unparseable) as caught:
+            lint_bitorder.scan_source("def f(:\n", "broken.py")
+        self.assertIn("broken.py", str(caught.exception))
 
     def test_it_actually_scans_something(self):
         """A lint that scans nothing passes vacuously."""
