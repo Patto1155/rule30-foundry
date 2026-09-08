@@ -1,0 +1,28 @@
+{
+  "mode": "test",
+  "task": "Add unit tests for experiments/invariant_measure.py in a NEW file tests/test_invariant_measure.py.\n\nCover: pack_row, unpack_rows, block_entropy and kmer_counts. pack_row and unpack_rows must round-trip exactly for lengths that are AND are not multiples of 8 -- that boundary is where a packing bug hides. block_entropy of a uniform count vector is log2(k); kmer_counts on a literal row has an exact histogram.\n\nRead the module first; do not guess its API. Test only pure functions that need no data file: the canonical bitstreams (data/center_col_*.bin) are gitignored and ABSENT here, so a test that opens one is a test that cannot run. If a function needs bits, build them in the test with the module's own small CPU simulator or a literal array. Never call np.unpackbits without bitorder='little' -- tools/lint_bitorder.py fails the build on a bare call. Do not import cupy or torch and do not require a GPU; use unittest.skipUnless for a GPU-only path. Do not edit the experiment module itself, do not touch docs/STATUS.md or docs/CLAIM_LEDGER.md, and create ONLY the one new test file named below. Assert real values you derived by running the code -- not tautologies like assertIsNotNone.\n\nDone looks like: `python -m unittest tests.test_invariant_measure` passes, and `python tools/lint_bitorder.py` still passes.",
+  "context_files": [
+    "experiments/invariant_measure.py",
+    "tools/lint_bitorder.py",
+    "CLAUDE.md"
+  ],
+  "acceptance": [
+    "python -m unittest tests.test_invariant_measure",
+    "python tools/lint_bitorder.py"
+  ],
+  "budget_minutes": 25,
+  "tools": [
+    "list_dir",
+    "read_file",
+    "grep",
+    "write_file",
+    "edit_file",
+    "run"
+  ],
+  "limits": {
+    "max_turns": 40,
+    "max_tool_calls": 80,
+    "max_cost_usd": 0.35,
+    "wall_clock_s": 1500
+  }
+}

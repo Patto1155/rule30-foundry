@@ -1,9 +1,17 @@
 # Brief template — copy, fill, dispatch
 
+    python tools/council.py review --file briefs/<slug>.md
+    python tools/council.py math --file briefs/<slug>.md      # or redteam
+
 A brief is the *entire* context the reviewer gets. It cannot ask a follow-up
-question, it cannot see this conversation, and (unless the role is codex-backed
-and you passed `--repo`) it cannot read the repo. A brief that says "the grid
-described above" buys you a confident answer to a question nobody asked.
+question, it cannot see this conversation, and it cannot read the repo —
+`tools/council.py` is read-only and has no checkout, by design. A brief that
+says "the grid described above" buys you a confident answer to a question
+nobody asked.
+
+The role (`math`, `redteam`, `review`) is a prompt framing, not a different
+model. It changes how the reply is argued, not what the reviewer can see, so
+it is never a substitute for putting the material in the brief.
 
 Two rules that are the whole reason this template exists:
 
@@ -27,8 +35,8 @@ progress and a reviewer who does not know that will waste your budget).
 
 ## The artifact under review
 
-The claim, number, diff, or argument. Inline it — do not cite a path unless the
-role has repo access. For numeric results give the parameters that produced
+The claim, number, diff, or argument. Inline it — a path is not context the
+reviewer can follow. For numeric results give the parameters that produced
 them (`d`, `w`, `D`, sample counts), not just the verdict.
 
 ## What I want back

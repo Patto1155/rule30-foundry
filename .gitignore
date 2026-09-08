@@ -43,3 +43,20 @@ __pycache__/
 
 # SAT toolchain built by tools/build_sat_toolchain.sh (rebuildable, not vendored).
 third_party/
+
+# Delegated-task artifacts (tools/codex_worker.py): prompt, raw reply, patch,
+# verification log. Transient working material for one task -- the reviewable
+# output is the codex/<task> branch, which git already keeps. Distinct from
+# runs/<name>/, which workhorse.py commits because it IS the experiment record.
+runs/codex/
+runs/pool/
+
+# The trap manifest's refusal record. tests/test_workhorse.py drives a real
+# workhorse refusal to prove the counting-bound gate still bites, and
+# workhorse writes the record into the real queue/refused/. The test unlinks
+# it in a `finally`, but a run killed by a timeout never reaches that -- and
+# codex_worker.changed_files() does `git add -A`, so a leftover would be
+# staged, committed, and attributed to whichever delegated worker happened to
+# time out. Real refusals (any other name) stay tracked, which is the point of
+# the directory.
+queue/refused/t-trap-*.json

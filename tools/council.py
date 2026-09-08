@@ -1,298 +1,352 @@
 #!/usr/bin/env python
-"""Dispatch a self-contained brief to an external model and capture the reply.
+"""Ask an independent model (Codex, on the dispatcher VM) to review a claim.
 
-Why this exists
----------------
-The expensive failures in this repo have all been *silent*: a byte-reversed
-bitstream, a vacuous counting bound, a ledger row citing a template. Every one
-of them was caught by a second reader who did not share the first reader's
-assumptions. This tool buys that second reader on demand, from a model that is
-not Claude, and writes the reply to a file so the reasoning is reviewable
-rather than lost in a chat scrollback.
+Why this exists: every grade in `docs/CLAIM_LEDGER.md` is currently produced
+and checked by the same agent lineage. That is a weak independence argument.
+A second model with different training and no stake in the repo's prior
+conclusions is a cheap adversarial check -- not authority, but a source of
+disagreement worth explaining.
 
-Design constraints, all deliberate:
+Transport is deliberately boring: HTTPS POST to a small dispatcher on a VM
+that runs `codex exec` locally. It is NOT ssh. This container's egress is a
+default-deny allowlist (an unlisted host answers 403 to CONNECT, and raw
+TCP/22 is not on it), so the dispatcher host must be added to the environment's
+network policy before any of this works. See `docs/CODEX_COUNCIL.md`.
 
-  * **Stdlib only.** CI installs numpy and nothing else (requirements-ci.txt);
-    `tests/test_council_config.py` must import this module there. The MCP
-    server path imports `mcp` lazily, inside `serve()`.
-  * **Read-only reviewers.** Codex runs with `--sandbox read-only`. External
-    models report; Claude applies. Two agents writing one tree is a lost
-    afternoon, and an unreviewed patch from a model that cannot run
-    `tools/verify_all.py` is worse than no patch.
-  * **One config block.** Everything you would want to change lives in ROLES.
+Configuration, both required, both from the environment (never a flag -- a
+token in argv is a token in `ps` output):
 
-Usage
------
-    python tools/council.py roles
-    python tools/council.py ask math briefs/c2c-lag-sets.md --repo
-    python tools/council.py ask lit - < brief.md --out briefs/out/lit.md
-    python tools/council.py doctor          # is this environment wired up?
-    python tools/council.py serve           # optional MCP server (needs `mcp`)
+    CODEX_COUNCIL_URL     https://<host>/ask
+    CODEX_COUNCIL_TOKEN   the bearer token the dispatcher was installed with
 
-Environment setup for a Claude Code cloud session: docs/COUNCIL.md.
+Usage:
+    echo "<claim>" | python tools/council.py redteam
+    python tools/council.py review --file docs/experiment-logs/foo.md
+    python tools/council.py math --json < argument.txt
+    python tools/council.py --check          # health probe, no token needed
+
+A role is a *prompt framing*, not a different model. The sketch this replaced
+mapped all three roles to the same model id, which made the dict decorative.
+What actually changes the answer is the preamble, so that is what a role is.
 """
 
 from __future__ import annotations
 
 import argparse
-import base64
 import json
 import os
-import pathlib
-import shutil
-import subprocess
+import ssl
 import sys
-import tempfile
-import time
 import urllib.error
 import urllib.request
+from pathlib import Path
 
-# --------------------------------------------------------------------------
-# Configuration. This block is the whole knob panel - edit it, not the code.
+REPO_ROOT = Path(__file__).resolve().parent.parent
+
+# Client-side cap. The dispatcher enforces its own, lower or equal; this one
+# exists so an accidental `cat data/center_col_10M.bin` fails here rather than
+# after a 40 MB upload through the proxy.
+MAX_PROMPT_BYTES = 100_000
+
+DEFAULT_TIMEOUT_S = 900
+
+# Appended to every role. These are the failure modes that have actually cost
+# this repo months (CLAUDE.md, AGENTS.md "Implementation Guardrails"). A
+# reviewer who does not know them re-derives generic advice; one who does can
+# check the specific things that went wrong before.
 #
-# backend   "codex"      -> OpenAI Codex CLI signed in with a ChatGPT account.
-#                           Can read the repo (--repo). Draws on the ChatGPT
-#                           subscription's rate limits, shared with your own
-#                           interactive Codex use, so spend it on jobs that
-#                           need repo access or heavy reasoning.
-#           "openrouter" -> one HTTPS call, no repo access, pennies. Right for
-#                           literature sweeps and cheap fan-out.
-# model     Backend-specific ID. These drift; `codex --help` and
-#           openrouter.ai/models are the authorities, not this comment.
-# reasoning Codex only: minimal | low | medium | high | xhigh.
-# timeout   Seconds. An xhigh Codex review over a repo can genuinely take 20 min.
-# --------------------------------------------------------------------------
-ROLES: dict[str, dict] = {
-    # Code and diff review, with the repo in front of it.
-    "review": dict(backend="codex", model="gpt-5.2", reasoning="high", timeout=1800),
-    # Proofs, counting bounds, "is this negative result vacuous".
-    "math": dict(backend="codex", model="gpt-5.2", reasoning="xhigh", timeout=2400),
-    # Literature: prior art on Rule 30, algebraic immunity, CA cryptanalysis.
-    "lit": dict(backend="openrouter", model="deepseek/deepseek-r1", timeout=900),
-    # Adversarial reader: what would make this claim wrong?
-    "redteam": dict(backend="openrouter", model="qwen/qwen3-235b-a22b", timeout=900),
+# Kept without a lead-in so tools/codex_worker.py can send the same list to an
+# agent that is *doing* the work rather than reviewing it -- see guardrails()
+# below. Two copies of this list would drift, and the drifted copy is always
+# the one that gets sent.
+REPO_FAILURE_MODES = """\
+1. Negative results from an underpowered search class. Before any "we searched
+   class M and found no fit" conclusion, log2|M| >= n must hold; strictly below
+   that the negative is guaranteed by counting alone and carries no
+   information. Equality is informative, not vacuous -- at log2|M| = n the
+   class has 2^n members and a no-fit outcome is not forced by cardinality, so
+   do not reject boundary-case evidence. A certificate was retracted in 2026-08
+   for running an experiment strictly below the threshold.
+2. Bit order. Packed center-column bitstreams are written LSB-first; NumPy's
+   default unpack is MSB-first. A bare np.unpackbits reverses every 8-bit block
+   -- ~49.95% of positions differ while the bit mean is identical, so no
+   aggregate check catches it.
+3. Single seed. All three prizes concern the one deterministic single-black-cell
+   initial condition. An ensemble average or random-initial-condition quantity
+   is not progress on them, however well measured.
+4. A ~50% bit difference between two streams is never a kernel bug -- it means
+   the streams are uncorrelated, i.e. a packing or seed mismatch. A real kernel
+   bug diverges late.
+5. Right-censoring. "Never reached within N steps" is not "never". Reject the
+   unqualified form.
+6. Noise floors. A near-zero metric is not evidence of asymmetry or structure
+   until a baseline has been defined and measured.
+7. In a radius-1 cellular automaton, first_divergence < distance is impossible.
+   Treat any such number as a hard failure, not a curiosity.
+
+Do not defer to the framing you were given. If the claim is fine, say it is
+fine and say what would falsify it. If it is not, name the specific step that
+fails rather than listing generic caveats."""
+
+
+def guardrails(activity: str = "reviewing") -> str:
+    """The failure-mode list under a lead-in that names what the reader is
+    doing. `reviewing` for the council, `doing` for a delegated worker."""
+    return (f"Context on the repository whose work you are {activity} "
+            "(rule30-foundry, empirical work on Wolfram's three Rule 30 prize "
+            "problems). These are its known, expensive failure modes. Check "
+            "for them explicitly, and say so when one applies:\n\n"
+            + REPO_FAILURE_MODES)
+
+
+REPO_GUARDRAILS = guardrails("reviewing")
+
+ROLE_PREAMBLES = {
+    "review": """\
+You are an independent reviewer. You did not write this work and you have no \
+stake in its conclusions. Assess whether the claim is supported by the \
+evidence offered, at the strength claimed. Distinguish clearly between: proved,
+empirically supported on the stated range, and asserted. Where the grade is
+overstated, say what the honest grade would be.""",
+    "math": """\
+You are checking a mathematical argument for correctness. Work through it \
+step by step. If it is valid, say so and identify which hypothesis is doing \
+the real work. If it is invalid, name the exact step that fails and why -- not \
+a general concern, the specific inference. If it is valid but proves something \
+weaker than advertised, state precisely what it does prove.""",
+    "redteam": """\
+Your job is to break this claim. Assume it is wrong and find the reason. \
+Prioritise, in order: a methodological error that would produce this result \
+from nothing; an artifact of data handling; an overstated conclusion that the \
+evidence does not reach; a gap between the quantity measured and the quantity \
+the prize problem actually asks about. If after genuine effort you cannot \
+break it, say so explicitly and describe the single experiment most likely to.""",
 }
 
-DEFAULT_TIMEOUT = 1800
-CODEX_HOME = pathlib.Path(os.environ.get("CODEX_HOME", pathlib.Path.home() / ".codex"))
-OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions"
-REPO_ROOT = pathlib.Path(__file__).resolve().parent.parent
 
+def render_prompt(role: str, body: str) -> str:
+    """Assemble the full prompt sent to the dispatcher.
 
-class CouncilError(RuntimeError):
-    """A dispatch failed for a reason the caller can act on."""
-
-
-# ---------------------------------------------------------------- codex ----
-def ensure_codex_auth() -> None:
-    """Seed ~/.codex/auth.json from CODEX_AUTH_B64 if it is not already there.
-
-    Cloud sandboxes are ephemeral: the environment's setup script normally does
-    this before Claude starts, so this is a fallback for a plain local shell.
-    Base64 because auth.json is full of double quotes and the environment
-    variable editor is not a shell - a raw paste breaks on the first quote.
+    Pure, so the wording can be tested without a network or a VM.
     """
-    auth = CODEX_HOME / "auth.json"
-    if auth.exists():
-        return
-    blob = os.environ.get("CODEX_AUTH_B64", "").strip()
-    if not blob:
-        raise CouncilError(
-            "codex backend: no ~/.codex/auth.json and CODEX_AUTH_B64 is unset.\n"
-            "On a trusted machine: `codex login`, then\n"
-            "  base64 -w0 ~/.codex/auth.json    (macOS: base64 -i ~/.codex/auth.json)\n"
-            "and store that single line as CODEX_AUTH_B64. See docs/COUNCIL.md."
-        )
-    CODEX_HOME.mkdir(parents=True, exist_ok=True)
-    CODEX_HOME.chmod(0o700)
-    try:
-        auth.write_bytes(base64.b64decode(blob, validate=True))
-    except Exception as exc:  # noqa: BLE001 - message matters more than type
-        raise CouncilError(f"CODEX_AUTH_B64 is not valid base64: {exc}") from exc
-    auth.chmod(0o600)
+    if role not in ROLE_PREAMBLES:
+        raise KeyError(role)
+    return (f"{ROLE_PREAMBLES[role]}\n\n{REPO_GUARDRAILS}\n\n"
+            f"--- material under review ---\n\n{body.strip()}\n")
 
 
-def run_codex(cfg: dict, brief: str, repo: bool) -> str:
-    ensure_codex_auth()
-    if not shutil.which("codex"):
-        raise CouncilError("codex is not installed: npm install -g @openai/codex")
-    # Without --repo the reviewer gets an empty scratch cwd, so a brief that
-    # forgot to inline its evidence fails loudly instead of quietly reading
-    # whatever happens to be in the working directory.
-    cwd = str(REPO_ROOT) if repo else tempfile.mkdtemp(prefix="council-")
-    out = pathlib.Path(tempfile.mkstemp(prefix="council-", suffix=".md")[1])
-    cmd = [
-        "codex", "exec", "--skip-git-repo-check",
-        "--sandbox", "read-only",
-        "-C", cwd,
-        "-m", cfg["model"],
-        "-c", f'model_reasoning_effort="{cfg.get("reasoning", "medium")}"',
-        "-o", str(out),
-        "-",  # prompt on stdin: no argv length limit, no shell quoting
-    ]
-    proc = subprocess.run(
-        cmd, input=brief, text=True, capture_output=True,
-        timeout=cfg.get("timeout", DEFAULT_TIMEOUT),
+def build_request(url: str, token: str, role: str, body: str,
+                  model: str | None = None) -> urllib.request.Request:
+    """Build the POST. Separated from sending so tests can inspect it.
+
+    The token goes in a header and never into argv, a log line, or the JSON
+    body -- see redact() for the error path.
+    """
+    payload: dict[str, object] = {"role": role, "prompt": render_prompt(role, body)}
+    if model:
+        payload["model"] = model
+    raw = json.dumps(payload).encode("utf-8")
+    return urllib.request.Request(
+        url,
+        data=raw,
+        method="POST",
+        headers={
+            "Content-Type": "application/json",
+            "Authorization": f"Bearer {token}",
+            "Accept": "application/json",
+        },
     )
-    answer = out.read_text(encoding="utf-8", errors="replace")
-    out.unlink(missing_ok=True)
-    if not answer.strip():
-        tail = (proc.stderr or proc.stdout or "")[-3000:]
-        hint = ""
-        if "401" in tail or "login" in tail.lower():
-            hint = ("\nHint: the seeded token has expired. Run `codex exec \"ok\"` on the "
-                    "machine you logged in from (that refreshes it), re-base64 "
-                    "~/.codex/auth.json, and update CODEX_AUTH_B64.")
-        raise CouncilError(f"codex exited {proc.returncode} with no answer:\n{tail}{hint}")
-    return answer
 
 
-# ----------------------------------------------------------- openrouter ----
-def run_openrouter(cfg: dict, brief: str, repo: bool) -> str:
-    if repo:
-        raise CouncilError(
-            "the openrouter backend has no repo access; inline the evidence in the "
-            "brief, or use a codex-backed role."
-        )
-    body = {
-        "model": cfg["model"],
-        "max_tokens": cfg.get("max_tokens", 8000),
-        "messages": [{"role": "user", "content": brief}],
-    }
-    headers = {"Content-Type": "application/json"}
-    # Empty is fine and expected in a cloud session: the agent proxy injects
-    # the Authorization header from the environment's API credential, so the
-    # key is never visible to this process or to the model driving it.
-    key = os.environ.get("OPENROUTER_API_KEY", "").strip()
-    if key:
-        headers["Authorization"] = f"Bearer {key}"
-    req = urllib.request.Request(OPENROUTER_URL, data=json.dumps(body).encode(), headers=headers)
-    try:
-        with urllib.request.urlopen(req, timeout=cfg.get("timeout", DEFAULT_TIMEOUT)) as resp:
-            payload = json.load(resp)
-    except urllib.error.HTTPError as exc:
-        detail = exc.read().decode("utf-8", "replace")[:2000]
-        raise CouncilError(f"openrouter HTTP {exc.code}: {detail}") from exc
-    except urllib.error.URLError as exc:
-        raise CouncilError(
-            f"openrouter unreachable ({exc.reason}). In a cloud session, check the "
-            "environment's network allowlist covers openrouter.ai - see docs/COUNCIL.md."
-        ) from exc
-    try:
-        return payload["choices"][0]["message"]["content"]
-    except (KeyError, IndexError) as exc:
-        raise CouncilError(f"unexpected openrouter response: {json.dumps(payload)[:2000]}") from exc
+def redact(text: str, token: str | None) -> str:
+    """Never let the bearer token reach stderr, a log, or a PR comment."""
+    if token and token in text:
+        text = text.replace(token, "<redacted>")
+    return text
 
 
-BACKENDS = {"codex": run_codex, "openrouter": run_openrouter}
+def _ssl_context() -> ssl.SSLContext:
+    """Default context, which honours SSL_CERT_FILE.
+
+    The agent proxy re-terminates TLS, so the certificate this client sees is
+    the proxy's, signed by the CA at /root/.ccr/ca-bundle.crt -- which
+    SSL_CERT_FILE already points at. Building the context explicitly documents
+    that this is load-bearing rather than incidental, and keeps anyone from
+    "fixing" a verification error by disabling verification.
+    """
+    return ssl.create_default_context()
 
 
-# ---------------------------------------------------------------- core -----
-def ask(role: str, brief: str, repo: bool = False) -> str:
-    """Send `brief` to `role`'s model and return the reply, provenance-stamped."""
-    if role not in ROLES:
-        raise CouncilError(f"unknown role {role!r}; known roles: {', '.join(sorted(ROLES))}")
-    if not brief.strip():
-        raise CouncilError("refusing to dispatch an empty brief")
-    cfg = ROLES[role]
-    started = time.time()
-    answer = BACKENDS[cfg["backend"]](cfg, brief, repo)
-    stamp = (
-        f"<!-- council role={role} backend={cfg['backend']} model={cfg['model']} "
-        f"repo_access={repo} elapsed={time.time() - started:.0f}s "
-        f"utc={time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime())} -->\n\n"
-    )
-    return stamp + answer
+class NoRedirect(urllib.request.HTTPRedirectHandler):
+    """Refuse every redirect rather than forwarding the bearer token.
+
+    urllib's default redirect handler rebuilds the request for the new URL and
+    copies every header across except content-length and content-type -- see
+    CONTENT_HEADERS in urllib.request.HTTPRedirectHandler.redirect_request.
+    Authorization is not in that list, so a 302 pointing anywhere at all hands
+    CODEX_COUNCIL_TOKEN to whatever answers, no warning and no error.
+
+    Checking that the origin is unchanged would be enough, but nothing in this
+    protocol has any business redirecting: the client talks to one endpoint it
+    was configured with, and nginx's only redirect is :80 -> :443, which a
+    correctly configured CODEX_COUNCIL_URL never hits. So refuse the lot; a
+    redirect here means something is wrong and should be read, not followed.
+    """
+
+    def redirect_request(self, req, fp, code, msg, headers, newurl):
+        raise urllib.error.HTTPError(
+            req.full_url, code,
+            f"refusing to follow a {code} redirect to {newurl}: urllib would "
+            "forward the bearer token to that origin",
+            headers, fp)
 
 
-def doctor() -> int:
-    """Report whether this machine can actually reach each configured backend."""
-    used = {cfg["backend"] for cfg in ROLES.values()}
-    failures = 0
-    if "codex" in used:
-        ok_bin = shutil.which("codex")
-        print(f"codex binary        : {'FOUND ' + ok_bin if ok_bin else 'MISSING (npm i -g @openai/codex)'}")
-        auth = CODEX_HOME / "auth.json"
-        seeded = auth.exists() or bool(os.environ.get("CODEX_AUTH_B64", "").strip())
-        print(f"codex credentials   : {'present' if seeded else 'MISSING (CODEX_AUTH_B64 unset)'}")
-        if auth.exists():
-            try:
-                mode = json.loads(auth.read_text()).get("auth_mode", "?")
-            except Exception:  # noqa: BLE001
-                mode = "unreadable"
-            print(f"codex auth_mode     : {mode}  (expected: chatgpt)")
-        failures += 0 if (ok_bin and seeded) else 1
-    if "openrouter" in used:
-        proxied = bool(os.environ.get("OPENROUTER_API_KEY", "").strip())
-        print(f"openrouter auth     : {'env key set' if proxied else 'none in env (fine if the agent proxy injects it)'}")
-    print(f"roles configured    : {', '.join(sorted(ROLES))}")
-    return failures
+def _opener() -> urllib.request.OpenerDirector:
+    """Opener with redirects refused and the proxy handling left intact.
+
+    build_opener keeps its default handlers -- ProxyHandler among them, which
+    is what routes this through HTTPS_PROXY -- and swaps in the handlers passed
+    here for those of the same class.
+    """
+    return urllib.request.build_opener(
+        NoRedirect(), urllib.request.HTTPSHandler(context=_ssl_context()))
 
 
-# ----------------------------------------------------------------- mcp -----
-def serve() -> None:
-    """Expose ask/roles as MCP tools, so a dispatch is a typed tool call."""
-    from mcp.server.fastmcp import FastMCP  # lazy: `pip install mcp`, not a CI dep
-
-    mcp = FastMCP("council")
-
-    @mcp.tool()
-    def council_ask(role: str, brief: str, repo_access: bool = False) -> str:
-        """Send a self-contained brief to an external reviewer model.
-
-        The reviewer sees ONLY this brief (plus read-only repo files when
-        repo_access=True and the role is codex-backed). Do not include your own
-        conclusion - independence is the thing being bought. Call council_roles
-        for the available roles.
-        """
-        return ask(role, brief, repo_access)
-
-    @mcp.tool()
-    def council_roles() -> str:
-        """List reviewer roles and the model behind each."""
-        return json.dumps(ROLES, indent=2)
-
-    mcp.run()
+def explain_http_error(err: urllib.error.HTTPError) -> str:
+    if err.code in (401, 403) and err.headers.get("X-Dispatcher") == "codex":
+        return ("dispatcher rejected the token (HTTP %d). CODEX_COUNCIL_TOKEN "
+                "does not match the value the service was installed with."
+                % err.code)
+    if err.code == 403:
+        return ("HTTP 403. If this came from the egress proxy rather than the "
+                "dispatcher, the host is not on this environment's network "
+                "allowlist -- that is a policy denial, not a transient error. "
+                "Add the host to the environment's network policy and start a "
+                "new session; do not route around it. "
+                "Confirm with: curl -sS \"$HTTPS_PROXY/__agentproxy/status\"")
+    if err.code == 413:
+        return "prompt too large for the dispatcher's limit (HTTP 413)."
+    if err.code == 504:
+        return "codex exec exceeded the dispatcher's timeout (HTTP 504)."
+    return f"HTTP {err.code} {err.reason}"
 
 
-def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    sub = parser.add_subparsers(dest="cmd", required=True)
-    sub.add_parser("roles", help="print the role table as JSON")
-    sub.add_parser("doctor", help="check this machine can reach each backend")
-    sub.add_parser("serve", help="run as an MCP server (requires `mcp`)")
-    a = sub.add_parser("ask", help="dispatch a brief")
-    a.add_argument("role", choices=sorted(ROLES))
-    a.add_argument("brief", help="path to a brief .md, or '-' for stdin")
-    a.add_argument("--repo", action="store_true",
-                   help="let the reviewer read this repo, read-only (codex roles only)")
-    a.add_argument("--out", help="write the reply here instead of stdout")
-    args = parser.parse_args(argv)
+def ask(url: str, token: str, role: str, body: str, model: str | None,
+        timeout: int) -> dict:
+    req = build_request(url, token, role, body, model)
+    with _opener().open(req, timeout=timeout) as resp:
+        return json.loads(resp.read().decode("utf-8"))
 
-    if args.cmd == "roles":
-        print(json.dumps(ROLES, indent=2))
-        return 0
-    if args.cmd == "doctor":
-        return doctor()
-    if args.cmd == "serve":
-        serve()
-        return 0
 
-    brief = sys.stdin.read() if args.brief == "-" else pathlib.Path(args.brief).read_text(encoding="utf-8")
-    try:
-        result = ask(args.role, brief, args.repo)
-    except CouncilError as exc:
-        print(f"council: {exc}", file=sys.stderr)
+def health_url(url: str) -> str:
+    """Derive the /health endpoint from the configured /ask endpoint.
+
+    Pure, so the mapping is tested rather than assumed. Both spellings of the
+    configured value are accepted, because whether a URL keeps its trailing
+    slash is exactly the sort of thing that differs between the runbook and
+    what someone actually pastes into an environment variable.
+    """
+    base = url[:-len("/ask")] if url.rstrip("/").endswith("/ask") else url
+    return base.rstrip("/") + "/health"
+
+
+def health(url: str, timeout: int = 30) -> dict:
+    """GET /health on the dispatcher. Unauthenticated by design.
+
+    This is the probe to run first after an allowlist change: it separates
+    "the network policy now permits this host" from "the token is right",
+    which otherwise fail in ways that look alike.
+    """
+    req = urllib.request.Request(health_url(url), method="GET")
+    with _opener().open(req, timeout=timeout) as resp:
+        return json.loads(resp.read().decode("utf-8"))
+
+
+def main() -> int:
+    ap = argparse.ArgumentParser(
+        description=__doc__,
+        formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap.add_argument("role", nargs="?", choices=sorted(ROLE_PREAMBLES),
+                    help="prompt framing to apply")
+    ap.add_argument("--file", type=Path,
+                    help="read the material from a file instead of stdin")
+    ap.add_argument("--model", help="override the dispatcher's default model")
+    ap.add_argument("--timeout", type=int, default=DEFAULT_TIMEOUT_S,
+                    metavar="S", help=f"seconds (default {DEFAULT_TIMEOUT_S})")
+    ap.add_argument("--json", action="store_true",
+                    help="print the full response envelope, not just the answer")
+    ap.add_argument("--check", action="store_true",
+                    help="probe /health and exit; needs URL but not a token")
+    ap.add_argument("--dry-run", action="store_true",
+                    help="print the assembled prompt and exit, sending nothing")
+    args = ap.parse_args()
+
+    url = os.environ.get("CODEX_COUNCIL_URL", "").strip()
+    token = os.environ.get("CODEX_COUNCIL_TOKEN", "").strip()
+
+    if args.check:
+        if not url:
+            print("CODEX_COUNCIL_URL is not set.", file=sys.stderr)
+            return 2
+        try:
+            print(json.dumps(health(url), indent=2))
+            return 0
+        except urllib.error.HTTPError as err:
+            print(f"health probe failed: {explain_http_error(err)}",
+                  file=sys.stderr)
+            return 1
+        except urllib.error.URLError as err:
+            print(f"health probe failed: {redact(str(err.reason), token)}",
+                  file=sys.stderr)
+            return 1
+
+    if not args.role:
+        ap.error("a role is required unless --check is given")
+
+    body = (args.file.read_text(encoding="utf-8") if args.file
+            else sys.stdin.read())
+    if not body.strip():
+        print("nothing to review: stdin was empty and --file was not given.",
+              file=sys.stderr)
         return 2
-    if args.out:
-        dest = pathlib.Path(args.out)
-        dest.parent.mkdir(parents=True, exist_ok=True)
-        dest.write_text(result, encoding="utf-8", newline="")
-        print(f"wrote {dest} ({len(result)} chars)")
+
+    if args.dry_run:
+        print(render_prompt(args.role, body))
+        return 0
+
+    encoded = len(render_prompt(args.role, body).encode("utf-8"))
+    if encoded > MAX_PROMPT_BYTES:
+        print(f"prompt is {encoded} bytes, over the {MAX_PROMPT_BYTES} limit. "
+              "Send the argument, not the dataset.", file=sys.stderr)
+        return 2
+
+    missing = [n for n, v in (("CODEX_COUNCIL_URL", url),
+                              ("CODEX_COUNCIL_TOKEN", token)) if not v]
+    if missing:
+        print(f"not configured: {', '.join(missing)} unset. "
+              "See docs/CODEX_COUNCIL.md.", file=sys.stderr)
+        return 2
+
+    try:
+        result = ask(url, token, args.role, body, args.model, args.timeout)
+    except urllib.error.HTTPError as err:
+        print(f"council request failed: {explain_http_error(err)}",
+              file=sys.stderr)
+        return 1
+    except urllib.error.URLError as err:
+        print(f"council request failed: {redact(str(err.reason), token)}",
+              file=sys.stderr)
+        return 1
+
+    if args.json:
+        print(json.dumps(result, indent=2))
     else:
-        print(result)
-    return 0
+        print(result.get("answer", "").rstrip())
+        meta = (f"[{result.get('role')} · {result.get('model')} · "
+                f"{result.get('duration_s', 0):.1f}s]")
+        print(meta, file=sys.stderr)
+    return 0 if result.get("ok") else 1
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    raise SystemExit(main())

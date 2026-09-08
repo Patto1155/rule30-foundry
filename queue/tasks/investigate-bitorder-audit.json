@@ -1,0 +1,23 @@
+{
+  "mode": "investigate",
+  "task": "Audit every file under experiments/ and gpu/ for the packing hazard in CLAUDE.md rule 2. Find each call to np.packbits or np.unpackbits and report, with file:line, whether it passes bitorder= explicitly. Then run `python tools/lint_bitorder.py` and, by reading its source, explain exactly which of those call sites it catches and which it misses -- a linter that misses a call site is the interesting finding here. Give file:line for everything you claim. CHANGE NO FILES.",
+  "context_files": [
+    "CLAUDE.md",
+    "tools/lint_bitorder.py",
+    "tools/verify_all.py"
+  ],
+  "acceptance": [],
+  "budget_minutes": 20,
+  "tools": [
+    "list_dir",
+    "read_file",
+    "grep",
+    "run"
+  ],
+  "limits": {
+    "max_turns": 30,
+    "max_tool_calls": 60,
+    "max_cost_usd": 0.25,
+    "wall_clock_s": 1200
+  }
+}
