@@ -39,6 +39,9 @@ Manifest (JSON). Fields marked * are required; the rest depend on `kind`.
                         "prefix_bits": 10000}          -- kind == search
                        or {"class": "<other>", "log2_size": 300.0,
                            "prefix_bits": 10000}       -- non-DFAO classes
+                       or {"class": "annihilator", "window_bits": 8,
+                           "degree": 2, "n_distinct_windows": 101,
+                           "margin_bits": 64}          -- margin defaults to 64
       "simulation":    {"cells": 92000064, "steps": 46000000}  -- kind == simulation
       "budget":        {"minutes": 30, "device": "cpu"}
     }
@@ -157,6 +160,50 @@ def gate_theory(m: dict) -> Gate:
                 "theory-gate check first and record its verdict.")
 
 
+def _gate_annihilator(s: dict) -> Gate:
+    """Apply both annihilator bounds, including for positive-only searches."""
+    values = {}
+    for key in ("window_bits", "degree", "n_distinct_windows", "margin_bits"):
+        value = s.get(key, 64 if key == "margin_bits" else None)
+        if type(value) is not int:
+            return Gate("counting-bound", FAIL,
+                        f"search.{key} must be an integer (not bool)")
+        values[key] = value
+    w, d = values["window_bits"], values["degree"]
+    n, margin = values["n_distinct_windows"], values["margin_bits"]
+    if w < 1:
+        return Gate("counting-bound", FAIL,
+                    "search.window_bits must be >= 1")
+    if not 0 <= d <= w:
+        return Gate("counting-bound", FAIL, "search.degree must be in 0..window_bits")
+    if not 1 <= n <= (1 << w):
+        return Gate("counting-bound", FAIL,
+                    "search.n_distinct_windows must be in 1..2^window_bits")
+    if margin < 0:
+        return Gate("counting-bound", FAIL, "search.margin_bits must be >= 0")
+    try:
+        v = _load("experiments/counting_bound.py").annihilator_verdict(w, d, n, margin)
+    except (OverflowError, ValueError) as exc:
+        return Gate("counting-bound", FAIL,
+                    f"Unsupported annihilator parameters in counting_bound helper: {exc}")
+    dim, ceiling = v["monomial_dimension"], v["max_zeros_reed_muller"]
+    if n > ceiling:
+        return Gate("counting-bound", FAIL, v["reading"])
+    if n < dim:
+        return Gate("counting-bound", FAIL,
+                    f"FORCED POSITIVE: {n} distinct windows < D={dim} monomials; "
+                    "a nonzero kernel exists by dimension alone.")
+    if not v["informative"]:
+        return Gate("counting-bound", FAIL,
+                    f"SAFETY MARGIN SHORTFALL: {n} distinct windows >= D={dim}, "
+                    f"but below D+margin_bits={dim + margin}. This conservative "
+                    "policy refusal does not imply a forced kernel or a probability bound.")
+    return Gate("counting-bound", PASS,
+                f"Annihilator preflight: D={dim} <= {n} distinct windows; "
+                f"D+margin_bits={dim + margin} <= {n} <= Reed-Muller ceiling {ceiling}. "
+                "These necessary bounds do not establish a relation or its predictive value.")
+
+
 def gate_counting_bound(m: dict) -> Gate:
     """CLAUDE.md rule 1. A negative from class M over n bits is information
     only when log2|M| >= n; below that every sequence gives the same negative
@@ -164,9 +211,13 @@ def gate_counting_bound(m: dict) -> Gate:
     tool's own threshold is `margin >= 0`, and Experiment S sits there."""
     if m.get("kind") != "search":
         return Gate("counting-bound", SKIP, "not a search")
+    s = m.get("search")
+    if not isinstance(s, dict):
+        return Gate("counting-bound", FAIL, "search must be an object")
+    if s.get("class") == "annihilator":
+        return _gate_annihilator(s)
     if "negative" not in (m.get("claims") or []):
         return Gate("counting-bound", SKIP, "search does not claim a negative")
-    s = m.get("search") or {}
     n = s.get("prefix_bits")
     if not isinstance(n, int) or n < 1:
         return Gate("counting-bound", FAIL, "search.prefix_bits (n) is missing")

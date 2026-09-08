@@ -134,6 +134,43 @@ the external path recurses without bound. It hung the suite once.
 
 ## Writing a manifest
 
+### Annihilator searches
+
+For `kind: "search"`, declare the specialized class as follows:
+
+```json
+"search": {
+  "class": "annihilator",
+  "window_bits": 8,
+  "degree": 2,
+  "n_distinct_windows": 101,
+  "margin_bits": 64
+}
+```
+
+`window_bits`, `degree`, and `n_distinct_windows` are required strict integers
+(booleans are rejected). The window must be positive, degree must lie in
+`0..window_bits`, and the number of **distinct** windows must lie in
+`1..2^window_bits`. `margin_bits` is an optional nonnegative integer, default
+64. Use a verified distinct-window count, not a prefix length or a count of
+overlapping window occurrences. This declarative gate does not measure it.
+
+The `counting-bound` gate calls `counting_bound.annihilator_verdict` before the
+generic negative-claim and `prefix_bits` checks. It runs even for positive-only
+or undeclared claims; neither `prefix_bits` nor `log2_size` is needed. Let `D`
+be the helper's monomial dimension. Fewer than `D` windows forces a nonzero
+kernel by dimension alone. Counts from `D` up to, but excluding,
+`D + margin_bits` fail a conservative safety policy; this shortfall does
+**not** prove that a kernel exists. The margin is a heuristic policy, not a
+rigorous probability bound for these evaluation rows. Counts above the
+helper's Reed-Muller zero ceiling force a negative. Equality at both the
+`D + margin_bits` threshold and zero ceiling passes when both bounds hold.
+Unsupported arithmetic in the helper fails preflight with an explicit reason.
+Passing these necessary checks establishes neither a relation nor a shortcut
+for the single-seed center sequence.
+
+### Common fields
+
 Schema is documented at the top of `tools/gates.py`. The minimum:
 
 ```json

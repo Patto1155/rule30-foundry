@@ -57,6 +57,77 @@ class TestSchema(unittest.TestCase):
         self.assertEqual(by_name(r, "schema")["status"], "FAIL")
 
 
+class TestAnnihilatorBound(unittest.TestCase):
+    def manifest(self, claims=("negative",), **fields):
+        search = {"class": "annihilator", "window_bits": 8, "degree": 2,
+                  "n_distinct_windows": 101}
+        search.update(fields)
+        return good_manifest(kind="search", claims=list(claims), search=search)
+
+    def check(self, m, status, reason):
+        report = gates.preflight(m, run_external=False)
+        gate = by_name(report, "counting-bound")
+        self.assertEqual(gate["status"], status, gate["reason"])
+        self.assertEqual(report["verdict"], status)
+        self.assertIn(reason, gate["reason"])
+
+    def test_both_exact_boundaries_pass_without_prefix_bits(self):
+        # w=8,d=2: D=37, default margin=64, max zeros=192.
+        for n in (101, 192):
+            for claims in (("positive",), ("negative",), ("positive", "negative"), ()):
+                with self.subTest(n=n, claims=claims):
+                    self.check(self.manifest(claims, n_distinct_windows=n),
+                               "PASS", "Reed-Muller ceiling 192")
+
+    def test_hard_and_policy_refusals_are_distinct(self):
+        for claims in (("positive",), ("negative",)):
+            self.check(self.manifest(claims, n_distinct_windows=36),
+                       "FAIL", "FORCED POSITIVE")
+            for n in (37, 100):
+                self.check(self.manifest(claims, n_distinct_windows=n),
+                           "FAIL", "SAFETY MARGIN SHORTFALL")
+            self.check(self.manifest(claims, n_distinct_windows=193),
+                       "FAIL", "Reed-Muller bound")
+
+    def test_zero_margin_accepts_dimension_boundary(self):
+        self.check(self.manifest(n_distinct_windows=37, margin_bits=0),
+                   "PASS", "D+margin_bits=37")
+
+    def test_missing_required_parameters(self):
+        for key in ("window_bits", "degree", "n_distinct_windows"):
+            m = self.manifest()
+            del m["search"][key]
+            self.check(m, "FAIL", key)
+
+    def test_strict_integer_fields(self):
+        for key in ("window_bits", "degree", "n_distinct_windows", "margin_bits"):
+            for value in (True, False, None, 2.0, "2", [], {}):
+                with self.subTest(key=key, value=value):
+                    self.check(self.manifest(**{key: value}), "FAIL", key)
+
+    def test_domain_validation(self):
+        for key, value in (("window_bits", 0), ("window_bits", -1),
+                           ("degree", -1), ("degree", 9),
+                           ("n_distinct_windows", 0), ("n_distinct_windows", 257),
+                           ("margin_bits", -1)):
+            self.check(self.manifest(**{key: value}), "FAIL", key)
+
+    def test_degree_endpoints_are_valid_but_bounds_can_refuse(self):
+        self.check(self.manifest(degree=0), "FAIL", "Reed-Muller bound")
+        self.check(self.manifest(degree=8, n_distinct_windows=255),
+                   "FAIL", "FORCED POSITIVE")
+
+    def test_helper_overflow_is_a_refusal(self):
+        self.check(self.manifest(window_bits=1024, degree=1024),
+                   "FAIL", "Unsupported annihilator parameters")
+
+    def test_missing_or_malformed_search_object_fails_dispatcher(self):
+        for search in (None, [], "annihilator", 4, False):
+            self.check(good_manifest(kind="search", search=search),
+                       "FAIL", "search must be an object")
+        self.check(good_manifest(kind="search"), "FAIL", "search must be an object")
+
+
 class TestSeed(unittest.TestCase):
     """CLAUDE.md rule 3: single seed only."""
 
