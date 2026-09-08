@@ -74,6 +74,30 @@ class TestPrompt(unittest.TestCase):
         self.assertIn("```diff", p)
         self.assertIn("must be empty lists", p)
 
+    def test_the_output_contract_is_the_last_thing_in_the_prompt(self):
+        """Measured 2026-09-08: two of three pool tasks returned a correct,
+        verified patch and no report, scoring a clean change as
+        NEEDS-ATTENTION. The contract now sits after the task and the quoted
+        files, where the model still has it in view when it starts writing."""
+        p = cw.render_prompt({**self.spec, "context_files": []}, "FILE BODY",
+                             has_repo=False)
+        self.assertGreater(p.index('"uncertainties"'), p.index("--- task ---"))
+        self.assertGreater(p.index('"uncertainties"'), p.index("FILE BODY"))
+        self.assertIn("Finish your reply with it", p)
+
+    def test_both_the_diff_and_the_report_are_demanded(self):
+        p = cw.render_prompt(self.spec, has_repo=False)
+        self.assertIn("BOTH the diff and the JSON report", p)
+
+    def test_the_modes_own_limits_are_excluded_from_blockers(self):
+        """Measured 2026-09-08: a task returned a clean, verified patch and
+        then reported "no repository checkout was provided" as a blocker,
+        which the prompt had just told it. Any blocker means BLOCKED, so a
+        finished change was held up by a restatement of the setup."""
+        p = cw.render_prompt(self.spec, has_repo=False)
+        self.assertIn("are NOT blockers", p)
+        self.assertIn("put\n                  them in `uncertainties`", p)
+
     def test_acceptance_commands_are_declared_up_front(self):
         p = cw.render_prompt({**self.spec, "acceptance": ["python -m unittest"]},
                              has_repo=True)

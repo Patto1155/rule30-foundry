@@ -69,14 +69,25 @@ python tools/providers.py check                   # what is usable, and why not
 python tools/providers.py models --grep deepseek  # live catalogue, needs egress
 ```
 
-### The default model is a guess until you check it
+### The default model, and what it costs
 
-`DEFAULT_OPENROUTER_MODEL` in `tools/providers.py` is `deepseek/deepseek-chat`
-and **it was not verified**: `openrouter.ai` was not reachable from the
-environment where this was written, so the catalogue could not be queried. Run
-`python tools/providers.py models --grep deepseek` from a host that can reach
-it and set `OPENROUTER_MODEL` to whatever actually exists. A wrong slug is a
-400 per task rather than one clear failure.
+`DEFAULT_OPENROUTER_MODEL` is `deepseek/deepseek-v4-flash-0731`, checked
+against the live catalogue and exercised end to end on 2026-09-08. Pinned to
+the dated build rather than the floating `deepseek/deepseek-v4-flash` alias:
+a repo whose whole argument is reproducibility should not have its worker
+change underneath it. The alias is about 40% cheaper if you would rather have
+that than the pin.
+
+Measured over five live tasks: **$0.0015–$0.018 each, 2 to 8 minutes each**.
+It is a reasoning model, and the time is reasoning — on the first task 14,332
+of 14,741 completion tokens were reasoning tokens. That is the whole argument
+for the pool: ten tasks at 5 minutes each is 5 minutes concurrent and 50
+serial, for the same few cents.
+
+Re-check with `python tools/providers.py models --grep deepseek` before
+assuming that slug is still current. Set `OPENROUTER_MODEL` to override it per
+environment, or `--model` per run. A slug remembered rather than checked gets
+you ten tasks that each fail identically.
 
 ## Configuring the key
 
@@ -137,9 +148,42 @@ and creates no worktrees.
 Artifacts land in `runs/pool/<stamp>/` (gitignored); each task's own
 `prompt.txt`, `raw.txt`, `changes.patch` and `verification.txt` are under it.
 
+## Live: what three concurrent OpenRouter tasks actually did
+
+2026-09-08, `deepseek/deepseek-v4-flash-0731`, `--concurrency 3`. Two
+`implement` tasks (a `--count` flag for `lint_ledger.py`, a `--json` flag for
+`lint_bitorder.py`) and one `investigate`. **311s wall against 658s of serial
+work**, so the fan-out is real.
+
+The first pass scored 2 of 3 as `NEEDS-ATTENTION`, and both failures were
+*reporting* failures on code that was correct:
+
+1. **Two tasks returned a verified patch and no JSON report at all.** The
+   change applied, `verify_all` passed, both acceptance commands passed — and
+   the contract check found nothing to read. The output contract had been
+   sitting in the middle of a long prompt, above the task and the quoted
+   files. It now comes last, where the model still has it in view when it
+   starts writing, and says explicitly that a diff without a report is
+   incomplete.
+2. **One task reported "no repository checkout was provided" as a blocker** —
+   a restatement of the setup the prompt had just given it. Any blocker means
+   `BLOCKED`, so a finished change was held up by the mode's own definition.
+   The contract now says what a blocker is not: no checkout, no shell, and no
+   sight of a file you did not need are `uncertainties`, not blockers.
+
+After both fixes the same three tasks came back `READY-FOR-REVIEW`, with
+substantive uncertainties — *"I assumed `--count` is a short-circuit mode that
+exits before running the lint checks"* is exactly the kind of thing a lead
+needs to see and a confident summary would have hidden.
+
+Neither fix is about the model being bad. Both are about a prompt that asked
+for two things and got the one it emphasised, which is what prompts do. They
+are recorded here because the next provider will need the same treatment and
+the failure will not look like this one.
+
 ## Keep `--verify full`
 
-The two live runs on 2026-09-07 make the case better than an argument would.
+Two live runs on 2026-09-07 make the case better than an argument would.
 Two tasks, concurrent, through the `codex-dispatcher` provider:
 
 ```

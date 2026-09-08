@@ -58,17 +58,25 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 
 OPENROUTER_BASE = "https://openrouter.ai/api/v1"
 
-# The default worker model. Deliberately an env-overridable constant rather
-# than a hard-coded slug in the pool: model names move, and a wrong one is a
-# 400 per task rather than one clear failure.
+# The default worker model. Env-overridable rather than hard-coded in the
+# pool: model names move, and a wrong one is a 400 per task rather than one
+# clear failure.
 #
-# NOT VERIFIED FROM THIS ENVIRONMENT. openrouter.ai is not on this container's
-# egress allowlist, so the catalogue could not be queried when this was
-# written. Run `python tools/providers.py models --grep deepseek` from a host
-# that can reach it and set OPENROUTER_MODEL to what actually exists, rather
-# than trusting this line. Guessing a slug from memory is how you get ten
-# tasks that each fail identically.
-DEFAULT_OPENROUTER_MODEL = "deepseek/deepseek-chat"
+# Verified against the live catalogue on 2026-09-08 and exercised end to end
+# the same day (docs/WORKER_POOL.md, *Live*). Pinned to the dated build rather
+# than the floating `deepseek/deepseek-v4-flash` alias: a research repo whose
+# whole argument is reproducibility should not have its worker silently
+# change underneath it. The alias is about 40% cheaper if you would rather
+# have that than the pin.
+#
+# It is a reasoning model: on the first live task 14,332 of 14,741 completion
+# tokens were reasoning, which is why one task takes minutes and why running
+# them concurrently is the point. Cost was $0.0026 for that task.
+#
+# Re-check with `python tools/providers.py models --grep deepseek` before
+# assuming this line is still true; a slug remembered rather than checked is
+# how you get ten tasks that each fail identically.
+DEFAULT_OPENROUTER_MODEL = "deepseek/deepseek-v4-flash-0731"
 
 # Retries are for the server saying "not now", never for the server saying
 # "no". A 400 retried three times is three times the wrong request.

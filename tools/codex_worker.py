@@ -238,12 +238,21 @@ exactly these keys:
                   anything you assumed because the task did not say. An empty
                   list asserts there were none; do not use it as a default.
   "blockers"      ["...", ...] -- what stopped you finishing. Empty list if
-                  you finished.
+                  you finished. A blocker is something that prevented the
+                  task from being done. Not having a checkout, not being able
+                  to run commands, and not having been shown a file you did
+                  not need are NOT blockers -- they are how this mode works,
+                  the harness already knows, and reporting them holds up a
+                  finished change. If those are your only reservations, put
+                  them in `uncertainties` and leave `blockers` empty.
 
 Report what happened, not what should have happened. A partial result with an
 honest blocker is more useful here than a complete-looking one that is wrong:
 the lead reads this to decide what to trust, and re-runs every test you claim
-to have passed."""
+to have passed.
+
+The report is not optional and it is not the part to drop when you are nearly
+done. Put it in a ```json fenced block. Finish your reply with it."""
 
 
 REQUIRED_RESULT_KEYS = ("summary", "changes", "commands_run", "tests",
@@ -350,10 +359,16 @@ def render_prompt(spec: dict, context: str = "", *, has_repo: bool) -> str:
             "You do NOT have a checkout. The files you need are quoted below. "
             "If the task requires changing code, put a unified diff -- `git "
             "diff` format, paths relative to the repository root with a/ and "
-            "b/ prefixes -- in a ```diff fenced block BEFORE the JSON report, "
-            "and describe each file in `changes`. You cannot run anything, so "
+            "b/ prefixes -- in a ```diff fenced block, and describe each file "
+            "in `changes`. Do not worry about the `@@` line counts being "
+            "exact; the harness recounts them. You cannot run anything, so "
             "`commands_run` and `tests` must be empty lists: the harness runs "
-            "the tests and does not want your prediction of the result.")
+            "the tests and does not want your prediction of the result.\n\n"
+            "Your reply must contain BOTH the diff and the JSON report, in "
+            "that order. A reply with a diff and no report is incomplete: the "
+            "code may be perfect and it is still rejected, because the lead "
+            "has no way to read what you were unsure about. Write the diff, "
+            "then write the report.")
     if spec.get("acceptance"):
         parts.append(
             "The harness will run these acceptance commands against your work "
@@ -366,10 +381,15 @@ def render_prompt(spec: dict, context: str = "", *, has_repo: bool) -> str:
             "postflight (tools/gates.py), which rejects a conclusion that "
             "states more than the run measured.\n\nMANIFEST\n"
             + json.dumps(spec["manifest"], indent=2))
-    parts.append(RESULT_INSTRUCTIONS)
     parts.append(f"--- task ---\n\n{spec['task'].strip()}")
     if context:
         parts.append(f"--- files ---\n\n{context}")
+    # Last, deliberately. The output contract is the instruction most often
+    # dropped -- measured on 2026-09-08, two of three pool tasks returned a
+    # correct, verified patch and no report at all, which scores a clean
+    # change as NEEDS-ATTENTION. Instructions nearest the end of a long prompt
+    # are the ones a model still has in view when it starts writing.
+    parts.append(RESULT_INSTRUCTIONS)
     return "\n\n".join(parts) + "\n"
 
 
