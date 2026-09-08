@@ -4,6 +4,11 @@ This is a research proposal, not a proved new result or a literature-novelty
 claim. It follows the output-loop work without assuming the alternating case
 will synchronize.
 
+The bounded experiment's outcome is recorded in
+[`2026-09-08-periodic-word-sieve.md`](../experiment-logs/2026-09-08-periodic-word-sieve.md).
+It found only the constant controls, with nonperiodic-output certificates for
+all tested nonconstant words. The composition idea below remains unproved.
+
 ## The change in question
 
 Instead of asking how far a proposed period survives in the actual center
