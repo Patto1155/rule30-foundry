@@ -1,0 +1,361 @@
+[
+  {
+    "width": 3,
+    "center_word": "1",
+    "states": 4,
+    "recurrent_sccs": 1,
+    "recurrent_states": 2,
+    "left_eventually_has_word_period": true,
+    "witness": null,
+    "scope": "open finite strip; no single-seed or infinite-plane counterexample"
+  },
+  {
+    "width": 5,
+    "center_word": "1",
+    "states": 16,
+    "recurrent_sccs": 1,
+    "recurrent_states": 4,
+    "left_eventually_has_word_period": true,
+    "witness": null,
+    "scope": "open finite strip; no single-seed or infinite-plane counterexample"
+  },
+  {
+    "width": 7,
+    "center_word": "1",
+    "states": 64,
+    "recurrent_sccs": 2,
+    "recurrent_states": 7,
+    "left_eventually_has_word_period": true,
+    "witness": null,
+    "scope": "open finite strip; no single-seed or infinite-plane counterexample"
+  },
+  {
+    "width": 9,
+    "center_word": "1",
+    "states": 256,
+    "recurrent_sccs": 2,
+    "recurrent_states": 11,
+    "left_eventually_has_word_period": true,
+    "witness": null,
+    "scope": "open finite strip; no single-seed or infinite-plane counterexample"
+  },
+  {
+    "width": 3,
+    "center_word": "0",
+    "states": 4,
+    "recurrent_sccs": 1,
+    "recurrent_states": 2,
+    "left_eventually_has_word_period": false,
+    "witness": {
+      "mismatch_path": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          5
+        ]
+      ],
+      "return_path": [
+        [
+          0,
+          5
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "closed_walk": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          5
+        ],
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    "scope": "open finite strip; no single-seed or infinite-plane counterexample"
+  },
+  {
+    "width": 5,
+    "center_word": "0",
+    "states": 16,
+    "recurrent_sccs": 2,
+    "recurrent_states": 3,
+    "left_eventually_has_word_period": true,
+    "witness": null,
+    "scope": "open finite strip; no single-seed or infinite-plane counterexample"
+  },
+  {
+    "width": 7,
+    "center_word": "0",
+    "states": 64,
+    "recurrent_sccs": 2,
+    "recurrent_states": 5,
+    "left_eventually_has_word_period": true,
+    "witness": null,
+    "scope": "open finite strip; no single-seed or infinite-plane counterexample"
+  },
+  {
+    "width": 9,
+    "center_word": "0",
+    "states": 256,
+    "recurrent_sccs": 3,
+    "recurrent_states": 8,
+    "left_eventually_has_word_period": true,
+    "witness": null,
+    "scope": "open finite strip; no single-seed or infinite-plane counterexample"
+  },
+  {
+    "width": 3,
+    "center_word": "01",
+    "states": 8,
+    "recurrent_sccs": 1,
+    "recurrent_states": 4,
+    "left_eventually_has_word_period": false,
+    "witness": {
+      "mismatch_path": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          0,
+          4
+        ]
+      ],
+      "return_path": [
+        [
+          0,
+          4
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "closed_walk": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          0,
+          4
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          0,
+          1
+        ]
+      ]
+    },
+    "scope": "open finite strip; no single-seed or infinite-plane counterexample"
+  },
+  {
+    "width": 5,
+    "center_word": "01",
+    "states": 32,
+    "recurrent_sccs": 1,
+    "recurrent_states": 8,
+    "left_eventually_has_word_period": false,
+    "witness": {
+      "mismatch_path": [
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          7
+        ],
+        [
+          0,
+          9
+        ]
+      ],
+      "return_path": [
+        [
+          0,
+          9
+        ],
+        [
+          1,
+          14
+        ],
+        [
+          0,
+          2
+        ]
+      ],
+      "closed_walk": [
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          7
+        ],
+        [
+          0,
+          9
+        ],
+        [
+          1,
+          14
+        ],
+        [
+          0,
+          2
+        ]
+      ]
+    },
+    "scope": "open finite strip; no single-seed or infinite-plane counterexample"
+  },
+  {
+    "width": 7,
+    "center_word": "01",
+    "states": 128,
+    "recurrent_sccs": 1,
+    "recurrent_states": 16,
+    "left_eventually_has_word_period": false,
+    "witness": {
+      "mismatch_path": [
+        [
+          0,
+          4
+        ],
+        [
+          1,
+          14
+        ],
+        [
+          0,
+          19
+        ]
+      ],
+      "return_path": [
+        [
+          0,
+          19
+        ],
+        [
+          1,
+          61
+        ],
+        [
+          0,
+          4
+        ]
+      ],
+      "closed_walk": [
+        [
+          0,
+          4
+        ],
+        [
+          1,
+          14
+        ],
+        [
+          0,
+          19
+        ],
+        [
+          1,
+          61
+        ],
+        [
+          0,
+          4
+        ]
+      ]
+    },
+    "scope": "open finite strip; no single-seed or infinite-plane counterexample"
+  },
+  {
+    "width": 9,
+    "center_word": "01",
+    "states": 512,
+    "recurrent_sccs": 1,
+    "recurrent_states": 28,
+    "left_eventually_has_word_period": false,
+    "witness": {
+      "mismatch_path": [
+        [
+          0,
+          8
+        ],
+        [
+          1,
+          28
+        ],
+        [
+          0,
+          38
+        ]
+      ],
+      "return_path": [
+        [
+          0,
+          38
+        ],
+        [
+          1,
+          379
+        ],
+        [
+          0,
+          8
+        ]
+      ],
+      "closed_walk": [
+        [
+          0,
+          8
+        ],
+        [
+          1,
+          28
+        ],
+        [
+          0,
+          38
+        ],
+        [
+          1,
+          379
+        ],
+        [
+          0,
+          8
+        ]
+      ]
+    },
+    "scope": "open finite strip; no single-seed or infinite-plane counterexample"
+  }
+]

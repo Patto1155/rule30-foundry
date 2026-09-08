@@ -1,0 +1,46 @@
+{
+  "artifact_sha256": "cfc7f71a06da80d67aeffe0e5bd455a3eed9228cd7bebe4545e27712e88eeb46",
+  "consistency": {
+    "branch_points_checked": 9,
+    "complete_binary_tree_nodes": 19,
+    "cyclic_continuations_checked": 18,
+    "event_period64_checks": 2,
+    "exclusive_diagonal_horizon": 12000000000,
+    "metadata_note": "collision_pair stores input indices (u,0); equal-word collision indices would be (d-3,d-2).",
+    "recomputed_steps": 36617159481,
+    "undoubled_leaves": 8
+  },
+  "negative_controls": {
+    "rejected": [
+      "changed_event_parity",
+      "changed_continuation",
+      "changed_steps",
+      "missing_tree_leaf"
+    ],
+    "rejected_count": 4
+  },
+  "scope": "Historical artifact consistency and optional finite seed gates only; excludes long trajectory replay and eternal settlement certification.",
+  "seed_gates": {
+    "base_match": true,
+    "histogram_match": true,
+    "lemma_a": {
+      "ok": true,
+      "tested": 50000,
+      "violations": 0
+    },
+    "map_vs_simulation": {
+      "checked": 50000,
+      "first_mismatch_d": null,
+      "mismatches": 0,
+      "ok": true,
+      "requested": 50000
+    },
+    "seed": {
+      "d0": 88867,
+      "u": "0x761f998d",
+      "v": "0x0c9b5379"
+    },
+    "simulation_seconds": 15.402
+  },
+  "status": "pass"
+}

@@ -1,0 +1,17 @@
+PASS  clone-integrity                  0.2s
+PASS  golden-self-test                 0.8s
+PASS  manifest+golden                  0.7s
+PASS  manifest-current                 0.1s
+SKIP  bitstream:center_col_10M.bin  not present (gitignored; regenerate with gpu/rule30_sim.py)
+SKIP  bitstream:center_col_46M.bin  not present (gitignored; regenerate with gpu/rule30_sim.py)
+SKIP  drat-toolchain                SAT toolchain absent (build it: bash tools/build_sat_toolchain.sh)
+PASS  gates-trap                       0.1s
+PASS  lint-bitorder                    0.4s
+PASS  lint-ledger                      0.1s
+PASS  unittest                        61.5s
+--------------------------------------------------
+
+verify_all: 8 passed, 3 skipped (0 unexpected), 0 failed  OK
+  Note: skipped stages checked nothing. The canonical bitstreams are
+  the artifacts the prize-facing claims rest on; run this on a machine
+  that has them before treating the repo as verified.

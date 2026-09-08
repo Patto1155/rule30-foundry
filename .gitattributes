@@ -6,3 +6,5 @@
 # that conversion, so these files check out identically on every platform and the
 # manifest means the same thing everywhere.
 data/** -text
+# Preserve the recovered artifact's original SHA256 across checkout platforms.
+runs/b1-recovered-2026-09-08/pattern_map_walk32.original.json -text
