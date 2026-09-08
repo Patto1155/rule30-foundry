@@ -937,6 +937,24 @@ def submit(spec: dict, *, backend: str = "auto", base: str | None = None,
             "no JSON report found in the reply"]
         result["contract_problems"] = problems
 
+        # The report is committed into the branch itself, not left in the
+        # gitignored `runs/` tree. `investigate` mode is contractually
+        # forbidden from touching the files it audits, which used to mean
+        # no diff at all -- and with nothing staged, submit() never made a
+        # commit, so the branch was indistinguishable from its base and the
+        # audit's findings existed only in this session's container. A
+        # 15-task pool run in 2026-09 lost three investigate reports this
+        # way. Every task now gets one, whether or not it changed anything
+        # else, so `changed_files`/the patch check below always has
+        # something to commit.
+        results_dir = worktree / "queue" / "results"
+        results_dir.mkdir(parents=True, exist_ok=True)
+        (results_dir / f"{task_id}.json").write_text(
+            json.dumps({"task_id": task_id, "mode": spec["mode"],
+                        "task": spec["task"], "report": report,
+                        "contract_problems": problems}, indent=2) + "\n",
+            encoding="utf-8")
+
         # git's account of the diff, alongside the agent's.
         result["files_changed"] = changed_files(worktree)
         patch = _git("diff", "--cached", cwd=worktree)
