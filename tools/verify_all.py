@@ -13,6 +13,7 @@ Stages, in order (each is independently runnable; see its own --help):
   manifest+golden    every tracked artifact still hashes the same
   manifest-current   data/MANIFEST.sha256 is what make_manifest regenerates
   bitstream:<name>   each canonical bitstream agrees with the golden reference
+  gates-trap         tools/gates.py still refuses the known-vacuous manifest
   lint-bitorder      no bare np.packbits / np.unpackbits
   lint-ledger        no ledger row cites evidence that is not there
   unittest           python -m unittest discover -s tests
@@ -83,6 +84,18 @@ def build_stages() -> list[Stage]:
         [py, "experiments/dfao_drat_proofs.py", "--self-test"],
         skip_reason=None if all(t.exists() for t in toolchain) else
         "SAT toolchain absent (build it: bash tools/build_sat_toolchain.sh)"))
+    # The trap manifest is the shape of the experiment whose certificate was
+    # retracted in 2026-08: a DFAO class far below the prefix it is tested
+    # against. `--expect-fail` passes only when the gate still refuses it. A
+    # gate that silently stops gating is worse than no gate, because the
+    # runner would then report PASS on exactly the run that must not happen.
+    trap = REPO_ROOT / "queue" / "trap-vacuous-dfao.json"
+    stages.append(Stage(
+        "gates-trap",
+        [py, "tools/gates.py", "preflight", "queue/trap-vacuous-dfao.json",
+         "--no-external", "--expect-fail"],
+        skip_reason=None if trap.exists() else
+        "queue/trap-vacuous-dfao.json absent"))
     stages += [
         Stage("lint-bitorder", [py, "tools/lint_bitorder.py"]),
         Stage("lint-ledger", [py, "tools/lint_ledger.py"]),
