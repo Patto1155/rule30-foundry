@@ -309,22 +309,40 @@ class TestContext(unittest.TestCase):
 
 
 class TestBackendChoice(unittest.TestCase):
+    """Environment is set explicitly in each case: `auto` reads both the
+    codex binary and the OpenRouter key, so a test that left either to the
+    ambient environment would pass or fail by accident."""
+
+    def setUp(self):
+        import os
+        self.env = os.environ
+        self.saved = {k: self.env.get(k)
+                      for k in ("CODEX_BIN", "OPENROUTER_API_KEY")}
+        self.env["CODEX_BIN"] = "definitely-not-a-real-binary-x9"
+
+    def tearDown(self):
+        for k, v in self.saved.items():
+            if v is None:
+                self.env.pop(k, None)
+            else:
+                self.env[k] = v
+
     def test_explicit_local_without_codex_fails_before_a_worktree_exists(self):
         """A missing binary must be a sentence, not a FileNotFoundError from
         inside the run after a worktree has already been created."""
-        import os
-        old = os.environ.get("CODEX_BIN")
-        os.environ["CODEX_BIN"] = "definitely-not-a-real-binary-x9"
-        try:
-            with self.assertRaises(RuntimeError) as caught:
-                cw.choose_backend("local")
-            self.assertIn("not on PATH", str(caught.exception))
-            self.assertEqual(cw.choose_backend("auto"), "remote")
-        finally:
-            if old is None:
-                del os.environ["CODEX_BIN"]
-            else:
-                os.environ["CODEX_BIN"] = old
+        with self.assertRaises(RuntimeError) as caught:
+            cw.choose_backend("local")
+        self.assertIn("not on PATH", str(caught.exception))
+
+    def test_auto_prefers_the_tool_using_agent_over_a_bare_completion(self):
+        """Both reach an outside model; only one can read a file it was not
+        handed. A completion backend is the fallback, not the default."""
+        self.env["OPENROUTER_API_KEY"] = "k"
+        self.assertEqual(cw.choose_backend("auto"), "agent")
+
+    def test_auto_falls_back_to_remote_with_no_tool_capable_provider(self):
+        self.env.pop("OPENROUTER_API_KEY", None)
+        self.assertEqual(cw.choose_backend("auto"), "remote")
 
 
 class TestBranchName(unittest.TestCase):

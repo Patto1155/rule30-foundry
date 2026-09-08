@@ -286,6 +286,14 @@ def _gates():
     return mod
 
 
+def _agent_loop():
+    spec = importlib.util.spec_from_file_location(
+        "agent_loop", REPO_ROOT / "tools" / "agent_loop.py")
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod
+
+
 def _providers():
     spec = importlib.util.spec_from_file_location(
         "providers", REPO_ROOT / "tools" / "providers.py")
@@ -563,11 +571,18 @@ def choose_backend(requested: str) -> str:
     if requested == "local" and not shutil.which(codex_bin()):
         raise RuntimeError(
             f"--backend local, but {codex_bin()!r} is not on PATH. Run this "
-            "where codex is installed and logged in, or use --backend remote "
-            "(which needs CODEX_COUNCIL_URL and CODEX_COUNCIL_TOKEN).")
+            "where codex is installed and logged in, or use --backend agent "
+            "(the tool-using loop, which needs only OPENROUTER_API_KEY).")
     if requested != "auto":
         return requested
-    return "local" if shutil.which(codex_bin()) else "remote"
+    if shutil.which(codex_bin()):
+        return "local"
+    # agent before remote: both reach an outside model, and only one of them
+    # can read a file it was not handed. A completion backend is the fallback
+    # for when no tool-capable provider is configured, not the default.
+    if _providers().OpenRouter().available()[0]:
+        return "agent"
+    return "remote"
 
 
 def codex_argv(prompt: str, workdir: Path) -> list[str]:
@@ -615,6 +630,72 @@ def run_local(spec: dict, worktree: Path, timeout: int, out: Path) -> dict:
     return {"backend": "local", "exit_code": code, "raw": raw,
             "duration_s": round(time.time() - started, 2),
             "report": extract_json(raw), "patch_applied": None}
+
+
+def run_agent(spec: dict, worktree: Path, timeout: int, out: Path,
+              model: str | None = None, limits: dict | None = None) -> dict:
+    """The tool-using loop: the worker reads, greps, runs and fetches.
+
+    Unlike the completion backends this one edits the worktree directly, so
+    there is no patch to apply -- the diff comes from git afterwards, exactly
+    as it does for `codex exec`. What it adds over `local` is that it needs no
+    CLI installed anywhere: the loop is tools/agent_loop.py and the model is
+    whatever OpenRouter serves.
+    """
+    al = _agent_loop()
+    prov = _providers().OpenRouter(model=model)
+    ok, why = prov.available()
+    if not ok:
+        raise RuntimeError(f"agent backend needs OpenRouter: {why}")
+
+    lim = dict(limits or {})
+    budget = al.Budget(
+        max_turns=lim.get("max_turns", al.DEFAULT_MAX_TURNS),
+        max_tool_calls=lim.get("max_tool_calls", al.DEFAULT_MAX_TOOL_CALLS),
+        max_cost_usd=lim.get("max_cost_usd", al.DEFAULT_MAX_COST_USD),
+        # The task's own budget is the wall clock unless something tighter was
+        # asked for: a loop with no clock is the failure mode that costs money
+        # while nobody is watching.
+        wall_clock_s=lim.get("wall_clock_s", timeout))
+    prompt = render_prompt(spec, has_repo=True)
+    (out / "prompt.txt").write_text(prompt, encoding="utf-8")
+
+    started = time.time()
+    head_before = _git("rev-parse", "HEAD", cwd=worktree)
+    r = al.run_loop(prompt, worktree, prov, budget=budget,
+                    tools=spec.get("tools"),
+                    transcript=out / "transcript.jsonl")
+    (out / "raw.txt").write_text(r["final"], encoding="utf-8")
+
+    # The worker has a shell, so the worktree is not beyond its reach. On the
+    # first live research run a worker ran `git worktree remove` on its own
+    # checkout to test a hypothesis and then re-created it -- honestly
+    # reported, and invisible to everything downstream, because the files were
+    # identical. Downstream is `git diff`, and a detached or re-created
+    # worktree silently produces an empty one. Check rather than trust: a
+    # missing checkout or a moved HEAD is a blocker on the result, not a
+    # surprise in the review.
+    disturbed = None
+    if not (worktree / ".git").exists():
+        disturbed = "the worker removed or replaced its own checkout"
+    else:
+        head_after = _git("rev-parse", "HEAD", cwd=worktree, check=False)
+        if head_after and head_after != head_before:
+            disturbed = (f"HEAD moved during the run, {head_before[:8]} -> "
+                         f"{head_after[:8]}; the worker changed git state")
+
+    # A loop that stopped at a budget did not finish, and that must not read
+    # as a worker who chose to stop. It becomes a blocker on the result, which
+    # is what keeps the verdict off READY-FOR-REVIEW.
+    stopped_early = r["stop_reason"] != al.STOP_DONE
+    return {"backend": "agent", "provider": "openrouter",
+            "exit_code": 0 if not stopped_early else 1,
+            "raw": r["final"], "duration_s": round(time.time() - started, 2),
+            "report": extract_json(r["final"]), "patch_applied": None,
+            "model": prov.model, "stop_reason": r["stop_reason"],
+            "budget": r["budget"], "tool_calls": r["tool_calls"],
+            "worktree_disturbed": disturbed,
+            "usage": {"cost": r["budget"]["cost_usd"]}}
 
 
 # `git apply` strategies, strictest first. A model writing a diff by hand from
@@ -838,8 +919,13 @@ def submit(spec: dict, *, backend: str = "auto", base: str | None = None,
 
     try:
         try:
-            raw = (run_local(spec, worktree, seconds, out) if chosen == "local"
-                   else run_remote(spec, worktree, seconds, out, provider, model))
+            if chosen == "local":
+                raw = run_local(spec, worktree, seconds, out)
+            elif chosen == "agent":
+                raw = run_agent(spec, worktree, seconds, out, model,
+                                spec.get("limits"))
+            else:
+                raw = run_remote(spec, worktree, seconds, out, provider, model)
         except subprocess.TimeoutExpired:
             raw = {"backend": chosen, "exit_code": None, "raw": "",
                    "duration_s": seconds, "report": None, "patch_applied": None,
@@ -876,9 +962,18 @@ def submit(spec: dict, *, backend: str = "auto", base: str | None = None,
             if post["verdict"] == gates.FAIL:
                 result.setdefault("gate_failures", []).append("postflight")
 
-        blockers = (report or {}).get("blockers") or []
+        blockers = list((report or {}).get("blockers") or [])
         if result.get("gate_failures"):
-            blockers = list(blockers) + ["postflight rejected the result"]
+            blockers.append("postflight rejected the result")
+        if result.get("worktree_disturbed"):
+            blockers.append(
+                f"the worker changed its own git state: "
+                f"{result['worktree_disturbed']}. Any diff below may be "
+                "incomplete; read the transcript before trusting it.")
+        if result.get("stop_reason") not in (None, "done"):
+            blockers.append(
+                f"the agent loop stopped at its {result['stop_reason']} limit "
+                "rather than finishing; the work on this branch is partial")
         result["verdict"] = decide(problems, result["verification"], blockers,
                                    result.get("patch_applied"),
                                    result.get("exit_code"),
@@ -909,6 +1004,13 @@ def summarise(result: dict) -> str:
                      + ("" if result.get("patch") else "  (no changes)"))
     if result.get("patch"):
         lines.append(f"  patch       {result['patch']}")
+    if result.get("tool_calls"):
+        used = ", ".join(f"{n}x{c}" for n, c in sorted(result["tool_calls"].items()))
+        b = result.get("budget") or {}
+        lines.append(f"  tools       {used}")
+        lines.append(f"  budget      {b.get('turns')} turns, "
+                     f"{b.get('tool_calls')} calls, ${b.get('cost_usd')}, "
+                     f"{b.get('elapsed_s')}s  [{result.get('stop_reason')}]")
     ver = result.get("verification") or {}
     if ver.get("checks"):
         for c in ver["checks"]:
@@ -946,6 +1048,14 @@ def load_spec(args) -> dict:
         spec["manifest"] = json.loads(Path(args.manifest).read_text(encoding="utf-8"))
     if args.budget:
         spec["budget_minutes"] = args.budget
+    if getattr(args, "tools", None):
+        spec["tools"] = args.tools.split(",")
+    limits = {k: v for k, v in (
+        ("max_turns", getattr(args, "max_turns", None)),
+        ("max_tool_calls", getattr(args, "max_tool_calls", None)),
+        ("max_cost_usd", getattr(args, "max_cost", None))) if v is not None}
+    if limits:
+        spec["limits"] = {**(spec.get("limits") or {}), **limits}
     spec.setdefault("mode", "implement")
     return spec
 
@@ -970,7 +1080,16 @@ def main(argv: list[str] | None = None) -> int:
                    help="command the WORKER runs against the result. Repeatable.")
     s.add_argument("--manifest", help="experiment manifest; gates run around it")
     s.add_argument("--budget", type=int, metavar="MIN")
-    s.add_argument("--backend", choices=("auto", "local", "remote"), default="auto")
+    s.add_argument("--backend", choices=("auto", "local", "remote", "agent"),
+                   default="auto",
+                   help="agent = the tool-using loop (tools/agent_loop.py); "
+                        "remote = one completion, no tools; local = the codex "
+                        "CLI. auto prefers local, then agent, then remote.")
+    s.add_argument("--tools", help="comma-separated subset for --backend agent "
+                                   "(default: all of them)")
+    s.add_argument("--max-turns", type=int)
+    s.add_argument("--max-tool-calls", type=int)
+    s.add_argument("--max-cost", type=float, metavar="USD")
     s.add_argument("--provider", default="auto",
                    help="remote backend only: openrouter, codex-dispatcher, "
                         "or auto (first one configured). See tools/providers.py.")

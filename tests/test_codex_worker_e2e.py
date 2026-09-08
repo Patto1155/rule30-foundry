@@ -222,12 +222,19 @@ class TestEndToEnd(unittest.TestCase):
 @unittest.skipIf(NESTED, "would re-enter verify_all through its unittest stage")
 class TestDryRun(unittest.TestCase):
     def test_dry_run_dispatches_nothing_and_prints_the_prompt(self):
+        # Counted before and after, not asserted to be zero. A delegated
+        # worker runs this suite from inside a codex-wt-* worktree of its own,
+        # so "none exist" is false there for a reason that has nothing to do
+        # with --dry-run. Found by one, on 2026-09-08, which correctly called
+        # the failure an environment collision rather than a repo regression.
+        before = git("worktree", "list").stdout.count("codex-wt-")
         r = worker("submit", "--mode", "debug", "--task", "why is it red",
                    "--dry-run")
         self.assertEqual(r.returncode, 0, r.stderr)
         self.assertIn("--- task ---", r.stdout)
         self.assertIn("why is it red", r.stdout)
-        self.assertEqual(git("worktree", "list").stdout.count("codex-wt-"), 0)
+        self.assertEqual(git("worktree", "list").stdout.count("codex-wt-"),
+                         before)
 
 
 if __name__ == "__main__":

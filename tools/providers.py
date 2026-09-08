@@ -243,6 +243,62 @@ class OpenRouter(Provider):
                               usage=data.get("usage") or {}, attempts=attempt)
         raise ProviderError(f"gave up after {MAX_ATTEMPTS} attempts: {last}")
 
+    def chat(self, messages: list[dict], timeout: int,
+             tools: list[dict] | None = None,
+             tool_choice: str = "auto") -> dict:
+        """One turn of a tool-calling conversation. Returns the raw envelope.
+
+        Separate from complete() rather than folded into it: complete() is a
+        question with an answer, and its callers want a string. This returns
+        the whole message because the interesting part may be `tool_calls`
+        rather than `content`, and the loop that drives it (tools/agent_loop.py)
+        needs the usage block per turn to keep a running cost.
+
+        Retries follow the same rule as complete(): a 429 is "not now" and is
+        worth repeating, a 400 is "no" and is not.
+        """
+        ok, why = self.available()
+        if not ok:
+            raise ProviderError(why)
+        payload: dict = {"model": self.model, "messages": messages}
+        if tools:
+            payload["tools"] = tools
+            payload["tool_choice"] = tool_choice
+        last = ""
+        for attempt in range(1, MAX_ATTEMPTS + 1):
+            try:
+                data = _post_json(f"{self.base}/chat/completions", payload,
+                                  self._headers(), timeout)
+            except urllib.error.HTTPError as err:
+                detail = _read_error(err)
+                if err.code in RETRY_STATUS and attempt < MAX_ATTEMPTS:
+                    last = f"HTTP {err.code}: {detail}"
+                    time.sleep(BACKOFF_BASE_S ** attempt)
+                    continue
+                raise ProviderError(explain_http(err.code, detail)) from None
+            except urllib.error.URLError as err:
+                raise ProviderError(explain_url_error(err)) from None
+            if data.get("error"):
+                msg = data["error"].get("message", json.dumps(data["error"]))
+                raise ProviderError(f"provider returned an error: {msg}")
+            if not (data.get("choices") or []):
+                raise ProviderError(
+                    f"no choices in response: {json.dumps(data)[:400]}")
+            return data
+        raise ProviderError(f"gave up after {MAX_ATTEMPTS} attempts: {last}")
+
+    def supports_tools(self, timeout: int = 60) -> bool:
+        """Ask the catalogue rather than assume.
+
+        A model without `tools` in supported_parameters silently ignores the
+        field: the loop would then get prose where it expected a tool call and
+        stop after one turn, looking like a model that chose not to use its
+        tools. Checking turns that into a sentence."""
+        for m in self.models(timeout):
+            if m.get("id") == self.model:
+                return "tools" in (m.get("supported_parameters") or [])
+        return False
+
     def models(self, timeout: int = 60) -> list[dict]:
         return (_get_json(f"{self.base}/models", self._headers(), timeout)
                 .get("data") or [])

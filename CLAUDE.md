@@ -83,7 +83,9 @@ python tools/providers.py check                    # who can answer right now
 ```
 
 One task: `docs/CODEX_WORKER.md`. Many at once, and which provider answers
-(OpenRouter, the Codex dispatcher): `docs/WORKER_POOL.md`.
+(OpenRouter, the Codex dispatcher): `docs/WORKER_POOL.md`. A worker that
+reads, greps, runs and fetches rather than answering from one prompt —
+`--backend agent`, which `auto` already prefers: `docs/AGENT_LOOP.md`.
 
 An outside model is not a Claude subagent, and that is the point. **Subagents
 give throughput, not independence** — they share a model lineage with whoever
@@ -101,6 +103,7 @@ wrote.
 | an experiment that already has a script | `tools/workhorse.py --agent script` — **not an agent** |
 | code that needs writing, fixing, or testing | `codex_worker.py` |
 | ten independent chores | `worker_pool.py run --concurrency 10` |
+| research that needs looking things up | `codex_worker.py --backend agent` |
 | "does the repo do X, and where" | `codex_worker.py --mode investigate` |
 | a claim that needs an outside opinion | `codex_worker.py --mode review`, or `tools/council.py` |
 | deciding what any of it means | you |
