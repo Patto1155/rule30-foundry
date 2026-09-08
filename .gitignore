@@ -43,3 +43,10 @@ __pycache__/
 
 # SAT toolchain built by tools/build_sat_toolchain.sh (rebuildable, not vendored).
 third_party/
+
+# Delegated-task artifacts (tools/codex_worker.py): prompt, raw reply, patch,
+# verification log. Transient working material for one task -- the reviewable
+# output is the codex/<task> branch, which git already keeps. Distinct from
+# runs/<name>/, which workhorse.py commits because it IS the experiment record.
+runs/codex/
+runs/pool/

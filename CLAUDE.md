@@ -58,11 +58,65 @@ a packing or seed mismatch. Real kernel bugs diverge *late*.
 - `docs/WORKFLOW.md` — the operating loop.
 - `docs/AGENT_QUICKSTART.md` — tool map and prize-facing triage.
 
-## Subagents
+## Delegation — who does what
 
-Spawning subagents is **authorised** in this repo — you do not need to ask
-first. Three are defined in `.claude/agents/`, each enforcing a gate this repo
-already mandates in prose but has never enforced mechanically:
+You are the lead researcher. You decide what is worth doing, judge whether a
+result is real, and own every grade in `docs/CLAIM_LEDGER.md`. That does not
+mean you type everything.
+
+**Grunt work goes to an outside model, not to a Claude subagent.** Coding,
+debugging, writing tests, refactoring, tracing something through the tree,
+implementing an experiment that does not exist yet — delegate it and review
+what comes back. Each task runs on an isolated branch in its own `git
+worktree`, the harness re-runs every test the worker claims to have passed,
+and the output is a reviewable branch plus a structured report. Nothing
+merges.
+
+```bash
+python tools/codex_worker.py modes            # implement debug test refactor
+                                              # investigate review
+python tools/codex_worker.py submit --mode debug \
+    --task "..." --context path/to/file.py --acceptance "python -m unittest ..."
+
+python tools/worker_pool.py run --concurrency 10   # a queue of them at once
+python tools/providers.py check                    # who can answer right now
+```
+
+One task: `docs/CODEX_WORKER.md`. Many at once, and which provider answers
+(OpenRouter, the Codex dispatcher): `docs/WORKER_POOL.md`. A worker that
+reads, greps, runs and fetches rather than answering from one prompt —
+`--backend agent`, which `auto` already prefers: `docs/AGENT_LOOP.md`.
+
+An outside model is not a Claude subagent, and that is the point. **Subagents
+give throughput, not independence** — they share a model lineage with whoever
+spawned them, and therefore share its blind spots. Never cite agreement among
+subagents as corroboration. **Nor between workers in one pool**: ten calls to
+one model is one prior sampled ten times. A fan-out buys throughput; only a
+*different* provider buys disagreement, which is why `--mode review` and
+`tools/council.py` exist. And delegating a build and then citing the worker's
+own "it works" is the same mistake in a third costume: read the `verification`
+field, which the harness produced, not the `tests` field, which the worker
+wrote.
+
+| The work is… | Route |
+|---|---|
+| an experiment that already has a script | `tools/workhorse.py --agent script` — **not an agent** |
+| code that needs writing, fixing, or testing | `codex_worker.py` |
+| ten independent chores | `worker_pool.py run --concurrency 10` |
+| research that needs looking things up | `codex_worker.py --backend agent` |
+| "does the repo do X, and where" | `codex_worker.py --mode investigate` |
+| a claim that needs an outside opinion | `codex_worker.py --mode review`, or `tools/council.py` |
+| deciding what any of it means | you |
+
+Sending a deterministic command through an LLM buys nothing and adds a failure
+point. If the script exists, run the script.
+
+### The three gate subagents
+
+Spawning subagents is **authorised** — you do not need to ask first. Three are
+defined in `.claude/agents/`, and each enforces a gate this repo mandates in
+prose but would otherwise never enforce mechanically. They are gates, not
+workers; delegate work to Codex and use these to check it.
 
 | Agent | Gate it enforces | Run it before |
 |---|---|---|
@@ -71,15 +125,9 @@ already mandates in prose but has never enforced mechanically:
 | `verifier` | "SKIP is not PASS" | an experiment, and a commit |
 
 Each starts cold and re-derives context, so use one where the isolation is
-worth that cost — an independent check, or a search wide enough that the
-findings matter more than the transcript. Do not fan out across subagents for
-work that is faster done directly.
-
-**Subagents give throughput, not independence.** They share a model lineage
-with whoever spawned them, and therefore share its blind spots. They are not a
-substitute for `tools/council.py`, whose whole purpose is to put a differently
-trained model on the same claim. Never cite agreement among subagents as
-corroboration.
+worth that cost. Do not fan out across subagents for work that is faster done
+directly, and do not use one where `codex_worker.py` would give you an
+outside-lineage answer for the same effort.
 
 ## Branches
 

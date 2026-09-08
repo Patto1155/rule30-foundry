@@ -101,8 +101,25 @@ def _is_exempt(lines: list[str], lineno: int) -> bool:
     return False
 
 
+class Unparseable(Exception):
+    """A scanned file is not valid Python.
+
+    Raised rather than swallowed, and caught in scan_repo so the lint reports
+    it as a failure with a file and a line. Before this, ast.parse's
+    SyntaxError escaped as a traceback: a human reading it can tell that the
+    lint crashed rather than that the tree is dirty, but a harness running the
+    lint as a gate -- tools/codex_worker.py runs it against work a delegated
+    agent just wrote -- sees only a nonzero exit with no finding, which reads
+    as "bare packbits found". Naming the real failure is the difference
+    between "your agent wrote a syntax error" and a bit-order alarm.
+    """
+
+
 def scan_source(source: str, relpath: str) -> list[Finding]:
-    tree = ast.parse(source, filename=relpath)
+    try:
+        tree = ast.parse(source, filename=relpath)
+    except SyntaxError as exc:
+        raise Unparseable(f"{relpath}:{exc.lineno}: {exc.msg}") from None
     lines = source.splitlines()
     findings: list[Finding] = []
     for node in ast.walk(tree):
@@ -130,12 +147,18 @@ def python_files(root: Path = REPO_ROOT) -> list[Path]:
     return out
 
 
-def scan_repo(root: Path = REPO_ROOT) -> list[Finding]:
+def scan_repo(root: Path = REPO_ROOT) -> tuple[list[Finding], list[str]]:
+    """Returns (findings, unparseable). Both are failures; they are kept
+    apart so the message says which one happened."""
     findings: list[Finding] = []
+    unparseable: list[str] = []
     for path in python_files(root):
         rel = path.relative_to(root).as_posix()
-        findings.extend(scan_source(path.read_text(encoding="utf-8"), rel))
-    return findings
+        try:
+            findings.extend(scan_source(path.read_text(encoding="utf-8"), rel))
+        except Unparseable as exc:
+            unparseable.append(str(exc))
+    return findings, unparseable
 
 
 def main() -> int:
@@ -144,7 +167,16 @@ def main() -> int:
                     help="print nothing; signal via exit code")
     args = ap.parse_args()
 
-    findings = scan_repo()
+    findings, unparseable = scan_repo()
+    if unparseable:
+        if not args.quiet:
+            print(f"lint_bitorder: {len(unparseable)} file(s) are not valid "
+                  "Python and could not be scanned:")
+            for item in unparseable:
+                print(f"  {item}")
+            print("  Fix the syntax error; until then these files are "
+                  "unchecked for bit order.")
+        return 1
     if findings:
         if not args.quiet:
             print(f"lint_bitorder: {len(findings)} bare call(s)")

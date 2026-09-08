@@ -62,8 +62,17 @@ that runs experiments. The council endpoint stays `--sandbox read-only`; making
 **The default agent is no agent.** `--agent script` runs the manifest's script
 with its argv and nothing else. Most of the backlog in `STATUS.md` is an
 existing script that has simply not been run — B1 is ~26 min of CPU, B2 is
-"minutes". An LLM is for experiments that do not exist yet; `--agent codex` is
-opt-in.
+"minutes". Sending a deterministic command through an LLM buys nothing and
+adds a failure point. An LLM is for experiments that do not exist yet;
+`--agent codex` is opt-in, and it invokes codex through
+[`codex_worker.py`](CODEX_WORKER.md), which owns the command line and the
+sandbox flag — one argv builder, so there is only one place that can stop
+passing `--sandbox`.
+
+Delegated work that is *not* an experiment manifest — fixing a bug, writing a
+test, investigating the tree — does not belong in this queue at all. It goes
+to `tools/codex_worker.py`, which isolates it in a `git worktree` and returns
+a branch. See [`CODEX_WORKER.md`](CODEX_WORKER.md).
 
 **Refusals are recorded.** A refused manifest lands in `queue/refused/` with
 the full gate report. Not in `docs/experiment-logs/`: `lint_ledger`'s
@@ -156,11 +165,13 @@ run.
 
 - **No scheduler.** One manifest per invocation, by hand or by cron. A queue
   daemon is not warranted until the queue is longer than the backlog.
-- **`--agent codex` is unexercised.** The flag is written and its failure path
-  is tested, but no experiment has been implemented by Codex through it. The
-  pilot the council proposed — run B1 and B2 with traps planted, and check
-  that the validation layer catches every invalid result — is the thing that
-  would justify going further.
+- **`--agent codex` has not run an experiment.** The delegation machinery it
+  now calls has been exercised end to end — a real coding task, a real patch
+  from `gpt-5.6-sol`, verification, a branch (`CODEX_WORKER.md`, *The
+  end-to-end run*) — but no *experiment manifest* has been implemented by
+  Codex through this queue. The pilot the council proposed — run B1 and B2
+  with traps planted, and check that the validation layer catches every
+  invalid result — is still the thing that would justify going further.
 - **No rented hardware, and none justified yet.** `COMPUTE_PLAN.md` §5 puts
   the whole of §3 under about $20, and the GPU simulator still does not
   checkpoint, which makes spot instances actively wrong: preemption discards

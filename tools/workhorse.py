@@ -30,8 +30,14 @@ Three properties are the point, and each is a choice rather than an accident:
   on the box that runs experiments. The council endpoint stays read-only.
 - **The default agent is no agent.** `--agent script` runs the manifest's
   script with its argv and nothing else -- most of the backlog in STATUS.md
-  is an existing script that has simply not been run. An LLM is for writing
-  experiments that do not exist yet, and `--agent codex` is opt-in for that.
+  is an existing script that has simply not been run. Sending a deterministic
+  command through an LLM buys nothing and adds a failure point. An LLM is for
+  writing experiments that do not exist yet, and `--agent codex` is opt-in
+  for that; it invokes codex through tools/codex_worker.py, which owns the
+  command line and the sandbox flag. For delegated work that is NOT an
+  experiment manifest -- fixing a bug, writing a test, investigating the tree
+  -- call codex_worker.py directly: it isolates the work in a git worktree
+  and hands back a branch. See docs/CODEX_WORKER.md.
 - **Refusals are recorded, not swallowed.** A manifest preflight rejects is
   written to queue/refused/ with the full gate report. Deliberately not to
   docs/experiment-logs/: lint_ledger's STALE-STATUS check requires STATUS.md
@@ -80,11 +86,19 @@ RUNS = REPO_ROOT / "runs"
 DEFAULT_BUDGET_MIN = 30
 
 
-def _gates():
-    spec = importlib.util.spec_from_file_location("gates", REPO_ROOT / "tools" / "gates.py")
+def _load(name: str, rel: str):
+    spec = importlib.util.spec_from_file_location(name, REPO_ROOT / rel)
     mod = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(mod)
     return mod
+
+
+def _gates():
+    return _load("gates", "tools/gates.py")
+
+
+def _codex_worker():
+    return _load("codex_worker", "tools/codex_worker.py")
 
 
 def _git(*args: str, check: bool = True) -> str:
@@ -214,24 +228,28 @@ def run_codex(m: dict, out: Path, timeout: int, preflight_report: dict) -> dict:
     """Opt-in: ask Codex to implement and run the experiment, in a writable
     sandbox scoped to this checkout. Runs where codex is installed and logged
     in -- the dispatcher VM -- not through the read-only council endpoint."""
-    if not shutil.which("codex"):
-        raise RuntimeError("codex is not on PATH; --agent codex runs on the VM")
+    worker = _codex_worker()
+    if not shutil.which(worker.codex_bin()):
+        raise RuntimeError(
+            f"{worker.codex_bin()} is not on PATH; --agent codex runs where "
+            "codex is installed and logged in. For a task that is not an "
+            "experiment manifest, tools/codex_worker.py also has a remote "
+            "backend that needs no local codex.")
     result_path = out / "result.json"
     prompt = CODEX_PROMPT.format(result_path=result_path,
                                  manifest=json.dumps(m, indent=2),
                                  preflight=json.dumps(preflight_report, indent=2))
-    argv = ["codex", "exec", "--skip-git-repo-check", "--sandbox",
-            "workspace-write", "-C", str(REPO_ROOT), prompt]
     started = time.time()
-    p = subprocess.run(argv, cwd=REPO_ROOT, capture_output=True, text=True,
-                       timeout=timeout)
-    (out / "stdout.txt").write_text(p.stdout, encoding="utf-8")
-    (out / "stderr.txt").write_text(p.stderr, encoding="utf-8")
+    # codex_worker owns the command line and the sandbox flag. Two argv
+    # builders is two sandbox decisions, and the one that drifts is always the
+    # one that stops passing --sandbox.
+    code, raw = worker.codex_exec(prompt, REPO_ROOT, timeout, out)
+    (out / "stdout.txt").write_text(raw, encoding="utf-8")
     if not result_path.exists():
         raise RuntimeError("agent did not write result.json; nothing to gate")
     r = json.loads(result_path.read_text(encoding="utf-8"))
     r.setdefault("manifest", m)
-    r.update(agent="codex", exit_code=p.returncode,
+    r.update(agent="codex", exit_code=code,
              duration_s=round(time.time() - started, 2))
     return r
 
