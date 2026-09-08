@@ -59,38 +59,6 @@ def log2_lfsr_behaviours(order: int, n_bits: int) -> float:
     return 2.0 * order - n_bits
 
 
-def monomial_count(width: int, degree: int) -> int:
-    """Number of GF(2) monomials of degree <= d over a w-bit window.
-
-    Squarefree only: x^2 = x over GF(2), so a monomial is a subset of the w
-    variables of size <= d, and the count is sum_i<=d C(w, i).
-    """
-    if width < 1 or degree < 0:
-        raise ValueError("width must be >= 1 and degree >= 0")
-    return sum(math.comb(width, i) for i in range(min(degree, width) + 1))
-
-
-def log2_expected_annihilators(width: int, degree: int, n_bits: int) -> float:
-    """log2 expected annihilators of a RANDOM sequence. Informative when < 0.
-
-    This class runs the opposite way to the DFAO one, and the difference is
-    not cosmetic. An annihilator search does not enumerate a class looking for
-    a fit; it computes the kernel of an n x m matrix over GF(2), where m is
-    the monomial count. Whenever m > n the nullity is at least m - n by
-    dimension counting alone, so a nonzero annihilator EXISTS for every
-    sequence, Rule 30 and coin flips alike. The characteristic failure here is
-    therefore a vacuous POSITIVE, not a vacuous negative.
-
-    A fixed nonzero polynomial vanishes on n independent random windows with
-    probability 2^-n, and there are 2^m - 1 of them, so the expected count is
-    2^(m-n) and the threshold is m < n. Note this is the reverse of the DFAO
-    rule (log2|M| >= n): applying that one to this class demands m >= n, which
-    is exactly the regime where the finding is guaranteed. Verified against a
-    known-random sequence -- at m = n the nullity is already nonzero.
-    """
-    return float(monomial_count(width, degree) - n_bits)
-
-
 def dfao_table(base: int, max_states: int) -> list[dict]:
     rows = []
     for s in range(1, max_states + 1):
