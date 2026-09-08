@@ -60,9 +60,34 @@ serialise the pool on a guess about overlap.
 | Use for | the pool: breadth, chores, ten at once | one careful worker; reviews comparable with past reviews |
 
 Both are **completion** providers: prompt in, text out. Neither can run
-anything, so an edit comes back as a unified diff which the worker applies and
-then tests itself. The agentic path — `codex exec` with a writable checkout —
-is `--backend local` and does not fan out.
+anything, so under `--backend remote` an edit comes back as a unified diff
+which the worker applies and then tests itself.
+
+## Choosing a backend
+
+The provider says *who answers*; the backend says *what the worker can do*.
+
+| `--backend` | What the worker can do | Fans out |
+|---|---|---|
+| `agent` **(pool default)** | reads, greps, writes, edits, runs a shell — inside its own worktree | yes |
+| `remote` | one completion; the diff it writes is applied for it | yes |
+| `local` | `codex exec` with a writable checkout | **no** — one process per task |
+| `auto` | prefers `local`, then `agent`, then `remote` | only if `local` is absent |
+
+`agent` is the default because it is the only backend that can *investigate*:
+a completion worker answers from the prompt and whatever `context_files` were
+pasted into it, so it cannot discover the file nobody thought to attach. The
+loop is `tools/agent_loop.py` and needs no CLI installed anywhere — only
+`OPENROUTER_API_KEY`.
+
+`auto` is a poor default *for the pool* specifically, because it prefers
+`local`, and `local` is one `codex` process per task. It is the right default
+for `codex_worker.py` running a single task, which is why the two differ.
+
+Read `docs/AGENT_LOOP.md` before enabling `fetch_url` on a task: `run` is a
+shell, the boundary is the container rather than the worktree, and a worker
+that reads an attacker-controlled page and then acts on it is the hazard that
+combination creates.
 
 ```bash
 python tools/providers.py check                   # what is usable, and why not
@@ -147,6 +172,53 @@ and creates no worktrees.
 
 Artifacts land in `runs/pool/<stamp>/` (gitignored); each task's own
 `prompt.txt`, `raw.txt`, `changes.patch` and `verification.txt` are under it.
+A `--backend agent` task also leaves `transcript.jsonl` — every tool call and
+result, which is the only place the *work* is legible rather than the claim.
+
+### Budgets belong in the spec
+
+`limits` in a task spec overrides `agent_loop`'s module defaults per task:
+
+```json
+"limits": {"max_turns": 40, "max_tool_calls": 80,
+           "max_cost_usd": 0.35, "wall_clock_s": 1500}
+```
+
+Fifteen unbounded workers against a metered provider is how a fan-out becomes
+a bill, so the shipped specs carry their caps explicitly rather than
+inheriting them — the number that matters should be readable in the diff.
+`worker_pool.py` validates both `limits` and `tools` before it creates a
+worktree: an unknown budget key would otherwise be silently dropped, leaving
+the author believing a cap is in force that is not.
+
+## A fifteen-task fan-out
+
+`queue/tasks/` ships fifteen specs — twelve `test` tasks, one per untested
+module under `experiments/`, and three read-only `investigate` audits:
+
+```bash
+python tools/worker_pool.py run --concurrency 15
+```
+
+They are deliberately **file-disjoint**: each `test` task creates exactly one
+new `tests/test_<module>.py` and is forbidden from editing the module it
+tests, so fifteen branches can be read and merged in any order without
+conflict. That is a property of these specs, not of the pool — the pool will
+happily run two tasks that collide and leave the lead to resolve it.
+
+The three `investigate` specs are handed `["list_dir", "read_file", "grep",
+"run"]` and nothing else. A read-only task that *cannot* write is enforced by
+the tool list; prose telling a model not to write is not enforcement.
+
+**On this machine (4 cores), `--verify full` at fifteen is affordable.** The
+suite is wait-bound rather than CPU-bound — measured 61s alone, 72s with four
+concurrent, 108s with eight — so verification is not what makes the run long.
+The model is: reasoning time dominates, which is the whole reason to overlap.
+
+**Fifteen deepseek workers agreeing about something is not evidence.** It is
+one prior sampled fifteen times, exactly as `CLAUDE.md` says of Claude
+subagents. Corroboration needs a differently trained model — that is what
+`tools/council.py` is for.
 
 ## Live: what three concurrent OpenRouter tasks actually did
 

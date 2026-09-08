@@ -232,6 +232,82 @@ class TestPoolCLI(unittest.TestCase):
         r = pool("run", str(self.tmp / "nothing-here"), "--dry-run")
         self.assertNotEqual(r.returncode, 0)
 
+    def test_the_agent_backend_is_selectable(self):
+        """The pool must be able to ask for the tool-using loop.
+
+        codex_worker has had `--backend agent` since the loop landed, but the
+        pool's own choices did not list it, so the one backend that can read a
+        file it was not handed was unreachable through the fan-out.
+        """
+        out = json.loads(pool("run", str(self.spec_path), "--dry-run",
+                              "--backend", "agent").stdout)
+        self.assertEqual(out["backend"], "agent")
+
+    def test_the_default_backend_is_the_tool_using_loop(self):
+        out = json.loads(pool("run", str(self.spec_path), "--dry-run").stdout)
+        self.assertEqual(out["backend"], "agent")
+
+
+class TestSpecValidation(unittest.TestCase):
+    """A typo in a spec should cost nothing, not fifteen worktrees.
+
+    Both `tools` and `limits` fail silently if unchecked: an unknown budget
+    key is dropped by Budget, so the author believes a cap is in force that is
+    not, and an unknown tool name used to select nothing at all.
+    """
+
+    def setUp(self):
+        self.tmp = Path(tempfile.mkdtemp(prefix="poolval-"))
+
+    def problems(self, spec):
+        p = self.tmp / "s.json"
+        p.write_text(json.dumps(spec))
+        return json.loads(pool("list", str(p)).stdout)[0]["problems"]
+
+    def test_a_good_spec_has_no_problems(self):
+        self.assertEqual(self.problems({
+            "mode": "test", "task": "add a test",
+            "tools": ["read_file", "write_file", "run"],
+            "limits": {"max_turns": 10, "max_tool_calls": 20,
+                       "max_cost_usd": 0.5, "wall_clock_s": 600}}), [])
+
+    def test_an_unknown_tool_is_caught_before_dispatch(self):
+        got = " ".join(self.problems(
+            {"mode": "test", "task": "x", "tools": ["read_file", "nope"]}))
+        self.assertIn("nope", got)
+
+    def test_an_unknown_limit_key_is_caught_rather_than_dropped(self):
+        got = " ".join(self.problems(
+            {"mode": "test", "task": "x", "limits": {"max_calls": 5}}))
+        self.assertIn("max_calls", got)
+        self.assertIn("max_tool_calls", got)
+
+    def test_a_nonpositive_budget_is_refused(self):
+        got = " ".join(self.problems(
+            {"mode": "test", "task": "x", "limits": {"max_cost_usd": 0}}))
+        self.assertIn("max_cost_usd", got)
+
+    def test_limits_must_be_an_object(self):
+        got = " ".join(self.problems(
+            {"mode": "test", "task": "x", "limits": [1, 2]}))
+        self.assertIn("limits must be an object", got)
+
+
+class TestShippedQueue(unittest.TestCase):
+    """The specs committed to queue/tasks/ must be dispatchable.
+
+    They are reviewed like code because they instruct an outside model to edit
+    this repository; a spec that cannot be validated is one nobody can review.
+    """
+
+    def test_every_committed_spec_validates(self):
+        queue = REPO / "queue" / "tasks"
+        specs = sorted(queue.glob("*.json"))
+        self.assertTrue(specs, "no task specs are committed")
+        rows = json.loads(pool("list", *[str(p) for p in specs]).stdout)
+        bad = {r["path"]: r["problems"] for r in rows if r["problems"]}
+        self.assertEqual(bad, {})
+
 
 if __name__ == "__main__":
     unittest.main()

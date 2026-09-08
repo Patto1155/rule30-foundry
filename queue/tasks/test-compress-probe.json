@@ -1,0 +1,28 @@
+{
+  "mode": "test",
+  "task": "Add unit tests for experiments/compress_probe.py in a NEW file tests/test_compress_probe.py.\n\nCover: ratio and geometric_expected_hist. ratio on highly compressible bytes (b'\\x00' * 10000) must be far below ratio on os.urandom(10000) -- assert that ordering, not a magic constant. geometric_expected_hist must sum to the total it was given, within float tolerance, and halve at each successive run length.\n\nRead the module first; do not guess its API. Test only pure functions that need no data file: the canonical bitstreams (data/center_col_*.bin) are gitignored and ABSENT here, so a test that opens one is a test that cannot run. If a function needs bits, build them in the test with the module's own small CPU simulator or a literal array. Never call np.unpackbits without bitorder='little' -- tools/lint_bitorder.py fails the build on a bare call. Do not import cupy or torch and do not require a GPU; use unittest.skipUnless for a GPU-only path. Do not edit the experiment module itself, do not touch docs/STATUS.md or docs/CLAIM_LEDGER.md, and create ONLY the one new test file named below. Assert real values you derived by running the code -- not tautologies like assertIsNotNone.\n\nDone looks like: `python -m unittest tests.test_compress_probe` passes, and `python tools/lint_bitorder.py` still passes.",
+  "context_files": [
+    "experiments/compress_probe.py",
+    "tools/lint_bitorder.py",
+    "CLAUDE.md"
+  ],
+  "acceptance": [
+    "python -m unittest tests.test_compress_probe",
+    "python tools/lint_bitorder.py"
+  ],
+  "budget_minutes": 25,
+  "tools": [
+    "list_dir",
+    "read_file",
+    "grep",
+    "write_file",
+    "edit_file",
+    "run"
+  ],
+  "limits": {
+    "max_turns": 40,
+    "max_tool_calls": 80,
+    "max_cost_usd": 0.35,
+    "wall_clock_s": 1500
+  }
+}

@@ -372,7 +372,25 @@ TOOLS = {t.name: t for t in [
 ]}
 
 
-def tool_schemas(names: list[str] | None = None) -> list[dict]:
+def tool_schemas(names: list[str] | str | None = None) -> list[dict]:
+    """Schemas for the named tools, or for all of them.
+
+    A string is accepted and split on commas because task specs are JSON
+    written by hand, and `"tools": "read_file,run"` is the natural thing to
+    write there. Without this it was still *accepted* -- and then matched as a
+    substring, so "run" selected `run` from "…,grep,run" by accident while a
+    name that merely contained another name would have selected both. A
+    selection that works by luck is worse than one that fails, so the string
+    is normalised to a list here rather than left to `in`.
+    """
+    if isinstance(names, str):
+        names = [n.strip() for n in names.split(",") if n.strip()]
+    if names is not None:
+        unknown = sorted(set(names) - set(TOOLS))
+        if unknown:
+            raise ValueError(
+                f"no such tool(s): {', '.join(unknown)}. "
+                f"Available: {', '.join(sorted(TOOLS))}")
     return [t.schema() for n, t in TOOLS.items()
             if names is None or n in names]
 
