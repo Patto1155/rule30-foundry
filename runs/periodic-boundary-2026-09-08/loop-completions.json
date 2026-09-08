@@ -1,0 +1,163 @@
+[
+  {
+    "width": 3,
+    "center_word": "01",
+    "block_length": 4,
+    "finite_right_initial": 0,
+    "choices": [
+      {
+        "choice": 0,
+        "first_right_edge_mismatch": 3,
+        "first_positive_strip_mismatch": 3,
+        "first_required_left_mismatch": null,
+        "right_completion_compatible": false
+      },
+      {
+        "choice": 1,
+        "first_right_edge_mismatch": 2,
+        "first_positive_strip_mismatch": 2,
+        "first_required_left_mismatch": 2,
+        "right_completion_compatible": false
+      }
+    ],
+    "scope": "specific zero-exterior completion; neither full seed nor all completions"
+  },
+  {
+    "width": 5,
+    "center_word": "01",
+    "block_length": 4,
+    "finite_right_initial": 0,
+    "choices": [
+      {
+        "choice": 0,
+        "first_right_edge_mismatch": 1,
+        "first_positive_strip_mismatch": 1,
+        "first_required_left_mismatch": 2,
+        "right_completion_compatible": false
+      },
+      {
+        "choice": 1,
+        "first_right_edge_mismatch": 3,
+        "first_positive_strip_mismatch": 3,
+        "first_required_left_mismatch": null,
+        "right_completion_compatible": false
+      }
+    ],
+    "scope": "specific zero-exterior completion; neither full seed nor all completions"
+  },
+  {
+    "width": 7,
+    "center_word": "01",
+    "block_length": 8,
+    "finite_right_initial": 0,
+    "choices": [
+      {
+        "choice": 0,
+        "first_right_edge_mismatch": 4,
+        "first_positive_strip_mismatch": 4,
+        "first_required_left_mismatch": 6,
+        "right_completion_compatible": false
+      },
+      {
+        "choice": 1,
+        "first_right_edge_mismatch": 5,
+        "first_positive_strip_mismatch": 5,
+        "first_required_left_mismatch": null,
+        "right_completion_compatible": false
+      }
+    ],
+    "scope": "specific zero-exterior completion; neither full seed nor all completions"
+  },
+  {
+    "width": 9,
+    "center_word": "01",
+    "block_length": 8,
+    "finite_right_initial": 0,
+    "choices": [
+      {
+        "choice": 0,
+        "first_right_edge_mismatch": 5,
+        "first_positive_strip_mismatch": 5,
+        "first_required_left_mismatch": null,
+        "right_completion_compatible": false
+      },
+      {
+        "choice": 1,
+        "first_right_edge_mismatch": 3,
+        "first_positive_strip_mismatch": 3,
+        "first_required_left_mismatch": 6,
+        "right_completion_compatible": false
+      }
+    ],
+    "scope": "specific zero-exterior completion; neither full seed nor all completions"
+  },
+  {
+    "width": 11,
+    "center_word": "01",
+    "block_length": 8,
+    "finite_right_initial": 0,
+    "choices": [
+      {
+        "choice": 0,
+        "first_right_edge_mismatch": 7,
+        "first_positive_strip_mismatch": 7,
+        "first_required_left_mismatch": null,
+        "right_completion_compatible": false
+      },
+      {
+        "choice": 1,
+        "first_right_edge_mismatch": 1,
+        "first_positive_strip_mismatch": 1,
+        "first_required_left_mismatch": 6,
+        "right_completion_compatible": false
+      }
+    ],
+    "scope": "specific zero-exterior completion; neither full seed nor all completions"
+  },
+  {
+    "width": 13,
+    "center_word": "01",
+    "block_length": 24,
+    "finite_right_initial": 0,
+    "choices": [
+      {
+        "choice": 0,
+        "first_right_edge_mismatch": 1,
+        "first_positive_strip_mismatch": 1,
+        "first_required_left_mismatch": 6,
+        "right_completion_compatible": false
+      },
+      {
+        "choice": 1,
+        "first_right_edge_mismatch": 5,
+        "first_positive_strip_mismatch": 5,
+        "first_required_left_mismatch": 14,
+        "right_completion_compatible": false
+      }
+    ],
+    "scope": "specific zero-exterior completion; neither full seed nor all completions"
+  },
+  {
+    "width": 15,
+    "center_word": "01",
+    "block_length": 28,
+    "finite_right_initial": 0,
+    "choices": [
+      {
+        "choice": 0,
+        "first_right_edge_mismatch": 8,
+        "first_positive_strip_mismatch": 8,
+        "first_required_left_mismatch": 14,
+        "right_completion_compatible": false
+      },
+      {
+        "choice": 1,
+        "first_right_edge_mismatch": 6,
+        "first_positive_strip_mismatch": 6,
+        "first_required_left_mismatch": 18,
+        "right_completion_compatible": false
+      }
+    ],
+    "scope": "specific zero-exterior completion; neither full seed nor all completions"
+  }
+]

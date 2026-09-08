@@ -6,7 +6,7 @@ lives here. Overwrite this file in place; git history keeps the old versions.
 No other file may carry a "current state as of" section —
 `tools/lint_ledger.py` enforces it.
 
-Updated: 2026-09-08 · Newest log: `docs/experiment-logs/2026-09-08-periodic-trace-constraints.md`
+Updated: 2026-09-08 · Newest log: `docs/experiment-logs/2026-09-08-periodic-trace-output-loops.md`
 
 ## Where the three prize problems stand
 
@@ -31,8 +31,7 @@ A1, A2, C2 and C2b are done (see *Recently closed*); **B3 is next**.
 | E1 | Write up the eight Theorem rows; `s*(n)` is citable | Writing | Days | — |
 | B2 | Exact period search on 46M — no code change, extends to `p <= 2.3e7` | Research | Minutes | A3 |
 | B1 | Historical full walk recovered, with fresh seed/local-algebra checks; two abstract branches double, eight reach the exclusive cutoff. Actual diagonal unresolved. See `docs/experiment-logs/2026-09-08-b1-recovery.md`. Full trajectory replay and workhorse execution have not been newly validated. Next useful step is the transient branch selector. | Research | Unknown | — |
-| P1-local | Periodic-trace and defect controls pass. Alternating-center strips through width 15 admit neighbors violating period 2. Seek a seed-derived constraint or allow a larger neighbor period; extending the finite prefix scan adds no mechanism. | Research | Unknown | — |
-| G1 | **Wire C2's annihilator gates into `preflight`** — `counting_bound.py` has `annihilator_dimension`, `max_zeros_of_degree` and `annihilator_verdict`, but #23 predates `tools/gates.py`, so `gate_counting_bound` has no annihilator branch and nothing calls them. Note the class is vacuous in *both* directions and the DFAO rule (`log2\|M\| >= n`) is the wrong way round for it, so the branch must call these functions rather than a second derivation | Infra | Hours | C2c, C2d |
+| P1-local | Stronger loop certificates prove open alternating-center strips through width 15 permit nonperiodic neighbors. A complete exterior removes free choices, but no sufficient seed invariant was found. Proposed next experiment: `docs/idea-bank/period-word-sieve.md`. | Research | Bounded first sweep | — |
 
 **De-prioritised:** more neural experiments (the ceiling is partly the models'
 — I/K/L are blind to long-lag XOR). Item 14 is worth closing but the ledger
@@ -56,13 +55,13 @@ grades left-edge structure as disjoint from the prize object.
   hold a constant offset around the cycle. The test file itself may be worth
   keeping; the source edit is not.
 
-## In-flight branches
+## Delivery and running experiments
 
-| PR | Branch | State |
-|---|---|---|
-| Local | `codex/periodic-defect-constraints` | Based on merged #31 (`372c505`): trace/defect controls, finite-strip witnesses, B1 recovery, and completed branch-cleanup documentation. |
-
-PR #31 is merged. No changes were made to the older checkout's unrelated edits.
+PR #32 (trace controls and B1 recovery) and PR #33 (annihilator preflight)
+are merged; both passed CPU and DRAT CI. The bounded output-loop and driven-
+boundary experiments are complete and recorded in the newest log. No long
+experiment or monitor is running. The older checkout's unrelated edits remain
+untouched.
 
 The #18 → #19 stack landed on 2026-09-02; #20 and #21 had already been merged
 into #19. The three-deep delegation stack is gone: #27, #28 and #29 landed on
@@ -86,6 +85,16 @@ is and the merge was resolved by updating this file, which is what should have
 happened anyway. See [`BRANCHING.md`](BRANCHING.md).
 
 ## Recently closed
+
+- **G1**: #33 wired the existing annihilator helper into preflight for positive,
+  negative, and undeclared search claims. Strict distinct-window parameters and
+  both boundaries are checked. A heuristic safety-margin shortfall is explicitly
+  distinguished from a forced kernel. All 51 focused gate tests and both CI
+  jobs pass. Schema: `docs/WORKHORSE.md`.
+- **P1 bounded follow-up**: verified two-loop nonperiodic output constructions
+  at seven widths. Finite right-completion checks expose the free-edge condition;
+  the actual-seed snapshot probes do not establish an asymptotic invariant.
+  `docs/experiment-logs/2026-09-08-periodic-trace-output-loops.md`.
 
 - **The delegation stack**: #27, #28 and #29 landed on 2026-09-08 in bottom-up
   order. `main` carries `tools/gates.py`, `tools/workhorse.py`,

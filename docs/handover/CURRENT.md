@@ -10,7 +10,7 @@ reference and does not count against that. This file is context and reasoning
 the claim record (`docs/CLAIM_LEDGER.md`) and not the work queue
 (`docs/STATUS.md`).
 
-Last updated: 2026-09-08 · Branch: `codex/periodic-defect-constraints`
+Last updated: 2026-09-08 · Branch: `codex/periodic-boundary-followup`
 
 ---
 
@@ -95,9 +95,17 @@ actual diagonal remains unresolved. See
 
 The periodic-trace work found another boundary-condition trap: every trace has
 an initial left-half-line realization. Fixing a bounded seed patch does not fix
-that whole half-line. Open strip witnesses for alternating centers through
-width 15 refute synchronization to the same period in those models, not on the
-actual seed. `docs/theory/periodic-trace-constraints.md` states the missing step.
+that whole half-line. The stronger follow-up gives two closed output loops at
+each tested width, so alternating centers can coexist with nonperiodic neighbors
+in those open strips. Fixing a complete right initial row removes their free
+choices, but does not imply a periodic response. The missing condition is
+compatibility with the actual left seed dynamics at the same onset. See
+`docs/theory/periodic-trace-constraints.md` sections 6 and 7.
+
+PR #32 landed the initial research/recovery branch; #33 added the annihilator
+preflight dispatch. Its safety-margin refusal is a policy, not a theorem that
+a kernel exists. Distinct-window counts still need verified input provenance;
+the manifest declares them and the gate does not measure them.
 
 ---
 
