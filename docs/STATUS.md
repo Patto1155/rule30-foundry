@@ -6,7 +6,7 @@ lives here. Overwrite this file in place; git history keeps the old versions.
 No other file may carry a "current state as of" section —
 `tools/lint_ledger.py` enforces it.
 
-Updated: 2026-09-08 · Newest log: `docs/experiment-logs/2026-09-01-nersissian-end-to-end-audit.md`
+Updated: 2026-09-08 · Newest log: `docs/experiment-logs/2026-09-03-algebraic-annihilator.md`
 
 ## Where the three prize problems stand
 
@@ -20,12 +20,13 @@ Updated: 2026-09-08 · Newest log: `docs/experiment-logs/2026-09-01-nersissian-e
 
 Sequence approved 2026-09-02: **A1 → A2 → C2**, with B3 as filler. Reasoning
 and the full option analysis: [`handover/CURRENT.md`](handover/CURRENT.md).
-A1 and A2 are done (see *Recently closed*); **C2 is next**.
+A1, A2, C2 and C2b are done (see *Recently closed*); **B3 is next**.
 
 | # | Work | Kind | Cost | Blocks |
 |---|---|---|---|---|
 | A3 | **Make bitstreams reachable** (Release asset or committed prefix) | Infra | ~½ day | B2 |
-| C2 | **Algebraic annihilator search** — low-degree GF(2) relations over `w`-bit windows, via monomial-matrix rank | Research | Days | — |
+| C2c | **Annihilators over non-consecutive bit selections** — every window searched so far is a run of adjacent bits, so long-lag structure (the I/K/L blind spot) is untested | Research | Days | — |
+| C2d | **Multi-word window codes**, lifting `w` past the `uint64` cap of 64 | Research | ~½ day | — |
 | B3 | Extend `s*(n)` past n=48 — re-costed ~28× cheaper | Research | Hours | — |
 | E1 | Write up the eight Theorem rows; `s*(n)` is citable | Writing | Days | — |
 | B2 | Exact period search on 46M — no code change, extends to `p <= 2.3e7` | Research | Minutes | A3 |
@@ -45,19 +46,14 @@ grades left-edge structure as disjoint from the prize object.
 
 | PR | Branch | State |
 |---|---|---|
-| — | `claude/rule-30-foundry-env-tlbr9x` | Open, based on `main`. A2: the `verify` workflow. |
-| [#27](https://github.com/Patto1155/rule30-foundry/pull/27) | `claude/codex-tool-availability-3fbc2z` | Open, based on `main`. The workhorse: `tools/gates.py` turns CLAUDE.md's rules into executable preflight/postflight checks, `tools/workhorse.py` is a pull-based runner that cannot execute what the gates refuse. New `gates-trap` stage in `verify_all`. **No hardware bought and none justified yet** — see [`WORKHORSE.md`](WORKHORSE.md) and [`COMPUTE_PLAN.md`](COMPUTE_PLAN.md) §1. |
-| [#28](https://github.com/Patto1155/rule30-foundry/pull/28) | `claude/codex-worker-integration-8pd8ls` | Open, **stacked on #27** (it edits `workhorse.py` and reuses `gates.py`). A general callable worker — six task modes, isolated `git worktree` per task, a structured result contract, verification the harness runs itself rather than believing — plus a provider layer (`tools/providers.py`: OpenRouter, the Codex dispatcher) and `tools/worker_pool.py`, which runs a queue of tasks concurrently. Review is one mode of six. Exercised against the live dispatcher on 2026-09-07, single and two-up; see [`CODEX_WORKER.md`](CODEX_WORKER.md) and [`WORKER_POOL.md`](WORKER_POOL.md). Both providers are exercised: the dispatcher on 2026-09-07, and OpenRouter (`deepseek/deepseek-v4-flash-0731`) on 2026-09-08 — three concurrent tasks, 311s wall against 658s serial, ~$0.002 each. Two prompt defects that run exposed are fixed and written up in `WORKER_POOL.md`, *Live*. `tools/agent_loop.py` adds a tool-using worker (read/grep/run/fetch, budgets, transcript, untrusted-content boundary) — first live research task made 38 tool calls for $0.014, found a real bug in this repo's test suite, and disclosed that it had removed its own worktree; both are fixed and written up in `AGENT_LOOP.md`. |
-| — | `claude/deepseek-parallel-experiments-hu5ue3` | Open, **stacked on #28** — it needs `tools/worker_pool.py` and `tools/agent_loop.py`, which exist on no other branch. That makes it **two levels from `main`**, which [`BRANCHING.md`](BRANCHING.md) §2 forbids; the fix is to land #27 and #28 rather than to restructure this branch, and until they land it should not be merged. Makes the pool able to reach the tool-using loop at all (`--backend agent` was missing from `worker_pool.py`'s choices, so the one backend that can investigate was unreachable through the fan-out), validates `tools`/`limits` in a spec before a worktree is created, and ships fifteen file-disjoint task specs in `queue/tasks/`. Adds a `SessionStart` hook: a web container had no `numpy`, so `verify_all` came up FAIL on a clean checkout of `main` and every delegated worker's verification would have been red for a reason that had nothing to do with its work. |
+| [#23](https://github.com/Patto1155/rule30-foundry/pull/23) | `claude/rule-30-foundry-env-tlbr9x` | This PR. C2 + C2b: the algebraic annihilator search. |
 
 The #18 → #19 stack landed on 2026-09-02; #20 and #21 had already been merged
-into #19. The stack is now **three deep** — `main` ← #27 ← #28 ←
-`deepseek-parallel-experiments` — which is one level more than
-[`BRANCHING.md`](BRANCHING.md) §2 permits. §2's own remedy applies: land the
-bottom of the stack rather than reshape the top. **Land #27, then #28**; the
-third branch cannot be rebased onto `main` because every tool it changes
-exists only above it. The 7 merged branches listed in
-[`BRANCHING.md`](BRANCHING.md) are still awaiting deletion (see *Chores*).
+into #19. The three-deep delegation stack is gone: #27, #28 and #29 landed on
+2026-09-08 in bottom-up order, which is [`BRANCHING.md`](BRANCHING.md) §2's own
+remedy. Nothing is stacked. The merged branches listed in
+[`BRANCHING.md`](BRANCHING.md) are still awaiting deletion (see *Chores*), and
+#27–#29's branches now join them.
 
 ### Why #20 and #21 were merged rather than left open
 
@@ -75,6 +71,21 @@ happened anyway. See [`BRANCHING.md`](BRANCHING.md).
 
 ## Recently closed
 
+- **C2 + C2b**: algebraic annihilator search — no GF(2) relation of degree
+  `<= 3` over windows up to 64 bits, nor degree `<= 4` up to 32 bits, in all 20
+  of 24 cells that clear both gates
+  ([log](experiment-logs/2026-09-03-algebraic-annihilator.md)). The gate is the
+  result worth remembering: this model class is vacuous in *both* directions,
+  and the Reed–Muller ceiling `2^w - 2^(w-d)` voids every search at `w <= 22`
+  regardless of the sequence. A first pass reported an apparent shortcut at
+  `w = 20` that was a sorted-subsample artifact at parameters that were vacuous
+  anyway; full-stream verification caught it. A second, worse defect was caught in **review**, not here: the golden input was decoded LSB-first when the golden files are MSB-first by documented exception, so the whole first grid ran on a byte-block-reversed stream at an unchanged bit mean of 0.500222. Reranked verdicts: none — every rank was full before and after. `load_bits` now verifies the decode against a naive center column instead of trusting a convention. Two routes closed alongside it:
+  **space-time patches**, where the local rule is itself a degree-2 relation so
+  the search succeeds by construction — all 6 rule instances lie in the kernel
+  (0 violations), a forced positive. Whether the kernel is *only* the rule
+  ideal is undetermined and no longer claimed, and
+  **`w <= 22`** for any degree. Width turned out to be the cheap axis — `w=64`
+  at `d=2` costs `D=2081` and 12 s, against `D=41449` for `w=32` at `d=4`.
 - **Codex council**: #25 landed on 2026-09-04. `main` carries
   `tools/council.py`, the VM-side dispatcher under `tools/codex_dispatcher/`,
   and [`CODEX_COUNCIL.md`](CODEX_COUNCIL.md). The point is independence: every
