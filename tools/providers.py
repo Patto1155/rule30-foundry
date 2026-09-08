@@ -84,6 +84,16 @@ RETRY_STATUS = (429, 500, 502, 503, 504)
 MAX_ATTEMPTS = 4
 BACKOFF_BASE_S = 2.0
 
+# Sent on every request, because leaving it unset is not neutral: OpenRouter
+# then fills in a default derived from the model's advertised context window,
+# and routes to a backend whose real output cap is lower. Kimi K2-thinking
+# advertises 262144 and got max_tokens 100352 against Novita's 98304 -- an
+# HTTP 400 on turn zero, before a single tool call. DeepSeek happened not to
+# trip it, which is why a pool that only ever ran one model looked
+# provider-agnostic and was not. 16384 sits under every current model's
+# output cap and is far more than one agent turn needs.
+DEFAULT_MAX_TOKENS = int(os.environ.get("OPENROUTER_MAX_TOKENS") or 16384)
+
 
 def _council():
     """The council module, for its transport only.
@@ -208,7 +218,7 @@ class OpenRouter(Provider):
         ok, why = self.available()
         if not ok:
             raise ProviderError(why)
-        payload = {"model": self.model,
+        payload = {"model": self.model, "max_tokens": DEFAULT_MAX_TOKENS,
                    "messages": [{"role": "user", "content": prompt}]}
         started = time.time()
         last = ""
@@ -260,7 +270,8 @@ class OpenRouter(Provider):
         ok, why = self.available()
         if not ok:
             raise ProviderError(why)
-        payload: dict = {"model": self.model, "messages": messages}
+        payload: dict = {"model": self.model, "messages": messages,
+                         "max_tokens": DEFAULT_MAX_TOKENS}
         if tools:
             payload["tools"] = tools
             payload["tool_choice"] = tool_choice
@@ -310,9 +321,19 @@ def _read_error(err: urllib.error.HTTPError) -> str:
     except Exception:  # noqa: BLE001 - the error path must not raise
         return err.reason or ""
     try:
-        return (json.loads(body).get("error") or {}).get("message") or body[:400]
+        err_obj = json.loads(body).get("error") or {}
     except ValueError:
         return body[:400]
+    msg = err_obj.get("message") or ""
+    # OpenRouter's own message is a routing-level generic -- "Provider
+    # returned error" -- and the cause is in metadata.raw, forwarded verbatim
+    # from whichever backend actually refused. Dropping it turns a one-line
+    # diagnosis ("max_tokens 100352 exceeds maximum 98304") into a manual
+    # curl, which is exactly what it cost the first time.
+    raw = ((err_obj.get("metadata") or {}).get("raw") or "").strip()
+    if raw:
+        return f"{msg} :: {raw[:400]}" if msg else raw[:400]
+    return msg or body[:400]
 
 
 def explain_http(code: int, detail: str) -> str:
