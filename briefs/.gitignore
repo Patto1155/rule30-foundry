@@ -1,0 +1,7 @@
+# Briefs and replies are working material, not results. Nothing here is tracked
+# except the template and this file: a reviewer's reply that turns out to matter
+# belongs in docs/experiment-logs/ under the normal logging standard, where the
+# ledger can cite it, not lying around in briefs/.
+*
+!.gitignore
+!TEMPLATE.md
