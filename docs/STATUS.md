@@ -60,8 +60,9 @@ grades left-edge structure as disjoint from the prize object.
 
 | PR | Branch | State |
 |---|---|---|
-| [#31](https://github.com/Patto1155/rule30-foundry/pull/31) | `claude/codex-tool-availability-3fbc2z` | This PR. Reconciles this file after #23, #27–#30 landed. |
-| [#24](https://github.com/Patto1155/rule30-foundry/pull/24) | `claude/rule-30-annihilators-phvmz7` | Open. Reduced from a competing council implementation to `briefs/` alone — the brief template, which #25 has no equivalent of. Everything it shared with #25 is dropped. |
+| [#31](https://github.com/Patto1155/rule30-foundry/pull/31) | `claude/codex-tool-availability-3fbc2z` | This PR, and the last one open. Reconciles this file after #23, #24 and #27–#30 landed. |
+
+Nothing else is in flight.
 
 The #18 → #19 stack landed on 2026-09-02; #20 and #21 had already been merged
 into #19. The three-deep delegation stack is gone: #27, #28 and #29 landed on
@@ -127,6 +128,14 @@ happened anyway. See [`BRANCHING.md`](BRANCHING.md).
   made 12 successful tool calls over 13 turns with every turn's `content`
   empty — the work was done and thrown away. Prefer non-thinking models for
   pool work until that is handled.
+- **#24**: reduced from a competing council implementation to `briefs/` alone
+  and landed. It and #25 built the council independently; #25's client won the
+  add/add conflict, having been exercised end to end. What survived is the
+  brief template, which `main` had no equivalent of and which states the
+  failure that makes an outside reviewer worthless: *state the claim, not your
+  confidence in it* — a brief asserting that a bound was correctly applied buys
+  agreement, not review. That is `CLAUDE.md`'s independence argument about
+  subagents, applied to the brief rather than the model.
 - **C2 + C2b**: algebraic annihilator search — no GF(2) relation of degree
   `<= 3` over windows up to 64 bits, nor degree `<= 4` up to 32 bits, in all 20
   of 24 cells that clear both gates
