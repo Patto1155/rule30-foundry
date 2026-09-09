@@ -2,7 +2,7 @@
 
 ## Goal
 
-Build exact tooling for Wolfram Rule 30 prize problem 2: decide whether the
+Build exact tooling for Wolfram Rule 30 prize problem 3: decide whether the
 single-black-cell center bit at time `n` can be computed by a shortcut that is
 meaningfully smaller than simulating the cellular automaton to time `n`.
 

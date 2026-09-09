@@ -22,12 +22,9 @@ Wolfram's three Rule 30 prizes, in the official numbering:
 | 2 | Does each color occur on average equally often in the center column? |
 | 3 | Does computing the nth cell of the center column require at least O(n) computational effort? |
 
-> **Correction:** several existing logs use a swapped numbering — Problems 2 and 3
-> are interchanged in `docs/problem-statements/center-column-shortcuts.md`
-> ("prize problem 2" for the shortcut question), in `S_linear_complexity.md`
-> ("Prize-2 probe" for an LFSR shortcut), and in `R_left_edge_cone.md`
-> ("Prize-3 equidistribution"). The shortcut/effort question is **Problem 3**;
-> equidistribution is **Problem 2**. Use the table above.
+The active documentation uses this official numbering. Some archived handovers
+retain the older swapped labels as historical records; do not copy those labels
+into current work.
 
 **All three prizes concern one single deterministic orbit** — the seed
 `…0001000…`. There is no ensemble. This has a sharp consequence:

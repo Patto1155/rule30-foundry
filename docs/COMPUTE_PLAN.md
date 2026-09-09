@@ -72,7 +72,7 @@ renting anything** — several of them change what is worth renting for.
 | **D1** | **Finish the item-14 pattern-map walk to `d = 1.2e10`** | **~26 min CPU per branch** | Tests a *sharp falsifiable prediction* — `period(d) ~ 2·log2(d)` says a 32→64 doubling near `d ≈ 8.6e9`. The tool exists, gates pass, validated to `d=5e7`. Cheapest conclusive result available anywhere in the repo. Caveat: the ledger grades left-edge structure as **disjoint from the prize object**, so this is decisive mathematics that cannot by itself yield a center-column shortcut. |
 | **D2** | Extend `s*(n)` past n=48 (item 10) | hours, CPU | Extends a **Certificate**. The SAT work measured ~28× cheaper than the plan assumed (207 solves in 133 s vs 3747 s for 105 through pysat). **Grow the state budget with `n`** — raising `n` at fixed `--max-states` makes the negative *more* vacuous. |
 | **D3** | `s*(n)` in bases 3, 4, 5 (item 9) | hours, CPU | The new Certificate covers **base 2 only**, and automaticity is base-dependent (Cobham). This closes a real scope gap in a claim already at the top grade. |
-| **D4** | Problem 3 as a finite discrepancy bound (item 12) | minutes, existing data | Converts the repo's weakest headline ("behaves close to fair") from Observation to Certificate, using the 10M bits already on disk. Compute `D_N = max_k |S_k − k/2|` against `sqrt(N log log N)`. Pure win, no new data. |
+| **D4** | Problem 2 as a finite discrepancy bound (item 12) | minutes, existing data | Converts the repo's weakest headline ("behaves close to fair") from Observation to Certificate, using the 10M bits already on disk. Compute `D_N = max_k |S_k − k/2|` against `sqrt(N log log N)`. Pure win, no new data. |
 | **D5** | Exact smallest grammar at small `n` | hours, CPU/SAT | `g(n)` is an *upper-bound* curve; the counting null and Re-Pair bracket the truth ~2.5× apart. Exact solving at n ≤ 64 promotes it to Certificate by the same route `s*(n)` took. |
 | **D6** | Parity-capable estimators on the center column | hours, CPU | The direct answer to item 8's blind spot: the neural suite cannot see `s[i-13] ⊕ s[i-27]` at any budget tested. Berlekamp–Massey and GF(2) rank find exactly that. **A model-class blind spot is answered by a different method, not a bigger network.** |
 | **D7** | 46M independent golden reference | ~50 h on a cheap CPU box (~$5) | Now possible: `gen_golden_reference.py` checkpoints and resumes as of this session. Closes the last verification gap — the 46M artifact's independent check currently reaches only its first 10M bits. |
@@ -145,7 +145,7 @@ weakens it. Either way the README changes.
 
 The repo has measured minimal-description curves over three model classes:
 LFSRs (`L(n) = n/2`), DFAOs (`s*(n)`, Certificate), and straight-line grammars
-(`g(n)`). The natural fourth is the one closest to Problem 2's actual wording —
+(`g(n)`). The natural fourth is the one closest to Problem 3's actual wording —
 but it has to quantify over the whole index function, not one index:
 
     C(k) = size of the smallest boolean circuit that, given the k binary

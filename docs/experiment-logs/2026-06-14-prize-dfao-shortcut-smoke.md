@@ -3,7 +3,7 @@
 - Date: 2026-06-14
 - Title: Prize DFAO Shortcut Smoke Test
 - Claim Level: Certificate for the tested finite prefixes and state bounds
-- Goal: Test a named shortcut class for Wolfram prize problem 2: binary DFAO
+- Goal: Test a named shortcut class for Wolfram prize problem 3: binary DFAO
   programs computing `n -> center_bit(n)` over the first 128 single-black-cell
   Rule 30 center-column bits.
 - Hypothesis: If the center column has a very small automatic shortcut, then a

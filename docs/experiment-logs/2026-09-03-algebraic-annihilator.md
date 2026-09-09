@@ -1,7 +1,7 @@
 # Experiment Log
 
 - Date: 2026-09-03
-- Title: **C2 — Algebraic Annihilator Search over `w`-bit Windows (Problem 2)**
+- Title: **C2 — Algebraic Annihilator Search over `w`-bit Windows (Problem 3)**
 - Claim Level: **Certificate** — the rank computation is exact over GF(2), with
   no sampling threshold, and the negative is admissible under the Admission
   Rule plus a sharper class-specific gate derived below.
@@ -11,7 +11,7 @@
 
 ## Goal
 
-Item C2 of `docs/STATUS.md`. Prize Problem 2 asks for a shortcut to the `n`-th
+Item C2 of `docs/STATUS.md`. Prize Problem 3 asks for a shortcut to the `n`-th
 center-column bit. Experiment S closed the *linear* form of that question: the
 center column has maximal linear complexity `L(n) = n/2`, so no LFSR generates
 it. C2 asks the next question up the degree ladder, which the ledger records as
@@ -202,7 +202,7 @@ degree-2 relation would have had room to show one.
 
 ## Interpretation
 
-The algebraic route to Problem 2 is now closed two degrees further than it was.
+The algebraic route to Problem 3 is now closed two degrees further than it was.
 Combined with Experiment S:
 
 - degree 1 (LFSR / linear recurrence): closed, maximal linear complexity.

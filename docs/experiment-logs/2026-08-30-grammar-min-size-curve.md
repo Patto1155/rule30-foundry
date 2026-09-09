@@ -13,7 +13,7 @@
 ## Goal
 
 Measure a minimal-description curve over a **third** model class, and the one
-closest to Prize Problem 2. The repo has done this for LFSRs (Experiment S,
+closest to Prize Problem 3. The repo has done this for LFSRs (Experiment S,
 `L(n) = n/2`) and for DFAOs (`s*(n)`, certified 2026-08-30). Straight-line
 grammars are the natural next step because a small straight-line grammar *is*
 a small program that prints the prefix — which is exactly the shape a "faster

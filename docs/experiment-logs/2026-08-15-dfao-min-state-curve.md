@@ -194,7 +194,7 @@ measured curves that carries the content. A vacuous design could not produce
 So: on prefixes up to n=48, the Rule 30 center column has essentially maximal
 automatic complexity - indistinguishable from random, and far above what any
 small DFAO could express. This is evidence against a base-2 automatic-sequence
-shortcut for Prize Problem 2.
+shortcut for Prize Problem 3.
 
 Scope, stated plainly: n <= 48 is short. This says nothing about shortcuts
 outside the DFAO class, nothing about bases other than 2, and nothing about
