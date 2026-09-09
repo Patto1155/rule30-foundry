@@ -10,7 +10,7 @@ reference and does not count against that. This file is context and reasoning
 the claim record (`docs/CLAIM_LEDGER.md`) and not the work queue
 (`docs/STATUS.md`).
 
-Last updated: 2026-09-08 · Branch: `codex/period-word-sieve`
+Last updated: 2026-09-09 · Branch: `codex/seed-compatibility-and-benchmarks`
 
 ---
 
@@ -35,6 +35,15 @@ still in the ledger as warnings). Assume any impressive-sounding number you
 find in a README is historical until the ledger confirms its grade.
 
 ## Why the work is sequenced this way
+
+The September 9 follow-up corrected official numbering, landed all twelve
+useful test branches without the bad orbit-cycle edit, confirmed the canonical
+bitstreams are unavailable, reproduced a small actual-transient branch choice,
+checked saved loops against actual seed strips, and established base-2 MSD
+`s*(56)=13`. A follow-up on all seven reachable zero-word branches found a
+six-bit tail-state selector, but the time needed to obtain that state still
+grows roughly with the diagonal. See
+`docs/experiment-logs/2026-09-09-seven-step-followup.md`.
 
 The bounded period-word sieve found no nonconstant exclusion: all 21 primitive
 nonconstant words of lengths 2..6 have nonperiodic-neighbor loop certificates

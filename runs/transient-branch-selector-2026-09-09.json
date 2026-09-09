@@ -1,0 +1,352 @@
+{
+  "artifact_type": "rule30.transient_branch_selector",
+  "artifact_version": 1,
+  "scope": "all zero words in the existing exact d<1M event artifact",
+  "params": {
+    "steps": 130000,
+    "zero_words": [
+      2,
+      7,
+      28,
+      399,
+      53207,
+      58286,
+      87866
+    ],
+    "chronological_training_cases": 4,
+    "chronological_validation_cases": 3
+  },
+  "cases": [
+    {
+      "zero_word_at_d": 2,
+      "period_before": 1,
+      "period_after": 2,
+      "analysis_period": 2,
+      "predecessor_word": 3,
+      "candidates": [
+        2,
+        1
+      ],
+      "actual_successor": 2,
+      "actual_candidate_index": 0,
+      "last_one_time": 1,
+      "last_one_phase": 1,
+      "last_reset_invariant_bits": 2,
+      "predecessor_last_mismatch": 0,
+      "successor_last_mismatch": 1,
+      "last_reset_prediction": 2,
+      "last_reset_prediction_correct": true,
+      "tail_cutoff_time": 1,
+      "tail_start_phase": 0,
+      "tail_start_value": 0,
+      "tail_state_invariant_bits": 2,
+      "tail_state_prediction": 2,
+      "tail_state_prediction_correct": true,
+      "dependency_time_over_diagonal": 0.5,
+      "simple_predictions": {
+        "constant_0": 0,
+        "constant_1": 1,
+        "zero_d_parity": 0,
+        "zero_d_block_parity": 1,
+        "predecessor_phase0": 1,
+        "predecessor_half_popcount_parity": 1
+      }
+    },
+    {
+      "zero_word_at_d": 7,
+      "period_before": 2,
+      "period_after": 4,
+      "analysis_period": 4,
+      "predecessor_word": 10,
+      "candidates": [
+        12,
+        3
+      ],
+      "actual_successor": 3,
+      "actual_candidate_index": 1,
+      "last_one_time": null,
+      "last_one_phase": null,
+      "last_reset_invariant_bits": 3,
+      "predecessor_last_mismatch": 1,
+      "successor_last_mismatch": 1,
+      "last_reset_prediction": 12,
+      "last_reset_prediction_correct": false,
+      "tail_cutoff_time": 1,
+      "tail_start_phase": 2,
+      "tail_start_value": 0,
+      "tail_state_invariant_bits": 3,
+      "tail_state_prediction": 3,
+      "tail_state_prediction_correct": true,
+      "dependency_time_over_diagonal": 0.142857,
+      "simple_predictions": {
+        "constant_0": 0,
+        "constant_1": 1,
+        "zero_d_parity": 1,
+        "zero_d_block_parity": 1,
+        "predecessor_phase0": 0,
+        "predecessor_half_popcount_parity": 1
+      }
+    },
+    {
+      "zero_word_at_d": 28,
+      "period_before": 4,
+      "period_after": 8,
+      "analysis_period": 8,
+      "predecessor_word": 238,
+      "candidates": [
+        180,
+        75
+      ],
+      "actual_successor": 75,
+      "actual_candidate_index": 1,
+      "last_one_time": 30,
+      "last_one_phase": 6,
+      "last_reset_invariant_bits": 4,
+      "predecessor_last_mismatch": 29,
+      "successor_last_mismatch": 29,
+      "last_reset_prediction": 75,
+      "last_reset_prediction_correct": true,
+      "tail_cutoff_time": 30,
+      "tail_start_phase": 7,
+      "tail_start_value": 0,
+      "tail_state_invariant_bits": 4,
+      "tail_state_prediction": 75,
+      "tail_state_prediction_correct": true,
+      "dependency_time_over_diagonal": 1.071429,
+      "simple_predictions": {
+        "constant_0": 0,
+        "constant_1": 1,
+        "zero_d_parity": 0,
+        "zero_d_block_parity": 1,
+        "predecessor_phase0": 0,
+        "predecessor_half_popcount_parity": 1
+      }
+    },
+    {
+      "zero_word_at_d": 399,
+      "period_before": 8,
+      "period_after": 16,
+      "analysis_period": 16,
+      "predecessor_word": 53456,
+      "candidates": [
+        40800,
+        24735
+      ],
+      "actual_successor": 40800,
+      "actual_candidate_index": 0,
+      "last_one_time": 500,
+      "last_one_phase": 4,
+      "last_reset_invariant_bits": 5,
+      "predecessor_last_mismatch": 500,
+      "successor_last_mismatch": 497,
+      "last_reset_prediction": 24735,
+      "last_reset_prediction_correct": false,
+      "tail_cutoff_time": 500,
+      "tail_start_phase": 5,
+      "tail_start_value": 1,
+      "tail_state_invariant_bits": 5,
+      "tail_state_prediction": 40800,
+      "tail_state_prediction_correct": true,
+      "dependency_time_over_diagonal": 1.253133,
+      "simple_predictions": {
+        "constant_0": 0,
+        "constant_1": 1,
+        "zero_d_parity": 1,
+        "zero_d_block_parity": 0,
+        "predecessor_phase0": 0,
+        "predecessor_half_popcount_parity": 1
+      }
+    },
+    {
+      "zero_word_at_d": 53207,
+      "period_before": 16,
+      "period_after": 16,
+      "analysis_period": 16,
+      "predecessor_word": 10435,
+      "candidates": [
+        12418,
+        53117
+      ],
+      "actual_successor": 12418,
+      "actual_candidate_index": 0,
+      "last_one_time": 71115,
+      "last_one_phase": 11,
+      "last_reset_invariant_bits": 5,
+      "predecessor_last_mismatch": 71115,
+      "successor_last_mismatch": 71113,
+      "last_reset_prediction": 53117,
+      "last_reset_prediction_correct": false,
+      "tail_cutoff_time": 71115,
+      "tail_start_phase": 12,
+      "tail_start_value": 1,
+      "tail_state_invariant_bits": 5,
+      "tail_state_prediction": 12418,
+      "tail_state_prediction_correct": true,
+      "dependency_time_over_diagonal": 1.336572,
+      "simple_predictions": {
+        "constant_0": 0,
+        "constant_1": 1,
+        "zero_d_parity": 1,
+        "zero_d_block_parity": 1,
+        "predecessor_phase0": 1,
+        "predecessor_half_popcount_parity": 0
+      }
+    },
+    {
+      "zero_word_at_d": 58286,
+      "period_before": 16,
+      "period_after": 16,
+      "analysis_period": 16,
+      "predecessor_word": 28532,
+      "candidates": [
+        19032,
+        46503
+      ],
+      "actual_successor": 46503,
+      "actual_candidate_index": 1,
+      "last_one_time": 77909,
+      "last_one_phase": 5,
+      "last_reset_invariant_bits": 5,
+      "predecessor_last_mismatch": 77908,
+      "successor_last_mismatch": 77909,
+      "last_reset_prediction": 46503,
+      "last_reset_prediction_correct": true,
+      "tail_cutoff_time": 77909,
+      "tail_start_phase": 6,
+      "tail_start_value": 0,
+      "tail_state_invariant_bits": 5,
+      "tail_state_prediction": 46503,
+      "tail_state_prediction_correct": true,
+      "dependency_time_over_diagonal": 1.336667,
+      "simple_predictions": {
+        "constant_0": 0,
+        "constant_1": 1,
+        "zero_d_parity": 0,
+        "zero_d_block_parity": 0,
+        "predecessor_phase0": 0,
+        "predecessor_half_popcount_parity": 0
+      }
+    },
+    {
+      "zero_word_at_d": 87866,
+      "period_before": 16,
+      "period_after": 32,
+      "analysis_period": 32,
+      "predecessor_word": 682109096,
+      "candidates": [
+        818925360,
+        3476041935
+      ],
+      "actual_successor": 3476041935,
+      "actual_candidate_index": 1,
+      "last_one_time": 117323,
+      "last_one_phase": 11,
+      "last_reset_invariant_bits": 6,
+      "predecessor_last_mismatch": 117323,
+      "successor_last_mismatch": 117323,
+      "last_reset_prediction": 818925360,
+      "last_reset_prediction_correct": false,
+      "tail_cutoff_time": 117323,
+      "tail_start_phase": 12,
+      "tail_start_value": 1,
+      "tail_state_invariant_bits": 6,
+      "tail_state_prediction": 3476041935,
+      "tail_state_prediction_correct": true,
+      "dependency_time_over_diagonal": 1.335249,
+      "simple_predictions": {
+        "constant_0": 0,
+        "constant_1": 1,
+        "zero_d_parity": 0,
+        "zero_d_block_parity": 1,
+        "predecessor_phase0": 0,
+        "predecessor_half_popcount_parity": 1
+      }
+    }
+  ],
+  "small_settled_only_selectors": [
+    {
+      "selector": "constant_0",
+      "train_correct": 2,
+      "train_total": 4,
+      "validation_correct": 1,
+      "validation_total": 3
+    },
+    {
+      "selector": "constant_1",
+      "train_correct": 2,
+      "train_total": 4,
+      "validation_correct": 2,
+      "validation_total": 3
+    },
+    {
+      "selector": "zero_d_parity",
+      "train_correct": 2,
+      "train_total": 4,
+      "validation_correct": 0,
+      "validation_total": 3
+    },
+    {
+      "selector": "zero_d_block_parity",
+      "train_correct": 3,
+      "train_total": 4,
+      "validation_correct": 1,
+      "validation_total": 3
+    },
+    {
+      "selector": "predecessor_phase0",
+      "train_correct": 1,
+      "train_total": 4,
+      "validation_correct": 0,
+      "validation_total": 3
+    },
+    {
+      "selector": "predecessor_half_popcount_parity",
+      "train_correct": 2,
+      "train_total": 4,
+      "validation_correct": 2,
+      "validation_total": 3
+    }
+  ],
+  "last_reset_phase_selector": {
+    "correct": 3,
+    "total": 7,
+    "maximum_stored_bits": 6,
+    "verdict": "insufficient when the predecessor is still transient"
+  },
+  "tail_phase_plus_bit_selector": {
+    "training_correct": 4,
+    "training_total": 4,
+    "validation_correct": 3,
+    "validation_total": 3,
+    "maximum_stored_bits": 6
+  },
+  "dependency_growth": {
+    "last_one_times": [
+      1,
+      0,
+      30,
+      500,
+      71115,
+      77909,
+      117323
+    ],
+    "tail_cutoff_times": [
+      1,
+      1,
+      30,
+      500,
+      71115,
+      77909,
+      117323
+    ],
+    "maximum_tail_cutoff": 117323,
+    "last_two_cutoff_increase": 39414,
+    "ratio_range": [
+      0.142857,
+      1.336667
+    ],
+    "compression_verdict": "phase plus one tail-boundary bit is sufficient, but no bounded way to compute that bit from settled words was found; exact dependency time grows with d"
+  },
+  "stop_reason": "no direct simulation beyond the computationally reachable early events",
+  "elapsed_s": 7.444
+}
