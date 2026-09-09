@@ -13,8 +13,8 @@ Updated: 2026-09-08 · Newest log: `docs/experiment-logs/2026-09-08-periodic-wor
 | # | Problem | Best current result | Grade |
 |---|---|---|---|
 | 1 | Does the center column repeat? | No period `p <= 5,000,000` in the first 10M bits — **decided exactly**, all 9,999,936 candidates, 0 survivors. Cannot resolve the problem: eventual periodicity is asymptotic. | Certificate |
-| 2 | Is there a shortcut for the nth bit? | None found. `s*(n)` minimal-DFAO curve certified to n=48 with DRAT proofs. No GF(2) annihilator of degree `<= 3` over windows to 64 bits, nor degree `<= 4` to 32 bits — three degrees past Experiment S's linear result, with a self-verifying certificate. ML routes (I/K/L) are **scoped down** — blind to long-lag XOR structure, and so is every annihilator window searched so far, which is C2c. | Certificate (s*(n)) |
-| 3 | Are 0s and 1s equidistributed? | Bias < 0.05% over 10M bits. Uniform Bernoulli(1/2) is invariant (proved, left-permutivity) — which is *not* the same as the single seed's limiting frequency, the actual question. A published shortcut claim is now under audit, with the warm query separated from the cold `n -> c_n` cost. | Theorem + Observation |
+| 2 | Are 0s and 1s equidistributed? | Bias < 0.05% over 10M bits. Uniform Bernoulli(1/2) is invariant (proved, left-permutivity) — which is *not* the same as the single seed's limiting frequency, the actual question. | Theorem + Observation |
+| 3 | Is there a shortcut for the nth bit? | None found. `s*(n)` minimal-DFAO curve certified to n=48 with DRAT proofs. No GF(2) annihilator of degree `<= 3` over windows to 64 bits, nor degree `<= 4` to 32 bits — three degrees past Experiment S's linear result, with a self-verifying certificate. ML routes (I/K/L) are **scoped down** — blind to long-lag XOR structure, and so is every annihilator window searched so far, which is C2c. A published shortcut claim is under audit, with the warm query separated from the cold `n -> c_n` cost. | Certificate (s*(n)) |
 
 ## Open work, ranked
 

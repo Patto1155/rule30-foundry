@@ -2,7 +2,7 @@
 
 - Date: 2026-06-13
 - Title: S — Linear Complexity (GF(2) recurrence) of the seed center column
-- Goal: A decisive Prize-2 probe on the **actual prize object** — the center
+- Goal: A decisive Prize-3 probe on the **actual prize object** — the center
   column from the single seed `…0001000…`. Does it satisfy *any* linear (GF(2))
   recurrence, i.e. is there an LFSR shortcut that generates it without running
   the CA?
@@ -31,7 +31,7 @@
 - Conclusion:
   - The seed center column has **maximal linear complexity**: no GF(2) linear
     recurrence of any order up to n/2 generates it. The LFSR / linear-shortcut
-    route to Prize 2 is **closed** on the real prize object. This is stronger
+    route to Prize 3 is **closed** on the real prize object. This is stronger
     than repo Experiment G, which only tested a single global linear transform.
   - Combined with R's permutivity note, the empirical picture is: linear and
     "looks-random" structure is exhausted; any surviving shortcut must be
@@ -41,6 +41,6 @@
     output of a finite automaton reading base-k digits of n?) — a positive
     result is a genuine sub-linear shortcut. Pair with a sheared/affine
     spacetime reparametrization scan for a lower-entropy column than the center
-    (Prize-2 "compressible along some direction"), each measured against an
+    (Prize-3 "compressible along some direction"), each measured against an
     explicit i.i.d. null. Bias to constructions whose positive result is
     *exploitable or provable*, not another null "looks random ✓".

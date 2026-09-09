@@ -13,7 +13,7 @@ Rule 30 is literally used as a PRNG (Mathematica). Well-defined, testable, clean
 ### G — GF(2) representation search (symmetry breaking)
 Search over XOR bases, linear transforms over GF(2), local Fourier transforms.
 Objective: minimize entropy of transformed sequence. GPU-friendly (matrix ops over GF(2)).
-Directly attacks Problem 2 — if any transform makes the sequence compressible, that's major.
+Directly attacks Problem 3 — if any transform makes the sequence compressible, that's major.
 
 ### H — Compute-bounded prediction scaling laws
 Meta-experiment on top of Markov predictor (Exp D). Fix horizon, increase model order

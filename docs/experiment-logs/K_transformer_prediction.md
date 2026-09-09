@@ -2,7 +2,7 @@
 
 - Date: 2026-03-27
 - Title: Transformer Context Length vs. Complexity
-- Goal: Test whether longer context helps a transformer predict Rule 30 center column (attacks Problem 2)
+- Goal: Test whether longer context helps a transformer predict Rule 30 center column (attacks Problem 3)
 - Setup: 7M train / 3M test bits, d_model=64, n_heads=4, n_layers=2, context_lengths=[64, 128, 256, 512, 1024], epochs=3
 - Method: GPT-style next-bit predictor, causal mask, measure BPT at each context length. BPT < 1.0 = structure found.
 - Result:

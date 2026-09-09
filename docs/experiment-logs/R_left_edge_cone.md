@@ -17,7 +17,7 @@
       initial row stays i.i.d. fair forever, so the center column is *provably*
       50/50 for random ICs. (Numerically confirmed: interior single-cell
       P(1)=0.49996 over 24M samples; 3-blocks within 0.0024 of 0.125.)
-    - ⇒ Prize-3 equidistribution is **trivially true for random ICs**; its whole
+    - ⇒ Prize-2 equidistribution is **trivially true for random ICs**; its whole
       difficulty is concentrated in the single deterministic seed `…0001000…`.
   - `a[i+1]` sits inside the OR/AND term ⇒ leftward propagation is *conditional*
     (gated on `a[i]=0`), so `v_left` is the only empirically interesting speed.

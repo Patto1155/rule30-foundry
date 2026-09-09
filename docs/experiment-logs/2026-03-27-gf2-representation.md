@@ -2,7 +2,7 @@
 
 - Date: 2026-03-27
 - Title: GF(2) Representation Search
-- Goal: Find linear transforms over GF(2) that reduce entropy of Rule 30 center column (attacks Problem 2)
+- Goal: Find linear transforms over GF(2) that reduce entropy of Rule 30 center column (attacks Problem 3)
 - Setup: 10M center column bits, window sizes w=8,16,32, random + greedy search over XOR projections
 - Method: For each window size, search for k-bit XOR projections (k=1,4) that minimize output entropy. Random search (5000 trials) + greedy local search (10 restarts with bit-flip optimization).
 - Result:
