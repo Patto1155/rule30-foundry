@@ -10,7 +10,7 @@ reference and does not count against that. This file is context and reasoning
 the claim record (`docs/CLAIM_LEDGER.md`) and not the work queue
 (`docs/STATUS.md`).
 
-Last updated: 2026-09-09 · Branch: `codex/seed-compatibility-and-benchmarks`
+Last updated: 2026-09-09 · Branch: `main` after PR #38
 
 ---
 
