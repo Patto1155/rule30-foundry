@@ -47,10 +47,10 @@ grades left-edge structure as disjoint from the prize object.
 
 ## Delivery and running experiments
 
-PRs #32–#37 are merged; all passed CPU and DRAT CI. They cover trace/B1
+PRs #32–#38 are merged; all passed CPU and DRAT CI. They cover trace/B1
 recovery, annihilator preflight, output loops, the period-word sieve, official
-numbering, and the twelve test suites. The seven-step follow-up is recorded in
-the newest log. No long
+numbering, twelve imported test suites, and the seven-step follow-up with its
+transient selector. No long
 experiment or monitor is running. The older checkout's unrelated edits remain
 untouched.
 
