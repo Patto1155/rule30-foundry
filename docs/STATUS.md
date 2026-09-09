@@ -6,7 +6,7 @@ lives here. Overwrite this file in place; git history keeps the old versions.
 No other file may carry a "current state as of" section —
 `tools/lint_ledger.py` enforces it.
 
-Updated: 2026-09-08 · Newest log: `docs/experiment-logs/2026-09-08-periodic-word-sieve.md`
+Updated: 2026-09-09 · Newest log: `docs/experiment-logs/2026-09-09-seven-step-followup.md`
 
 ## Where the three prize problems stand
 
@@ -14,7 +14,7 @@ Updated: 2026-09-08 · Newest log: `docs/experiment-logs/2026-09-08-periodic-wor
 |---|---|---|---|
 | 1 | Does the center column repeat? | No period `p <= 5,000,000` in the first 10M bits — **decided exactly**, all 9,999,936 candidates, 0 survivors. Cannot resolve the problem: eventual periodicity is asymptotic. | Certificate |
 | 2 | Are 0s and 1s equidistributed? | Bias < 0.05% over 10M bits. Uniform Bernoulli(1/2) is invariant (proved, left-permutivity) — which is *not* the same as the single seed's limiting frequency, the actual question. | Theorem + Observation |
-| 3 | Is there a shortcut for the nth bit? | None found. `s*(n)` minimal-DFAO curve certified to n=48 with DRAT proofs. No GF(2) annihilator of degree `<= 3` over windows to 64 bits, nor degree `<= 4` to 32 bits — three degrees past Experiment S's linear result, with a self-verifying certificate. ML routes (I/K/L) are **scoped down** — blind to long-lag XOR structure, and so is every annihilator window searched so far, which is C2c. A published shortcut claim is under audit, with the warm query separated from the cold `n -> c_n` cost. | Certificate (s*(n)) |
+| 3 | Is there a shortcut for the nth bit? | None found. Base-2 minimal-DFAO size is now certified through MSD `s*(56)=13` (LSD remains certified through n=48). No GF(2) annihilator of degree `<= 3` over windows to 64 bits, nor degree `<= 4` to 32 bits. ML routes (I/K/L) are scoped down. A published shortcut claim is under audit, separating warm query from cold `n -> c_n` cost. | Certificate (s*(n)) |
 
 ## Open work, ranked
 
@@ -24,14 +24,14 @@ A1, A2, C2 and C2b are done (see *Recently closed*); **B3 is next**.
 
 | # | Work | Kind | Cost | Blocks |
 |---|---|---|---|---|
-| A3 | **Make bitstreams reachable** (Release asset or committed prefix) | Infra | ~½ day | B2 |
+| A3 | **Make bitstreams reachable** — no local, release, Actions, or LFS copy found on 2026-09-09; manifest hashes remain anchored | Infra | ~½ day | B2 |
 | C2c | **Annihilators over non-consecutive bit selections** — every window searched so far is a run of adjacent bits, so long-lag structure (the I/K/L blind spot) is untested | Research | Days | — |
 | C2d | **Multi-word window codes**, lifting `w` past the `uint64` cap of 64 | Research | ~½ day | — |
-| B3 | Extend `s*(n)` past n=48 — re-costed ~28× cheaper | Research | Hours | — |
+| B3 | Extend `s*(n)` — MSD n=56 is now exact at 13 states; benchmark MSD n=64 next, then the harder LSD n=56 states individually | Research | Hours | — |
 | E1 | Write up the eight Theorem rows; `s*(n)` is citable | Writing | Days | — |
 | B2 | Exact period search on 46M — no code change, extends to `p <= 2.3e7` | Research | Minutes | A3 |
-| B1 | Historical full walk recovered, with fresh seed/local-algebra checks; two abstract branches double, eight reach the exclusive cutoff. Actual diagonal unresolved. See `docs/experiment-logs/2026-09-08-b1-recovery.md`. Full trajectory replay and workhorse execution have not been newly validated. Next useful step is the transient branch selector. | Research | Unknown | — |
-| P1-local | Period-word sieve completed: all 21 nonconstant primitive words through length 6 permit nonperiodic neighbors at widths 3,5,7,9. Only constant controls synchronize. No new seed exclusion or composition law. Further work requires a seed/exterior constraint or justified wider-strip mechanism; see newest log. | Research | Proof target needed | — |
+| B1 | All seven computationally reachable early zero words were tested. Phase plus one tail-boundary bit selects every successor (4 train, 3 held out), but computing that bit still depends on a transient cutoff growing to 117,323 (~1.335d). Settled-only rules fail; stop before the first period-32 branch at `d=1,420,878,969`. | Research | Proof target needed | — |
+| P1-local | Actual seed rows reject most saved alternating-loop alignments before the center mismatch (5,574 exact starts tested), but this excludes only those walks. Period-word sieve still yields no nonconstant all-onset exclusion. | Research | Proof target needed | — |
 
 **De-prioritised:** more neural experiments (the ceiling is partly the models'
 — I/K/L are blind to long-lag XOR). Item 14 is worth closing but the ledger
@@ -39,27 +39,18 @@ grades left-edge structure as disjoint from the prize object.
 
 ## Chores
 
-- **Merged-branch cleanup completed 2026-09-08.** The original seven refs were
-  already absent. All nine remaining merged refs were verified against live
-  remote tips and removed atomically with exact-tip leases. Automatic deletion
-  after merge is enabled. The twelve unmerged test branches and unmerged
-  `fix/rule110-showcase` remain untouched.
-- **Triage 12 unreviewed `codex/test-*` branches** from the 15-task pool run.
-  Each adds one `tests/test_<module>.py` and none has a PR. **Do not merge
-  `codex/test-add-unit-tests-for-experiments-orbit-cyc-aacc346f` as it stands**:
-  it edited `experiments/orbit_cycle_structure.py`, which its spec forbade, and
-  the edit is wrong. It changes Floyd phase 2 from `tortoise = start` to
-  `tortoise = step(start)`; measured against known `mu` and `lambda` the
-  original is correct in all 12 cases while the edit is off by one at
-  `lambda = 1` and does not terminate at `lambda > 1`, because the two pointers
-  hold a constant offset around the cycle. The test file itself may be worth
-  keeping; the source edit is not.
+- **Branch cleanup completed.** The merged backlog was removed on 2026-09-08.
+  On 2026-09-09 the twelve test branches were audited, their test-only content
+  landed in PR #37, and the bad orbit-cycle source edit was excluded. All twelve
+  obsolete refs were then removed atomically with exact-tip leases. Automatic
+  deletion after merge is enabled. Unmerged `fix/rule110-showcase` is untouched.
 
 ## Delivery and running experiments
 
-PR #32 (trace controls and B1 recovery), PR #33 (annihilator preflight), and
-PR #34 (output loops and exterior probes) are merged; all passed CPU and DRAT
-CI. The period-word sieve is complete and recorded in the newest log. No long
+PRs #32–#37 are merged; all passed CPU and DRAT CI. They cover trace/B1
+recovery, annihilator preflight, output loops, the period-word sieve, official
+numbering, and the twelve test suites. The seven-step follow-up is recorded in
+the newest log. No long
 experiment or monitor is running. The older checkout's unrelated edits remain
 untouched.
 
