@@ -256,3 +256,55 @@ Before proposing an experiment, answer in one line each:
 4. **Promotion path?** What would turn the result into a checkable artifact — a
    verifier command, an UNSAT certificate, a lemma? If there is none, the
    experiment is probably not worth running.
+
+---
+
+## 6. External literature bearing directly on Problem 1
+
+This file previously cited no outside work on the *exact* question Problem 1
+asks. Two references are directly on point and should be read before any new
+periodicity direction is proposed.
+
+- **Jen, "Aperiodicity in one-dimensional cellular automata", Physica D 45
+  (1990) 3–18.** For the relevant class of one-dimensional CA, no two adjacent
+  columns of a space-time diagram can both be eventually periodic.
+- **Kopra, "A natural class of cellular automata containing fractional
+  multiplication automata, Rule 30, and others", arXiv:2202.13809.** Defines
+  *rapidly left expansive* CA, a class that contains Rule 30, and generalises
+  Jen's aperiodicity proposition to it: no width-2 trace of a suitable
+  configuration is eventually periodic. The paper's own open problem for the
+  width-1 case is Wolfram Problem 1 verbatim.
+
+**Why this matters for how work here is scoped.** The pair-level statement is
+*already a theorem* for Rule 30. What is open is exactly the drop from two
+columns to one. So an experiment whose best possible outcome is "these two
+adjacent columns are not both eventually periodic" re-derives Jen/Kopra and is
+not progress — it belongs in §1's do-not-re-measure list. The live target is
+the one stated in `periodic-trace-constraints.md` §5: a seed-specific reason
+that the *single* center column cannot be eventually periodic, or a reason its
+left neighbour must inherit periodicity from it.
+
+**Where the one open bit is forced, and where it is not.** Specialising the
+exact identity in `periodic-trace-constraints.md` §7,
+`ell(t) = c(t+1) XOR (c(t) OR r_1(t))`, to `c(t) = 1` removes the dependence on
+the right neighbour entirely:
+
+```
+c(t) = 1   =>   ell(t) = 1 XOR c(t+1).
+```
+
+Checked bit-exact on the seed orbit (976 one-positions in the first 2000 steps,
+0 violations). This is a one-substitution corollary of §7 and a generalisation
+of §4 from constant centers to arbitrary ones — it is elementary and is not
+claimed as new. Its one consequence worth recording: if the center column were
+eventually periodic, its left neighbour would be *determined and equally
+periodic on the center's one-set*, so all of the aperiodicity that Jen/Kopra
+force onto the left neighbour would have to live on the center's **zero-set**,
+where §7 leaves `ell(t) = c(t+1) XOR r_1(t)` — governed by the right neighbour,
+which the seed's light cone does not constrain. That localises the obstruction;
+it excludes nothing, and it is the same wall as
+`periodic-trace-constraints.md` §1.
+
+Numbering of the cited theorem and problem inside arXiv:2202.13809 has not been
+checked against the source from this repo (egress blocked); check it before
+citing a specific theorem number in a write-up.
