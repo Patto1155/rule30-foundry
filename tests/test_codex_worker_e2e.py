@@ -123,6 +123,78 @@ class TestEndToEnd(unittest.TestCase):
         self.assertTrue(result["verification"]["ok"])
         self.assertTrue(result["verification"]["checks"])
 
+    def test_the_harness_verification_survives_on_the_branch(self):
+        """The branch used to carry the agent's report -- written by the party
+        being checked -- while the harness's own verification landed only in
+        the gitignored runs/ tree. CLAUDE.md tells reviewers to read the
+        `verification` field rather than the agent's `tests` field, and a
+        reviewer with only the branch could not.
+        """
+        result = self.submit("Add one.\n"
+                             "FAKE-WRITE tools/_e2e_review.py :: R = 1\n")
+        branch, task_id = result["branch"], result["task_id"]
+        path = f"queue/results/{task_id}.review.json"
+
+        show = git("show", f"{branch}:{path}")
+        self.assertEqual(show.returncode, 0,
+                         f"{path} is not on the branch:\n{show.stderr}")
+        record = json.loads(show.stdout)
+
+        # The harness's evidence, not the worker's testimony.
+        self.assertEqual(record["verification"]["ok"],
+                         result["verification"]["ok"])
+        self.assertTrue(record["verification"]["checks"])
+        self.assertEqual(record["verdict"], result["verdict"])
+
+        # Recoverable without runs/: the log is inlined, not referenced.
+        self.assertIn("$ ", record["verification_log"])
+
+    def test_the_review_commit_is_not_the_commit_that_was_tested(self):
+        """A report-only commit made after verification must not be able to
+        pass as the state that was verified."""
+        result = self.submit("Add two.\n"
+                             "FAKE-WRITE tools/_e2e_review2.py :: R = 2\n")
+        branch, task_id = result["branch"], result["task_id"]
+        record = json.loads(
+            git("show", f"{branch}:queue/results/{task_id}.review.json").stdout)
+
+        tested = record["commit_tested"]
+        head = git("rev-parse", branch).stdout.strip()
+        self.assertNotEqual(tested, head,
+                            "the review record claims to have tested the "
+                            "commit that contains it")
+        self.assertTrue(record["verified_tree_is_this_commits_parent"])
+
+        # And the claim is true of the graph, not merely asserted in the file.
+        parent = git("rev-parse", f"{branch}^").stdout.strip()
+        self.assertEqual(tested, parent)
+        self.assertEqual(result["commit_tested"], tested)
+
+        # The tested commit carries the work; it does not carry the record.
+        self.assertIn("_e2e_review2.py",
+                      git("show", "--name-only", "--format=", tested).stdout)
+        self.assertEqual(
+            git("cat-file", "-e",
+                f"{tested}:queue/results/{task_id}.review.json").returncode, 128)
+
+    def test_the_review_evidence_survives_a_fresh_clone(self):
+        """Another checkout must be able to recover it with no runs/ tree."""
+        result = self.submit("Add three.\n"
+                             "FAKE-WRITE tools/_e2e_review3.py :: R = 3\n")
+        dest = self.tmp / "fresh"
+        c = subprocess.run(["git", "clone", "--quiet", "--no-local",
+                            "--branch", result["branch"], "--single-branch",
+                            str(REPO), str(dest)],
+                           capture_output=True, text=True)
+        self.assertEqual(c.returncode, 0, c.stderr)
+        self.assertFalse((dest / "runs" / "codex").exists())
+        record = json.loads(
+            (dest / "queue" / "results"
+             / f"{result['task_id']}.review.json").read_text(encoding="utf-8"))
+        self.assertEqual(record["verification"]["ok"],
+                         result["verification"]["ok"])
+        self.assertIn("$ ", record["verification_log"])
+
     def test_the_working_tree_is_untouched_and_no_worktree_leaks(self):
         before = git("status", "--porcelain").stdout
         worktrees_before = git("worktree", "list").stdout.count("\n")

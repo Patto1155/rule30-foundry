@@ -827,6 +827,78 @@ def verify(spec: dict, worktree: Path, level: str, out: Path) -> dict:
 # pipeline
 # --------------------------------------------------------------------------
 
+MAX_REVIEW_LOG_CHARS = 200_000
+
+
+def persist_review(worktree: Path, out: Path, task_id: str, spec: dict,
+                   result: dict, commit_tested: str) -> str | None:
+    """Commit the harness's own evidence onto the task branch.
+
+    Until this existed the branch carried `queue/results/<id>.json` -- the
+    agent's report, written by the party being checked -- while the
+    harness's verification landed only in `runs/codex/`, which is gitignored.
+    CLAUDE.md tells every reviewer to read the `verification` field rather
+    than the agent's `tests` field, and a reviewer with only the branch could
+    not: the instruction and the artifact disagreed.
+
+    The commit that carries this record is NOT the commit that was verified.
+    It is made afterwards and adds only the record, so `commit_tested` names
+    the parent explicitly and `verified_tree_is_this_commits_parent` says so
+    in the artifact rather than leaving it to be inferred from the graph. A
+    later report-only commit must never be mistaken for the tested state.
+
+    The verification log is inlined rather than referenced so the evidence
+    survives without `runs/`: a fresh checkout of the branch is enough.
+    """
+    log_path = out / "verification.txt"
+    log_text = ""
+    if log_path.is_file():
+        log_text = log_path.read_text(encoding="utf-8")[:MAX_REVIEW_LOG_CHARS]
+
+    record = {
+        "schema": "rule30.codex_worker.review/1",
+        "task_id": task_id,
+        "mode": spec.get("mode"),
+        "commit_tested": commit_tested,
+        "verified_tree_is_this_commits_parent": True,
+        "note": ("The harness ran these checks against commit_tested. This "
+                 "file was committed afterwards and changes no tested "
+                 "content, so HEAD is not the tree that was verified -- "
+                 "`git show " + (commit_tested or "<commit_tested>") +
+                 "` is."),
+        "verified_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+        "backend": result.get("backend"),
+        "verify_level": (result.get("verification") or {}).get("level"),
+        "verification": result.get("verification"),
+        "verification_log": log_text,
+        "postflight": result.get("postflight"),
+        "stop_reason": result.get("stop_reason"),
+        "files_changed": result.get("files_changed"),
+        "verdict": result.get("verdict"),
+    }
+    results_dir = worktree / "queue" / "results"
+    results_dir.mkdir(parents=True, exist_ok=True)
+    (results_dir / f"{task_id}.review.json").write_text(
+        json.dumps(record, indent=2) + "\n", encoding="utf-8")
+
+    _git("add", "-A", cwd=worktree)
+    if not _git("diff", "--cached", "--name-only", cwd=worktree):
+        return None
+    _git("-c", "user.email=codex-worker@local",
+         "-c", "user.name=codex-worker",
+         "commit", "-q", "-m",
+         f"codex[review]: harness verification of {commit_tested[:12]}\n\n"
+         f"task_id={task_id}\n"
+         f"verify_level={record['verify_level']} "
+         f"ok={(result.get('verification') or {}).get('ok')} "
+         f"verdict={result.get('verdict')}\n\n"
+         "Produced by the harness, not by the worker. This commit adds only "
+         "the review record; the tree that was verified is its parent, "
+         f"{commit_tested}.",
+         cwd=worktree)
+    return _git("rev-parse", "HEAD", cwd=worktree)
+
+
 def changed_files(worktree: Path) -> list[str]:
     """What actually changed, from git, not from the agent's list.
 
@@ -972,6 +1044,12 @@ def submit(spec: dict, *, backend: str = "auto", base: str | None = None,
         else:
             result["patch"] = None
 
+        # The exact tree the checks below run against. Captured before
+        # verify() so it cannot drift, and before the review commit that
+        # records the outcome.
+        commit_tested = _git("rev-parse", "HEAD", cwd=worktree)
+        result["commit_tested"] = commit_tested
+
         result["verification"] = verify(spec, worktree, verify_level, out)
 
         if spec.get("manifest") and isinstance(report, dict):
@@ -996,6 +1074,10 @@ def submit(spec: dict, *, backend: str = "auto", base: str | None = None,
                                    result.get("patch_applied"),
                                    result.get("exit_code"),
                                    bool(result.get("timed_out")))
+        # Last, so the record carries the verdict it explains. The branch is
+        # the durable artifact; runs/ is this container's scratch.
+        result["review_commit"] = persist_review(
+            worktree, out, task_id, spec, result, commit_tested)
     finally:
         if keep_worktree:
             result["worktree"] = str(worktree)
