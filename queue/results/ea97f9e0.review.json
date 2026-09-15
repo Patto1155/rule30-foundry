@@ -1,0 +1,44 @@
+{
+  "schema": "rule30.codex_worker.review/1",
+  "task_id": "ea97f9e0",
+  "mode": "implement",
+  "commit_tested": "c3a02602fafa95d165e4c0b3da28cbdb1601178f",
+  "verified_tree_is_this_commits_parent": true,
+  "note": "The harness ran these checks against commit_tested. This file was committed afterwards and changes no tested content, so HEAD is not the tree that was verified -- `git show c3a02602fafa95d165e4c0b3da28cbdb1601178f` is.",
+  "verified_at": "2026-09-15T03:23:36Z",
+  "backend": "agent",
+  "verify_level": "fast",
+  "verification": {
+    "level": "fast",
+    "ok": true,
+    "checks": [
+      {
+        "cmd": "/usr/local/bin/python tools/lint_bitorder.py",
+        "exit_code": 0,
+        "passed": true,
+        "duration_s": 0.27
+      },
+      {
+        "cmd": "/usr/local/bin/python tools/lint_ledger.py",
+        "exit_code": 0,
+        "passed": true,
+        "duration_s": 0.05
+      },
+      {
+        "cmd": "python tools/gates.py preflight queue/halo-repin-random-ic.json",
+        "exit_code": 0,
+        "passed": true,
+        "duration_s": 22.96
+      }
+    ],
+    "log": "verification.txt"
+  },
+  "verification_log": "$ /usr/local/bin/python tools/lint_bitorder.py\nlint_bitorder: 82 files scanned, no bare packbits/unpackbits\n\n\n$ /usr/local/bin/python tools/lint_ledger.py\nlint_ledger: 40 ledger rows, 53 experiment logs, all cited paths present\n\n\n$ /bin/sh -c python tools/gates.py preflight queue/halo-repin-random-ic.json\n{\n  \"artifact_type\": \"rule30.gates.preflight\",\n  \"name\": \"halo-repin-random-ic\",\n  \"verdict\": \"PASS\",\n  \"gates\": [\n    {\n      \"gate\": \"schema\",\n      \"status\": \"PASS\",\n      \"reason\": \"all required fields present; purpose 'correctness-check'\"\n    },\n    {\n      \"gate\": \"seed\",\n      \"status\": \"SKIP\",\n      \"reason\": \"purpose is 'correctness-check': the result is a statement about the instrument, not about the single-seed center column. Any initial condition is admissible, and a random one is required for open-boundary checks (docs/WORKFLOW.md).\"\n    },\n    {\n      \"gate\": \"theory-gate\",\n      \"status\": \"SKIP\",\n      \"reason\": \"purpose is 'correctness-check': a control checks the instrument against a known answer, so settled ground is the point rather than a reason to refuse it.\"\n    },\n    {\n      \"gate\": \"counting-bound\",\n      \"status\": \"SKIP\",\n      \"reason\": \"purpose is 'correctness-check': the negative measures the detector, not the sequence.\"\n    },\n    {\n      \"gate\": \"light-cone\",\n      \"status\": \"PASS\",\n      \"reason\": \"512 steps on 2,048 cells; 991 exact\"\n    },\n    {\n      \"gate\": \"script\",\n      \"status\": \"PASS\",\n      \"reason\": \"experiments/eca_sim.py\"\n    },\n    {\n      \"gate\": \"bitorder-lint\",\n      \"status\": \"SKIP\",\n      \"reason\": \"does not read a packed bitstream\"\n    },\n    {\n      \"gate\": \"golden-self-test\",\n      \"status\": \"SKIP\",\n      \"reason\": \"does not read a packed bitstream\"\n    },\n    {\n      \"gate\": \"verify-all\",\n      \"status\": \"PASS\",\n      \"reason\": \"verify_all: 8 passed, 3 skipped (0 unexpected), 0 failed  OK\"\n    }\n  ]\n}\n\n",
+  "postflight": null,
+  "stop_reason": "done",
+  "files_changed": [
+    "A\tqueue/halo-repin-random-ic.json",
+    "A\tqueue/results/ea97f9e0.json"
+  ],
+  "verdict": "READY-FOR-REVIEW"
+}
