@@ -33,12 +33,13 @@ real months:
   explicit `lineterminator="\n"` and `Path.write_text` needs `newline=""`.
   `tests/test_manifest_determinism.py` fails the build if either is forgotten.
 
-A ~50% bit difference between two streams means they are uncorrelated, which
-is almost always a packing or seed mismatch rather than a kernel bug. Confirm
-it with the *first divergence position*, not the rate alone: a kernel bug that
-corrupts the opening steps decorrelates everything after it and also reads
-~50%. Late first divergence is what rules the kernel out; immediate first
-divergence at ~50% is a kernel bug and must be investigated as one.
+A ~50% bit difference between two streams means they are uncorrelated, and
+nothing further. **Check packing and seed conventions, then localise the first
+divergence before assigning a cause.** The rate cannot rank causes: a
+convention mismatch and a kernel bug in the opening steps decorrelate
+everything downstream alike and both sit at ~50%. Late first divergence rules
+the kernel out; immediate first divergence does not, and is investigated as a
+kernel bug.
 
 **New here?** Read [`CLAUDE.md`](CLAUDE.md) (auto-loaded, ~1 min), then
 [`docs/STATUS.md`](docs/STATUS.md) for what is in flight, then

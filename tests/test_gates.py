@@ -183,16 +183,94 @@ class TestPurpose(unittest.TestCase):
         self.assertEqual(g["status"], "FAIL")
         self.assertIn("not progress", g["reason"])
 
+    def test_replication_must_name_what_it_reproduces(self):
+        r = gates.preflight(good_manifest(purpose="replication",
+                                          seed="random-ic-uniform"),
+                            run_external=False)
+        g = by_name(r, "seed")
+        self.assertEqual(g["status"], "FAIL")
+        self.assertIn("replicates", g["reason"])
+
+    def test_replication_cannot_masquerade_with_a_different_seed(self):
+        """The strongest false positive this taxonomy could have allowed: a
+        random-IC run claiming to reproduce a single-seed result."""
+        r = gates.preflight(good_manifest(
+            purpose="replication", seed="random-ic-uniform",
+            replicates={"source": "docs/experiment-logs/2026-08-30-"
+                                  "golden-reference-10M.md",
+                        "seed": "single-black-cell"}), run_external=False)
+        g = by_name(r, "seed")
+        self.assertEqual(g["status"], "FAIL")
+        self.assertIn("not a replication", g["reason"])
+
+    def test_replication_needs_the_source_seed_stated(self):
+        """An unstated source seed cannot be checked, so it is not accepted."""
+        r = gates.preflight(good_manifest(
+            purpose="replication", seed="single-black-cell",
+            replicates={"source": "somewhere"}), run_external=False)
+        self.assertEqual(by_name(r, "seed")["status"], "FAIL")
+
+    def test_replication_passes_when_it_preserves_the_seed(self):
+        for seed in ("single-black-cell", "random-ic-uniform"):
+            with self.subTest(seed=seed):
+                r = gates.preflight(good_manifest(
+                    purpose="replication", seed=seed,
+                    replicates={"source": "log.md", "seed": seed}),
+                    run_external=False)
+                self.assertEqual(by_name(r, "seed")["status"], "PASS")
+                self.assertEqual(r["verdict"], "PASS")
+
+    def test_a_control_may_target_settled_ground(self):
+        """A positive control is valuable *because* the answer is known:
+        Thue-Morse returns s*=2. Refusing it as ALREADY SETTLED would refuse
+        every control the repo has."""
+        r = gates.preflight(good_manifest(purpose="correctness-check",
+                                          theory_gate="ALREADY SETTLED"),
+                            run_external=False)
+        self.assertEqual(by_name(r, "theory-gate")["status"], "SKIP")
+        self.assertEqual(r["verdict"], "PASS")
+
+    def test_a_control_may_use_a_deliberately_vacuous_class(self):
+        """A detection-power control runs a class too small to fit on
+        purpose, to confirm the search reports a negative when it should."""
+        r = gates.preflight(good_manifest(
+            purpose="correctness-check", kind="search", claims=["negative"],
+            search={"class": "dfao", "states": 2, "base": 2,
+                    "prefix_bits": 128}), run_external=False)
+        self.assertEqual(by_name(r, "counting-bound")["status"], "SKIP")
+        self.assertEqual(r["verdict"], "PASS")
+
+    def test_scoping_the_control_does_not_relax_the_prize_purposes(self):
+        """The same vacuous search is still refused where it makes a claim."""
+        for purpose in ("prize-claim", "exact-exclusion", "exploratory"):
+            with self.subTest(purpose=purpose):
+                r = gates.preflight(good_manifest(
+                    purpose=purpose, kind="search", claims=["negative"],
+                    search={"class": "dfao", "states": 2, "base": 2,
+                            "prefix_bits": 128}), run_external=False)
+                self.assertEqual(by_name(r, "counting-bound")["status"], "FAIL")
+                self.assertEqual(by_name(r, "theory-gate")["status"], "PASS")
+
     def test_every_purpose_is_scoped_deliberately(self):
-        """No purpose may be silently neither scoped nor exempt."""
+        """No purpose may be silently neither scoped nor exempt. A random IC
+        is admissible only for an instrument check; the prize purposes refuse
+        it and `replication` refuses it unless the source used one too."""
         for purpose in gates.PURPOSES:
             with self.subTest(purpose=purpose):
                 r = gates.preflight(
                     good_manifest(purpose=purpose, seed="random-ic"),
                     run_external=False)
-                expected = ("FAIL" if purpose in gates.SEED_SCOPED_PURPOSES
-                            else "SKIP")
+                expected = ("SKIP" if purpose in gates.INSTRUMENT_PURPOSES
+                            else "FAIL")
                 self.assertEqual(by_name(r, "seed")["status"], expected)
+
+    def test_no_purpose_is_both_seed_scoped_and_instrument(self):
+        self.assertEqual(
+            set(gates.SEED_SCOPED_PURPOSES) & set(gates.INSTRUMENT_PURPOSES),
+            set())
+        self.assertTrue(
+            set(gates.SEED_SCOPED_PURPOSES) | set(gates.INSTRUMENT_PURPOSES)
+            | {"replication"} == set(gates.PURPOSES))
 
     def test_scoped_purposes_pass_on_the_seed(self):
         for purpose in gates.SEED_SCOPED_PURPOSES:
@@ -423,10 +501,11 @@ class TestDivergence(unittest.TestCase):
 
 
 class TestFiftyPercent(unittest.TestCase):
-    """AGENTS.md: ~50% differing means uncorrelated streams -- almost always a
-    packing or seed mismatch. The gate still refuses the result, but its
-    reason must send the reader to the first divergence position rather than
-    asserting the kernel is sound, which ~50% alone does not establish."""
+    """AGENTS.md: ~50% differing means the streams are uncorrelated, and
+    nothing further. The gate still refuses the result, but its reason must
+    send the reader to the first divergence position rather than ranking
+    causes by a rate that is identical for a convention mismatch and for a
+    kernel bug in the opening steps."""
 
     def test_the_bitorder_bug_signature_is_caught(self):
         """49.95% -- the measured signature of the I-L bit-order bug."""
@@ -434,7 +513,7 @@ class TestFiftyPercent(unittest.TestCase):
             stream_comparison={"fraction_differing": 0.4995}))
         g = by_name(r, "fifty-percent")
         self.assertEqual(g["status"], "FAIL")
-        self.assertIn("packing and seed", g["reason"])
+        self.assertIn("packing and seed conventions", g["reason"])
 
     def test_the_reason_does_not_absolve_the_kernel(self):
         """An early-step kernel bug decorrelates everything after it and lands
@@ -445,6 +524,8 @@ class TestFiftyPercent(unittest.TestCase):
         reason = by_name(r, "fifty-percent")["reason"]
         self.assertNotIn("Do not investigate", reason)
         self.assertIn("first divergence", reason)
+        for overclaim in ("almost always", "likely", "not a kernel bug"):
+            self.assertNotIn(overclaim, reason)
 
     def test_late_divergence_passes(self):
         r = gates.postflight(good_result(

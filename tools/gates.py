@@ -109,10 +109,15 @@ REQUIRED = ("name", "kind", "purpose", "seed", "theory_gate", "script")
 THE_SEED = "single-black-cell"
 
 # Purposes whose output is a statement about the single-seed center column,
-# and which must therefore use that seed (CLAUDE.md rule 3). The rest are
-# statements about the instrument or about a prior run, where the initial
-# condition is a free parameter and a random one is positively required.
+# and which must therefore use that seed (CLAUDE.md rule 3).
 SEED_SCOPED_PURPOSES = ("prize-claim", "exact-exclusion", "exploratory")
+
+# Purposes that are statements about the instrument rather than about Rule 30.
+# The initial condition is a free parameter for these, and a random one is
+# positively required to expose open-boundary padding bugs. `replication` is
+# deliberately NOT here: it is free of the single-seed rule but not free of
+# the seed it claims to reproduce -- see gate_seed.
+INSTRUMENT_PURPOSES = ("correctness-check",)
 
 # A conclusion that says "never" without a horizon is the right-censoring
 # error AGENTS.md names explicitly. These qualifiers make it honest.
@@ -121,11 +126,12 @@ CENSOR_QUALIFIERS = re.compile(
     r"<=?\s*\d|≤\s*\d|first \d|the first)\b", re.I)
 UNQUALIFIED_NEVER = re.compile(r"\b(never|no period|aperiodic|does not repeat)\b", re.I)
 
-# The ~50% rule. A difference this close to a coin flip means uncorrelated
-# streams, which is almost always a packing or seed mismatch. It is not proof
-# that the kernel is sound: a bug corrupting the opening steps decorrelates
-# everything after it and lands in this band too. The first divergence
-# position, not the rate, is what separates the two.
+# The ~50% rule. A difference this close to a coin flip means the two streams
+# are uncorrelated. That is all it means: the rate identifies no cause, and
+# ranking causes by it is a guess dressed as a diagnosis. Check packing and
+# seed conventions, then localise the first divergence before assigning a
+# cause -- an early-step kernel bug decorrelates everything after it and
+# lands in this band exactly as a packing mismatch does.
 FIFTY_PERCENT_BAND = (0.45, 0.55)
 
 
@@ -181,13 +187,44 @@ def gate_seed(m: dict) -> Gate:
     and the ledger never reads it as anything else.
     """
     purpose = m.get("purpose")
-    if purpose not in SEED_SCOPED_PURPOSES:
+
+    if purpose == "replication":
+        # Exempting a replication from the seed rule outright would let a
+        # random-IC run claim to reproduce a single-seed result: the strongest
+        # possible false positive, since a replication's whole value is that
+        # it reproduces a specific prior run. So the rule is not waived, it is
+        # redirected -- the seed must match the source's, and the source's
+        # seed must be stated where a reviewer can check it against the log.
+        rep = m.get("replicates")
+        if not isinstance(rep, dict):
+            return Gate("seed", FAIL,
+                        "purpose 'replication' requires a `replicates` object "
+                        "naming what is being reproduced: "
+                        '{"source": "<log or artifact path>", "seed": "<the '
+                        'seed that run used>"}.')
+        source, src_seed = rep.get("source"), rep.get("seed")
+        if not isinstance(source, str) or not source.strip():
+            return Gate("seed", FAIL, "replicates.source is missing")
+        if not isinstance(src_seed, str) or not src_seed.strip():
+            return Gate("seed", FAIL,
+                        f"replicates.seed is missing for source {source!r}. "
+                        "State the seed the original run used; an unstated "
+                        "one cannot be checked against this manifest's.")
+        if m.get("seed") != src_seed:
+            return Gate("seed", FAIL,
+                        f"replication seed {m.get('seed')!r} does not match "
+                        f"the seed {src_seed!r} of the run it claims to "
+                        f"reproduce ({source}). A different initial condition "
+                        "is a different experiment, not a replication.")
+        return Gate("seed", PASS,
+                    f"replication of {source} preserves its seed {src_seed!r}")
+
+    if purpose in INSTRUMENT_PURPOSES:
         return Gate("seed", SKIP,
                     f"purpose is {purpose!r}: the result is a statement about "
-                    "the instrument or about a prior run, not about the "
-                    "single-seed center column. Any initial condition is "
-                    "admissible, and a random one is required for "
-                    "open-boundary checks (docs/WORKFLOW.md).")
+                    "the instrument, not about the single-seed center column. "
+                    "Any initial condition is admissible, and a random one is "
+                    "required for open-boundary checks (docs/WORKFLOW.md).")
     if m.get("seed") == THE_SEED:
         return Gate("seed", PASS, f"single-black-cell (purpose {purpose!r})")
     return Gate("seed", FAIL,
@@ -203,7 +240,21 @@ def gate_theory(m: dict) -> Gate:
     states the theory-gate verdict rather than this code deriving it from
     prose -- but mandatory, so the question cannot go unasked. Only OPEN may
     run; re-measuring a Theorem is never legitimate and re-walking a closed
-    route is waste."""
+    route is waste.
+
+    That reasoning is about learning something new concerning Rule 30, so it
+    does not apply to a check on the instrument. A positive control is
+    *required* to target settled ground -- Thue-Morse returning s*=2 is
+    valuable precisely because the answer is known in advance, and a kernel
+    check reproducing a hash-anchored stream is checking the tool against an
+    answer theory already fixed. Refusing those as "ALREADY SETTLED" would
+    refuse every control the repo has, so this gate does not run for them."""
+    purpose = m.get("purpose")
+    if purpose in INSTRUMENT_PURPOSES:
+        return Gate("theory-gate", SKIP,
+                    f"purpose is {purpose!r}: a control checks the instrument "
+                    "against a known answer, so settled ground is the point "
+                    "rather than a reason to refuse it.")
     v = str(m.get("theory_gate", "")).strip().upper()
     if v == "OPEN":
         return Gate("theory-gate", PASS, "OPEN")
@@ -265,7 +316,21 @@ def gate_counting_bound(m: dict) -> Gate:
     """CLAUDE.md rule 1. A negative from class M over n bits is information
     only when log2|M| >= n; below that every sequence gives the same negative
     and the run measures |M|, not Rule 30. Equality is informative -- the
-    tool's own threshold is `margin >= 0`, and Experiment S sits there."""
+    tool's own threshold is `margin >= 0`, and Experiment S sits there.
+
+    Scoped away from instrument checks for the same reason as the theory
+    gate: a detection-power control deliberately runs a class too small to
+    fit, to confirm the search reports a negative when it should. Its
+    negative is a measurement of the detector, not a claim about Rule 30, and
+    the counting bound has nothing to say about it. This does NOT relax the
+    rule for `exact-exclusion`, which still fails here -- recording a bounded
+    exclusion as a finding needs the vacuity verdict split from the
+    truth of the exclusion, which has not been done yet."""
+    purpose = m.get("purpose")
+    if purpose in INSTRUMENT_PURPOSES:
+        return Gate("counting-bound", SKIP,
+                    f"purpose is {purpose!r}: the negative measures the "
+                    "detector, not the sequence.")
     if m.get("kind") != "search":
         return Gate("counting-bound", SKIP, "not a search")
     s = m.get("search")
@@ -473,10 +538,10 @@ def gate_divergence(r: dict) -> Gate:
 
 def gate_fifty_percent(r: dict) -> Gate:
     """AGENTS.md: a ~50% bit difference means the two streams are
-    uncorrelated, which is almost always a packing or seed mismatch. Check
-    packing and seed first. The residual case is a kernel bug that corrupts
-    the opening steps, which decorrelates the remainder and reads ~50% as
-    well; `divergence[].first_divergence` is what tells them apart."""
+    uncorrelated, and nothing more. Check packing and seed conventions, then
+    localise the first divergence before assigning a cause --
+    `divergence[].first_divergence` is the evidence that distinguishes a
+    convention mismatch from an early-step kernel bug. The rate does not."""
     sc = r.get("stream_comparison")
     if not sc:
         return Gate("fifty-percent", SKIP, "no stream comparison reported")
@@ -487,10 +552,10 @@ def gate_fifty_percent(r: dict) -> Gate:
     if lo <= f <= hi:
         return Gate("fifty-percent", FAIL,
                     f"{f:.4f} of positions differ: the streams are "
-                    "uncorrelated. Check packing and seed before the kernel -- "
-                    "a mismatch there is the overwhelmingly likely cause. Rule "
-                    "the kernel out on the first divergence position, not on "
-                    "this rate: an early-step kernel bug also reads ~50%.")
+                    "uncorrelated. Check packing and seed conventions, then "
+                    "localise the first divergence before assigning a cause. "
+                    "This rate is consistent with a convention mismatch and "
+                    "with an early-step kernel bug alike, so it names neither.")
     return Gate("fifty-percent", PASS, f"{f:.4f} differing, outside the "
                 "uncorrelated band")
 

@@ -39,13 +39,30 @@ scopes the gates by it, so it decides what the run is allowed to do and what a
 reader is entitled to conclude. `kind` says how the run is shaped
 (search/measurement/simulation); `purpose` says what its output *means*.
 
-| `purpose` | The output is a statement about | Seed |
-|---|---|---|
-| `prize-claim` | the single-seed center column, intended for the ledger | single-black-cell |
-| `exact-exclusion` | a finite model class, excluded outright | single-black-cell |
-| `exploratory` | the column, as a pilot — not yet ledger-facing | single-black-cell |
-| `correctness-check` | **the instrument**, not the column | any, and random ICs are required |
-| `replication` | a prior run, reproduced | whatever the original used |
+| `purpose` | The output is a statement about | Seed | Gates scoped away |
+|---|---|---|---|
+| `prize-claim` | the single-seed center column, intended for the ledger | single-black-cell | none |
+| `exact-exclusion` | a finite model class, excluded outright | single-black-cell | none |
+| `exploratory` | the column, as a pilot — not yet ledger-facing | single-black-cell | none |
+| `correctness-check` | **the instrument**, not the column | any; random ICs required | `seed`, `theory-gate`, `counting-bound` |
+| `replication` | a prior run, reproduced | **must equal the source's** | none |
+
+`replication` is not exempt from the seed rule, it is redirected by it. The
+manifest must carry `"replicates": {"source": "<log or artifact>", "seed":
+"<the seed that run used>"}`, and the gate refuses any run whose own seed
+differs from the one it claims to reproduce. Exempting replications outright
+would have allowed the strongest false positive the taxonomy could produce —
+a random-IC run presented as reproducing a single-seed result.
+
+A `correctness-check` is scoped out of three gates, not one, because all
+three are reasons about *learning something new concerning Rule 30* and a
+control is not that. A positive control has to target settled ground — the
+`s*(n)` suite's Thue-Morse arm is valuable precisely because the answer is
+known in advance — so `theory-gate` would refuse every control the repo has.
+A detection-power control deliberately runs a model class too small to fit,
+to confirm the search reports a negative when it should, so `counting-bound`
+would refuse that too. Neither makes a claim about the column, so neither
+gate has anything to say.
 
 This axis exists because two of the repo's own rules were in direct conflict.
 CLAUDE.md rule 3 refuses random ICs, correctly: an ensemble quantity is not
@@ -55,11 +72,13 @@ the single seed cannot see it. An unscoped seed gate refuses the exact check
 that catches the bug class that has cost this repo the most. `purpose` says
 which of the two a given run is, so both rules can hold at once.
 
-Two things it does **not** do. It does not lower any other gate: the counting
-bound, light cone, bit-order lint and censoring checks apply to every purpose
-alike. And it is not a grade — a `correctness-check` cannot be promoted into a
-prize claim by relabelling it, because its seed is wrong for that claim and
-the gate will say so on the next run.
+Two things it does **not** do. It does not weaken any gate for a purpose that
+makes a claim about the column: the counting bound, light cone, bit-order lint
+and censoring checks apply to `prize-claim`, `exact-exclusion` and
+`exploratory` unchanged, and the trap manifest is still refused. And it is not
+a grade — a `correctness-check` cannot be promoted into a prize claim by
+relabelling it, because its seed is wrong for that claim and the gate will say
+so on the next run.
 
 ## Driving coarse-graining sweeps — `ca_lab.py`
 

@@ -97,7 +97,7 @@ tool it claims to enforce.
 | `censoring` | no unqualified "never" | AGENTS.md |
 | `noise-floor` | every metric carries a baseline | AGENTS.md |
 | `divergence-invariant` | `first_divergence >= distance` | AGENTS.md |
-| `fifty-percent` | ~50% differing is almost always a packing/seed mismatch | CLAUDE.md |
+| `fifty-percent` | ~50% differing means uncorrelated streams; cause needs the first divergence | CLAUDE.md |
 
 Equality passes the counting bound. `counting_bound.py` marks `margin >= 0`
 informative and Experiment S sits at that boundary; a strict `>` would reject
@@ -195,12 +195,16 @@ and the remedy (a `.gitignore` `!` exception plus `make_manifest`) is a
 decision for a person rather than something to `add -f` past.
 
 `purpose` is required and closed-vocabulary: `prize-claim`, `exact-exclusion`,
-`exploratory`, `correctness-check`, `replication`. It scopes the `seed` gate —
-the first three are statements about the single-seed center column and must use
-that seed; the last two are statements about the instrument or about a prior
-run and may use any initial condition, including the random IC that
-[`WORKFLOW.md`](WORKFLOW.md) requires for open-boundary checks. It lowers no
-other gate. Full table: [`WORKFLOW.md`](WORKFLOW.md) *Experiment purposes*.
+`exploratory`, `correctness-check`, `replication`. The first three are
+statements about the single-seed center column and must use that seed, with
+every gate applying unchanged. A `correctness-check` is a statement about the
+instrument, so `seed`, `theory-gate` and `counting-bound` are scoped away from
+it — a control has to be free to use the random IC
+[`WORKFLOW.md`](WORKFLOW.md) requires for open-boundary checks, to target
+settled ground, and to run a class too small to fit. A `replication` must
+carry `"replicates": {"source": ..., "seed": ...}` and use that same seed, so
+it cannot present a different initial condition as a reproduction. Full table:
+[`WORKFLOW.md`](WORKFLOW.md) *Experiment purposes*.
 
 `kind: "search"` with `"claims": ["negative"]` additionally requires `search`
 with either DFAO parameters or a declared `log2_size` — a guess there defeats
