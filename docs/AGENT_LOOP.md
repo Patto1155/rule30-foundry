@@ -56,20 +56,46 @@ patch from a stranger, because in part it is one.
 
 ## Budgets
 
-Five, enforced rather than hoped for: **turns** (40), **tool calls** (50),
-**wall clock** (the task's own budget), **US dollars** (1.00, from the
-provider's own usage accounting rather than an estimate), and per-result
-output size. The first to trip ends the loop, and `stop_reason` names it.
+Five, enforced rather than hoped for: **turns** (40, inclusive of the final
+report), **tool calls** (50), **wall clock** (the task's own budget, minus the
+wrap-up reserve), **US dollars** (1.00, from the provider's own usage
+accounting rather than an estimate), and per-result output size. The first to
+trip ends the loop, and `stop_reason` names it.
 
 A budget stop is a blocker on the result, so the verdict cannot be
 `READY-FOR-REVIEW`. The partial work still reaches a branch — an agent stopped
 at its budget has usually done something worth reading.
+
+**Enforced per tool call, not per turn.** A model may return any number of
+`tool_calls` in a single turn. The loop originally checked the budget between
+turns and then executed the whole batch, so a three-call batch ran in full
+against a one-call limit: the limit held for turns and not for the thing it
+named. The check now runs before each call, and a call that arrives after the
+budget is spent gets a refusal *as its result* rather than being dropped —
+every `tool_call` in an assistant message needs a matching result or the
+provider rejects the next request, so dropping one would break the run
+instead of ending it.
+
+**A blocking tool is clamped to the time left.** `run` accepts up to 900
+seconds; started with 30 seconds of wall clock remaining it overruns the
+limit by fourteen minutes. `execute` clamps any tool that takes a `timeout` to
+the remaining budget, reading the tool's own signature for the default so the
+two cannot drift. The clamp is a ceiling, never an override: a model asking
+for 2 seconds gets 2 seconds.
 
 **When a budget trips, the loop takes the tools away and asks for a report
 anyway.** That is not politeness. The first live research run hit its turn cap
 after 36 tool calls and six minutes and returned *nothing*: the work was done
 and unreadable. Tools are withheld rather than discouraged, because the budget
 is spent and a model that can call one will.
+
+**The report is budgeted, not added on top.** It is a real billed request, so
+the working phase stops one turn early and holds back
+`--wrap-up-reserve` seconds (120 by default, capped at half the wall clock) to
+write it in. Before this, `--max-turns 40` ran 40 tool-using turns and then
+billed a 41st, and the wrap-up inherited the full request timeout with no
+clock left to spend it — so the limit named a number the run always exceeded,
+and the report it exists to salvage was the thing most likely to be cut off.
 
 ## Live: the first real research task
 
