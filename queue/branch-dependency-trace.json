@@ -1,0 +1,26 @@
+{
+  "name": "branch-dependency-trace",
+  "kind": "measurement",
+  "purpose": "exploratory",
+  "seed": "single-black-cell",
+  "theory_gate": "OPEN",
+  "theory_gate_citation": "Complementary to docs/STATUS.md B1. The closed routes in docs/theory/README.md \u00a74 concern compressing completed histories; this measures whether most intermediate work can be SKIPPED, which none of them address.",
+  "script": "experiments/branch_dependency_trace.py",
+  "argv": [
+    "--depths",
+    "16,32,64,128,256,512,1024",
+    "--out",
+    "runs/branch-dependency-trace-2026-09-15.json",
+    "--pretty"
+  ],
+  "claims": [],
+  "reads_packed_bitstream": false,
+  "outputs": [
+    "runs/branch-dependency-trace-2026-09-15.json"
+  ],
+  "budget": {
+    "minutes": 20,
+    "device": "cpu"
+  },
+  "notes": "All preprocessing is charged to the algorithm: there is no precomputed table. The short-circuit is an exact algebraic cancellation (D_d(t) sits inside the OR), and the traced value is checked bit-exactly against a direct simulation at every reported depth."
+}

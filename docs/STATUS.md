@@ -6,7 +6,7 @@ lives here. Overwrite this file in place; git history keeps the old versions.
 No other file may carry a "current state as of" section —
 `tools/lint_ledger.py` enforces it.
 
-Updated: 2026-09-15 · Newest log: `docs/experiment-logs/2026-09-15-delegation-pipeline-end-to-end.md`
+Updated: 2026-09-15 · Newest log: `docs/experiment-logs/2026-09-15-four-structural-probes.md`
 
 ## Where the three prize problems stand
 
@@ -25,13 +25,14 @@ A1, A2, C2 and C2b are done (see *Recently closed*); **B3 is next**.
 | # | Work | Kind | Cost | Blocks |
 |---|---|---|---|---|
 | A3 | **Make bitstreams reachable** — no local, release, Actions, or LFS copy found on 2026-09-09; manifest hashes remain anchored | Infra | ~½ day | B2 |
+| D1 | **Non-window invariants for P1-local** — the SFT family is closed at width ≤ 15 ([log](experiment-logs/2026-09-15-four-structural-probes.md)); a counting or algebraic constraint on rows is the surviving shape | Research | Days | — |
 | C2c | **Annihilators over non-consecutive bit selections** — every window searched so far is a run of adjacent bits, so long-lag structure (the I/K/L blind spot) is untested | Research | Days | — |
 | C2d | **Multi-word window codes**, lifting `w` past the `uint64` cap of 64 | Research | ~½ day | — |
 | B3 | Extend `s*(n)` — MSD n=56 is now exact at 13 states; benchmark MSD n=64 next, then the harder LSD n=56 states individually | Research | Hours | — |
 | E1 | Write up the eight Theorem rows; `s*(n)` is citable | Writing | Days | — |
 | B2 | Exact period search on 46M — no code change, extends to `p <= 2.3e7` | Research | Minutes | A3 |
-| B1 | All seven computationally reachable early zero words were tested. Phase plus one tail-boundary bit selects every successor (4 train, 3 held out), but computing that bit still depends on a transient cutoff growing to 117,323 (~1.335d). Settled-only rules fail; stop before the first period-32 branch at `d=1,420,878,969`. | Research | Proof target needed | — |
-| P1-local | Actual seed rows reject most saved alternating-loop alignments before the center mismatch (5,574 exact starts tested), but this excludes only those walks. Period-word sieve still yields no nonconstant all-onset exclusion. | Research | Proof target needed | — |
+| B1 | **Sharpened 2026-09-15 and the selector route is now doubtful.** Seven candidate compact summaries — the predecessor word alone, and that word plus last-reset phase (mod p, mod 2p), transient parity, settle phase, a tail boundary bit, phase+parity — are each REFUTED as a branch state on arbitrary histories, over 2,509 events with 1,258–2,000 twinned. On the seed orbit only **3** branch events are reachable and **no two share a summary value under any candidate**, so the seed population has zero power to test one. The earlier "4 train, 3 held out" selector was fitted at that same size and nothing in that population could have refuted it either. Computing the bit still depends on a transient cutoff growing to 117,323 (~1.335d). Stop before the first period-32 branch at `d=1,420,878,969`. | Research | Proof target needed; a finite summary now needs an argument, not more fitting | — |
+| P1-local | Actual seed rows reject most saved alternating-loop alignments before the center mismatch (5,574 exact starts tested), but this excludes only those walks. Period-word sieve still yields no nonconstant all-onset exclusion. **The window-invariant route is closed 2026-09-15**: the seed's row language is the full window set at every width `k = 2..15`, so the best subshift-of-finite-type invariant true of the seed is "true of every row" and excludes nothing, at all seven saved loop widths 3–15. Rule 90 returns 87 of 16,384 windows at a matched horizon, so the instrument detects restriction where it exists. A wider window, or a non-window (counting or algebraic) invariant, is untouched. | Research | Proof target needed; not via a window invariant | — |
 
 **De-prioritised:** more neural experiments (the ceiling is partly the models'
 — I/K/L are blind to long-lag XOR). Item 14 is worth closing but the ledger

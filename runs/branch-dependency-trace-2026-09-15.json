@@ -1,0 +1,98 @@
+{
+  "artifact_type": "rule30.branch_dependency_trace",
+  "artifact_version": 1,
+  "query": "D_t(t) -- the diagonal the centre bit at time t lives on",
+  "depths": [
+    16,
+    32,
+    64,
+    128,
+    256,
+    512,
+    1024
+  ],
+  "rows": [
+    {
+      "d": 16,
+      "t": 16,
+      "value": 1,
+      "cells_rect": 289,
+      "cells_cone": 161,
+      "cells_evaluated": 116,
+      "pruned_fraction": 0.279503,
+      "cone_over_rect": 0.557093
+    },
+    {
+      "d": 32,
+      "t": 32,
+      "value": 0,
+      "cells_rect": 1089,
+      "cells_cone": 577,
+      "cells_evaluated": 503,
+      "pruned_fraction": 0.12825,
+      "cone_over_rect": 0.529844
+    },
+    {
+      "d": 64,
+      "t": 64,
+      "value": 1,
+      "cells_rect": 4225,
+      "cells_cone": 2177,
+      "cells_evaluated": 1876,
+      "pruned_fraction": 0.138264,
+      "cone_over_rect": 0.515266
+    },
+    {
+      "d": 128,
+      "t": 128,
+      "value": 1,
+      "cells_rect": 16641,
+      "cells_cone": 8449,
+      "cells_evaluated": 6662,
+      "pruned_fraction": 0.211504,
+      "cone_over_rect": 0.507722
+    },
+    {
+      "d": 256,
+      "t": 256,
+      "value": 1,
+      "cells_rect": 66049,
+      "cells_cone": 33281,
+      "cells_evaluated": 27674,
+      "pruned_fraction": 0.168475,
+      "cone_over_rect": 0.503883
+    },
+    {
+      "d": 512,
+      "t": 512,
+      "value": 0,
+      "cells_rect": 263169,
+      "cells_cone": 132097,
+      "cells_evaluated": 113586,
+      "pruned_fraction": 0.140132,
+      "cone_over_rect": 0.501947
+    },
+    {
+      "d": 1024,
+      "t": 1024,
+      "value": 1,
+      "cells_rect": 1050625,
+      "cells_cone": 526337,
+      "cells_evaluated": 433806,
+      "pruned_fraction": 0.175802,
+      "cone_over_rect": 0.500975
+    }
+  ],
+  "growth": {
+    "exponent_evaluated": 1.9688,
+    "exponent_cone": 1.9513,
+    "intercept_evaluated": -0.9697,
+    "reading": "constant-factor saving on the same growth rate"
+  },
+  "oracle": {
+    "checked": 7,
+    "mismatches": [],
+    "ok": true
+  },
+  "elapsed_s": 2.02
+}

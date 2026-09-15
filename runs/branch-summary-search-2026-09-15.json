@@ -1,0 +1,241 @@
+{
+  "artifact_type": "rule30.branch_summary_search",
+  "artifact_version": 1,
+  "params": {
+    "n_histories": 3000,
+    "length": 192,
+    "depth": 400,
+    "tail": 64,
+    "steps": 8192,
+    "seed": 30
+  },
+  "arbitrary": {
+    "n_events": 2509,
+    "rows": [
+      {
+        "summary": "predecessor_word",
+        "n_events": 2509,
+        "n_distinct_summaries": 726,
+        "n_colliding_keys": 180,
+        "events_with_a_twin": 2000,
+        "determines_branch": false,
+        "counterexample": {
+          "key": [
+            3
+          ],
+          "branches": [
+            0,
+            1
+          ]
+        },
+        "tested": true,
+        "verdict": "REFUTED: same summary, different branch"
+      },
+      {
+        "summary": "word+reset_phase",
+        "n_events": 2509,
+        "n_distinct_summaries": 1318,
+        "n_colliding_keys": 137,
+        "events_with_a_twin": 1419,
+        "determines_branch": false,
+        "counterexample": {
+          "key": [
+            3,
+            1
+          ],
+          "branches": [
+            0,
+            1
+          ]
+        },
+        "tested": true,
+        "verdict": "REFUTED: same summary, different branch"
+      },
+      {
+        "summary": "word+reset_phase_2p",
+        "n_events": 2509,
+        "n_distinct_summaries": 1442,
+        "n_colliding_keys": 130,
+        "events_with_a_twin": 1278,
+        "determines_branch": false,
+        "counterexample": {
+          "key": [
+            3,
+            5
+          ],
+          "branches": [
+            0,
+            1
+          ]
+        },
+        "tested": true,
+        "verdict": "REFUTED: same summary, different branch"
+      },
+      {
+        "summary": "word+transient_parity",
+        "n_events": 2509,
+        "n_distinct_summaries": 906,
+        "n_colliding_keys": 202,
+        "events_with_a_twin": 1897,
+        "determines_branch": false,
+        "counterexample": {
+          "key": [
+            3,
+            0
+          ],
+          "branches": [
+            0,
+            1
+          ]
+        },
+        "tested": true,
+        "verdict": "REFUTED: same summary, different branch"
+      },
+      {
+        "summary": "word+reset_phase+parity",
+        "n_events": 2509,
+        "n_distinct_summaries": 1454,
+        "n_colliding_keys": 137,
+        "events_with_a_twin": 1258,
+        "determines_branch": false,
+        "counterexample": {
+          "key": [
+            3,
+            1,
+            0
+          ],
+          "branches": [
+            0,
+            1
+          ]
+        },
+        "tested": true,
+        "verdict": "REFUTED: same summary, different branch"
+      },
+      {
+        "summary": "word+settle_phase",
+        "n_events": 2509,
+        "n_distinct_summaries": 1296,
+        "n_colliding_keys": 130,
+        "events_with_a_twin": 1434,
+        "determines_branch": false,
+        "counterexample": {
+          "key": [
+            3,
+            2
+          ],
+          "branches": [
+            0,
+            1
+          ]
+        },
+        "tested": true,
+        "verdict": "REFUTED: same summary, different branch"
+      },
+      {
+        "summary": "word+tail_boundary_bit",
+        "n_events": 2509,
+        "n_distinct_summaries": 726,
+        "n_colliding_keys": 180,
+        "events_with_a_twin": 2000,
+        "determines_branch": false,
+        "counterexample": {
+          "key": [
+            3,
+            0
+          ],
+          "branches": [
+            0,
+            1
+          ]
+        },
+        "tested": true,
+        "verdict": "REFUTED: same summary, different branch"
+      }
+    ]
+  },
+  "seed_orbit": {
+    "n_events": 3,
+    "rows": [
+      {
+        "summary": "predecessor_word",
+        "n_events": 3,
+        "n_distinct_summaries": 3,
+        "n_colliding_keys": 0,
+        "events_with_a_twin": 0,
+        "determines_branch": true,
+        "counterexample": null,
+        "tested": false,
+        "verdict": "UNTESTED: every summary value is unique, so a collision was impossible -- this is a forced pass, not a result"
+      },
+      {
+        "summary": "word+reset_phase",
+        "n_events": 3,
+        "n_distinct_summaries": 3,
+        "n_colliding_keys": 0,
+        "events_with_a_twin": 0,
+        "determines_branch": true,
+        "counterexample": null,
+        "tested": false,
+        "verdict": "UNTESTED: every summary value is unique, so a collision was impossible -- this is a forced pass, not a result"
+      },
+      {
+        "summary": "word+reset_phase_2p",
+        "n_events": 3,
+        "n_distinct_summaries": 3,
+        "n_colliding_keys": 0,
+        "events_with_a_twin": 0,
+        "determines_branch": true,
+        "counterexample": null,
+        "tested": false,
+        "verdict": "UNTESTED: every summary value is unique, so a collision was impossible -- this is a forced pass, not a result"
+      },
+      {
+        "summary": "word+transient_parity",
+        "n_events": 3,
+        "n_distinct_summaries": 3,
+        "n_colliding_keys": 0,
+        "events_with_a_twin": 0,
+        "determines_branch": true,
+        "counterexample": null,
+        "tested": false,
+        "verdict": "UNTESTED: every summary value is unique, so a collision was impossible -- this is a forced pass, not a result"
+      },
+      {
+        "summary": "word+reset_phase+parity",
+        "n_events": 3,
+        "n_distinct_summaries": 3,
+        "n_colliding_keys": 0,
+        "events_with_a_twin": 0,
+        "determines_branch": true,
+        "counterexample": null,
+        "tested": false,
+        "verdict": "UNTESTED: every summary value is unique, so a collision was impossible -- this is a forced pass, not a result"
+      },
+      {
+        "summary": "word+settle_phase",
+        "n_events": 3,
+        "n_distinct_summaries": 3,
+        "n_colliding_keys": 0,
+        "events_with_a_twin": 0,
+        "determines_branch": true,
+        "counterexample": null,
+        "tested": false,
+        "verdict": "UNTESTED: every summary value is unique, so a collision was impossible -- this is a forced pass, not a result"
+      },
+      {
+        "summary": "word+tail_boundary_bit",
+        "n_events": 3,
+        "n_distinct_summaries": 3,
+        "n_colliding_keys": 0,
+        "events_with_a_twin": 0,
+        "determines_branch": true,
+        "counterexample": null,
+        "tested": false,
+        "verdict": "UNTESTED: every summary value is unique, so a collision was impossible -- this is a forced pass, not a result"
+      }
+    ],
+    "note": "single-seed events only; a small count means low power, not a clean result"
+  },
+  "elapsed_s": 0.47
+}

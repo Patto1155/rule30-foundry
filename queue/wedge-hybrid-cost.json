@@ -1,0 +1,28 @@
+{
+  "name": "wedge-hybrid-cost",
+  "kind": "measurement",
+  "purpose": "exploratory",
+  "seed": "single-black-cell",
+  "theory_gate": "OPEN",
+  "theory_gate_citation": "docs/theory/README.md \u00a73 and \u00a74 close the wedge as a SHORTCUT, by the argument that the centre bit at time T lives on diagonal d = T and settle(T) ~ 1.34*T > T, so the TARGET cell is never settled. That argument does not cover the target's dependency cone, whose smaller-d cells settle well before the horizon. The fraction of the cone the wedge supplies has never been measured and is what decides whether further wedge work is worth doing.",
+  "script": "experiments/wedge_hybrid_cost.py",
+  "argv": [
+    "--depths",
+    "64,128,256,512,1024",
+    "--tail",
+    "512",
+    "--out",
+    "runs/wedge-hybrid-cost-2026-09-15.json",
+    "--pretty"
+  ],
+  "claims": [],
+  "reads_packed_bitstream": false,
+  "outputs": [
+    "runs/wedge-hybrid-cost-2026-09-15.json"
+  ],
+  "budget": {
+    "minutes": 20,
+    "device": "cpu"
+  },
+  "notes": "settle(d) is measured inside a finite horizon, so it is an UPPER bound on the true settling time. That direction is safe for a negative: it can only make the wedge look more useful than it is. The practical constant factor and the asymptotic exponent are reported separately."
+}

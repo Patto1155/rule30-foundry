@@ -1,0 +1,635 @@
+{
+  "artifact_type": "rule30.seed_invariant_search",
+  "artifact_version": 1,
+  "params": {
+    "steps": 1500,
+    "kmax": 15,
+    "controls": [
+      45,
+      90,
+      110
+    ]
+  },
+  "loops_source": "runs/periodic-boundary-2026-09-08/output-loops.json",
+  "loop_widths": [
+    3,
+    5,
+    7,
+    9,
+    11,
+    13,
+    15
+  ],
+  "rows": [
+    {
+      "k": 2,
+      "n_seed_windows": 4,
+      "of_possible": 4,
+      "full_language": true,
+      "preserved": {
+        "checked": 0,
+        "violations": [],
+        "ok": true,
+        "note": "trivially preserved: W is every window"
+      },
+      "exclusion": {
+        "per_width": [
+          {
+            "width": 5,
+            "rows": 6,
+            "forbidden_windows_found": [],
+            "excluded": false
+          },
+          {
+            "width": 7,
+            "rows": 7,
+            "forbidden_windows_found": [],
+            "excluded": false
+          },
+          {
+            "width": 9,
+            "rows": 10,
+            "forbidden_windows_found": [],
+            "excluded": false
+          },
+          {
+            "width": 11,
+            "rows": 10,
+            "forbidden_windows_found": [],
+            "excluded": false
+          },
+          {
+            "width": 13,
+            "rows": 32,
+            "forbidden_windows_found": [],
+            "excluded": false
+          },
+          {
+            "width": 15,
+            "rows": 24,
+            "forbidden_windows_found": [],
+            "excluded": false
+          }
+        ],
+        "excludes_any": false,
+        "widths_tested": [
+          5,
+          7,
+          9,
+          11,
+          13,
+          15
+        ]
+      },
+      "nontrivial": false,
+      "verdict": "VACUOUS: W is the full window set, so the invariant is 'true of every row'. It is preserved because it says nothing, and it excludes nothing."
+    },
+    {
+      "k": 3,
+      "n_seed_windows": 8,
+      "of_possible": 8,
+      "full_language": true,
+      "preserved": {
+        "checked": 0,
+        "violations": [],
+        "ok": true,
+        "note": "trivially preserved: W is every window"
+      },
+      "exclusion": {
+        "per_width": [
+          {
+            "width": 5,
+            "rows": 6,
+            "forbidden_windows_found": [],
+            "excluded": false
+          },
+          {
+            "width": 7,
+            "rows": 7,
+            "forbidden_windows_found": [],
+            "excluded": false
+          },
+          {
+            "width": 9,
+            "rows": 10,
+            "forbidden_windows_found": [],
+            "excluded": false
+          },
+          {
+            "width": 11,
+            "rows": 10,
+            "forbidden_windows_found": [],
+            "excluded": false
+          },
+          {
+            "width": 13,
+            "rows": 32,
+            "forbidden_windows_found": [],
+            "excluded": false
+          },
+          {
+            "width": 15,
+            "rows": 24,
+            "forbidden_windows_found": [],
+            "excluded": false
+          }
+        ],
+        "excludes_any": false,
+        "widths_tested": [
+          5,
+          7,
+          9,
+          11,
+          13,
+          15
+        ]
+      },
+      "nontrivial": false,
+      "verdict": "VACUOUS: W is the full window set, so the invariant is 'true of every row'. It is preserved because it says nothing, and it excludes nothing."
+    },
+    {
+      "k": 4,
+      "n_seed_windows": 16,
+      "of_possible": 16,
+      "full_language": true,
+      "preserved": {
+        "checked": 0,
+        "violations": [],
+        "ok": true,
+        "note": "trivially preserved: W is every window"
+      },
+      "exclusion": {
+        "per_width": [
+          {
+            "width": 7,
+            "rows": 7,
+            "forbidden_windows_found": [],
+            "excluded": false
+          },
+          {
+            "width": 9,
+            "rows": 10,
+            "forbidden_windows_found": [],
+            "excluded": false
+          },
+          {
+            "width": 11,
+            "rows": 10,
+            "forbidden_windows_found": [],
+            "excluded": false
+          },
+          {
+            "width": 13,
+            "rows": 32,
+            "forbidden_windows_found": [],
+            "excluded": false
+          },
+          {
+            "width": 15,
+            "rows": 24,
+            "forbidden_windows_found": [],
+            "excluded": false
+          }
+        ],
+        "excludes_any": false,
+        "widths_tested": [
+          7,
+          9,
+          11,
+          13,
+          15
+        ]
+      },
+      "nontrivial": false,
+      "verdict": "VACUOUS: W is the full window set, so the invariant is 'true of every row'. It is preserved because it says nothing, and it excludes nothing."
+    },
+    {
+      "k": 5,
+      "n_seed_windows": 32,
+      "of_possible": 32,
+      "full_language": true,
+      "preserved": {
+        "checked": 0,
+        "violations": [],
+        "ok": true,
+        "note": "trivially preserved: W is every window"
+      },
+      "exclusion": {
+        "per_width": [
+          {
+            "width": 7,
+            "rows": 7,
+            "forbidden_windows_found": [],
+            "excluded": false
+          },
+          {
+            "width": 9,
+            "rows": 10,
+            "forbidden_windows_found": [],
+            "excluded": false
+          },
+          {
+            "width": 11,
+            "rows": 10,
+            "forbidden_windows_found": [],
+            "excluded": false
+          },
+          {
+            "width": 13,
+            "rows": 32,
+            "forbidden_windows_found": [],
+            "excluded": false
+          },
+          {
+            "width": 15,
+            "rows": 24,
+            "forbidden_windows_found": [],
+            "excluded": false
+          }
+        ],
+        "excludes_any": false,
+        "widths_tested": [
+          7,
+          9,
+          11,
+          13,
+          15
+        ]
+      },
+      "nontrivial": false,
+      "verdict": "VACUOUS: W is the full window set, so the invariant is 'true of every row'. It is preserved because it says nothing, and it excludes nothing."
+    },
+    {
+      "k": 6,
+      "n_seed_windows": 64,
+      "of_possible": 64,
+      "full_language": true,
+      "preserved": {
+        "checked": 0,
+        "violations": [],
+        "ok": true,
+        "note": "trivially preserved: W is every window"
+      },
+      "exclusion": {
+        "per_width": [
+          {
+            "width": 9,
+            "rows": 10,
+            "forbidden_windows_found": [],
+            "excluded": false
+          },
+          {
+            "width": 11,
+            "rows": 10,
+            "forbidden_windows_found": [],
+            "excluded": false
+          },
+          {
+            "width": 13,
+            "rows": 32,
+            "forbidden_windows_found": [],
+            "excluded": false
+          },
+          {
+            "width": 15,
+            "rows": 24,
+            "forbidden_windows_found": [],
+            "excluded": false
+          }
+        ],
+        "excludes_any": false,
+        "widths_tested": [
+          9,
+          11,
+          13,
+          15
+        ]
+      },
+      "nontrivial": false,
+      "verdict": "VACUOUS: W is the full window set, so the invariant is 'true of every row'. It is preserved because it says nothing, and it excludes nothing."
+    },
+    {
+      "k": 7,
+      "n_seed_windows": 128,
+      "of_possible": 128,
+      "full_language": true,
+      "preserved": {
+        "checked": 0,
+        "violations": [],
+        "ok": true,
+        "note": "trivially preserved: W is every window"
+      },
+      "exclusion": {
+        "per_width": [
+          {
+            "width": 9,
+            "rows": 10,
+            "forbidden_windows_found": [],
+            "excluded": false
+          },
+          {
+            "width": 11,
+            "rows": 10,
+            "forbidden_windows_found": [],
+            "excluded": false
+          },
+          {
+            "width": 13,
+            "rows": 32,
+            "forbidden_windows_found": [],
+            "excluded": false
+          },
+          {
+            "width": 15,
+            "rows": 24,
+            "forbidden_windows_found": [],
+            "excluded": false
+          }
+        ],
+        "excludes_any": false,
+        "widths_tested": [
+          9,
+          11,
+          13,
+          15
+        ]
+      },
+      "nontrivial": false,
+      "verdict": "VACUOUS: W is the full window set, so the invariant is 'true of every row'. It is preserved because it says nothing, and it excludes nothing."
+    },
+    {
+      "k": 8,
+      "n_seed_windows": 256,
+      "of_possible": 256,
+      "full_language": true,
+      "preserved": {
+        "checked": 0,
+        "violations": [],
+        "ok": true,
+        "note": "trivially preserved: W is every window"
+      },
+      "exclusion": {
+        "per_width": [
+          {
+            "width": 11,
+            "rows": 10,
+            "forbidden_windows_found": [],
+            "excluded": false
+          },
+          {
+            "width": 13,
+            "rows": 32,
+            "forbidden_windows_found": [],
+            "excluded": false
+          },
+          {
+            "width": 15,
+            "rows": 24,
+            "forbidden_windows_found": [],
+            "excluded": false
+          }
+        ],
+        "excludes_any": false,
+        "widths_tested": [
+          11,
+          13,
+          15
+        ]
+      },
+      "nontrivial": false,
+      "verdict": "VACUOUS: W is the full window set, so the invariant is 'true of every row'. It is preserved because it says nothing, and it excludes nothing."
+    },
+    {
+      "k": 9,
+      "n_seed_windows": 512,
+      "of_possible": 512,
+      "full_language": true,
+      "preserved": {
+        "checked": 0,
+        "violations": [],
+        "ok": true,
+        "note": "trivially preserved: W is every window"
+      },
+      "exclusion": {
+        "per_width": [
+          {
+            "width": 11,
+            "rows": 10,
+            "forbidden_windows_found": [],
+            "excluded": false
+          },
+          {
+            "width": 13,
+            "rows": 32,
+            "forbidden_windows_found": [],
+            "excluded": false
+          },
+          {
+            "width": 15,
+            "rows": 24,
+            "forbidden_windows_found": [],
+            "excluded": false
+          }
+        ],
+        "excludes_any": false,
+        "widths_tested": [
+          11,
+          13,
+          15
+        ]
+      },
+      "nontrivial": false,
+      "verdict": "VACUOUS: W is the full window set, so the invariant is 'true of every row'. It is preserved because it says nothing, and it excludes nothing."
+    },
+    {
+      "k": 10,
+      "n_seed_windows": 1024,
+      "of_possible": 1024,
+      "full_language": true,
+      "preserved": {
+        "checked": 0,
+        "violations": [],
+        "ok": true,
+        "note": "trivially preserved: W is every window"
+      },
+      "exclusion": {
+        "per_width": [
+          {
+            "width": 13,
+            "rows": 32,
+            "forbidden_windows_found": [],
+            "excluded": false
+          },
+          {
+            "width": 15,
+            "rows": 24,
+            "forbidden_windows_found": [],
+            "excluded": false
+          }
+        ],
+        "excludes_any": false,
+        "widths_tested": [
+          13,
+          15
+        ]
+      },
+      "nontrivial": false,
+      "verdict": "VACUOUS: W is the full window set, so the invariant is 'true of every row'. It is preserved because it says nothing, and it excludes nothing."
+    },
+    {
+      "k": 11,
+      "n_seed_windows": 2048,
+      "of_possible": 2048,
+      "full_language": true,
+      "preserved": {
+        "checked": 0,
+        "violations": [],
+        "ok": true,
+        "note": "trivially preserved: W is every window"
+      },
+      "exclusion": {
+        "per_width": [
+          {
+            "width": 13,
+            "rows": 32,
+            "forbidden_windows_found": [],
+            "excluded": false
+          },
+          {
+            "width": 15,
+            "rows": 24,
+            "forbidden_windows_found": [],
+            "excluded": false
+          }
+        ],
+        "excludes_any": false,
+        "widths_tested": [
+          13,
+          15
+        ]
+      },
+      "nontrivial": false,
+      "verdict": "VACUOUS: W is the full window set, so the invariant is 'true of every row'. It is preserved because it says nothing, and it excludes nothing."
+    },
+    {
+      "k": 12,
+      "n_seed_windows": 4096,
+      "of_possible": 4096,
+      "full_language": true,
+      "preserved": {
+        "checked": 0,
+        "violations": [],
+        "ok": true,
+        "note": "trivially preserved: W is every window"
+      },
+      "exclusion": {
+        "per_width": [
+          {
+            "width": 15,
+            "rows": 24,
+            "forbidden_windows_found": [],
+            "excluded": false
+          }
+        ],
+        "excludes_any": false,
+        "widths_tested": [
+          15
+        ]
+      },
+      "nontrivial": false,
+      "verdict": "VACUOUS: W is the full window set, so the invariant is 'true of every row'. It is preserved because it says nothing, and it excludes nothing."
+    },
+    {
+      "k": 13,
+      "n_seed_windows": 8192,
+      "of_possible": 8192,
+      "full_language": true,
+      "preserved": {
+        "checked": 0,
+        "violations": [],
+        "ok": true,
+        "note": "trivially preserved: W is every window"
+      },
+      "exclusion": {
+        "per_width": [
+          {
+            "width": 15,
+            "rows": 24,
+            "forbidden_windows_found": [],
+            "excluded": false
+          }
+        ],
+        "excludes_any": false,
+        "widths_tested": [
+          15
+        ]
+      },
+      "nontrivial": false,
+      "verdict": "VACUOUS: W is the full window set, so the invariant is 'true of every row'. It is preserved because it says nothing, and it excludes nothing."
+    },
+    {
+      "k": 14,
+      "n_seed_windows": 16384,
+      "of_possible": 16384,
+      "full_language": true,
+      "preserved": {
+        "checked": 0,
+        "violations": [],
+        "ok": true,
+        "note": "trivially preserved: W is every window"
+      },
+      "exclusion": {
+        "per_width": [],
+        "excludes_any": false,
+        "widths_tested": []
+      },
+      "nontrivial": false,
+      "verdict": "VACUOUS: W is the full window set, so the invariant is 'true of every row'. It is preserved because it says nothing, and it excludes nothing."
+    },
+    {
+      "k": 15,
+      "n_seed_windows": 32768,
+      "of_possible": 32768,
+      "full_language": true,
+      "preserved": {
+        "checked": 0,
+        "violations": [],
+        "ok": true,
+        "note": "trivially preserved: W is every window"
+      },
+      "exclusion": {
+        "per_width": [],
+        "excludes_any": false,
+        "widths_tested": []
+      },
+      "nontrivial": false,
+      "verdict": "VACUOUS: W is the full window set, so the invariant is 'true of every row'. It is preserved because it says nothing, and it excludes nothing."
+    }
+  ],
+  "controls_window_counts": {
+    "30": {
+      "6": 64,
+      "10": 1024,
+      "14": 10478
+    },
+    "45": {
+      "6": 64,
+      "10": 1024,
+      "14": 11149
+    },
+    "90": {
+      "6": 15,
+      "10": 43,
+      "14": 87
+    },
+    "110": {
+      "6": 59,
+      "10": 715,
+      "14": 2958
+    }
+  },
+  "controls_steps": 160,
+  "controls_note": "matched horizon, rule 30 included. A control whose count is far below 2^k shows the measurement can detect a restricted language when one exists, so a full count for rule 30 is an absence of structure rather than an absence of sensitivity.",
+  "any_invariant_found": false,
+  "elapsed_s": 0.33
+}

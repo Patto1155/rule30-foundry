@@ -1,0 +1,30 @@
+{
+  "name": "branch-summary-search",
+  "kind": "measurement",
+  "purpose": "exploratory",
+  "seed": "single-black-cell",
+  "theory_gate": "OPEN",
+  "theory_gate_citation": "docs/STATUS.md B1 is graded 'Proof target needed': phase plus one tail-boundary bit selects every successor, but computing that bit still depends on a transient growing to 1.335*d. docs/theory/README.md \u00a74 closes no route that bears on whether a compact summary is a state.",
+  "script": "experiments/branch_summary_search.py",
+  "argv": [
+    "--histories",
+    "3000",
+    "--steps",
+    "8192",
+    "--depth",
+    "400",
+    "--out",
+    "runs/branch-summary-search-2026-09-15.json",
+    "--pretty"
+  ],
+  "claims": [],
+  "reads_packed_bitstream": false,
+  "outputs": [
+    "runs/branch-summary-search-2026-09-15.json"
+  ],
+  "budget": {
+    "minutes": 15,
+    "device": "cpu"
+  },
+  "notes": "Two populations, never pooled. The 'arbitrary' population is a counterexample search against a PROPOSED general recurrence, not a measurement of Rule 30: a recurrence claiming to be general must hold on every history, so a collision there refutes it and nothing else is claimed from it. CLAUDE.md rule 3 governs the 'seed_orbit' population, which uses the single black cell and is reported with its event count so a clean result is not read as a powered one."
+}
