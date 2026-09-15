@@ -82,9 +82,11 @@ assuming a locally feasible pattern or abstract map branch is that orbit.
 - **`SKIP` is not `PASS`.** See A3.
 - **Vacuous negatives.** Run `python experiments/counting_bound.py --pretty`
   before any "searched class `M`, found no fit" experiment. If
-  `log2|M| < n` the negative is guaranteed. A certificate was retracted in
-  2026-08 for exactly this, and its own random control had returned the *same*
-  negative — which is a red flag, not a reassurance.
+  `log2|M| < n` the negative does not discriminate — almost every sequence
+  gives it. A certificate was retracted in 2026-08 for exactly this, and its
+  own random control had returned the *same* negative, which is a red flag
+  rather than a reassurance. The exclusion may still be true if the search was
+  exhaustive; that is a bounded finding, not evidence.
 - **Vacuous controls.** A negative control that passes while testing nothing is
   worse than none. The DRAT self-test originally truncated a proof of an
   instance that was UNSAT by unit propagation, so the checker accepted *any*

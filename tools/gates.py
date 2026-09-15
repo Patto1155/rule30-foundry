@@ -70,14 +70,16 @@ Usage:
 `--expect-fail` inverts the exit code: it is how verify_all checks that the
 trap manifest is still refused. A gate that stops gating is the failure mode.
 
-`purpose` scopes the gates. Today only `seed` reads it: the first three
-purposes above are statements about the single-seed center column and must
-use that seed, the last two are not and may use any initial condition. The
-counting bound still applies to every declared negative regardless of
-purpose -- `exact-exclusion` names the case where an exhaustive negative is a
-true finite fact even when it carries no information about the sequence, but
-separating that from the statistical verdict is a change to
-experiments/counting_bound.py that has not been made yet.
+`purpose` scopes the gates. `seed` refuses a non-single-seed run for the
+three purposes that speak about the column, requires a `replication` to
+preserve the seed of the run it names, and does not apply to an instrument
+check. `theory-gate` and `counting-bound` do not apply to an instrument check
+either: a positive control must be free to target settled ground, and a
+detection-power control must be free to run a class too small to fit.
+`counting-bound` also admits a declared-exhaustive `exact-exclusion` as a
+bounded finding -- whether a negative DISCRIMINATES the sequence and whether
+it is TRUE are separate questions, and only the first is a counting
+question.
 """
 
 from __future__ import annotations
@@ -312,6 +314,48 @@ def _gate_annihilator(s: dict) -> Gate:
                 "These necessary bounds do not establish a relation or its predictive value.")
 
 
+def _non_discriminating(m: dict, s: dict, detail: str) -> Gate:
+    """Verdict for a negative that a coin would also have produced.
+
+    Two independent questions, and the old gate answered only one while
+    claiming both. Whether the negative DISCRIMINATES this sequence from a
+    random one is the counting bound: below the threshold, P(a uniform random
+    string fits) <= 2^(log2|M| - n), so the negative carries almost no
+    information about Rule 30. Whether the negative is TRUE is exhaustiveness:
+    a complete search of M that finds no fit has proved no member of M
+    generates the prefix, and that proof does not weaken as M shrinks.
+
+    So a declared-exhaustive `exact-exclusion` is admitted as a bounded
+    finding, with the limit stated in the verdict rather than left for the
+    write-up to remember. Everything that makes a claim about the column is
+    still refused: the finding is real and it is not evidence of complexity,
+    and those are not the same permission.
+    """
+    exhaustive = s.get("exhaustive") is True
+    if m.get("purpose") == "exact-exclusion":
+        if not exhaustive:
+            return Gate("counting-bound", FAIL,
+                        f"{detail} purpose 'exact-exclusion' admits a bounded "
+                        "finding only when the search is complete: declare "
+                        '`"exhaustive": true` in `search`. A search that was '
+                        "not exhaustive has not excluded anything -- it failed "
+                        "to find something, which is the weaker claim the "
+                        "counting bound refuses.")
+        return Gate("counting-bound", PASS,
+                    f"{detail} admitted as a BOUNDED EXCLUSION: an exhaustive "
+                    "search proves no member of this class generates the "
+                    "prefix, and that is true however small the class. It is "
+                    "not evidence that the sequence is complex -- a coin gives "
+                    "the same negative -- so state the class and do not "
+                    "generalise beyond it.")
+    return Gate("counting-bound", FAIL,
+                f"{detail} A uniform random string would almost certainly "
+                "give the same negative, so this measures |M|, not Rule 30. "
+                "If the search is exhaustive, the exclusion is still true: "
+                "declare purpose 'exact-exclusion' with `\"exhaustive\": true` "
+                "and record it as a bounded finding rather than as evidence.")
+
+
 def gate_counting_bound(m: dict) -> Gate:
     """CLAUDE.md rule 1. A negative from class M over n bits is information
     only when log2|M| >= n; below that every sequence gives the same negative
@@ -355,10 +399,11 @@ def gate_counting_bound(m: dict) -> Gate:
             return Gate("counting-bound", PASS,
                         f"log2|M| = {log2m:.1f} >= n = {n} "
                         f"(margin {log2m - n:+.1f})")
-        return Gate("counting-bound", FAIL,
-                    f"VACUOUS: log2|M| = {log2m:.1f} < n = {n} for "
-                    f"{states}-state base-{base} DFAO. {v['reading']}. "
-                    "The negative is guaranteed by counting alone.")
+        return _non_discriminating(
+            m, s,
+            f"NOT DISCRIMINATING: log2|M| = {log2m:.1f} < n = {n} for "
+            f"{states}-state base-{base} DFAO (expected fits "
+            f"2^{v['log2_expected_fits']:.1f}).")
 
     log2m = s.get("log2_size")
     if not isinstance(log2m, (int, float)):
@@ -369,8 +414,10 @@ def gate_counting_bound(m: dict) -> Gate:
     if log2m >= n:
         return Gate("counting-bound", PASS,
                     f"log2|M| = {log2m:.1f} >= n = {n} (declared)")
-    return Gate("counting-bound", FAIL,
-                f"VACUOUS: declared log2|M| = {log2m:.1f} < n = {n}")
+    return _non_discriminating(
+        m, s,
+        f"NOT DISCRIMINATING: declared log2|M| = {log2m:.1f} < n = {n} "
+        f"(expected fits 2^{log2m - n:+.1f}).")
 
 
 def gate_light_cone(m: dict) -> Gate:

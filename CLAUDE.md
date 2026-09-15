@@ -36,8 +36,13 @@ file starts tracking current state.
 
 1. **Run the counting bound before any "we searched class `M`, found no fit"
    experiment.** `python experiments/counting_bound.py --pretty`. If
-   `log2|M| < n` the negative is guaranteed and the run is worthless. A
-   certificate was retracted in 2026-08 for exactly this.
+   `log2|M| < n` the negative does not discriminate: almost every sequence
+   gives it, so the run has measured `|M|` rather than Rule 30. A certificate
+   was retracted in 2026-08 for exactly this. Note what the bound does *not*
+   say — the negative is not *guaranteed* (a 1-state DFAO generates the
+   all-zero string at any length), and an exhaustive search that finds no fit
+   has still proved the exclusion. Record that as a bounded finding under
+   `purpose: exact-exclusion`, never as evidence of complexity.
 2. **`bitorder='little'` for every `data/center_col_*.bin`.** A bare
    `np.unpackbits` reverses each 8-bit block — 49.95% of positions differ while
    the bit mean is *identical*, so no aggregate check catches it.

@@ -1,8 +1,26 @@
 """Finite-prefix counting bound for shortcut-class search experiments.
 
 A negative result ("nothing in model class M fits the first n bits") is
-informative only when log2|M| >= n. Below that threshold every sequence produces
-the same negative and the experiment has measured |M|, not the sequence.
+*discriminating* only when log2|M| >= n. Below that threshold almost every
+sequence produces the same negative, so the experiment has measured |M| rather
+than the sequence.
+
+Two questions, and this file answers only the first:
+
+  discriminating?  Does the negative tell you something about THIS sequence?
+                   By Markov, P(some m in M fits a uniform random n-bit
+                   string) <= 2^(log2|M| - n), so below the threshold the
+                   negative is what you would have got from a coin.
+  true?            Is the negative correct? An exhaustive search that finds no
+                   fit has PROVED no member of M generates the prefix, at any
+                   |M|, and that proof does not weaken as the class shrinks.
+
+Conflating them is an error in both directions. Recording a non-discriminating
+negative as evidence about Rule 30 is the 2026-08 retraction. But claiming such
+a negative is *guaranteed* -- that any sequence whatsoever produces it -- is
+also false: a 1-state DFAO generates the all-zero string at every length, so a
+search over that class returns a positive on that sequence. What is guaranteed
+is only that the overwhelming majority of sequences give the negative.
 
 See docs/theory/finite-prefix-counting-bound.md.
 
@@ -109,10 +127,18 @@ def verdict(states: int, n_bits: int, base: int) -> dict:
         "p_random_sequence_also_has_no_fit_at_least": (
             1.0 - 2.0**margin if margin < 0 else None
         ),
+        "discriminating": bool(margin >= 0),
+        "exclusion_would_still_be_true": True,
         "reading": (
-            "informative: a negative result here constrains the sequence"
+            "discriminating: a negative result here constrains the sequence"
             if margin >= 0
-            else f"VACUOUS: any sequence gives this negative (expected fits 2^{margin:.1f})"
+            else ("NOT DISCRIMINATING: at most a 2^{:.1f} chance that a "
+                  "uniform random string would fit, so the negative is what a "
+                  "coin gives and says almost nothing about this sequence. An "
+                  "exhaustive search finding no fit has still PROVED no member "
+                  "of this class generates the prefix; record that as a "
+                  "bounded exclusion, never as evidence of complexity."
+                  ).format(margin)
         ),
     }
 

@@ -72,13 +72,38 @@ the single seed cannot see it. An unscoped seed gate refuses the exact check
 that catches the bug class that has cost this repo the most. `purpose` says
 which of the two a given run is, so both rules can hold at once.
 
-Two things it does **not** do. It does not weaken any gate for a purpose that
-makes a claim about the column: the counting bound, light cone, bit-order lint
-and censoring checks apply to `prize-claim`, `exact-exclusion` and
-`exploratory` unchanged, and the trap manifest is still refused. And it is not
-a grade — a `correctness-check` cannot be promoted into a prize claim by
-relabelling it, because its seed is wrong for that claim and the gate will say
-so on the next run.
+### Exact exclusions
+
+The counting bound answers one question: does a negative **discriminate** this
+sequence from a random one? It does not answer whether the negative is
+**true**. An exhaustive search of `M` that finds no fit has proved no member of
+`M` generates the prefix, and that proof does not weaken as `M` shrinks.
+
+So `exact-exclusion` may carry a non-discriminating negative, provided the
+search declares `"exhaustive": true`. The gate passes it as a *bounded
+exclusion* and says in the verdict what it is not: a coin gives the same
+negative, so it is not evidence that the column is complex. An exclusion that
+was not exhaustive is refused — that is a search that failed to find
+something, which is the weaker claim the bound exists to refuse.
+
+`"exhaustive": true` is not a bypass. `prize-claim` and `exploratory` are
+still refused with it, because they claim more than a bounded exclusion.
+
+The bound also never said the negative was *guaranteed*. A 1-state DFAO
+generates the all-zero string at every length, so that class returns a
+positive on that sequence; `counting_bound.py --verdict 1:8` reports
+non-discriminating while `p_random_sequence_also_has_no_fit_at_least` is
+0.992, which is the honest number.
+
+### What the taxonomy does not do
+
+It does not weaken any gate for a purpose that makes a claim about the column:
+the counting bound, light cone, bit-order lint and censoring checks apply to
+`prize-claim`, `exact-exclusion` and `exploratory` unchanged — bar the bounded
+exclusion above, which is stated in the verdict rather than hidden — and the
+trap manifest is still refused. And it is not a grade: a `correctness-check`
+cannot be promoted into a prize claim by relabelling it, because its seed is
+wrong for that claim and the gate will say so on the next run.
 
 ## Driving coarse-graining sweeps — `ca_lab.py`
 

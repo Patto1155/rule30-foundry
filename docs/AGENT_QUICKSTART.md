@@ -27,7 +27,10 @@ toward checkable artifacts.
 
    Before proposing any "search class `M`, find no fit" experiment, run
    `python experiments/counting_bound.py --pretty` and check `log2|M| >= n`.
-   If not, the negative is guaranteed and the run is worthless.
+   If not, the negative does not discriminate this sequence from a coin: it
+   measures `|M|`, not Rule 30. An exhaustive search still *proves* its
+   exclusion — record that under `purpose: exact-exclusion`, not as
+   evidence.
 
 3. Prefer existing tools over one-off scripts. If you need coarse-grain or CA
    exploration, start with `ca_lab.py`.

@@ -318,14 +318,66 @@ class TestCountingBound(unittest.TestCase):
                                      "base": 2, "prefix_bits": n})
 
     def test_the_retracted_certificate_shape_is_refused(self):
-        """24-state DFAO vs 10,000 bits: log2|M| = 244.078, VACUOUS. This is
-        the exact shape of the 2026-08 retraction and the trap manifest."""
+        """24-state DFAO vs 10,000 bits: log2|M| = 244.078. This is the exact
+        shape of the 2026-08 retraction and the trap manifest."""
         r = gates.preflight(self._search(24, 10_000), run_external=False)
         g = by_name(r, "counting-bound")
         self.assertEqual(g["status"], "FAIL")
         self.assertIn("244.1", g["reason"])
-        self.assertIn("VACUOUS", g["reason"])
+        self.assertIn("NOT DISCRIMINATING", g["reason"])
         self.assertEqual(r["verdict"], "FAIL")
+
+    def test_the_refusal_does_not_claim_the_negative_was_guaranteed(self):
+        """It was not. A 1-state DFAO generates the all-zero string at every
+        length, so `--verdict 1:8` is non-discriminating while a search over
+        that class returns a POSITIVE on that sequence. What counting gives
+        is that almost every string produces the negative, not that all do."""
+        r = gates.preflight(self._search(24, 10_000), run_external=False)
+        reason = by_name(r, "counting-bound")["reason"]
+        self.assertIn("almost certainly", reason)
+        for overclaim in ("guaranteed", "any sequence", "every sequence"):
+            self.assertNotIn(overclaim, reason)
+
+    def test_the_tool_agrees_that_a_tiny_class_can_still_fit(self):
+        cb = gates._load("experiments/counting_bound.py")
+        v = cb.verdict(1, 8, 2)
+        self.assertFalse(v["discriminating"])
+        self.assertTrue(v["exclusion_would_still_be_true"])
+        self.assertNotIn("any sequence", v["reading"])
+
+    def test_an_exhaustive_exact_exclusion_is_a_bounded_finding(self):
+        """The exclusion is TRUE however small the class -- an exhaustive
+        search has proved no member of M generates the prefix. That is a
+        different question from whether the negative discriminates Rule 30
+        from a coin, and the gate now answers them separately."""
+        m = self._search(2, 128)
+        m["purpose"] = "exact-exclusion"
+        m["search"]["exhaustive"] = True
+        r = gates.preflight(m, run_external=False)
+        g = by_name(r, "counting-bound")
+        self.assertEqual(g["status"], "PASS", g["reason"])
+        self.assertIn("BOUNDED EXCLUSION", g["reason"])
+        self.assertIn("not evidence", g["reason"])
+
+    def test_an_exclusion_that_was_not_exhaustive_excluded_nothing(self):
+        m = self._search(2, 128)
+        m["purpose"] = "exact-exclusion"
+        r = gates.preflight(m, run_external=False)
+        g = by_name(r, "counting-bound")
+        self.assertEqual(g["status"], "FAIL")
+        self.assertIn("exhaustive", g["reason"])
+
+    def test_exhaustiveness_does_not_admit_a_claim_making_purpose(self):
+        """`exhaustive: true` is not a bypass. Only the purpose that says the
+        finding is bounded may carry a non-discriminating negative."""
+        for purpose in ("prize-claim", "exploratory"):
+            with self.subTest(purpose=purpose):
+                m = self._search(2, 128)
+                m["purpose"] = purpose
+                m["search"]["exhaustive"] = True
+                r = gates.preflight(m, run_external=False)
+                self.assertEqual(
+                    by_name(r, "counting-bound")["status"], "FAIL")
 
     def test_informative_search_passes(self):
         r = gates.preflight(self._search(24, 200), run_external=False)
