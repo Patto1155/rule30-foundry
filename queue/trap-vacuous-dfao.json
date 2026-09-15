@@ -1,6 +1,7 @@
 {
   "name": "TRAP-vacuous-dfao-24",
   "kind": "search",
+  "purpose": "prize-claim",
   "seed": "single-black-cell",
   "theory_gate": "OPEN",
   "script": "experiments/counting_bound.py",

@@ -29,6 +29,11 @@ Manifest (JSON). Fields marked * are required; the rest depend on `kind`.
     {
       "name":        * "pattern-map-walk-32",
       "kind":        * "search" | "measurement" | "simulation",
+      "purpose":     * "prize-claim"       -- a statement about the column
+                     | "exact-exclusion"   -- a finite class excluded outright
+                     | "exploratory"       -- a pilot aimed at the column
+                     | "correctness-check" -- a statement about the instrument
+                     | "replication",      -- reproduces a prior run
       "seed":        * "single-black-cell",
       "theory_gate": * "OPEN" | "ALREADY SETTLED" | "ROUTE CLOSED" | "NOT COVERED",
       "script":      * "experiments/pattern_map_walk.py",
@@ -64,6 +69,15 @@ Usage:
 
 `--expect-fail` inverts the exit code: it is how verify_all checks that the
 trap manifest is still refused. A gate that stops gating is the failure mode.
+
+`purpose` scopes the gates. Today only `seed` reads it: the first three
+purposes above are statements about the single-seed center column and must
+use that seed, the last two are not and may use any initial condition. The
+counting bound still applies to every declared negative regardless of
+purpose -- `exact-exclusion` names the case where an exhaustive negative is a
+true finite fact even when it carries no information about the sequence, but
+separating that from the statistical verdict is a change to
+experiments/counting_bound.py that has not been made yet.
 """
 
 from __future__ import annotations
@@ -81,8 +95,24 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 PASS, FAIL, SKIP = "PASS", "FAIL", "SKIP"
 
 KINDS = ("search", "measurement", "simulation")
-REQUIRED = ("name", "kind", "seed", "theory_gate", "script")
+
+# What the run's output will be read AS. `kind` says how the run is shaped;
+# `purpose` says what a reader is entitled to conclude from it, and the gates
+# below are scoped by it. Without this axis a rule that exists to protect
+# prize claims also refuses the instrument checks the workflow mandates --
+# which is exactly what the blanket seed gate did to docs/WORKFLOW.md's
+# "always test a random IC".
+PURPOSES = ("prize-claim", "exact-exclusion", "exploratory",
+            "correctness-check", "replication")
+
+REQUIRED = ("name", "kind", "purpose", "seed", "theory_gate", "script")
 THE_SEED = "single-black-cell"
+
+# Purposes whose output is a statement about the single-seed center column,
+# and which must therefore use that seed (CLAUDE.md rule 3). The rest are
+# statements about the instrument or about a prior run, where the initial
+# condition is a free parameter and a random one is positively required.
+SEED_SCOPED_PURPOSES = ("prize-claim", "exact-exclusion", "exploratory")
 
 # A conclusion that says "never" without a horizon is the right-censoring
 # error AGENTS.md names explicitly. These qualifiers make it honest.
@@ -91,8 +121,11 @@ CENSOR_QUALIFIERS = re.compile(
     r"<=?\s*\d|≤\s*\d|first \d|the first)\b", re.I)
 UNQUALIFIED_NEVER = re.compile(r"\b(never|no period|aperiodic|does not repeat)\b", re.I)
 
-# The ~50% rule. A difference this close to a coin flip is uncorrelated
-# streams -- packing or seed mismatch -- never a kernel bug, which diverges late.
+# The ~50% rule. A difference this close to a coin flip means uncorrelated
+# streams, which is almost always a packing or seed mismatch. It is not proof
+# that the kernel is sound: a bug corrupting the opening steps decorrelates
+# everything after it and lands in this band too. The first divergence
+# position, not the rate, is what separates the two.
 FIFTY_PERCENT_BAND = (0.45, 0.55)
 
 
@@ -126,19 +159,43 @@ def gate_schema(m: dict) -> Gate:
         return Gate("schema", FAIL, f"missing required field(s): {', '.join(missing)}")
     if m["kind"] not in KINDS:
         return Gate("schema", FAIL, f"kind must be one of {KINDS}, got {m['kind']!r}")
-    return Gate("schema", PASS, "all required fields present")
+    if m["purpose"] not in PURPOSES:
+        return Gate("schema", FAIL,
+                    f"purpose must be one of {PURPOSES}, got {m['purpose']!r}. "
+                    "It decides which gates apply, so it cannot be guessed.")
+    return Gate("schema", PASS,
+                f"all required fields present; purpose {m['purpose']!r}")
 
 
 def gate_seed(m: dict) -> Gate:
-    """CLAUDE.md rule 3. All three prizes concern one deterministic initial
-    condition. An ensemble or random-IC quantity is not prize progress,
-    however well measured, so it is refused rather than run."""
+    """CLAUDE.md rule 3, scoped by `purpose`. All three prizes concern one
+    deterministic initial condition, so an ensemble or random-IC quantity is
+    not prize progress however well measured, and is refused rather than run.
+
+    It is refused only for the purposes that make a statement about the
+    center column. docs/WORKFLOW.md requires a random IC to catch packed
+    open-boundary padding bugs -- they leave the edges at 0, so the single
+    seed cannot see them -- and an unscoped seed gate refuses that check,
+    which is the conflict `purpose` exists to resolve. A correctness check is
+    not weaker evidence about the prize; it is evidence about the instrument,
+    and the ledger never reads it as anything else.
+    """
+    purpose = m.get("purpose")
+    if purpose not in SEED_SCOPED_PURPOSES:
+        return Gate("seed", SKIP,
+                    f"purpose is {purpose!r}: the result is a statement about "
+                    "the instrument or about a prior run, not about the "
+                    "single-seed center column. Any initial condition is "
+                    "admissible, and a random one is required for "
+                    "open-boundary checks (docs/WORKFLOW.md).")
     if m.get("seed") == THE_SEED:
-        return Gate("seed", PASS, "single-black-cell")
+        return Gate("seed", PASS, f"single-black-cell (purpose {purpose!r})")
     return Gate("seed", FAIL,
-                f"seed is {m.get('seed')!r}, not {THE_SEED!r}. An ensemble or "
-                "random-IC quantity is not progress on any prize problem "
-                "(docs/theory/README.md §0).")
+                f"seed is {m.get('seed')!r}, not {THE_SEED!r}, under purpose "
+                f"{purpose!r}. An ensemble or random-IC quantity is not "
+                "progress on any prize problem (docs/theory/README.md §0). If "
+                "this run checks the kernel rather than the column, declare "
+                "purpose 'correctness-check' instead of changing the seed.")
 
 
 def gate_theory(m: dict) -> Gate:
@@ -415,8 +472,11 @@ def gate_divergence(r: dict) -> Gate:
 
 
 def gate_fifty_percent(r: dict) -> Gate:
-    """AGENTS.md: a ~50% bit difference between two streams is never a kernel
-    bug -- it means they are uncorrelated, i.e. packing or seed mismatch."""
+    """AGENTS.md: a ~50% bit difference means the two streams are
+    uncorrelated, which is almost always a packing or seed mismatch. Check
+    packing and seed first. The residual case is a kernel bug that corrupts
+    the opening steps, which decorrelates the remainder and reads ~50% as
+    well; `divergence[].first_divergence` is what tells them apart."""
     sc = r.get("stream_comparison")
     if not sc:
         return Gate("fifty-percent", SKIP, "no stream comparison reported")
@@ -427,8 +487,10 @@ def gate_fifty_percent(r: dict) -> Gate:
     if lo <= f <= hi:
         return Gate("fifty-percent", FAIL,
                     f"{f:.4f} of positions differ: the streams are "
-                    "uncorrelated. Packing or seed mismatch -- not a kernel "
-                    "bug, which diverges late. Do not investigate the kernel.")
+                    "uncorrelated. Check packing and seed before the kernel -- "
+                    "a mismatch there is the overwhelmingly likely cause. Rule "
+                    "the kernel out on the first divergence position, not on "
+                    "this rate: an early-step kernel bug also reads ~50%.")
     return Gate("fifty-percent", PASS, f"{f:.4f} differing, outside the "
                 "uncorrelated band")
 

@@ -20,13 +20,52 @@ conventions and the experiment frontier.
 4. **Benchmark honestly.** If the reference now delegates to your fast path, force
    the slow path for the baseline (`RULE30_NO_FAST=1`). Report warm numbers and
    note run-to-run variance.
-5. **Drive experiments via `ca_lab.py`**, not one-off scripts (see below).
+5. **Drive coarse-graining and multi-rule sweeps via `ca_lab.py`**, not one-off
+   scripts (see below). Prize-facing work on the single-seed center column is
+   *outside* its scope — it has no verb for DFAO minimisation, annihilator
+   search, period sieving or diagonal walks. Those live in `experiments/`, one
+   script per experiment, driven under a manifest by `tools/workhorse.py`
+   ([`WORKHORSE.md`](WORKHORSE.md)). Do not wrap them in `ca_lab.py` to satisfy
+   this step.
 6. **Log** the result in `docs/experiment-logs/` (date, goal, setup, result,
    interpretation, next step; plus what was verified for GPU work).
 7. **Commit** per logical step with the verification result in the message. Push
    when asked; open a PR with `gh` when asked.
 
-## Driving experiments — `ca_lab.py`
+## Experiment purposes
+
+Every manifest declares a `purpose`. It is not a label — `tools/gates.py`
+scopes the gates by it, so it decides what the run is allowed to do and what a
+reader is entitled to conclude. `kind` says how the run is shaped
+(search/measurement/simulation); `purpose` says what its output *means*.
+
+| `purpose` | The output is a statement about | Seed |
+|---|---|---|
+| `prize-claim` | the single-seed center column, intended for the ledger | single-black-cell |
+| `exact-exclusion` | a finite model class, excluded outright | single-black-cell |
+| `exploratory` | the column, as a pilot — not yet ledger-facing | single-black-cell |
+| `correctness-check` | **the instrument**, not the column | any, and random ICs are required |
+| `replication` | a prior run, reproduced | whatever the original used |
+
+This axis exists because two of the repo's own rules were in direct conflict.
+CLAUDE.md rule 3 refuses random ICs, correctly: an ensemble quantity is not
+progress on any prize. The *Correctness lessons* above require a random IC,
+also correctly: the packed open-boundary padding bug leaves the edges at 0, so
+the single seed cannot see it. An unscoped seed gate refuses the exact check
+that catches the bug class that has cost this repo the most. `purpose` says
+which of the two a given run is, so both rules can hold at once.
+
+Two things it does **not** do. It does not lower any other gate: the counting
+bound, light cone, bit-order lint and censoring checks apply to every purpose
+alike. And it is not a grade — a `correctness-check` cannot be promoted into a
+prize claim by relabelling it, because its seed is wrong for that claim and
+the gate will say so on the next run.
+
+## Driving coarse-graining sweeps — `ca_lab.py`
+
+**Scope: coarse-graining closure and multi-rule field statistics.** For
+prize-facing center-column experiments see [`WORKHORSE.md`](WORKHORSE.md)
+instead; the two do not overlap.
 
 One JSON-emitting CLI over the verified, GPU-resident stack. `--pretty` adds a
 human table on stderr; stdout stays pure JSON (pipe to `jq`).
@@ -87,6 +126,8 @@ from an O(M)-per-projection loop and is no longer needed for the histogram path.
   (`g<0` or `g>=n_words`) to 0 *every* step, or Rule 30 fills them and bits leak
   across the edge in ~2 steps. This was hidden by spike-only space-time tests
   (edges stay 0) and caught only by a **random IC**. Always test a random IC.
+  Declare that run `"purpose": "correctness-check"` so the single-seed gate
+  admits it — see *Experiment purposes* below.
 - **Wrong positive control:** see the shift-rule note above — choosing a control
   that *can't* hit the target in principle produces a false "tool is broken".
 

@@ -46,8 +46,12 @@ file starts tracking current state.
    single-black-cell initial condition. An ensemble or random-IC quantity is
    not prize progress. See `docs/theory/README.md` §0.
 
-A ~50% bit difference between two streams is **never** a kernel bug — it means
-a packing or seed mismatch. Real kernel bugs diverge *late*.
+A ~50% bit difference between two streams is almost always a packing or seed
+mismatch, not a kernel bug: the streams are simply uncorrelated. Check *where*
+they first diverge before believing that. A kernel bug that corrupts the first
+few steps also decorrelates the rest, and reads ~50% too — so ~50% plus an
+immediate first divergence is a kernel bug. It is late first divergence that
+rules the kernel out.
 
 ## Deeper reference, in the order worth reading
 

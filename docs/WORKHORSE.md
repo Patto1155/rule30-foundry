@@ -89,7 +89,7 @@ tool it claims to enforce.
 | Gate | Rule | Authority |
 |---|---|---|
 | `counting-bound` | `log2\|M\| >= n`, or a negative is vacuous | `experiments/counting_bound.verdict` |
-| `seed` | single black cell only | CLAUDE.md rule 3 |
+| `seed` | single black cell, for the purposes that speak about the column | CLAUDE.md rule 3, scoped by `purpose` |
 | `theory-gate` | must be `OPEN` | AGENTS.md, declared in the manifest |
 | `light-cone` | tape long enough for the step count | `gpu/tape_geometry.check` |
 | `bitorder-lint` | no bare `packbits`/`unpackbits` | `tools/lint_bitorder.py` |
@@ -97,7 +97,7 @@ tool it claims to enforce.
 | `censoring` | no unqualified "never" | AGENTS.md |
 | `noise-floor` | every metric carries a baseline | AGENTS.md |
 | `divergence-invariant` | `first_divergence >= distance` | AGENTS.md |
-| `fifty-percent` | ~50% differing is a packing/seed mismatch | CLAUDE.md |
+| `fifty-percent` | ~50% differing is almost always a packing/seed mismatch | CLAUDE.md |
 
 Equality passes the counting bound. `counting_bound.py` marks `margin >= 0`
 informative and Experiment S sits at that boundary; a strict `>` would reject
@@ -177,6 +177,7 @@ Schema is documented at the top of `tools/gates.py`. The minimum:
 {
   "name": "b1-pattern-map-walk-32",
   "kind": "measurement",
+  "purpose": "exploratory",
   "seed": "single-black-cell",
   "theory_gate": "OPEN",
   "script": "experiments/pattern_map_walk.py",
@@ -192,6 +193,14 @@ Anything a run leaves untracked fails the run and is named on stderr: an
 untracked file blocks the *next* run, which refuses to start on a dirty tree,
 and the remedy (a `.gitignore` `!` exception plus `make_manifest`) is a
 decision for a person rather than something to `add -f` past.
+
+`purpose` is required and closed-vocabulary: `prize-claim`, `exact-exclusion`,
+`exploratory`, `correctness-check`, `replication`. It scopes the `seed` gate —
+the first three are statements about the single-seed center column and must use
+that seed; the last two are statements about the instrument or about a prior
+run and may use any initial condition, including the random IC that
+[`WORKFLOW.md`](WORKFLOW.md) requires for open-boundary checks. It lowers no
+other gate. Full table: [`WORKFLOW.md`](WORKFLOW.md) *Experiment purposes*.
 
 `kind: "search"` with `"claims": ["negative"]` additionally requires `search`
 with either DFAO parameters or a declared `log2_size` — a guess there defeats

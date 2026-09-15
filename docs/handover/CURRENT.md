@@ -75,8 +75,10 @@ assuming a locally feasible pattern or abstract map branch is that orbit.
   MSB-first. A bare `np.unpackbits` reverses each 8-bit block: 49.95% of
   positions differ while the bit mean is *identical*, so no aggregate check
   catches it. `tools/lint_bitorder.py` rejects bare calls.
-- **A ~50% bit difference between two streams is never a kernel bug.** It means
-  a packing or seed mismatch. Real kernel bugs diverge *late*.
+- **A ~50% bit difference between two streams is almost always a packing or
+  seed mismatch, not a kernel bug.** Confirm with the first divergence
+  position, not the rate: an early-step kernel bug also decorrelates and reads
+  ~50%. Late first divergence is what rules the kernel out.
 - **`SKIP` is not `PASS`.** See A3.
 - **Vacuous negatives.** Run `python experiments/counting_bound.py --pretty`
   before any "searched class `M`, found no fit" experiment. If
