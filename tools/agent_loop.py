@@ -81,6 +81,7 @@ from __future__ import annotations
 import argparse
 import fnmatch
 import importlib.util
+import inspect
 import json
 import os
 import re
@@ -97,6 +98,13 @@ DEFAULT_MAX_TURNS = 40
 DEFAULT_MAX_TOOL_CALLS = 50
 DEFAULT_MAX_COST_USD = 1.00
 DEFAULT_WALL_CLOCK_S = 3600
+
+# Wall-clock held back from the working phase so the final report has time to
+# be written. Without it the loop works until the clock is spent and then asks
+# for a report with nothing left to write it in -- the wrap-up call inherits
+# the full request timeout and overruns the limit, or is cut off and the run
+# ends silent, which is the failure the wrap-up exists to prevent.
+DEFAULT_WRAP_UP_RESERVE_S = 120
 
 # Per-result cap. A `run` that prints a megabyte would otherwise be pasted
 # into the next request, and the turn after that, and the one after that:
@@ -395,17 +403,42 @@ def tool_schemas(names: list[str] | str | None = None) -> list[dict]:
             if names is None or n in names]
 
 
-def execute(name: str, args: dict, workdir: Path) -> tuple[str, bool]:
+def _default_timeout(fn) -> int:
+    """The tool function's own default, so the clamp has one source of truth."""
+    param = inspect.signature(fn).parameters.get("timeout")
+    if param is None or param.default is inspect.Parameter.empty:
+        return 0
+    return int(param.default)
+
+
+def execute(name: str, args: dict, workdir: Path,
+            max_seconds: float | None = None) -> tuple[str, bool]:
     """Run one tool call. Returns (result_text, ok).
 
     A refusal comes back as text the model can read and act on. Only a bug in
     this file should raise, and even that is caught by the loop -- one bad
     tool call should not lose a run that is otherwise going well.
+
+    `max_seconds` is the wall clock the whole run has left. A blocking tool is
+    clamped to it: a 900-second `run` started with 30 seconds left overruns
+    the limit by fourteen minutes, and the limit is the only thing standing
+    between a stuck command and a run that never ends. Clamping here rather
+    than in each tool keeps the rule in one place, and reads the tool's own
+    signature for the default so the two cannot drift apart.
     """
     tool = TOOLS.get(name)
     if tool is None:
         return (f"no such tool {name!r}. Available: "
                 f"{', '.join(sorted(TOOLS))}"), False
+    if max_seconds is not None and "timeout" in tool.params:
+        if max_seconds <= 0:
+            return (f"not executed: no wall clock left to run {name!r} "
+                    "within the budget."), False
+        asked = args.get("timeout")
+        asked = int(asked) if isinstance(asked, (int, float)) else _default_timeout(tool.fn)
+        clamped = max(1, min(asked, int(max_seconds)))
+        if clamped < asked:
+            args = {**args, "timeout": clamped}
     try:
         return tool.fn(workdir, **args), True
     except ToolError as exc:
@@ -462,9 +495,13 @@ class Budget:
     def __init__(self, max_turns=DEFAULT_MAX_TURNS,
                  max_tool_calls=DEFAULT_MAX_TOOL_CALLS,
                  max_cost_usd=DEFAULT_MAX_COST_USD,
-                 wall_clock_s=DEFAULT_WALL_CLOCK_S):
+                 wall_clock_s=DEFAULT_WALL_CLOCK_S,
+                 wrap_up_reserve_s=DEFAULT_WRAP_UP_RESERVE_S):
         self.max_turns, self.max_tool_calls = max_turns, max_tool_calls
         self.max_cost_usd, self.wall_clock_s = max_cost_usd, wall_clock_s
+        # Never reserve so much that there is no working phase at all: a
+        # 60-second budget with a 120-second reserve must still do something.
+        self.wrap_up_reserve_s = min(wrap_up_reserve_s, wall_clock_s // 2)
         self.turns = self.tool_calls = 0
         self.cost_usd = 0.0
         self.started = time.time()
@@ -473,14 +510,41 @@ class Budget:
     def elapsed(self) -> float:
         return time.time() - self.started
 
+    @property
+    def work_remaining_s(self) -> float:
+        """Wall clock left for work, with the report's share held back."""
+        return max(0.0, self.wall_clock_s - self.wrap_up_reserve_s
+                   - self.elapsed)
+
+    @property
+    def total_remaining_s(self) -> float:
+        """Wall clock left before the limit, reserve included."""
+        return max(0.0, self.wall_clock_s - self.elapsed)
+
+    def report_timeout(self, request_timeout: int) -> int:
+        """Timeout for the wrap-up call: what is left, never more than asked.
+
+        At least a second, because a zero timeout is an immediate failure and
+        a report that was never attempted is indistinguishable from one the
+        model declined to write.
+        """
+        return max(1, int(min(request_timeout, self.total_remaining_s)))
+
     def exceeded(self) -> str | None:
-        if self.turns >= self.max_turns:
+        """Why the working phase must stop, or None.
+
+        The turn limit reserves one turn for the report, so `max_turns` is
+        the total the run may cost rather than the number before a wrap-up
+        that pushes it one higher. The clock stops the working phase at
+        `wall_clock_s - wrap_up_reserve_s` for the same reason.
+        """
+        if self.turns >= max(1, self.max_turns - 1):
             return STOP_TURNS
         if self.tool_calls >= self.max_tool_calls:
             return STOP_CALLS
         if self.max_cost_usd and self.cost_usd >= self.max_cost_usd:
             return STOP_COST
-        if self.elapsed >= self.wall_clock_s:
+        if self.work_remaining_s <= 0:
             return STOP_CLOCK
         return None
 
@@ -491,7 +555,8 @@ class Budget:
                 "limits": {"max_turns": self.max_turns,
                            "max_tool_calls": self.max_tool_calls,
                            "max_cost_usd": self.max_cost_usd,
-                           "wall_clock_s": self.wall_clock_s}}
+                           "wall_clock_s": self.wall_clock_s,
+                           "wrap_up_reserve_s": self.wrap_up_reserve_s}}
 
 
 WRAP_UP = """\
@@ -566,7 +631,8 @@ def run_loop(task: str, workdir: Path, provider, *, budget: Budget | None = None
                 # usually found something, and the cheapest way to get it is
                 # to ask. Tools are withheld rather than merely discouraged:
                 # the budget is spent, and a model that can call one will.
-                final = _wrap_up(provider, messages, hit, request_timeout,
+                final = _wrap_up(provider, messages, hit,
+                                 budget.report_timeout(request_timeout),
                                  budget, record)
                 break
             try:
@@ -598,20 +664,38 @@ def run_loop(task: str, workdir: Path, provider, *, budget: Budget | None = None
             messages.append({"role": "assistant",
                              "content": msg.get("content") or "",
                              "tool_calls": calls})
+            # The budget is enforced per call, not per batch. A model may
+            # return any number of tool_calls in one turn, and checking only
+            # between turns let a three-call batch run in full against a
+            # one-call limit -- the limit held for turns and not for the
+            # thing it names. A refused call still gets a result message:
+            # the API rejects the next request if any tool_call in the
+            # assistant message is left unanswered, so dropping it would
+            # break the run rather than end it. The loop is not broken out
+            # of here either -- it goes round, `exceeded()` fires at the top,
+            # and the run ends through the wrap-up like any other budget stop.
             for call in calls:
                 fn = call.get("function") or {}
                 name = fn.get("name") or ""
-                try:
-                    args = json.loads(fn.get("arguments") or "{}")
-                    if not isinstance(args, dict):
-                        raise ValueError("arguments must be an object")
-                except ValueError as exc:
-                    result, ok = (f"error: could not parse arguments as JSON "
-                                  f"({exc}). Send a JSON object."), False
+                hit = budget.exceeded()
+                if hit:
+                    result, ok = (f"not executed: the {hit} budget was spent "
+                                  "earlier in this batch of tool calls."), False
+                    record({"event": "tool-refused", "name": name,
+                            "stop_reason": hit})
                 else:
-                    result, ok = execute(name, args, workdir)
-                budget.tool_calls += 1
-                tally[name] = tally.get(name, 0) + 1
+                    try:
+                        args = json.loads(fn.get("arguments") or "{}")
+                        if not isinstance(args, dict):
+                            raise ValueError("arguments must be an object")
+                    except ValueError as exc:
+                        result, ok = (f"error: could not parse arguments as "
+                                      f"JSON ({exc}). Send a JSON object."), False
+                    else:
+                        result, ok = execute(name, args, workdir,
+                                             max_seconds=budget.work_remaining_s)
+                    budget.tool_calls += 1
+                    tally[name] = tally.get(name, 0) + 1
                 record({"event": "tool", "name": name,
                         "args": fn.get("arguments", "")[:1000], "ok": ok,
                         "result": result[:2000]})
@@ -647,6 +731,10 @@ def main(argv: list[str] | None = None) -> int:
                    metavar="USD")
     r.add_argument("--wall-clock", type=int, default=DEFAULT_WALL_CLOCK_S,
                    metavar="S")
+    r.add_argument("--wrap-up-reserve", type=int,
+                   default=DEFAULT_WRAP_UP_RESERVE_S, metavar="S",
+                   help="wall clock held back from work so the final report "
+                        "can be written (capped at half the wall clock)")
     r.add_argument("--transcript", help="append JSONL of every turn here")
 
     args = ap.parse_args(argv)
@@ -671,7 +759,8 @@ def main(argv: list[str] | None = None) -> int:
     result = run_loop(
         args.task, Path(args.workdir), provider,
         budget=Budget(args.max_turns, args.max_tool_calls, args.max_cost,
-                      args.wall_clock),
+                      args.wall_clock,
+                      wrap_up_reserve_s=args.wrap_up_reserve),
         tools=args.tools.split(",") if args.tools else None,
         transcript=Path(args.transcript) if args.transcript else None,
         on_event=lambda e: print(

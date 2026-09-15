@@ -29,6 +29,11 @@ Manifest (JSON). Fields marked * are required; the rest depend on `kind`.
     {
       "name":        * "pattern-map-walk-32",
       "kind":        * "search" | "measurement" | "simulation",
+      "purpose":     * "prize-claim"       -- a statement about the column
+                     | "exact-exclusion"   -- a finite class excluded outright
+                     | "exploratory"       -- a pilot aimed at the column
+                     | "correctness-check" -- a statement about the instrument
+                     | "replication",      -- reproduces a prior run
       "seed":        * "single-black-cell",
       "theory_gate": * "OPEN" | "ALREADY SETTLED" | "ROUTE CLOSED" | "NOT COVERED",
       "script":      * "experiments/pattern_map_walk.py",
@@ -64,6 +69,17 @@ Usage:
 
 `--expect-fail` inverts the exit code: it is how verify_all checks that the
 trap manifest is still refused. A gate that stops gating is the failure mode.
+
+`purpose` scopes the gates. `seed` refuses a non-single-seed run for the
+three purposes that speak about the column, requires a `replication` to
+preserve the seed of the run it names, and does not apply to an instrument
+check. `theory-gate` and `counting-bound` do not apply to an instrument check
+either: a positive control must be free to target settled ground, and a
+detection-power control must be free to run a class too small to fit.
+`counting-bound` also admits a declared-exhaustive `exact-exclusion` as a
+bounded finding -- whether a negative DISCRIMINATES the sequence and whether
+it is TRUE are separate questions, and only the first is a counting
+question.
 """
 
 from __future__ import annotations
@@ -81,8 +97,29 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 PASS, FAIL, SKIP = "PASS", "FAIL", "SKIP"
 
 KINDS = ("search", "measurement", "simulation")
-REQUIRED = ("name", "kind", "seed", "theory_gate", "script")
+
+# What the run's output will be read AS. `kind` says how the run is shaped;
+# `purpose` says what a reader is entitled to conclude from it, and the gates
+# below are scoped by it. Without this axis a rule that exists to protect
+# prize claims also refuses the instrument checks the workflow mandates --
+# which is exactly what the blanket seed gate did to docs/WORKFLOW.md's
+# "always test a random IC".
+PURPOSES = ("prize-claim", "exact-exclusion", "exploratory",
+            "correctness-check", "replication")
+
+REQUIRED = ("name", "kind", "purpose", "seed", "theory_gate", "script")
 THE_SEED = "single-black-cell"
+
+# Purposes whose output is a statement about the single-seed center column,
+# and which must therefore use that seed (CLAUDE.md rule 3).
+SEED_SCOPED_PURPOSES = ("prize-claim", "exact-exclusion", "exploratory")
+
+# Purposes that are statements about the instrument rather than about Rule 30.
+# The initial condition is a free parameter for these, and a random one is
+# positively required to expose open-boundary padding bugs. `replication` is
+# deliberately NOT here: it is free of the single-seed rule but not free of
+# the seed it claims to reproduce -- see gate_seed.
+INSTRUMENT_PURPOSES = ("correctness-check",)
 
 # A conclusion that says "never" without a horizon is the right-censoring
 # error AGENTS.md names explicitly. These qualifiers make it honest.
@@ -91,8 +128,12 @@ CENSOR_QUALIFIERS = re.compile(
     r"<=?\s*\d|≤\s*\d|first \d|the first)\b", re.I)
 UNQUALIFIED_NEVER = re.compile(r"\b(never|no period|aperiodic|does not repeat)\b", re.I)
 
-# The ~50% rule. A difference this close to a coin flip is uncorrelated
-# streams -- packing or seed mismatch -- never a kernel bug, which diverges late.
+# The ~50% rule. A difference this close to a coin flip means the two streams
+# are uncorrelated. That is all it means: the rate identifies no cause, and
+# ranking causes by it is a guess dressed as a diagnosis. Check packing and
+# seed conventions, then localise the first divergence before assigning a
+# cause -- an early-step kernel bug decorrelates everything after it and
+# lands in this band exactly as a packing mismatch does.
 FIFTY_PERCENT_BAND = (0.45, 0.55)
 
 
@@ -126,19 +167,74 @@ def gate_schema(m: dict) -> Gate:
         return Gate("schema", FAIL, f"missing required field(s): {', '.join(missing)}")
     if m["kind"] not in KINDS:
         return Gate("schema", FAIL, f"kind must be one of {KINDS}, got {m['kind']!r}")
-    return Gate("schema", PASS, "all required fields present")
+    if m["purpose"] not in PURPOSES:
+        return Gate("schema", FAIL,
+                    f"purpose must be one of {PURPOSES}, got {m['purpose']!r}. "
+                    "It decides which gates apply, so it cannot be guessed.")
+    return Gate("schema", PASS,
+                f"all required fields present; purpose {m['purpose']!r}")
 
 
 def gate_seed(m: dict) -> Gate:
-    """CLAUDE.md rule 3. All three prizes concern one deterministic initial
-    condition. An ensemble or random-IC quantity is not prize progress,
-    however well measured, so it is refused rather than run."""
+    """CLAUDE.md rule 3, scoped by `purpose`. All three prizes concern one
+    deterministic initial condition, so an ensemble or random-IC quantity is
+    not prize progress however well measured, and is refused rather than run.
+
+    It is refused only for the purposes that make a statement about the
+    center column. docs/WORKFLOW.md requires a random IC to catch packed
+    open-boundary padding bugs -- they leave the edges at 0, so the single
+    seed cannot see them -- and an unscoped seed gate refuses that check,
+    which is the conflict `purpose` exists to resolve. A correctness check is
+    not weaker evidence about the prize; it is evidence about the instrument,
+    and the ledger never reads it as anything else.
+    """
+    purpose = m.get("purpose")
+
+    if purpose == "replication":
+        # Exempting a replication from the seed rule outright would let a
+        # random-IC run claim to reproduce a single-seed result: the strongest
+        # possible false positive, since a replication's whole value is that
+        # it reproduces a specific prior run. So the rule is not waived, it is
+        # redirected -- the seed must match the source's, and the source's
+        # seed must be stated where a reviewer can check it against the log.
+        rep = m.get("replicates")
+        if not isinstance(rep, dict):
+            return Gate("seed", FAIL,
+                        "purpose 'replication' requires a `replicates` object "
+                        "naming what is being reproduced: "
+                        '{"source": "<log or artifact path>", "seed": "<the '
+                        'seed that run used>"}.')
+        source, src_seed = rep.get("source"), rep.get("seed")
+        if not isinstance(source, str) or not source.strip():
+            return Gate("seed", FAIL, "replicates.source is missing")
+        if not isinstance(src_seed, str) or not src_seed.strip():
+            return Gate("seed", FAIL,
+                        f"replicates.seed is missing for source {source!r}. "
+                        "State the seed the original run used; an unstated "
+                        "one cannot be checked against this manifest's.")
+        if m.get("seed") != src_seed:
+            return Gate("seed", FAIL,
+                        f"replication seed {m.get('seed')!r} does not match "
+                        f"the seed {src_seed!r} of the run it claims to "
+                        f"reproduce ({source}). A different initial condition "
+                        "is a different experiment, not a replication.")
+        return Gate("seed", PASS,
+                    f"replication of {source} preserves its seed {src_seed!r}")
+
+    if purpose in INSTRUMENT_PURPOSES:
+        return Gate("seed", SKIP,
+                    f"purpose is {purpose!r}: the result is a statement about "
+                    "the instrument, not about the single-seed center column. "
+                    "Any initial condition is admissible, and a random one is "
+                    "required for open-boundary checks (docs/WORKFLOW.md).")
     if m.get("seed") == THE_SEED:
-        return Gate("seed", PASS, "single-black-cell")
+        return Gate("seed", PASS, f"single-black-cell (purpose {purpose!r})")
     return Gate("seed", FAIL,
-                f"seed is {m.get('seed')!r}, not {THE_SEED!r}. An ensemble or "
-                "random-IC quantity is not progress on any prize problem "
-                "(docs/theory/README.md §0).")
+                f"seed is {m.get('seed')!r}, not {THE_SEED!r}, under purpose "
+                f"{purpose!r}. An ensemble or random-IC quantity is not "
+                "progress on any prize problem (docs/theory/README.md §0). If "
+                "this run checks the kernel rather than the column, declare "
+                "purpose 'correctness-check' instead of changing the seed.")
 
 
 def gate_theory(m: dict) -> Gate:
@@ -146,7 +242,21 @@ def gate_theory(m: dict) -> Gate:
     states the theory-gate verdict rather than this code deriving it from
     prose -- but mandatory, so the question cannot go unasked. Only OPEN may
     run; re-measuring a Theorem is never legitimate and re-walking a closed
-    route is waste."""
+    route is waste.
+
+    That reasoning is about learning something new concerning Rule 30, so it
+    does not apply to a check on the instrument. A positive control is
+    *required* to target settled ground -- Thue-Morse returning s*=2 is
+    valuable precisely because the answer is known in advance, and a kernel
+    check reproducing a hash-anchored stream is checking the tool against an
+    answer theory already fixed. Refusing those as "ALREADY SETTLED" would
+    refuse every control the repo has, so this gate does not run for them."""
+    purpose = m.get("purpose")
+    if purpose in INSTRUMENT_PURPOSES:
+        return Gate("theory-gate", SKIP,
+                    f"purpose is {purpose!r}: a control checks the instrument "
+                    "against a known answer, so settled ground is the point "
+                    "rather than a reason to refuse it.")
     v = str(m.get("theory_gate", "")).strip().upper()
     if v == "OPEN":
         return Gate("theory-gate", PASS, "OPEN")
@@ -204,11 +314,67 @@ def _gate_annihilator(s: dict) -> Gate:
                 "These necessary bounds do not establish a relation or its predictive value.")
 
 
+def _non_discriminating(m: dict, s: dict, detail: str) -> Gate:
+    """Verdict for a negative that a coin would also have produced.
+
+    Two independent questions, and the old gate answered only one while
+    claiming both. Whether the negative DISCRIMINATES this sequence from a
+    random one is the counting bound: below the threshold, P(a uniform random
+    string fits) <= 2^(log2|M| - n), so the negative carries almost no
+    information about Rule 30. Whether the negative is TRUE is exhaustiveness:
+    a complete search of M that finds no fit has proved no member of M
+    generates the prefix, and that proof does not weaken as M shrinks.
+
+    So a declared-exhaustive `exact-exclusion` is admitted as a bounded
+    finding, with the limit stated in the verdict rather than left for the
+    write-up to remember. Everything that makes a claim about the column is
+    still refused: the finding is real and it is not evidence of complexity,
+    and those are not the same permission.
+    """
+    exhaustive = s.get("exhaustive") is True
+    if m.get("purpose") == "exact-exclusion":
+        if not exhaustive:
+            return Gate("counting-bound", FAIL,
+                        f"{detail} purpose 'exact-exclusion' admits a bounded "
+                        "finding only when the search is complete: declare "
+                        '`"exhaustive": true` in `search`. A search that was '
+                        "not exhaustive has not excluded anything -- it failed "
+                        "to find something, which is the weaker claim the "
+                        "counting bound refuses.")
+        return Gate("counting-bound", PASS,
+                    f"{detail} admitted as a BOUNDED EXCLUSION: an exhaustive "
+                    "search proves no member of this class generates the "
+                    "prefix, and that is true however small the class. It is "
+                    "not evidence that the sequence is complex -- a coin gives "
+                    "the same negative -- so state the class and do not "
+                    "generalise beyond it.")
+    return Gate("counting-bound", FAIL,
+                f"{detail} A uniform random string would almost certainly "
+                "give the same negative, so this measures |M|, not Rule 30. "
+                "If the search is exhaustive, the exclusion is still true: "
+                "declare purpose 'exact-exclusion' with `\"exhaustive\": true` "
+                "and record it as a bounded finding rather than as evidence.")
+
+
 def gate_counting_bound(m: dict) -> Gate:
     """CLAUDE.md rule 1. A negative from class M over n bits is information
     only when log2|M| >= n; below that every sequence gives the same negative
     and the run measures |M|, not Rule 30. Equality is informative -- the
-    tool's own threshold is `margin >= 0`, and Experiment S sits there."""
+    tool's own threshold is `margin >= 0`, and Experiment S sits there.
+
+    Scoped away from instrument checks for the same reason as the theory
+    gate: a detection-power control deliberately runs a class too small to
+    fit, to confirm the search reports a negative when it should. Its
+    negative is a measurement of the detector, not a claim about Rule 30, and
+    the counting bound has nothing to say about it. This does NOT relax the
+    rule for `exact-exclusion`, which still fails here -- recording a bounded
+    exclusion as a finding needs the vacuity verdict split from the
+    truth of the exclusion, which has not been done yet."""
+    purpose = m.get("purpose")
+    if purpose in INSTRUMENT_PURPOSES:
+        return Gate("counting-bound", SKIP,
+                    f"purpose is {purpose!r}: the negative measures the "
+                    "detector, not the sequence.")
     if m.get("kind") != "search":
         return Gate("counting-bound", SKIP, "not a search")
     s = m.get("search")
@@ -233,10 +399,11 @@ def gate_counting_bound(m: dict) -> Gate:
             return Gate("counting-bound", PASS,
                         f"log2|M| = {log2m:.1f} >= n = {n} "
                         f"(margin {log2m - n:+.1f})")
-        return Gate("counting-bound", FAIL,
-                    f"VACUOUS: log2|M| = {log2m:.1f} < n = {n} for "
-                    f"{states}-state base-{base} DFAO. {v['reading']}. "
-                    "The negative is guaranteed by counting alone.")
+        return _non_discriminating(
+            m, s,
+            f"NOT DISCRIMINATING: log2|M| = {log2m:.1f} < n = {n} for "
+            f"{states}-state base-{base} DFAO (expected fits "
+            f"2^{v['log2_expected_fits']:.1f}).")
 
     log2m = s.get("log2_size")
     if not isinstance(log2m, (int, float)):
@@ -247,8 +414,10 @@ def gate_counting_bound(m: dict) -> Gate:
     if log2m >= n:
         return Gate("counting-bound", PASS,
                     f"log2|M| = {log2m:.1f} >= n = {n} (declared)")
-    return Gate("counting-bound", FAIL,
-                f"VACUOUS: declared log2|M| = {log2m:.1f} < n = {n}")
+    return _non_discriminating(
+        m, s,
+        f"NOT DISCRIMINATING: declared log2|M| = {log2m:.1f} < n = {n} "
+        f"(expected fits 2^{log2m - n:+.1f}).")
 
 
 def gate_light_cone(m: dict) -> Gate:
@@ -415,8 +584,11 @@ def gate_divergence(r: dict) -> Gate:
 
 
 def gate_fifty_percent(r: dict) -> Gate:
-    """AGENTS.md: a ~50% bit difference between two streams is never a kernel
-    bug -- it means they are uncorrelated, i.e. packing or seed mismatch."""
+    """AGENTS.md: a ~50% bit difference means the two streams are
+    uncorrelated, and nothing more. Check packing and seed conventions, then
+    localise the first divergence before assigning a cause --
+    `divergence[].first_divergence` is the evidence that distinguishes a
+    convention mismatch from an early-step kernel bug. The rate does not."""
     sc = r.get("stream_comparison")
     if not sc:
         return Gate("fifty-percent", SKIP, "no stream comparison reported")
@@ -427,8 +599,10 @@ def gate_fifty_percent(r: dict) -> Gate:
     if lo <= f <= hi:
         return Gate("fifty-percent", FAIL,
                     f"{f:.4f} of positions differ: the streams are "
-                    "uncorrelated. Packing or seed mismatch -- not a kernel "
-                    "bug, which diverges late. Do not investigate the kernel.")
+                    "uncorrelated. Check packing and seed conventions, then "
+                    "localise the first divergence before assigning a cause. "
+                    "This rate is consistent with a convention mismatch and "
+                    "with an early-step kernel bug alike, so it names neither.")
     return Gate("fifty-percent", PASS, f"{f:.4f} differing, outside the "
                 "uncorrelated band")
 

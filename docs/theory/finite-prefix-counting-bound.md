@@ -2,7 +2,17 @@
 
 **Read this before running any "we searched model class M and found no fit"
 experiment.** It is the single cheapest way to avoid burning GPU-months on a
-result that was arithmetically guaranteed before the run started.
+result that a coin would have produced just as well.
+
+Two questions, and this bound answers only the first. **Does the negative
+discriminate** this sequence from a random one? That is counting. **Is the
+negative true?** That is exhaustiveness, and it is untouched by the bound: a
+complete search of `M` that finds no fit has proved no member of `M` generates
+the prefix, however small `M` is. So the bound does not say the negative was
+*guaranteed* — a 1-state DFAO generates the all-zero string at every length,
+so that class returns a positive on that sequence. It says almost every
+sequence gives the negative, which is why the negative tells you almost
+nothing.
 
 ## The bound
 

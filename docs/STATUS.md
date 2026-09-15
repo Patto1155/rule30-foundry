@@ -6,7 +6,7 @@ lives here. Overwrite this file in place; git history keeps the old versions.
 No other file may carry a "current state as of" section —
 `tools/lint_ledger.py` enforces it.
 
-Updated: 2026-09-09 · Newest log: `docs/experiment-logs/2026-09-09-seven-step-followup.md`
+Updated: 2026-09-15 · Newest log: `docs/experiment-logs/2026-09-15-delegation-pipeline-end-to-end.md`
 
 ## Where the three prize problems stand
 
@@ -103,12 +103,24 @@ happened anyway. See [`BRANCHING.md`](BRANCHING.md).
   **What has and has not been exercised.** The council answered a real review
   on 2026-09-04 and reproduced `counting_bound.py`'s own verdict on a planted
   vacuous negative. The pool has run live against both providers and two model
-  families. But `workhorse.py --agent codex` has still never implemented an
+  families.
+
+  **`codex_worker.py --backend agent` was demonstrated on 2026-09-15**
+  ([log](experiment-logs/2026-09-15-delegation-pipeline-end-to-end.md)): one
+  real task, two runs, $0.0295 total. The first hit its turn cap and came back
+  `BLOCKED` with the harness's own acceptance check failing; its evidence was
+  then recovered from a fresh `--single-branch` clone holding no `runs/` tree.
+  The second finished `READY-FOR-REVIEW`, and its output was reviewed against
+  the running script rather than accepted, then merged. The run also surfaced
+  a lead-side error worth keeping: an acceptance command of "preflight exits 0"
+  is satisfied by any gate-passing manifest, including one whose `script` never
+  runs the described check.
+
+  Still unexercised: `workhorse.py --agent codex` has never implemented an
   experiment, and `queue/b1-pattern-map-walk.json` — the one queued real task —
-  **has never been run**. The pilot that would settle whether any of this is
-  trustworthy is B1 and B2 on hardware already owned, with traps planted,
-  checking the validation layer catches every invalid result. Until that runs
-  the machinery is argued for rather than demonstrated. No hardware bought and
+  **has never been run**. The pilot that would settle the rest is B1 and B2 on
+  hardware already owned, with traps planted, checking the validation layer
+  catches every invalid result. No hardware bought and
   none justified: [`COMPUTE_PLAN.md`](COMPUTE_PLAN.md) §1 is titled *"The
   premise for renting was wrong"*, and the GPU simulator still does not
   checkpoint, which makes spot instances actively wrong.

@@ -33,9 +33,13 @@ real months:
   explicit `lineterminator="\n"` and `Path.write_text` needs `newline=""`.
   `tests/test_manifest_determinism.py` fails the build if either is forgotten.
 
-A ~50% bit difference between two streams is **never** a kernel bug. It means
-they are uncorrelated: a packing or seed mismatch. A real kernel bug diverges
-*late*.
+A ~50% bit difference between two streams means they are uncorrelated, and
+nothing further. **Check packing and seed conventions, then localise the first
+divergence before assigning a cause.** The rate cannot rank causes: a
+convention mismatch and a kernel bug in the opening steps decorrelate
+everything downstream alike and both sit at ~50%. Late first divergence rules
+the kernel out; immediate first divergence does not, and is investigated as a
+kernel bug.
 
 **New here?** Read [`CLAUDE.md`](CLAUDE.md) (auto-loaded, ~1 min), then
 [`docs/STATUS.md`](docs/STATUS.md) for what is in flight, then
@@ -182,7 +186,7 @@ For bit-packed Rule 30 code, treat these as mandatory:
 - In a radius-1 cellular automaton, `first_divergence < distance` is impossible. Treat that as a hard failure.
 - "Never reached within N steps" is right-censored. Do not report it as "never" without qualification.
 - If a metric is near zero, define a noise floor or baseline before calling it asymmetric or structured.
-- Do not cite a number from `data/` without checking `docs/DATA_INTEGRITY.md` first. The March-vs-June kernel gap is CLOSED (the 10M bitstream is byte-identical across the fix), but experiments **I-L are known-bad** and pending a re-run.
+- Do not cite a number from `data/` without checking `docs/DATA_INTEGRITY.md` first. The March-vs-June kernel gap is CLOSED (the 10M bitstream is byte-identical across the fix). Experiments **I-L have been re-run** (2026-08-30) and are no longer withdrawn: the bit-order bug did not change their conclusions, measured as a paired comparison of both decodes at identical budget, seed and architecture, largest difference 0.0024 across 24 configurations. They are graded *Observation, scoped* — the sequence models are blind to long-lag XOR, which is the structure class Rule 30 most plausibly has, so I/K/L bound what that class of experiment can detect rather than what the column contains. See `docs/experiment-logs/2026-08-30-rerun-il-bitorder.md` and the ledger row; do not describe them as pending.
 - **Always pass `bitorder='little'` when unpacking `center_col_*.bin`.** `gpu/rule30_sim.py` writes LSB-first; numpy's default is MSB-first. Omitting it silently returns the stream with every 8-bit block reversed - ~50% of bit positions differ while the bit mean is unchanged, so aggregate checks will not catch it. This bug invalidated experiments I-L. The golden reference is MSB-first by deliberate, documented exception.
 - Verify new packed kernels against `data/golden/center_col_golden_1M.bin` via `python tools/verify_data.py --bitstream <file>`, not only against a 20-bit prefix.
 - If you add a file under `data/`, add it to `.gitignore` as an explicit `!` exception and rerun `python tools/make_manifest.py`. Do not `git add -f`.

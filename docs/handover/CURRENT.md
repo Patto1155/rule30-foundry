@@ -75,14 +75,18 @@ assuming a locally feasible pattern or abstract map branch is that orbit.
   MSB-first. A bare `np.unpackbits` reverses each 8-bit block: 49.95% of
   positions differ while the bit mean is *identical*, so no aggregate check
   catches it. `tools/lint_bitorder.py` rejects bare calls.
-- **A ~50% bit difference between two streams is never a kernel bug.** It means
-  a packing or seed mismatch. Real kernel bugs diverge *late*.
+- **A ~50% bit difference between two streams means they are uncorrelated,
+  and nothing further.** Check packing and seed conventions, then localise the
+  first divergence before assigning a cause. The rate ranks no causes — a
+  convention mismatch and an early-step kernel bug both read ~50%.
 - **`SKIP` is not `PASS`.** See A3.
 - **Vacuous negatives.** Run `python experiments/counting_bound.py --pretty`
   before any "searched class `M`, found no fit" experiment. If
-  `log2|M| < n` the negative is guaranteed. A certificate was retracted in
-  2026-08 for exactly this, and its own random control had returned the *same*
-  negative — which is a red flag, not a reassurance.
+  `log2|M| < n` the negative does not discriminate — almost every sequence
+  gives it. A certificate was retracted in 2026-08 for exactly this, and its
+  own random control had returned the *same* negative, which is a red flag
+  rather than a reassurance. The exclusion may still be true if the search was
+  exhaustive; that is a bounded finding, not evidence.
 - **Vacuous controls.** A negative control that passes while testing nothing is
   worse than none. The DRAT self-test originally truncated a proof of an
   instance that was UNSAT by unit propagation, so the checker accepted *any*

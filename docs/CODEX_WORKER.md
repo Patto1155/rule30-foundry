@@ -194,6 +194,29 @@ none` disables verification and says so in the result, in words: a run with
 Artifacts land in `runs/codex/<task_id>/` (gitignored): `prompt.txt`,
 `raw.txt`, `changes.patch`, `verification.txt`, `result.json`.
 
+### What survives on the branch
+
+`runs/` is this container's scratch. Two files are committed onto the task
+branch so the review evidence outlives it:
+
+| On the branch | Written by | Read it as |
+|---|---|---|
+| `queue/results/<task_id>.json` | the worker | testimony |
+| `queue/results/<task_id>.review.json` | the harness | evidence |
+
+The review record carries the verification result, the verdict, and the
+verification log **inlined** — so a fresh clone of the branch is enough to
+audit the run, with no `runs/` tree and no access to the machine that did it.
+
+**The commit carrying the record is not the commit that was verified.** It is
+made after the checks run and adds only the record, so it names the tested
+tree explicitly: `commit_tested` is the parent, and
+`verified_tree_is_this_commits_parent` says so rather than leaving it to be
+inferred from the graph. `git show <commit_tested>` is the state the checks
+actually ran against. Without that, a report-only commit made afterwards would
+read as the verified state — which is the thing the whole `verification` /
+`tests` split exists to prevent.
+
 ## The end-to-end run
 
 The previous integration's own documentation had to record that `--agent

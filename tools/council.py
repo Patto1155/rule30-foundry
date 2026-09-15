@@ -74,9 +74,11 @@ REPO_FAILURE_MODES = """\
 3. Single seed. All three prizes concern the one deterministic single-black-cell
    initial condition. An ensemble average or random-initial-condition quantity
    is not progress on them, however well measured.
-4. A ~50% bit difference between two streams is never a kernel bug -- it means
-   the streams are uncorrelated, i.e. a packing or seed mismatch. A real kernel
-   bug diverges late.
+4. A ~50% bit difference between two streams means they are uncorrelated, and
+   nothing further. Check packing and seed conventions, then localise the first
+   divergence before assigning a cause. The rate ranks no causes: a convention
+   mismatch and a kernel bug in the opening steps both decorrelate everything
+   downstream and both read ~50%.
 5. Right-censoring. "Never reached within N steps" is not "never". Reject the
    unqualified form.
 6. Noise floors. A near-zero metric is not evidence of asymmetry or structure

@@ -20,7 +20,8 @@ REPO = Path(__file__).resolve().parent.parent
 
 def write_manifest(tmp: Path, **over) -> Path:
     m = {
-        "name": "t-fast", "kind": "measurement", "seed": "single-black-cell",
+        "name": "t-fast", "kind": "measurement", "purpose": "exploratory",
+        "seed": "single-black-cell",
         "theory_gate": "OPEN", "script": "experiments/counting_bound.py",
         "argv": ["--verdict", "5:10"], "claims": [],
         "reads_packed_bitstream": False, "budget": {"minutes": 1},

@@ -1,0 +1,67 @@
+{
+  "task_id": "ea97f9e0",
+  "mode": "implement",
+  "task": "Create the file queue/halo-repin-random-ic.json. Write it FIRST from the schema, then check it; do not spend turns reading before you write.\n\nThe schema is in the module docstring at the top of tools/gates.py (read that one file). Required keys: name, kind, purpose, seed, theory_gate, script. This run checks the packed kernel's open-boundary halo re-pinning, so it is a statement about the INSTRUMENT, not about the center column: it needs a random initial condition and the purpose that admits one. Use kind 'simulation' with simulation.cells and simulation.steps satisfying the light-cone gate (cells must be comfortably larger than 2*steps), and set script to an existing file under experiments/.\n\nIt must pass: python tools/gates.py preflight queue/halo-repin-random-ic.json\nRun that command yourself and fix the manifest until it exits 0. Change no other file.",
+  "report": {
+    "summary": "Created queue/halo-repin-random-ic.json and verified it passes `python tools/gates.py preflight queue/halo-repin-random-ic.json` (exit 0). The manifest follows the schema in tools/gates.py's module docstring: kind 'simulation', purpose 'correctness-check' (a statement about the instrument, not the center column), seed 'random-ic' (admitted only for this purpose \u2014 the seed, theory-gate and counting-bound gates all SKIP, which the gate output confirms), theory_gate 'OPEN', script experiments/eca_sim.py, simulation.cells=2048 / steps=512 (light-cone gate PASS: 991 steps exact, so the tape is comfortably > 2*steps), argv [] (eca_sim.py's __main__ takes no flags; it runs verify(), whose step 1 is packed-CPU == naive over 120 steps on random rows \u2014 the repo's packed open-boundary halo re-pin audit, which WORKFLOW.md says only a random IC can expose because a lone spike leaves the edges at 0). A reviewer should look first at the purpose/seed pairing (correctness-check + random-ic, per WORKFLOW.md's purpose table) and at the notes field, which cites the boundary-leak lesson. I also ran the target script itself (`python experiments/eca_sim.py` \u2014 all checks pass, GPU path skipped as unavailable) and the gates unit suite (72 tests pass). No other file was touched.",
+    "changes": [
+      {
+        "path": "queue/halo-repin-random-ic.json",
+        "action": "added",
+        "why": "The task: a preflight-passing manifest for the packed kernel's open-boundary halo re-pinning check: kind simulation, purpose correctness-check (instrument statement, hence the admissible random IC per the gates' seed gate, WORKFLOW.md 'always test a random IC'), script points at an existing experiments/ file (eca_sim.py, whose verify() audits packed-vs-naive on random rows), cells/steps satisfy the light-cone gate with cells comfortably > 2*steps. argv fixed to [] after reading workhorse.py (argv is forwarded verbatim to the script and eca_sim.py ignores argv; no --verify flag exists)."
+      }
+    ],
+    "commands_run": [
+      {
+        "cmd": "git status && git log --oneline -8",
+        "exit_code": 0,
+        "note": "confirmed clean scratch branch; no existing halo-repin manifest"
+      },
+      {
+        "cmd": "python tools/gates.py preflight queue/halo-repin-random-ic.json",
+        "exit_code": 0,
+        "note": "verdict PASS (verdict PASS; seed/theory-gate/counting-bound SKIP for correctness-check; light-cone, script, verify-all PASS)"
+      },
+      {
+        "cmd": "python tools/gates.py preflight queue/halo-repin-random-ic.json --pretty 2>&1 | tail -20",
+        "exit_code": 0,
+        "note": "same run with pretty table after argv fix; still PASS, exit 0"
+      },
+      {
+        "cmd": "python experiments/eca_sim.py",
+        "exit_code": 0,
+        "note": "the manifest's script runs green: packed-CPU == naive for rules [30,45,90,110,184,60,150] over 120 steps incl. random rows; rule-30 path == rule30_open_utils reference; GPU cross-check skipped (no GPU)"
+      },
+      {
+        "cmd": "python tools/gates.py preflight queue/halo-repin-random-ic.json >/dev/null && echo \"EXIT 0: PREFLIGHT PASS\"",
+        "exit_code": 0,
+        "note": "verbatim acceptance command on the final file state; exit 0"
+      },
+      {
+        "cmd": "python -m unittest tests.test_gates -v 2>&1 | tail -15",
+        "exit_code": 0,
+        "note": "72 tests OK, incl. test_correctness_check_admits_a_random_ic \u2014 the gate contract this manifest relies on is pinned"
+      },
+      {
+        "cmd": "git status --short",
+        "exit_code": 0,
+        "note": "only untracked new file: queue/halo-repin-random-ic.json; no other file changed"
+      }
+    ],
+    "tests": [
+      {
+        "cmd": "python tools/gates.py preflight queue/halo-repin-random-ic.json >/dev/null && echo \"EXIT 0: PREFLIGHT PASS\"",
+        "exit_code": "exit_code 0 as integer",
+        "passed": true
+      }
+    ],
+    "artifacts": [],
+    "uncertainties": [
+      "Theories-gate value: for correctness-check the theory gate SKIPs regardless of value, so 'OPEN' is not exercised; I chose the least misleading value; nothing to cite \u2014 the gate's own reason confirms the value is not checked.",
+      "Exact run semantics: kind 'simulation' with cells 2048/steps 512 was chosen to clear the light-cone gate with comfortable margin (991 exact steps possible) while staying CPU-cheap; nothing in preflight validates the simulation block against argv, and I verified the script side by running it. Nothing beyond this.",
+      "The reports 'tests' tooling attached a non-integer exit code to the preflight run; the actual exit code was 0 and the gate verdict was PASS, which the commands_run entry records."
+    ],
+    "blockers": []
+  },
+  "contract_problems": []
+}

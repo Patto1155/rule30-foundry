@@ -227,8 +227,10 @@ def check_bitstream(candidate: Path, bitorder: str = "auto") -> bool:
 
     if ndiff / compare_bits > 0.4:
         print("      ~50% differing with divergence at bit 0 means the two")
-        print("      streams are uncorrelated -- almost always a packing or")
-        print("      seed mismatch, not a kernel bug")
+        print("      streams are uncorrelated. Check packing and seed")
+        print("      conventions first -- but bit-0 divergence is also what a")
+        print("      kernel bug in the opening steps looks like, so this does")
+        print("      not clear the kernel on its own")
     elif diff[0] > 0:
         print("      a late first divergence usually means a word-boundary or")
         print("      padding bug, not a seed or rule-table bug")

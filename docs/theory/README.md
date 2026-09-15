@@ -74,9 +74,16 @@ all theorems, none needing measurement:
 
 See **[finite-prefix-counting-bound.md](finite-prefix-counting-bound.md)**.
 
-One-line form: searching a model class `M` against `n` bits and finding no fit is
-informative **only if `log2|M| >= n`**. Otherwise every sequence gives that
-answer.
+One-line form: searching a model class `M` against `n` bits and finding no fit
+**discriminates this sequence only if `log2|M| >= n`**. Below that, a uniform
+random string fits with probability at most `2^(log2|M| - n)`, so almost every
+sequence gives the same answer and the search has measured `|M|`.
+
+*Almost* every, not every: a 1-state DFAO generates the all-zero string at any
+length. An exhaustive search that finds no fit has proved its exclusion, and
+that proof does not weaken as the class shrinks — it simply is not evidence
+about Rule 30. The two questions are separate and the gate now answers them
+separately (`purpose: exact-exclusion`).
 
 Standing consequences:
 

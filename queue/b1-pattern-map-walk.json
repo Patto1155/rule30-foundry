@@ -1,6 +1,7 @@
 {
   "name": "b1-pattern-map-walk-32",
   "kind": "measurement",
+  "purpose": "exploratory",
   "seed": "single-black-cell",
   "theory_gate": "OPEN",
   "theory_gate_citation": "docs/CLAIM_LEDGER.md names this as the stated promotion route for the period(d) ~ 2*log2(d) row: confirm the 32->64 doubling near d ~ 8.6e9 via the generalized pattern map. docs/STATUS.md B1.",

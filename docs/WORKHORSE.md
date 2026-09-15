@@ -89,7 +89,7 @@ tool it claims to enforce.
 | Gate | Rule | Authority |
 |---|---|---|
 | `counting-bound` | `log2\|M\| >= n`, or a negative is vacuous | `experiments/counting_bound.verdict` |
-| `seed` | single black cell only | CLAUDE.md rule 3 |
+| `seed` | single black cell, for the purposes that speak about the column | CLAUDE.md rule 3, scoped by `purpose` |
 | `theory-gate` | must be `OPEN` | AGENTS.md, declared in the manifest |
 | `light-cone` | tape long enough for the step count | `gpu/tape_geometry.check` |
 | `bitorder-lint` | no bare `packbits`/`unpackbits` | `tools/lint_bitorder.py` |
@@ -97,7 +97,7 @@ tool it claims to enforce.
 | `censoring` | no unqualified "never" | AGENTS.md |
 | `noise-floor` | every metric carries a baseline | AGENTS.md |
 | `divergence-invariant` | `first_divergence >= distance` | AGENTS.md |
-| `fifty-percent` | ~50% differing is a packing/seed mismatch | CLAUDE.md |
+| `fifty-percent` | ~50% differing means uncorrelated streams; cause needs the first divergence | CLAUDE.md |
 
 Equality passes the counting bound. `counting_bound.py` marks `margin >= 0`
 informative and Experiment S sits at that boundary; a strict `>` would reject
@@ -177,6 +177,7 @@ Schema is documented at the top of `tools/gates.py`. The minimum:
 {
   "name": "b1-pattern-map-walk-32",
   "kind": "measurement",
+  "purpose": "exploratory",
   "seed": "single-black-cell",
   "theory_gate": "OPEN",
   "script": "experiments/pattern_map_walk.py",
@@ -192,6 +193,18 @@ Anything a run leaves untracked fails the run and is named on stderr: an
 untracked file blocks the *next* run, which refuses to start on a dirty tree,
 and the remedy (a `.gitignore` `!` exception plus `make_manifest`) is a
 decision for a person rather than something to `add -f` past.
+
+`purpose` is required and closed-vocabulary: `prize-claim`, `exact-exclusion`,
+`exploratory`, `correctness-check`, `replication`. The first three are
+statements about the single-seed center column and must use that seed, with
+every gate applying unchanged. A `correctness-check` is a statement about the
+instrument, so `seed`, `theory-gate` and `counting-bound` are scoped away from
+it — a control has to be free to use the random IC
+[`WORKFLOW.md`](WORKFLOW.md) requires for open-boundary checks, to target
+settled ground, and to run a class too small to fit. A `replication` must
+carry `"replicates": {"source": ..., "seed": ...}` and use that same seed, so
+it cannot present a different initial condition as a reproduction. Full table:
+[`WORKFLOW.md`](WORKFLOW.md) *Experiment purposes*.
 
 `kind: "search"` with `"claims": ["negative"]` additionally requires `search`
 with either DFAO parameters or a declared `log2_size` — a guess there defeats

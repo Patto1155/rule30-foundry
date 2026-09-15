@@ -14,6 +14,7 @@ import json
 import os
 import tempfile
 import threading
+import time
 import unittest
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
@@ -332,10 +333,12 @@ class TestBudgets(WorkdirCase):
         r = al.run_loop("t", self.wd, ScriptedProvider(self.turns(20)),
                         budget=al.Budget(max_turns=3))
         self.assertEqual(r["stop_reason"], al.STOP_TURNS)
-        # max_turns + 1: the tool-using loop stops at the limit, and the
-        # wrap-up turn that salvages a report is a real billed request, so it
-        # is counted rather than hidden. The cap is on tool-using turns.
-        self.assertEqual(r["budget"]["turns"], 4)
+        # Exactly max_turns. The wrap-up turn is a real billed request, so it
+        # is budgeted rather than added on top: the working phase stops one
+        # turn early to leave room for it. Previously this ran max_turns
+        # tool-using turns and then billed a (max_turns + 1)th for the
+        # report, so the limit named a number the run always exceeded.
+        self.assertEqual(r["budget"]["turns"], 3)
 
     def test_max_tool_calls_stops_the_loop(self):
         r = al.run_loop("t", self.wd, ScriptedProvider(self.turns(20)),
@@ -360,7 +363,7 @@ class TestBudgets(WorkdirCase):
         """Observed live 2026-09-08: a research task spent six minutes and 36
         tool calls, hit the turn cap mid-investigation, and returned nothing.
         The work was done and unreadable."""
-        turns = self.turns(3) + [{"content": "PARTIAL REPORT"}]
+        turns = self.turns(2) + [{"content": "PARTIAL REPORT"}]
         p = ScriptedProvider(turns)
         r = al.run_loop("t", self.wd, p, budget=al.Budget(max_turns=3))
         self.assertEqual(r["stop_reason"], al.STOP_TURNS)
@@ -385,10 +388,121 @@ class TestBudgets(WorkdirCase):
         self.assertEqual(r["stop_reason"], al.STOP_TURNS)
         self.assertEqual(r["final"], "")
 
+    def test_a_batch_cannot_exceed_the_tool_call_limit(self):
+        """The bug this class exists to stop. A model may return any number
+        of tool_calls in one turn; the loop checked the budget only between
+        turns and then executed the whole batch, so a three-call batch ran in
+        full against a one-call limit."""
+        batch = [{"content": "", "tool_calls": [call("list_dir", {}),
+                                                call("list_dir", {}),
+                                                call("list_dir", {})]}]
+        r = al.run_loop("t", self.wd, ScriptedProvider(batch + self.turns(5)),
+                        budget=al.Budget(max_turns=99, max_tool_calls=1))
+        self.assertEqual(r["stop_reason"], al.STOP_CALLS)
+        self.assertEqual(r["budget"]["tool_calls"], 1)
+        self.assertEqual(sum(r["tool_calls"].values()), 1)
+
+    def test_a_refused_call_still_gets_a_result_message(self):
+        """Every tool_call in the assistant message needs a matching result
+        or the provider rejects the next request. Refusing in band ends the
+        run; dropping the call would break it."""
+        seen = []
+        batch = [{"content": "", "tool_calls": [call("list_dir", {}),
+                                                call("list_dir", {})]}]
+
+        class Recording(ScriptedProvider):
+            def chat(self, messages, timeout, tools=None, tool_choice="auto"):
+                seen.append([m for m in messages])
+                return super().chat(messages, timeout, tools, tool_choice)
+
+        al.run_loop("t", self.wd, Recording(batch + self.turns(3)),
+                    budget=al.Budget(max_turns=99, max_tool_calls=1))
+        last = seen[-1]
+        assistant = next(m for m in last if m.get("tool_calls"))
+        ids = {c["id"] for c in assistant["tool_calls"]}
+        answered = {m["tool_call_id"] for m in last if m["role"] == "tool"}
+        self.assertEqual(ids, answered)
+        refusals = [m for m in last
+                    if m["role"] == "tool" and "not executed" in m["content"]]
+        self.assertEqual(len(refusals), 1)
+
     def test_a_finished_run_reports_done(self):
         r = al.run_loop("t", self.wd, ScriptedProvider([{"content": "fin"}]),
                         budget=al.Budget(max_turns=99))
         self.assertEqual(r["stop_reason"], al.STOP_DONE)
+
+
+class TestBudgetedTimeouts(WorkdirCase):
+    """A blocking tool must not be allowed to overrun the wall clock.
+
+    `run` accepts up to 900 seconds. Started with 30 seconds left it
+    overruns the limit by fourteen minutes, and the limit is the only thing
+    between a stuck command and a run that never ends.
+    """
+
+    def test_a_tool_timeout_is_clamped_to_the_time_left(self):
+        started = time.time()
+        result, ok = al.execute("run", {"command": "sleep 30", "timeout": 900},
+                                self.wd, max_seconds=1)
+        self.assertFalse(ok)
+        self.assertIn("timed out", result)
+        self.assertLess(time.time() - started, 15)
+
+    def test_a_tool_is_refused_outright_with_no_clock_left(self):
+        result, ok = al.execute("run", {"command": "echo hi"}, self.wd,
+                                max_seconds=0)
+        self.assertFalse(ok)
+        self.assertIn("not executed", result)
+
+    def test_the_clamp_never_raises_a_smaller_request(self):
+        """It is a ceiling, not an override: a model asking for 2s gets 2s."""
+        result, ok = al.execute("run", {"command": "echo hi", "timeout": 2},
+                                self.wd, max_seconds=600)
+        self.assertTrue(ok, result)
+        self.assertIn("hi", result)
+
+    def test_tools_without_a_timeout_are_untouched(self):
+        result, ok = al.execute("list_dir", {}, self.wd, max_seconds=1)
+        self.assertTrue(ok, result)
+
+    def test_the_default_clamp_reads_the_tools_own_signature(self):
+        """One source of truth, so the clamp cannot drift from the default."""
+        self.assertEqual(al._default_timeout(al.t_run), 300)
+        self.assertEqual(al._default_timeout(al.t_fetch_url), 60)
+        self.assertEqual(al._default_timeout(al.t_list_dir), 0)
+
+
+class TestWrapUpReserve(WorkdirCase):
+    def test_work_stops_early_enough_to_leave_room_for_the_report(self):
+        b = al.Budget(wall_clock_s=1000, wrap_up_reserve_s=200)
+        self.assertAlmostEqual(b.work_remaining_s, 800, delta=2)
+        self.assertAlmostEqual(b.total_remaining_s, 1000, delta=2)
+
+    def test_the_reserve_never_eats_the_whole_budget(self):
+        """A 60s budget with a 120s reserve must still do some work."""
+        b = al.Budget(wall_clock_s=60, wrap_up_reserve_s=120)
+        self.assertEqual(b.wrap_up_reserve_s, 30)
+        self.assertGreater(b.work_remaining_s, 0)
+
+    def test_the_report_timeout_is_bounded_by_what_is_left(self):
+        b = al.Budget(wall_clock_s=10, wrap_up_reserve_s=5)
+        self.assertLessEqual(b.report_timeout(600), 10)
+        self.assertGreaterEqual(b.report_timeout(600), 1)
+
+    def test_the_report_timeout_never_exceeds_the_request_timeout(self):
+        b = al.Budget(wall_clock_s=3600)
+        self.assertEqual(b.report_timeout(30), 30)
+
+    def test_the_clock_stops_work_while_the_reserve_remains(self):
+        """The point of the reserve: work is over, the report still has time.
+        `started` is rewound rather than slept through, so the assertion is
+        about the arithmetic and not about the test machine's timing."""
+        b = al.Budget(max_turns=99, wall_clock_s=100, wrap_up_reserve_s=20)
+        b.started -= 85          # 85s elapsed: past 80s of work, inside 100s
+        self.assertEqual(b.exceeded(), al.STOP_CLOCK)
+        self.assertEqual(b.work_remaining_s, 0)
+        self.assertGreater(b.total_remaining_s, 10)
+        self.assertGreaterEqual(b.report_timeout(600), 10)
 
 
 class TestTranscript(WorkdirCase):
