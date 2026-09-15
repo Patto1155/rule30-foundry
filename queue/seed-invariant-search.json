@@ -1,0 +1,30 @@
+{
+  "name": "seed-invariant-search",
+  "kind": "measurement",
+  "purpose": "exact-exclusion",
+  "seed": "single-black-cell",
+  "theory_gate": "OPEN",
+  "theory_gate_citation": "docs/STATUS.md P1-local is graded 'Proof target needed': the saved alternating-loop alignments are excluded only as finite walks. Whether an inductive invariant could exclude them uniformly is open and is not covered by any row of docs/theory/README.md \u00a74.",
+  "script": "experiments/seed_invariant_search.py",
+  "argv": [
+    "--steps",
+    "1500",
+    "--kmax",
+    "15",
+    "--controls",
+    "45,90,110",
+    "--out",
+    "runs/seed-invariant-search-2026-09-15.json",
+    "--pretty"
+  ],
+  "claims": [],
+  "reads_packed_bitstream": false,
+  "outputs": [
+    "runs/seed-invariant-search-2026-09-15.json"
+  ],
+  "budget": {
+    "minutes": 20,
+    "device": "cpu"
+  },
+  "notes": "Not a search over candidate invariants. For window-based (subshift of finite type) invariants there is a unique best candidate at each width k -- the set of k-windows the seed actually shows -- because any invariant true of the seed must contain it and a larger set excludes less. Testing that one set therefore decides the whole family at that k, which is why this is a characterisation and the counting bound does not apply. Rule 90 is the positive control: its language must come back far below 2^k or a full count for Rule 30 measures the instrument rather than the rule."
+}

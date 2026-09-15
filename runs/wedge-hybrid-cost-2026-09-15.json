@@ -1,0 +1,81 @@
+{
+  "artifact_type": "rule30.wedge_hybrid_cost",
+  "artifact_version": 1,
+  "params": {
+    "depths": [
+      64,
+      128,
+      256,
+      512,
+      1024
+    ],
+    "tail": 512
+  },
+  "rows": [
+    {
+      "T": 64,
+      "centre_bit": 1,
+      "cells_cone": 3169,
+      "cells_free": 889,
+      "cells_work": 2280,
+      "free_fraction": 0.28053,
+      "settle_at_T": 88,
+      "target_is_settled": false
+    },
+    {
+      "T": 128,
+      "centre_bit": 1,
+      "cells_cone": 12481,
+      "cells_free": 2630,
+      "cells_work": 9851,
+      "free_fraction": 0.21072,
+      "settle_at_T": 171,
+      "target_is_settled": false
+    },
+    {
+      "T": 256,
+      "centre_bit": 1,
+      "cells_cone": 49537,
+      "cells_free": 10180,
+      "cells_work": 39357,
+      "free_fraction": 0.205503,
+      "settle_at_T": 319,
+      "target_is_settled": false
+    },
+    {
+      "T": 512,
+      "centre_bit": 0,
+      "cells_cone": 197377,
+      "cells_free": 42096,
+      "cells_work": 155281,
+      "free_fraction": 0.213277,
+      "settle_at_T": null,
+      "target_is_settled": false
+    },
+    {
+      "T": 1024,
+      "centre_bit": 1,
+      "cells_cone": 787969,
+      "cells_free": 145670,
+      "cells_work": 642299,
+      "free_fraction": 0.184868,
+      "settle_at_T": null,
+      "target_is_settled": false
+    }
+  ],
+  "growth": {
+    "exponent_work": 2.0255,
+    "exponent_cone": 1.9899,
+    "exponent_free_fraction": -0.1186,
+    "free_fraction_first": 0.28053,
+    "free_fraction_last": 0.184868,
+    "reading": "the wedge buys a constant factor, not a growth rate"
+  },
+  "oracle": {
+    "checked": 5,
+    "mismatches": [],
+    "ok": true
+  },
+  "target_ever_settled": false,
+  "elapsed_s": 0.06
+}
