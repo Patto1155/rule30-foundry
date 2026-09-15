@@ -1,0 +1,21 @@
+{
+  "name": "halo-repin-random-ic",
+  "kind": "simulation",
+  "purpose": "correctness-check",
+  "seed": "random-ic",
+  "theory_gate": "OPEN",
+  "script": "experiments/eca_sim.py",
+  "argv": [],
+  "claims": [],
+  "reads_packed_bitstream": false,
+  "simulation": {
+    "cells": 2048,
+    "steps": 512
+  },
+  "budget": {
+    "minutes": 10,
+    "device": "cpu"
+  },
+  "notes": "docs/WORKFLOW.md 'Boundary leak': a fused multi-step kernel must re-pin out-of-tape halo words every step, or bits leak across the edges. A data/boundary-leak test is a statement about the INSTRUMENT, not the column; this run is a correctness-check of experiments/eca_sim.py's verify() (rule 30 + the other-rules packed path) against a rule30_open_utils reference on a RANDOM IC -- a lone-spike IC leaves the edges at 0 and hides the bug, the random IC does not (docs/WORKFLOW.md 'always test a random IC')."
+
+}
