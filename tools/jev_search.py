@@ -28,7 +28,10 @@ from prize_lab import dfao_sat_cnf, sequence_bits
 from tools import gates
 from tools.gen_golden_reference import center_naive
 
-ENDPOINT = "https://api.typesafe.ai/v1/systemone"
+ENDPOINTS = {
+    "typesafe": ("https://api.typesafe.ai/v1/systemone", "jev-latest"),
+    "openrouter": ("https://openrouter.ai/api/alpha/decisions", "~typesafe/jev-latest"),
+}
 PRICE_PER_MILLION = 0.042  # USD, published 2026-09-15; estimate, not invoice
 CALL_TOKEN_RESERVE = 32768
 
@@ -148,10 +151,11 @@ def validate_choice(response, options):
     return choice, probs[choice]
 
 
-def jev_select(plan, cards, history, directory, api_key, timeout, threshold):
+def jev_select(plan, cards, history, directory, api_key, timeout, threshold, provider="typesafe"):
+    endpoint, model = ENDPOINTS[provider]
     options = {c["id"]: c["hypothesis"] for c in cards}
     options["return-to-lead"] = "No supplied experiment is useful enough; request a new hypothesis or better plan."
-    request = {"model": "jev-latest", "state": {
+    request = {"model": model, "state": {
         "goal": plan["goal"], "scope": plan["scope"], "candidates": cards,
         "checked_results": [{"id": r["card"]["id"], "status": r["status"],
                              "verified": r["verified"]} for r in history],
@@ -163,14 +167,15 @@ def jev_select(plan, cards, history, directory, api_key, timeout, threshold):
     if len(body) > 60000:
         raise ValueError("decision state too large; reduce the plan")
     save(directory / "request.json", request)
-    req = urllib.request.Request(ENDPOINT, body, headers={
+    req = urllib.request.Request(endpoint, body, headers={
         "Authorization": f"Bearer {api_key}", "Content-Type": "application/json"})
     started = time.monotonic()
     with urllib.request.urlopen(req, timeout=timeout) as reply:
         response = json.load(reply)
     save(directory / "response.json", response)
     choice, probability = validate_choice(response, options)
-    usage = response.get("usage", {}).get("input_tokens")
+    counts = response.get("usage", {})
+    usage = counts.get("input_tokens", counts.get("prompt_tokens"))
     if type(usage) is not int or not 0 <= usage <= CALL_TOKEN_RESERVE:
         raise ValueError("missing or out-of-reserve API usage")
     return {"choice": choice, "probability": probability,
@@ -264,9 +269,13 @@ def verify_result(directory, checker, timeout):
 
 
 def run(plan, args):
-    key = os.environ.get("TYPESAFE_API_KEY", "")
+    provider = getattr(args, "jev_provider", "auto")
+    if provider == "auto":
+        provider = "openrouter" if os.environ.get("OPENROUTER_API_KEY") else "typesafe"
+    key_var = "OPENROUTER_API_KEY" if provider == "openrouter" else "TYPESAFE_API_KEY"
+    key = os.environ.get(key_var, "")
     if args.policy == "jev" and not key:
-        raise ValueError("TYPESAFE_API_KEY is unset; no live Jev calls made")
+        raise ValueError(f"{key_var} is unset; no live Jev calls made")
     cadical = find_tool(args.cadical, "CADICAL", ["cadical"], "bash tools/build_sat_toolchain.sh")
     checker = find_tool(args.drat_trim, "DRAT_TRIM", ["drat-trim"], "bash tools/build_sat_toolchain.sh")
     out = args.out.resolve()
@@ -320,7 +329,8 @@ def run(plan, args):
                     calls += 1
                     charged_tokens += CALL_TOKEN_RESERVE  # retain reserve on failed/unknown billing
                     decision = jev_select(plan, eligible, history, d, key,
-                                          min(30, deadline - time.monotonic()), args.min_probability)
+                                          min(30, deadline - time.monotonic()), args.min_probability,
+                                          provider=provider)
                     charged_tokens += decision["input_tokens"] - CALL_TOKEN_RESERVE
                     decisions.append(decision)
                     save(d / "decision.json", decision)
@@ -357,7 +367,8 @@ def run(plan, args):
         reason = "error"
         # Never include HTTP bodies/headers or credential-bearing request objects.
         save(out / "error.json", {"type": type(exc).__name__, "message": str(exc)[:500]})
-    summary = {"scope": plan["scope"], "policy": args.policy, "stop_reason": reason,
+    summary = {"scope": plan["scope"], "policy": args.policy,
+               "jev_provider": provider if args.policy == "jev" else None, "stop_reason": reason,
                "attempted": len(history), "inferred": inferred, "decisions": decisions,
                "results": [{"id": r["card"]["id"], "sequence": r["card"]["sequence"],
                             "role": r["card"]["role"], "status": r["status"], "verified": r["verified"]} for r in history],
@@ -376,6 +387,7 @@ def main():
     p.add_argument("plan", type=Path, nargs="?")
     p.add_argument("--verify-result", type=Path)
     p.add_argument("--policy", choices=("fixed", "random", "jev"), default="fixed")
+    p.add_argument("--jev-provider", choices=("auto", "typesafe", "openrouter"), default="auto")
     p.add_argument("--out", type=Path)
     p.add_argument("--seconds", type=float, default=120)
     p.add_argument("--solve-seconds", type=float, default=10)

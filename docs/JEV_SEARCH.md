@@ -2,6 +2,9 @@
 
 One loop: **reviewed cards → choose → solve → verify → prune → choose again**.
 
+For a session workflow and a prompt for the lead agent, see
+[`JEV_SESSION_GUIDE.md`](JEV_SESSION_GUIDE.md).
+
 The first lane is the base-2 DFAO frontier identified in `STATUS.md`. A card
 asks whether an automaton of at most `s` states reproduces the first `n` bits.
 Jev chooses which unresolved card gets the next solve budget. It sees checked
@@ -37,11 +40,14 @@ frontier credit. Missing tools or a failed control stop the run.
 ```bash
 python tools/jev_search.py queue/jev/frontier.json --policy fixed --out runs/jev/fixed
 python tools/jev_search.py queue/jev/frontier.json --policy random --seed 30 --out runs/jev/random
-python tools/jev_search.py queue/jev/frontier.json --policy jev --out runs/jev/jev
+python tools/jev_search.py queue/jev/frontier.json --policy jev --jev-provider openrouter --out runs/jev/jev
 ```
 
-The last command requires `TYPESAFE_API_KEY` in the environment. It makes real
-requests to TypeSafe; there is no mock fallback. All three use the same plan,
+The last command requires `OPENROUTER_API_KEY` in the environment and sends
+typed questions to OpenRouter's Decisions API. Alternatively use
+`--jev-provider typesafe` with `TYPESAFE_API_KEY` for the direct TypeSafe API.
+`--jev-provider auto` (the default) picks OpenRouter if its key is present,
+otherwise TypeSafe. There is no mock fallback. All three use the same plan,
 solve/check budgets and stopping rules. Each output directory must be new.
 Run `verify_all.py` after the experiment, as required by `AGENTS.md`.
 Per-card preflight records external integrity stages as SKIP: these are the
@@ -125,3 +131,5 @@ API contract checked 2026-09-17:
 [TypeSafe quickstart](https://docs.typesafe.ai/introduction/quickstart),
 [Choice/HTTP reference](https://docs.typesafe.ai/api),
 [pricing and launch caveats](https://typesafe.ai/blog/introducing-system-one-models-and-jev).
+OpenRouter's [Jev model page](https://openrouter.ai/~typesafe/jev-latest)
+documents `POST /api/alpha/decisions` with model `~typesafe/jev-latest`.

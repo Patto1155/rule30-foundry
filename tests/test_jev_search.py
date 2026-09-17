@@ -71,6 +71,22 @@ class JevSearchTests(unittest.TestCase):
             self.assertEqual(result["input_tokens"], 50)
             self.assertNotIn("secret-for-test", (Path(td) / "request.json").read_text())
 
+    def test_openrouter_decisions_contract_and_key_is_not_persisted(self):
+        c = {**plan()["cards"][2], "id": "a"}
+        reply = response()
+        reply["usage"] = {"prompt_tokens": 51, "completion_tokens": 0}
+        with tempfile.TemporaryDirectory() as td:
+            with patch.object(j.urllib.request, "urlopen", return_value=io.BytesIO(json.dumps(reply).encode())) as send:
+                result = j.jev_select(plan(), [c], [], Path(td), "secret-for-test", 1, .5,
+                                      provider="openrouter")
+            request = send.call_args.args[0]
+            self.assertEqual(request.full_url, "https://openrouter.ai/api/alpha/decisions")
+            self.assertEqual(request.get_header("Authorization"), "Bearer secret-for-test")
+            self.assertEqual(json.loads(request.data)["model"], "~typesafe/jev-latest")
+            self.assertEqual(result["input_tokens"], 51)
+            self.assertNotIn("secret-for-test", (Path(td) / "request.json").read_text())
+            self.assertNotIn("secret-for-test", (Path(td) / "response.json").read_text())
+
     def test_independent_generator_disagreement_aborts(self):
         c = plan()["cards"][1]
         with patch.object(j, "sequence_bits", return_value=[0] * c["n"]):

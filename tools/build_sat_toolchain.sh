@@ -31,8 +31,15 @@ if [ ! -x "$DEST/cadical" ]; then
   git clone --depth 1 "$CADICAL_REPO" "$BUILD/cadical"
   ( cd "$BUILD/cadical" && ./configure && make -j"$(nproc 2>/dev/null || echo 4)" )
   cp "$BUILD/cadical/build/cadical" "$DEST/cadical"
+  chmod +x "$DEST/cadical"
 else
   echo "==> cadical already built"
+fi
+
+# A failed or interrupted build can leave an empty file at the target path.
+if [ ! -s "$DEST/cadical" ] || ! "$DEST/cadical" --version >/dev/null; then
+  echo "cadical build produced an unusable executable" >&2
+  exit 1
 fi
 
 if [ ! -x "$DEST/drat-trim" ]; then
