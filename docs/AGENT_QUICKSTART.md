@@ -60,6 +60,7 @@ toward checkable artifacts.
 | See which worker providers are usable | `tools/providers.py check` | OpenRouter and the Codex dispatcher; says why not, when not. |
 | A worker that reads, runs and fetches | `codex_worker.py --backend agent` | Tool-calling loop with budgets and a transcript. `docs/AGENT_LOOP.md`. |
 | Run a queued experiment | `tools/workhorse.py --agent script` | Gated runner. The default is no agent, on purpose. `docs/WORKHORSE.md`. |
+| Choose the next finite DFAO instance | `tools/jev_search.py` | Jev/fixed/random selection, checked witnesses/DRAT, bounded sessions. `docs/JEV_SEARCH.md`. |
 | Outside opinion on a claim | `tools/council.py`, or `codex_worker.py --mode review` | A different model lineage. Claude subagents are throughput, not independence. |
 
 ## Prize-Facing Filter

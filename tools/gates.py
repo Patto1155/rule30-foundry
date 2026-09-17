@@ -609,10 +609,10 @@ def gate_fifty_percent(r: dict) -> Gate:
 
 def gate_seed_echo(r: dict) -> Gate:
     m = r.get("manifest") or {}
-    if m.get("seed") == THE_SEED:
-        return Gate("seed-echo", PASS, THE_SEED)
-    return Gate("seed-echo", FAIL, "result does not echo the single-black-cell "
-                "seed in its manifest")
+    # Apply the same purpose scope as preflight. Otherwise a legitimate
+    # random/Thue-Morse control passes preflight and fails after execution.
+    checked = gate_seed(m)
+    return Gate("seed-echo", checked.status, checked.reason)
 
 
 def postflight(r: dict) -> dict:
