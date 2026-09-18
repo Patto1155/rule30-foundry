@@ -85,6 +85,61 @@ paste it into the prompt, a plan, a tracked file, or a run log.
 > or a different model class is the higher-expected-value move. Say which you
 > are doing and why. Check the ledger before calling anything new.
 >
+> ## Where Jev pays, and where it does not
+>
+> **The rule: call Jev only when a wrong choice costs more than the call.** A
+> decision costs ~1.3 s and ~$0.00006. A cheap card costs 65 ms — never worth a
+> call, just run them all. The deciding n=64 card cost 951 s and 2.26 GB —
+> there a call is free by comparison. The ratio decides, not how interesting
+> the question feels.
+>
+> Five triggers. When you hit one, stop reasoning and ask.
+>
+> **1. Ordering under asymmetric, unknown cost.** You have N runnable items, a
+> wall budget, and no way to tell which will eat it. This is measured, not
+> hypothetical: a matched null cost 493 s against 123 s for the card it
+> controls, and a fixed walk let one strand `center64-s14` — the card that
+> settled `s*(64)`. Jev had scored that null at p=0.01. Use a `choice` over
+> eligible items. Do not deliberate about ordering in your own tokens; you will
+> spend more reasoning than the call costs.
+>
+> **2. Go/no-go before expensive compute.** A `noul`: "will this instance
+> resolve inside the budget?" Ask before committing 600 s and gigabytes of
+> proof. Calibrate first — log every prediction against its outcome, and stop
+> using it if it does not beat always-yes. An uncalibrated probability is worth
+> nothing.
+>
+> **3. Duplicate detection against the ledger.** 41 ledger rows, 56 logs.
+> Re-measuring a settled claim is this repo's most expensive recurring failure
+> — a certificate was retracted for exactly it. Re-reading the ledger per
+> candidate costs thousands of tokens; a `noul` ("does this restate an existing
+> row?") costs ~400. Treat a hit as a prompt to go read that row, never as the
+> answer.
+>
+> **4. Stop/continue.** `return-to-lead` works — when only controls remained,
+> Jev said so rather than letting the queue grind. Use it to end a line of work
+> instead of looping over cards that cannot advance anything.
+>
+> **5. Routing.** CLAUDE.md's delegation table is a fixed option set: script,
+> `codex_worker`, `--mode investigate`, `--mode review`, or you. That is a
+> `choice`, and you re-derive it constantly.
+>
+> **Where it never pays.** Anything deterministic — if a script exists, run the
+> script; sending a fixed command through a model adds a failure point and buys
+> nothing. Any mathematical verdict: Jev selects, CaDiCaL and `drat-trim`
+> establish, and a probability is not a proof. Any case with one eligible item.
+> The counting bound, which is arithmetic.
+>
+> **Triggers 1, 4 and 5 were exercised on 2026-09-18; triggers 2 and 3 were
+> not.** Calibrate those two against outcomes before trusting either, and
+> report what you find.
+>
+> **Prove it or drop it.** Log every call with its options, probabilities, your
+> choice, and the outcome. At session end report verified center results per
+> wall second under Jev against the same frozen plan under `--policy fixed` at
+> identical budgets. If Jev does not win, say so and keep the deterministic
+> selector. A cheap call you cannot show helped is still waste.
+>
 > **What to deliver.** Score the session on *new verified center results per
 > total wall time*, not on Jev calls. Count controls, random nulls, inferred
 > answers and model calls separately. If you want to claim Jev helps, run the
