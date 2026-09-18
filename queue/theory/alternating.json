@@ -9,17 +9,18 @@
     "Consequence of D1 and D4': column -1 is identically 1 on an alternating stretch exactly when (a(t,1), a(t,2)) is never (0,0) at a 1-phase in it.",
     "Condrey 2026 Cor. 5 (primary source read): no column of a nonzero finite Rule 30 orbit is eventually constant. This is the theorem that would finish any argument reaching an eventually constant column.",
     "Condrey Lemma 1 (triangular uniqueness): a prescribed trace plus a right half determines the left half uniquely. The alternating fiber therefore has exactly one left half per right half, like the constant fiber.",
-    "A finite horizon is evidence for designing a lemma, never a proof of one, and a finite-prefix violation does not refute an asymptotic lemma either."
+    "A finite horizon is evidence for designing a lemma, never a proof of one, and a finite-prefix violation does not refute an asymptotic lemma either.",
+    "The double-zero event at a 1-phase occurs in 100% of rows achieving the maximal alternating prefix, radius 1..9. 'Column -1 identically 1' has no local mechanism."
   ],
   "obligations": [
     {
       "id": "left-column-constant",
       "prize": "1",
-      "status": "open",
+      "status": "parked",
       "lemma": "If a nonzero finitely supported row has an eventually alternating centre trace, then column -1 is eventually identically 1.",
       "implication": "Excludes eventual period 2 (nonconstant) for every nonzero finite configuration, via Condrey Cor. 5: an eventually constant column is impossible. PARTIAL - every eventual period at least 3 remains open, so this is not Prize 1.",
       "bridge": "COMPLETE for p=2 and only for p=2. D1 already gives column -1 equal to 1 at every 1-phase, for free and independent of the right half. D4' turns the remaining half into a single condition: (a(t,1), a(t,2)) is never (0,0) at a 1-phase. So the lemma reduces to one sub-statement, and Condrey Cor. 5 finishes it in one line. Residue to reach all periods: p>=3, untouched, and no uniform argument over p is known.",
-      "missing_lemma": "That (a(t,1), a(t,2)) != (0,0) at every large 1-phase, given the centre alternates forever and the row is finitely supported.",
+      "missing_lemma": "Unchanged in statement, sharpened in difficulty: that (a(t,1), a(t,2)) != (0,0) at every large 1-phase. The falsifier shows this cannot be derived from a bounded alternating window, because the rows that alternate longest are exactly the rows where it fails. The missing ingredient is an argument using BOTH infinite alternation and finite support; neither alone reaches it.",
       "refutation": "Among rows achieving the LONGEST alternating prefixes, does the double-zero event still occur at a 1-phase? If it persists at maximal prefix length the sub-lemma cannot come from local structure and must be derived from infinite alternation plus finite support.",
       "falsifier_cost": "Claude: under an hour. Compute: seconds, exhaustive over small support radius. Verification: exact enumeration against the repo's naive stepper.",
       "stop": "Stop if the double-zero event occurs at a 1-phase in rows with maximal alternating prefixes AND no finite-support ingredient can be identified, since then the sub-lemma has no visible mechanism.",
@@ -27,7 +28,8 @@
         "prize-restatement": "This escapes the mechanism because it is a strictly partial exclusion, not an equivalent form: proving no finite row has an eventually alternating trace leaves every period at least 3 open, so it neither proves Prize 1 nor follows vacuously from Prize 1 being true.",
         "finite-exclusion-as-asymptotic": "The enumeration is used only to design and stress the sub-lemma and is recorded as a bounded finding about small radius; the deliverable is a symbolic implication valid for all t, and a finite-prefix violation is explicitly not treated as a refutation.",
         "ensemble-not-orbit": "Finitely supported configurations are a restricted class containing the lone seed rather than an average over initial conditions, and Condrey's Cor. 5 is proved for exactly that class."
-      }
+      },
+      "progress": "FALSIFIER RUN (experiments/alternating_trace_constraints.py, radius 1..9, 699,029 configurations, CPU seconds). The derived identities D1, D2 and D5 hold with ZERO violations everywhere inside their own hypotheses. The sub-lemma does not. The double-zero event (a(t,1), a(t,2)) = (0,0) at a 1-phase occurs in EVERY row achieving the maximal alternating prefix, at every radius: 1/1, 1/1, 1/1, 2/2, 7/7, 11/11, 67/67, 3/3, 1/1 -- 100%, not merely present. So 'column -1 is identically 1' is not forced by any bounded stretch of alternation, and the extremal rows are precisely the ones that violate it. A proof must come from infinite alternation together with finite support; no local or horizon-bounded argument can reach it. PARKED. This is NOT a refutation of the lemma: no finite row alternates forever, so every row here leaves the hypothesis eventually. Maximal prefixes 7,7,7,7,9,10,10,15,17 agree exactly with experiments/period_two_horizon.py, an independent implementation."
     },
     {
       "id": "alternating-fiber-support",
@@ -60,7 +62,8 @@
       "mechanism_check": {
         "algebra-already-gives-it": "Sideways determinism gives that the left half is determined, but not that it is a reflection of the right half in this shifted form; D3 at depth 2 was derived and checked here rather than quoted.",
         "disjoint-from-prize-object": "The columns are those of the same single orbit whose centre trace is hypothesised alternating, so the object intersects the prize object rather than sitting in the cone's settled wedge."
-      }
+      },
+      "progress": "Not run this hour. D3 is proved and verified at depth 2 (column -2 is a time-shifted copy of column +1); whether the pattern continues past depth 2 is untested."
     },
     {
       "id": "left-density-obstruction",

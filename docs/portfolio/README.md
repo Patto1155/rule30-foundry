@@ -216,3 +216,87 @@ Not consulted directly, and cited as second-hand: Kopra, *Theor. Comp. Sci.*
 `latch-descent`'s bridge needs only the weaker of the two statements attributed
 to Jen — "no two *adjacent* columns are both eventually periodic" — because the
 columns it produces are adjacent by construction.
+
+## The alternating-trace hour
+
+One focused hour on the card the pilot upgraded. **No period-two exclusion is
+claimed and none was proved.**
+
+### Constraints derived from the recurrence
+
+For a centre trace with `c_{t+1} = 1 XOR c_t`, writing `l = a(.,-1)`,
+`c = a(.,0)`, `r = a(.,1)`, `r2 = a(.,2)`:
+
+| | Constraint | Checked |
+|---|---|---|
+| D1 | `c_t = 1  =>  l_t = 1` — the OR latches, independent of the right half | 0 violations |
+| D2 | `c_t = 0  =>  l_t = 1 XOR r_t` | 0 violations |
+| D3 | `a(t,-2) = r_{t+1}` if `c_t=1`, else `r_t` — column −2 mirrors column +1 | 0 violations |
+| D4′ | `c_t = 1  =>  l_{t+1} = r_t OR r2_t` | 0 violations |
+| D5 | `c_t = 1  =>  r_{t+1} = 1 XOR (r_t OR r2_t)` | 0 violations |
+
+Each is a one-line substitution into the recurrence; the counts verify the
+transcription, they do not establish the algebra. Checked over 699,029
+configurations of support radius ≤ 9, inside each identity's own hypothesis.
+
+**D1 and D4′ together** give the leverage: column −1 is identically 1 across an
+alternating stretch **exactly when** `(r_t, r2_t)` is never `(0,0)` at a
+1-phase inside it. Half of "column −1 is eventually constant" is free and does
+not involve the right half at all.
+
+Two earlier derivations, D6 and a first version of D4, were wrong and are not
+above: both were index bookkeeping at the edge of the alternating window,
+caught by the numerical check before anything was built on them.
+
+### The four candidates and the ranking
+
+| Candidate | Implication | Cheapest counterexample test |
+|---|---|---|
+| `left-column-constant` | column −1 eventually ≡1 ⇒ Condrey Cor. 5 ⇒ **p=2 excluded** for all nonzero finite rows | double-zero at a 1-phase among longest-prefix rows |
+| `alternating-fiber-support` | forced left half has ones at arbitrary depth ⇒ no finite support ⇒ **p=2 excluded** | a forced left half that terminates |
+| `mirror-collapse` | none directly; makes the left half explicit | `a(t,-3)` vs column 2 |
+| `left-density-obstruction` | bridge explicitly missing (time density ≠ spatial support) | density collapsing with depth |
+
+Frozen Claude ranking, committed before the call: 1 `left-column-constant`,
+2 `alternating-fiber-support`, 3 `mirror-collapse`, 4 `left-density-obstruction`.
+
+Jev: `left-column-constant` **0.79**, `mirror-collapse` 0.14,
+`alternating-fiber-support` 0.04, `return-to-lead` 0.03,
+`left-density-obstruction` 0.00.
+
+**Same top choice — no decision changed, so nothing was learned that would not
+have been.** Jev swapped ranks 2 and 3, preferring the cheap lever over the
+heavy classification. That is defensible and, as it happens, agrees with the
+hour's constraint against starting a days-long project — but it did not select
+the action, so it changed nothing this hour.
+
+### Theorem → bridge → missing lemma → falsifier → verdict
+
+- **Theorem.** D1–D5 above.
+- **Bridge.** Complete for `p = 2` **only**: lemma + Condrey Cor. 5 excludes an
+  eventually alternating centre trace for every nonzero finite configuration.
+  Residue to reach all periods: every `p >= 3`, untouched, no uniform argument
+  over `p` known. The length ladder is not an alternative — `RS(N)` failing
+  implies an eventual period at most `2^N`.
+- **Missing lemma.** `(a(t,1), a(t,2)) != (0,0)` at every large 1-phase, given
+  the centre alternates forever and the row is finitely supported.
+- **Falsifier.** Does the double-zero event survive among the rows with the
+  longest alternating prefixes?
+- **Verdict.** It does, and universally. The event occurs in **100%** of rows
+  achieving the maximal alternating prefix at every radius 1–9 (1/1, 1/1, 1/1,
+  2/2, 7/7, 11/11, 67/67, 3/3, 1/1). The rows that alternate longest are
+  exactly the rows where the sub-lemma fails. **No local or horizon-bounded
+  argument can prove it.** Card parked. Maximal prefixes `7,7,7,7,9,10,10,15,17`
+  agree exactly with `experiments/period_two_horizon.py`, an independent
+  implementation. **Proposed grade: bounded finding**, radius ≤ 9.
+
+This is not a refutation of the lemma. No finite row alternates forever, so
+every row here leaves the hypothesis eventually. It prices a proof strategy and
+kills a local one.
+
+### Strongest counterexample search completed
+
+Exhaustive over all 699,029 nonzero rows of support radius ≤ 9, 40 steps, every
+alternating prefix and every 1-phase within it. No finite row with an unbounded
+alternating trace exists at radius ≤ 9 — consistent with the lemma and, per the
+line above, not evidence for it.

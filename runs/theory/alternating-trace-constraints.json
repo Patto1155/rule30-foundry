@@ -1,0 +1,553 @@
+{
+  "steps": 40,
+  "self_test": {
+    "rows": 6,
+    "steps": 40,
+    "mismatches": 0
+  },
+  "rows": [
+    {
+      "radius": 1,
+      "configurations": 7,
+      "identity_violations": {
+        "D1": 0,
+        "D2": 0,
+        "D5": 0
+      },
+      "max_alternating_prefix": 7,
+      "by_alternating_prefix_length": [
+        {
+          "prefix_length": 1,
+          "rows": 3,
+          "rows_with_double_zero_at_a_1_phase": 0
+        },
+        {
+          "prefix_length": 2,
+          "rows": 2,
+          "rows_with_double_zero_at_a_1_phase": 1
+        },
+        {
+          "prefix_length": 3,
+          "rows": 1,
+          "rows_with_double_zero_at_a_1_phase": 0
+        },
+        {
+          "prefix_length": 7,
+          "rows": 1,
+          "rows_with_double_zero_at_a_1_phase": 1
+        }
+      ],
+      "at_maximal_prefix": {
+        "rows": 1,
+        "with_double_zero_at_a_1_phase": 1
+      }
+    },
+    {
+      "radius": 2,
+      "configurations": 31,
+      "identity_violations": {
+        "D1": 0,
+        "D2": 0,
+        "D5": 0
+      },
+      "max_alternating_prefix": 7,
+      "by_alternating_prefix_length": [
+        {
+          "prefix_length": 1,
+          "rows": 15,
+          "rows_with_double_zero_at_a_1_phase": 0
+        },
+        {
+          "prefix_length": 2,
+          "rows": 8,
+          "rows_with_double_zero_at_a_1_phase": 1
+        },
+        {
+          "prefix_length": 3,
+          "rows": 6,
+          "rows_with_double_zero_at_a_1_phase": 0
+        },
+        {
+          "prefix_length": 6,
+          "rows": 1,
+          "rows_with_double_zero_at_a_1_phase": 1
+        },
+        {
+          "prefix_length": 7,
+          "rows": 1,
+          "rows_with_double_zero_at_a_1_phase": 1
+        }
+      ],
+      "at_maximal_prefix": {
+        "rows": 1,
+        "with_double_zero_at_a_1_phase": 1
+      }
+    },
+    {
+      "radius": 3,
+      "configurations": 127,
+      "identity_violations": {
+        "D1": 0,
+        "D2": 0,
+        "D5": 0
+      },
+      "max_alternating_prefix": 7,
+      "by_alternating_prefix_length": [
+        {
+          "prefix_length": 1,
+          "rows": 63,
+          "rows_with_double_zero_at_a_1_phase": 0
+        },
+        {
+          "prefix_length": 2,
+          "rows": 32,
+          "rows_with_double_zero_at_a_1_phase": 4
+        },
+        {
+          "prefix_length": 3,
+          "rows": 16,
+          "rows_with_double_zero_at_a_1_phase": 3
+        },
+        {
+          "prefix_length": 4,
+          "rows": 1,
+          "rows_with_double_zero_at_a_1_phase": 1
+        },
+        {
+          "prefix_length": 5,
+          "rows": 10,
+          "rows_with_double_zero_at_a_1_phase": 0
+        },
+        {
+          "prefix_length": 6,
+          "rows": 4,
+          "rows_with_double_zero_at_a_1_phase": 4
+        },
+        {
+          "prefix_length": 7,
+          "rows": 1,
+          "rows_with_double_zero_at_a_1_phase": 1
+        }
+      ],
+      "at_maximal_prefix": {
+        "rows": 1,
+        "with_double_zero_at_a_1_phase": 1
+      }
+    },
+    {
+      "radius": 4,
+      "configurations": 511,
+      "identity_violations": {
+        "D1": 0,
+        "D2": 0,
+        "D5": 0
+      },
+      "max_alternating_prefix": 7,
+      "by_alternating_prefix_length": [
+        {
+          "prefix_length": 1,
+          "rows": 255,
+          "rows_with_double_zero_at_a_1_phase": 0
+        },
+        {
+          "prefix_length": 2,
+          "rows": 128,
+          "rows_with_double_zero_at_a_1_phase": 16
+        },
+        {
+          "prefix_length": 3,
+          "rows": 64,
+          "rows_with_double_zero_at_a_1_phase": 12
+        },
+        {
+          "prefix_length": 4,
+          "rows": 32,
+          "rows_with_double_zero_at_a_1_phase": 9
+        },
+        {
+          "prefix_length": 5,
+          "rows": 22,
+          "rows_with_double_zero_at_a_1_phase": 3
+        },
+        {
+          "prefix_length": 6,
+          "rows": 8,
+          "rows_with_double_zero_at_a_1_phase": 8
+        },
+        {
+          "prefix_length": 7,
+          "rows": 2,
+          "rows_with_double_zero_at_a_1_phase": 2
+        }
+      ],
+      "at_maximal_prefix": {
+        "rows": 2,
+        "with_double_zero_at_a_1_phase": 2
+      }
+    },
+    {
+      "radius": 5,
+      "configurations": 2047,
+      "identity_violations": {
+        "D1": 0,
+        "D2": 0,
+        "D5": 0
+      },
+      "max_alternating_prefix": 9,
+      "by_alternating_prefix_length": [
+        {
+          "prefix_length": 1,
+          "rows": 1023,
+          "rows_with_double_zero_at_a_1_phase": 0
+        },
+        {
+          "prefix_length": 2,
+          "rows": 512,
+          "rows_with_double_zero_at_a_1_phase": 64
+        },
+        {
+          "prefix_length": 3,
+          "rows": 256,
+          "rows_with_double_zero_at_a_1_phase": 48
+        },
+        {
+          "prefix_length": 4,
+          "rows": 128,
+          "rows_with_double_zero_at_a_1_phase": 36
+        },
+        {
+          "prefix_length": 5,
+          "rows": 64,
+          "rows_with_double_zero_at_a_1_phase": 26
+        },
+        {
+          "prefix_length": 6,
+          "rows": 30,
+          "rows_with_double_zero_at_a_1_phase": 30
+        },
+        {
+          "prefix_length": 7,
+          "rows": 27,
+          "rows_with_double_zero_at_a_1_phase": 5
+        },
+        {
+          "prefix_length": 9,
+          "rows": 7,
+          "rows_with_double_zero_at_a_1_phase": 7
+        }
+      ],
+      "at_maximal_prefix": {
+        "rows": 7,
+        "with_double_zero_at_a_1_phase": 7
+      }
+    },
+    {
+      "radius": 6,
+      "configurations": 8191,
+      "identity_violations": {
+        "D1": 0,
+        "D2": 0,
+        "D5": 0
+      },
+      "max_alternating_prefix": 10,
+      "by_alternating_prefix_length": [
+        {
+          "prefix_length": 1,
+          "rows": 4095,
+          "rows_with_double_zero_at_a_1_phase": 0
+        },
+        {
+          "prefix_length": 2,
+          "rows": 2048,
+          "rows_with_double_zero_at_a_1_phase": 256
+        },
+        {
+          "prefix_length": 3,
+          "rows": 1024,
+          "rows_with_double_zero_at_a_1_phase": 192
+        },
+        {
+          "prefix_length": 4,
+          "rows": 512,
+          "rows_with_double_zero_at_a_1_phase": 144
+        },
+        {
+          "prefix_length": 5,
+          "rows": 256,
+          "rows_with_double_zero_at_a_1_phase": 104
+        },
+        {
+          "prefix_length": 6,
+          "rows": 128,
+          "rows_with_double_zero_at_a_1_phase": 69
+        },
+        {
+          "prefix_length": 7,
+          "rows": 80,
+          "rows_with_double_zero_at_a_1_phase": 35
+        },
+        {
+          "prefix_length": 8,
+          "rows": 18,
+          "rows_with_double_zero_at_a_1_phase": 18
+        },
+        {
+          "prefix_length": 9,
+          "rows": 19,
+          "rows_with_double_zero_at_a_1_phase": 19
+        },
+        {
+          "prefix_length": 10,
+          "rows": 11,
+          "rows_with_double_zero_at_a_1_phase": 11
+        }
+      ],
+      "at_maximal_prefix": {
+        "rows": 11,
+        "with_double_zero_at_a_1_phase": 11
+      }
+    },
+    {
+      "radius": 7,
+      "configurations": 32767,
+      "identity_violations": {
+        "D1": 0,
+        "D2": 0,
+        "D5": 0
+      },
+      "max_alternating_prefix": 10,
+      "by_alternating_prefix_length": [
+        {
+          "prefix_length": 1,
+          "rows": 16383,
+          "rows_with_double_zero_at_a_1_phase": 0
+        },
+        {
+          "prefix_length": 2,
+          "rows": 8192,
+          "rows_with_double_zero_at_a_1_phase": 1024
+        },
+        {
+          "prefix_length": 3,
+          "rows": 4096,
+          "rows_with_double_zero_at_a_1_phase": 768
+        },
+        {
+          "prefix_length": 4,
+          "rows": 2048,
+          "rows_with_double_zero_at_a_1_phase": 576
+        },
+        {
+          "prefix_length": 5,
+          "rows": 1024,
+          "rows_with_double_zero_at_a_1_phase": 416
+        },
+        {
+          "prefix_length": 6,
+          "rows": 512,
+          "rows_with_double_zero_at_a_1_phase": 276
+        },
+        {
+          "prefix_length": 7,
+          "rows": 256,
+          "rows_with_double_zero_at_a_1_phase": 166
+        },
+        {
+          "prefix_length": 8,
+          "rows": 82,
+          "rows_with_double_zero_at_a_1_phase": 82
+        },
+        {
+          "prefix_length": 9,
+          "rows": 107,
+          "rows_with_double_zero_at_a_1_phase": 81
+        },
+        {
+          "prefix_length": 10,
+          "rows": 67,
+          "rows_with_double_zero_at_a_1_phase": 67
+        }
+      ],
+      "at_maximal_prefix": {
+        "rows": 67,
+        "with_double_zero_at_a_1_phase": 67
+      }
+    },
+    {
+      "radius": 8,
+      "configurations": 131071,
+      "identity_violations": {
+        "D1": 0,
+        "D2": 0,
+        "D5": 0
+      },
+      "max_alternating_prefix": 15,
+      "by_alternating_prefix_length": [
+        {
+          "prefix_length": 1,
+          "rows": 65535,
+          "rows_with_double_zero_at_a_1_phase": 0
+        },
+        {
+          "prefix_length": 2,
+          "rows": 32768,
+          "rows_with_double_zero_at_a_1_phase": 4096
+        },
+        {
+          "prefix_length": 3,
+          "rows": 16384,
+          "rows_with_double_zero_at_a_1_phase": 3072
+        },
+        {
+          "prefix_length": 4,
+          "rows": 8192,
+          "rows_with_double_zero_at_a_1_phase": 2304
+        },
+        {
+          "prefix_length": 5,
+          "rows": 4096,
+          "rows_with_double_zero_at_a_1_phase": 1664
+        },
+        {
+          "prefix_length": 6,
+          "rows": 2048,
+          "rows_with_double_zero_at_a_1_phase": 1104
+        },
+        {
+          "prefix_length": 7,
+          "rows": 1024,
+          "rows_with_double_zero_at_a_1_phase": 664
+        },
+        {
+          "prefix_length": 8,
+          "rows": 512,
+          "rows_with_double_zero_at_a_1_phase": 380
+        },
+        {
+          "prefix_length": 9,
+          "rows": 362,
+          "rows_with_double_zero_at_a_1_phase": 310
+        },
+        {
+          "prefix_length": 10,
+          "rows": 144,
+          "rows_with_double_zero_at_a_1_phase": 144
+        },
+        {
+          "prefix_length": 11,
+          "rows": 3,
+          "rows_with_double_zero_at_a_1_phase": 3
+        },
+        {
+          "prefix_length": 15,
+          "rows": 3,
+          "rows_with_double_zero_at_a_1_phase": 3
+        }
+      ],
+      "at_maximal_prefix": {
+        "rows": 3,
+        "with_double_zero_at_a_1_phase": 3
+      }
+    },
+    {
+      "radius": 9,
+      "configurations": 524287,
+      "identity_violations": {
+        "D1": 0,
+        "D2": 0,
+        "D5": 0
+      },
+      "max_alternating_prefix": 17,
+      "by_alternating_prefix_length": [
+        {
+          "prefix_length": 1,
+          "rows": 262143,
+          "rows_with_double_zero_at_a_1_phase": 0
+        },
+        {
+          "prefix_length": 2,
+          "rows": 131072,
+          "rows_with_double_zero_at_a_1_phase": 16384
+        },
+        {
+          "prefix_length": 3,
+          "rows": 65536,
+          "rows_with_double_zero_at_a_1_phase": 12288
+        },
+        {
+          "prefix_length": 4,
+          "rows": 32768,
+          "rows_with_double_zero_at_a_1_phase": 9216
+        },
+        {
+          "prefix_length": 5,
+          "rows": 16384,
+          "rows_with_double_zero_at_a_1_phase": 6656
+        },
+        {
+          "prefix_length": 6,
+          "rows": 8192,
+          "rows_with_double_zero_at_a_1_phase": 4416
+        },
+        {
+          "prefix_length": 7,
+          "rows": 4096,
+          "rows_with_double_zero_at_a_1_phase": 2656
+        },
+        {
+          "prefix_length": 8,
+          "rows": 2048,
+          "rows_with_double_zero_at_a_1_phase": 1520
+        },
+        {
+          "prefix_length": 9,
+          "rows": 1024,
+          "rows_with_double_zero_at_a_1_phase": 920
+        },
+        {
+          "prefix_length": 10,
+          "rows": 556,
+          "rows_with_double_zero_at_a_1_phase": 556
+        },
+        {
+          "prefix_length": 11,
+          "rows": 286,
+          "rows_with_double_zero_at_a_1_phase": 286
+        },
+        {
+          "prefix_length": 13,
+          "rows": 28,
+          "rows_with_double_zero_at_a_1_phase": 28
+        },
+        {
+          "prefix_length": 14,
+          "rows": 11,
+          "rows_with_double_zero_at_a_1_phase": 11
+        },
+        {
+          "prefix_length": 15,
+          "rows": 71,
+          "rows_with_double_zero_at_a_1_phase": 71
+        },
+        {
+          "prefix_length": 16,
+          "rows": 71,
+          "rows_with_double_zero_at_a_1_phase": 71
+        },
+        {
+          "prefix_length": 17,
+          "rows": 1,
+          "rows_with_double_zero_at_a_1_phase": 1
+        }
+      ],
+      "at_maximal_prefix": {
+        "rows": 1,
+        "with_double_zero_at_a_1_phase": 1
+      }
+    }
+  ],
+  "derived_identity_violations_total": 0,
+  "double_zero_persists_at_maximal_prefix": true,
+  "verdict": "THE SUB-LEMMA HAS NO LOCAL MECHANISM. The double-zero event (a(t,1), a(t,2)) = (0,0) at a 1-phase still occurs among the rows achieving the LONGEST alternating prefix at every radius measured. So 'column -1 is identically 1' is not forced by any bounded stretch of alternation, and a proof must use infinite alternation together with finite support -- not a local argument.",
+  "claim_limit": "No period-two exclusion is claimed or proved here. This is a bounded finding about small support radius, used to design a lemma. No finite row alternates forever, so every row here violates the lemma's hypothesis eventually; a finite-prefix violation is not a refutation. Even if proved, the lemma would exclude only eventual period two and leave every period at least three open."
+}
