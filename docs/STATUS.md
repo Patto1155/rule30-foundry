@@ -78,6 +78,36 @@ happened anyway. See [`BRANCHING.md`](BRANCHING.md).
 
 ## Recently closed
 
+- **Right-special-factor route audited and reclassified** (2026-09-18, no compute).
+  "For every `n` the centre column has a right-special factor of length `n`" is
+  **exactly Prize 1**, via `p(n+1) - p(n) = #RS_n` and Morse-Hedlund — a third
+  equivalent form beside the `F_2(x)` irrationality row, at equal strength rather
+  than the strictly-greater strength of the automaticity row. The induction the
+  Rule 30 recurrence suggests fails three ways: the implication direction is
+  backwards (right-specialness is suffix-closed), seed-blind arguments are refuted
+  by the all-zero fixed point, and the permutivity step terminates at Jen's
+  at-most-one-eventually-periodic-column theorem. `RS(n)` for all `n <= 21` falls
+  out of the existing annihilator window counts for free, and `RS(0)` is now
+  unconditional (Condrey 2026 excludes an eventually constant column for every
+  nonzero finite configuration). The 10M prefix holds no repeated 64-block, so
+  finite sweeps cap at `n <= 63` and have no falsification power here. The live
+  ladder is in the *period*, not the length: `p = 1` settled, `p = 2` open.
+  Rows in [`CLAIM_LEDGER.md`](CLAIM_LEDGER.md) and
+  [`theory/README.md`](theory/README.md) §4.
+
+- **Right-special-factor route audited and reclassified** (2026-09-18, no compute).
+  "For every `n` the centre column has a right-special factor of length `n`" is
+  **exactly Prize 1**, via `p(n+1) - p(n) = #RS_n` and Morse-Hedlund — a third
+  equivalent form beside the `F_2(x)` irrationality row, at equal strength rather
+  than the strictly-greater strength of the automaticity row. The induction the
+  Rule 30 recurrence suggests fails three ways (implication direction, seed-blind
+  arguments refuted by the all-zero fixed point, and a permutivity step that
+  terminates at Jen's 1990 two-column theorem). `RS(n)` for all `n <= 21` falls
+  out of the existing annihilator window counts for free; the 10M prefix holds no
+  repeated 64-block, so finite sweeps cap at `n <= 63` and have no falsification
+  power here. Rows in [`CLAIM_LEDGER.md`](CLAIM_LEDGER.md) and
+  [`theory/README.md`](theory/README.md) §4.
+
 - **Jev selector pilot**: `tools/jev_search.py` selects bounded DFAO instances
   using fixed, random or Jev policies, verifies witnesses/DRAT, and prunes only
   checked implications. CPU fixed/random replays passed; n=64 reproduced the
