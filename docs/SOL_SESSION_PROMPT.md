@@ -85,8 +85,15 @@ paste it into the prompt, a plan, a tracked file, or a run log.
 >
 > **The open frontier, as of 2026-09-18.** `s*(n)`, base-2 MSD, is now
 > certified through **`s*(64)=15`** — B3's MSD ask is closed, and `s*(52)=12`
-> is exact. Do not re-measure any of it. What is open: the **LSD** direction at
-> n=56 (harder, states individually), **bases 3 and 4**, and MSD beyond n=64.
+> is exact. Do not re-measure any of it.
+>
+> Your target is scoped and ready: **`s*(56)` in the LSD direction lies in
+> `{12,13,14}`**, with the 11-state refutation verified and the 14-state
+> witness independently evaluated. `queue/jev/frontier.json` and
+> `queue/jev/lsd56.json` are validated and point straight at it. Budget for it:
+> LSD costs **~4-5x MSD** per card, so start at `--solve-seconds 600
+> --check-seconds 1200` and expect s=13 to be the one that may not close.
+> After that: **bases 3 and 4**, and MSD beyond n=64.
 >
 > Be warned on that last one. The deciding n=64 instance at 14 states took
 > 353 s to solve and produced a **2.26 GB** proof that took 598 s to check —

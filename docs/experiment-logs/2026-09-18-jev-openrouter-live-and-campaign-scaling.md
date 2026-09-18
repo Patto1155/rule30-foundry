@@ -191,6 +191,37 @@ n=56 sweep in section 3, not on these runs. And the advantage exists only
 because the budget binds; with enough wall clock every policy finishes the plan
 and ordering stops mattering.
 
+## 3c. LSD n=56 scoped for the next session
+
+The ledger certifies base-2 LSD only through n=48, and `queue/jev/frontier.json`
+still pointed at n=64 MSD cards that section 3 has now closed. That plan is
+replaced, and `queue/jev/lsd56.json` is added and validated against
+`load_plan`, targeting the real open frontier.
+
+A fixed-policy pilot at `--solve-seconds 120` establishes bounds without
+closing them:
+
+| card | status | verified | solve | check |
+|---|---|---|---|---|
+| `center56-s11-lsd` | UNSAT | yes | 66.6 s | 93.2 s |
+| `center56-s12-lsd` | UNKNOWN | — | >120 s | — |
+| `center56-s13-lsd` | UNKNOWN | — | >120 s | — |
+| `center56-s14-lsd` | SAT | yes | 0.0 s | — |
+
+So **`s*(56)` in the LSD direction lies in `{12, 13, 14}`**: the 11-state
+refutation is `drat-trim`-verified and the 14-state witness independently
+evaluated. The two middle states are open, and closing them is a well-scoped
+target for one session rather than a research programme.
+
+Budget guidance for whoever takes it. LSD is **~4-5x more expensive than MSD**
+at the same `(n, states)` — `center56-s11` cost 160 s in LSD against 34.5 s in
+MSD — which is consistent with the ledger calling the LSD direction harder.
+Extrapolating the MSD per-state growth, s=12 plausibly needs a few hundred
+seconds of solve and comparable checking, so budget `--solve-seconds 600
+--check-seconds 1200` and expect the s=13 card to be the one that may not
+close. Matched random nulls at s=9..11 resolved in 1.7-40.9 s, so they are not
+the constraint here that they were at n=64 MSD.
+
 ## 4. Reproduce
 
 ```bash
