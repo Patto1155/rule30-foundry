@@ -6,6 +6,7 @@ actually detect the structure it claims to exclude.
 """
 import json
 import sys
+import pathlib
 import unittest
 from pathlib import Path
 
@@ -16,7 +17,9 @@ from experiments.algebraic_relation import (bits_to_poly, budget_curve, clmul,
                                             complexity_point, kernel_vector,
                                             relation_for, residual_bits)
 from prize_lab import sequence_bits
-from tools.theory_triage import MECHANISMS, load_queue, mechanism_gate, quantitative_gate
+from tools.theory_triage import (MANDATORY_BY_PRIZE, MECHANISMS, OPTIONAL,
+                                 REQUIRED, load_queue, mechanism_gate,
+                                 quantitative_gate)
 
 
 class QuantitativeGateTest(unittest.TestCase):
@@ -261,6 +264,108 @@ class IndependentRankCrossCheckTest(unittest.TestCase):
         self.assertIsNotNone(r)
         self.assertEqual(r["coefficients"], 64)
         self.assertFalse(r["extrapolates"])
+
+
+class EvidenceFieldsTest(unittest.TestCase):
+    """The fields that let a second decision see a changed state.
+
+    REQUIRED is fixed by what a card IS, so re-ranking after a finding sent an
+    identical payload and the selector could only repeat itself. These fields
+    are what a finding moves. A queue may omit them; an empty one is a queue
+    error rather than a field that is silently dropped.
+    """
+
+    def queue_path(self):
+        return ROOT / "queue/theory/portfolio.json"
+
+    def test_portfolio_queue_validates_and_clears_the_mechanism_gate(self):
+        data = load_queue(self.queue_path())
+        open_items = [o for o in data["obligations"] if o.get("status", "open") == "open"]
+        self.assertGreaterEqual(len(open_items), 4)
+        for o in open_items:
+            with self.subTest(obligation=o["id"]):
+                self.assertEqual(mechanism_gate(o)["verdict"], "PASS")
+                self.assertTrue(set(o["mechanism_check"]) <= set(MECHANISMS))
+
+    def test_every_portfolio_card_states_a_bridge_and_a_stop_condition(self):
+        # A card without these is the thing the portfolio loop exists to stop:
+        # a route that cannot say what it would buy or when to abandon it.
+        data = load_queue(self.queue_path())
+        for o in data["obligations"]:
+            with self.subTest(obligation=o["id"]):
+                self.assertIn("bridge", o)
+                self.assertIn("missing_lemma", o)
+                self.assertIn("stop", o)
+
+    def test_empty_optional_field_is_a_queue_error(self):
+        import json
+        import tempfile
+        data = json.loads(self.queue_path().read_text(encoding="utf-8"))
+        data["obligations"][0]["bridge"] = "   "
+        with tempfile.TemporaryDirectory() as d:
+            bad = pathlib.Path(d) / "q.json"
+            bad.write_text(json.dumps(data))
+            with self.assertRaises(ValueError):
+                load_queue(bad)
+
+    def test_optional_fields_reach_the_decision_payload(self):
+        # The regression this guards is invisible from outside: the run still
+        # succeeds, the selector just never sees the new evidence.
+        card = {"id": "c", "lemma": "L", "prize": "1", "implication": "I",
+                "refutation": "R", "mechanism_check": {"algebra-already-gives-it": "x"},
+                "bridge": "B", "missing_lemma": "M", "progress": "P"}
+        payload = {k: card[k] for k in REQUIRED + OPTIONAL if k in card}
+        for field in ("bridge", "missing_lemma", "progress"):
+            self.assertIn(field, payload)
+        self.assertNotIn("falsifier_cost", payload)
+
+
+class PrizeRestatementGateTest(unittest.TestCase):
+    """A Prize 1 card must say whether it is Prize 1 written differently.
+
+    The case this encodes: a portfolio pilot ranked a card first for three
+    cycles whose lemma was 'P implies Q', bridged by a theorem forbidding P
+    and Q together. Given that theorem the lemma is equivalent to not-P --
+    the prize itself -- because not-P implies it vacuously. The mechanism gate
+    passed it, and the selector, which judges no mathematics, ranked it 0.87,
+    0.84, 0.96. Only an outside model caught it.
+    """
+
+    def card(self, prize, extra=None):
+        checks = {"algebra-already-gives-it":
+                  "left permutivity supplies the identity for free but the residue "
+                  "is open and that residue is the whole content of the card"}
+        checks.update(extra or {})
+        return {"id": "x", "prize": prize, "mechanism_check": checks}
+
+    def test_prize_one_card_must_address_restatement(self):
+        self.assertEqual(mechanism_gate(self.card("1"))["verdict"], "FAIL")
+
+    def test_prize_one_card_passes_once_it_does(self):
+        rebuttal = ("the bridge theorem forbids the hypothesis and the conclusion "
+                    "together, so the lemma is equivalent to the prize once that "
+                    "theorem is admitted, and it is graded at equal strength")
+        o = self.card("1", {"prize-restatement": rebuttal})
+        self.assertEqual(mechanism_gate(o)["verdict"], "PASS")
+
+    def test_other_prizes_are_not_burdened(self):
+        # Only the prizes with equivalent reformulations on record are gated.
+        for prize in ("2", "3", "none"):
+            with self.subTest(prize=prize):
+                self.assertEqual(mechanism_gate(self.card(prize))["verdict"], "PASS")
+
+    def test_mandatory_mechanisms_are_real_mechanisms(self):
+        for prize, names in MANDATORY_BY_PRIZE.items():
+            for name in names:
+                self.assertIn(name, MECHANISMS, f"prize {prize}")
+
+    def test_shipped_obligations_queue_still_passes(self):
+        # The gate is new; the queue the repo already ships must not break.
+        data = load_queue(ROOT / "queue/theory/obligations.json")
+        for o in data["obligations"]:
+            if o.get("status", "open") == "open":
+                with self.subTest(obligation=o["id"]):
+                    self.assertEqual(mechanism_gate(o)["verdict"], "PASS")
 
 
 if __name__ == "__main__":
