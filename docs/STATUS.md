@@ -78,6 +78,26 @@ happened anyway. See [`BRANCHING.md`](BRANCHING.md).
 
 ## Recently closed
 
+- **Right-special-factor route audited and reclassified** (2026-09-18, no compute).
+  "For every `n` the centre column has a right-special factor of length `n`" is
+  **exactly Prize 1**, via `p(n+1) - p(n) = #RS_n` and Morse-Hedlund — a third
+  equivalent form beside the `F_2(x)` irrationality row, at equal strength rather
+  than the strictly-greater strength of the automaticity row. The induction the
+  Rule 30 recurrence suggests fails three ways: the implication direction is
+  backwards (right-specialness is suffix-closed), seed-blind arguments are refuted
+  by the all-zero fixed point and by Rule 90 — left permutive, same single-cell
+  seed, eventually periodic centre column — and the permutivity step terminates
+  at Jen (1990) Prop. 3, which reaches **width 2** (no two adjacent columns both
+  eventually periodic) and stops one short of the width-1 prize, which Kopra
+  (2023) Problem 4.8 records as open. `RS(n)` for all `n <= 21` falls out of the
+  existing annihilator window counts for free; `RS(0)` rests on Condrey's
+  unrefereed 2026 preprint (Cor. 5), whose eventually-one half is Jen (1986)
+  Thm 7a. The 10M prefix holds no repeated 64-block, so finite sweeps cap at
+  `n <= 63` and have no falsification power here. The live ladder is in the
+  *period*, not the length: `p = 1` settled, every `p >= 2` open.
+  Rows in [`CLAIM_LEDGER.md`](CLAIM_LEDGER.md) and
+  [`theory/README.md`](theory/README.md) §4.
+
 - **Jev selector pilot**: `tools/jev_search.py` selects bounded DFAO instances
   using fixed, random or Jev policies, verifies witnesses/DRAT, and prunes only
   checked implications. CPU fixed/random replays passed; n=64 reproduced the
