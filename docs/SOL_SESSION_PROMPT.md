@@ -73,12 +73,17 @@ paste it into the prompt, a plan, a tracked file, or a run log.
 > A single random seed is not the 7-seed null band; do not read a one-seed gap
 > as separation.
 >
-> **The open frontier, as of 2026-09-18.** `s*(n)`, base-2 MSD, is certified
-> through `s*(56)=13`; `s*(52)=12` and `s*(64) >= 14` were established in the
-> log above, leaving `s*(64)` in `{14,15}`. STATUS.md item B3 asks for MSD n=64,
-> then the harder LSD n=56 states individually. Closing `s*(64)` is the single
-> highest-value target and is within reach. Check the ledger before calling
-> anything new.
+> **The open frontier, as of 2026-09-18.** `s*(n)`, base-2 MSD, is now
+> certified through **`s*(64)=15`** — B3's MSD ask is closed, and `s*(52)=12`
+> is exact. Do not re-measure any of it. What is open: the **LSD** direction at
+> n=56 (harder, states individually), **bases 3 and 4**, and MSD beyond n=64.
+>
+> Be warned on that last one. The deciding n=64 instance at 14 states took
+> 353 s to solve and produced a **2.26 GB** proof that took 598 s to check —
+> roughly 10x its 13-state predecessor for one extra state. Extending this
+> encoding to n=72 is a compute bet that will probably lose; a better encoding
+> or a different model class is the higher-expected-value move. Say which you
+> are doing and why. Check the ledger before calling anything new.
 >
 > **What to deliver.** Score the session on *new verified center results per
 > total wall time*, not on Jev calls. Count controls, random nulls, inferred

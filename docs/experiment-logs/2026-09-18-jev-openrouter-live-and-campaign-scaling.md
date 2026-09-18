@@ -108,16 +108,28 @@ none is vacuous. Recorded under `purpose: exact-exclusion`.
 | 40, 44, 48 | 11 | 12 | `s*(48)=12` matches the certified anchor |
 | **52** | 11 | 12 | **`s*(52)=12`** — new exact value |
 | **56** | 12 | 13 | **reproduces the certified `s*(56)=13`** |
-| **64** | **13** | 15 | **`s*(64) >= 14`**, narrowing `{12..15}` to `{14,15}` |
+| **64** | **14** | 15 | **`s*(64) = 15`** — exact; closes STATUS item B3 |
 
 Two things matter here. The n=56 row independently reproduces a value the
 ledger already certifies by a different route — that is instrument validation,
 not a new finding, and it is the reason to trust the other rows. The n=64 row
-is progress on STATUS.md item **B3** ("benchmark MSD n=64 next"): `center64-s12`
-and `center64-s13` are both verified UNSAT, so no base-2 MSD DFAO with 13 or
-fewer states generates the first 64 center bits. With the known 15-state
-witness this leaves `s*(64)` in `{14,15}`; `center64-s14` decides it, and was
-still solving when this log was written.
+**closes STATUS.md item B3** ("benchmark MSD n=64 next"). `center64-s12`,
+`center64-s13` and `center64-s14` are each verified UNSAT, so no base-2 MSD
+DFAO with 14 or fewer states generates the first 64 center bits. The 15-state
+witness was independently evaluated in the same session. Hence
+
+> **`s*(64) = 15` exactly**, for base-2 MSD DFAOs on the single-seed center
+> column.
+
+The deciding instance, `center64-s14`, took **353 s** to solve and produced a
+**2.26 GB** DRAT proof that `drat-trim` verified in **598 s** — a ~10x jump in
+checking cost over `center64-s13` for one extra state, and a direct measure of
+where this method runs out. The counting bound clears it comfortably: at
+s=14 `log2|M|` is 120.6 against n=64, and the conservative threshold at n=64 is
+11 states, so the exclusion is non-vacuous. Hashes and the 15-state witness are
+retained in `runs/dfao-n64-msd-s14-2026-09-18.json`, following the convention of
+the certified n=56 artifact; the 2.26 GB proof itself is not retained and
+regenerates from the recorded CNF hash.
 
 **Not claimed.** The single random null needed more states than the center
 column at n=52 and n=56. This is *not* evidence of structure: the ledger's
