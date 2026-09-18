@@ -113,7 +113,8 @@ class MechanismGateTest(unittest.TestCase):
         for o in open_items:
             with self.subTest(obligation=o["id"]):
                 self.assertEqual(mechanism_gate(o)["verdict"], "PASS")
-                self.assertIn(o["prize"], ("1", "2", "3"))
+                # "none" is legitimate: structural work with no prize bridge.
+                self.assertIn(o["prize"], ("1", "2", "3", "none"))
                 self.assertTrue(set(o["mechanism_check"]) <= set(MECHANISMS))
 
 

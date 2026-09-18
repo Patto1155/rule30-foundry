@@ -13,7 +13,7 @@
       "id": "christol-transcendence",
       "prize": "3",
       "lemma": "The generating function f(x) = sum c_n x^n of the single-seed center column is transcendental over F_2(x).",
-      "implication": "By Christol's theorem this is equivalent to the center column not being 2-automatic, which subsumes the entire s*(n) program at every n simultaneously rather than one prefix at a time, and removes automatic-sequence shortcuts from Prize 3 in base 2.",
+      "implication": "Prize 3 only. Correction 2026-09-18: this is NOT a Prize 1 route. Over a finite field a power series is rational iff its coefficients are eventually periodic, so Prize 1 is exactly irrationality - the D=1 case. Algebraicity (D>=2) is strictly stronger than Prize 1 needs, so a transcendence proof is a harder target than the prize it was filed under. It removes automatic-sequence shortcuts from Prize 3 in base 2, and nothing more.",
       "refutation": "experiments/algebraic_relation.py finds a bounded-degree relation that extrapolates onto held-out coefficients. The instrument is calibrated: it recovers the textbook Thue-Morse relation (D=2, E=3, C*=12) and that budget plateaus in N, which is the signature a genuine shortcut would show.",
       "mechanism_check": {
         "forced-outcome": "The search is a kernel over F_2 with C=(D+1)(E+1) unknowns against N constraints, so a fit is forced whenever C exceeds N. The instrument therefore reports the minimal budget C*(N) as a curve against a random null and a Thue-Morse positive control, and additionally requires any fit to predict coefficients it never saw, which is not forced at any budget.",
@@ -65,10 +65,10 @@
     },
     {
       "id": "diagonal-period-growth-law",
-      "prize": "1",
+      "prize": "none",
       "lemma": "The left-diagonal period satisfies period(d) = Theta(log d), and the constant is exactly 2 in the measured regime.",
-      "implication": "The period-propagation lemma is already a theorem; a proved growth law would turn the refuted period-16 conjecture into a positive structural statement, and unbounded period along diagonals is the diagonal reading of Prize 1's non-periodicity.",
-      "refutation": "Find a diagonal whose period departs from the 2*log2(d) law, or show the doubling branch fires at a rate inconsistent with it. period 32 first appears at d=87867, which the law predicts.",
+      "implication": "NONE. Demoted 2026-09-18: this is independent cone theory with no prize bridge. The automaticity-to-bounded-period route that would have used it is closed (see theory/README.md section 4), and the cone is in any case provably disjoint from the centre column because settle(d) ~ 1.34d > d. Worth proving as a structural theorem about the light cone; not prize progress, and not to be given prize priority.",
+      "refutation": "Find a diagonal whose period departs from the 2*log2(d) law. The doubling criterion is already a Theorem - the branch fires exactly at a consecutive-word collision w_{d-2} = w_{d-1} with odd parity - so the open lemma is that infinitely many such events occur. Note period(d) ~ 2*log2(d) is a Robust observation, NOT a Theorem: what is proved is only that d=87867 has period 32, i.e. periods are not bounded by 16. Unboundedness itself is unproved.",
       "mechanism_check": {
         "partial-map-assumed-total": "The earlier cycle and reachability routes died because the pair of pattern words is not a complete state and the orbit escapes at every zero word. This obligation targets the rate at which the doubling branch fires, and never assumes a total map or looks for a cycle.",
         "disjoint-from-prize-object": "Diagonal periodicity does not touch the center column directly, so the implication is stated as structure about the cone rather than as a Prize 1 proof, and it is scoped accordingly."

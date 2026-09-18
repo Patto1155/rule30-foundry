@@ -107,8 +107,11 @@ def load_queue(path):
                 continue
             if not isinstance(o.get(field), str) or not o[field].strip():
                 raise ValueError(f"{o['id']}: {field} is required and must be non-empty")
-        if o["prize"] not in ("1", "2", "3"):
-            raise ValueError(f"{o['id']}: prize must be '1', '2' or '3'")
+        # "none" is deliberate, not a loophole: structural work with no prize
+        # bridge should be recorded honestly as such rather than given a prize
+        # label it cannot support. It is ranked below prize-linked work.
+        if o["prize"] not in ("1", "2", "3", "none"):
+            raise ValueError(f"{o['id']}: prize must be '1', '2', '3' or 'none'")
         # An obligation with no way to be wrong is not an obligation.
         if o.get("status", "open") not in ("open", "parked", "closed"):
             raise ValueError(f"{o['id']}: invalid status")
@@ -261,7 +264,9 @@ def jev_rank(data, obligations, directory, api_key, timeout, threshold, provider
         "goal": data.get("goal", ""),
         "obligations": [{k: o[k] for k in REQUIRED if k in o} for o in obligations],
         "settled": data.get("settled", []),
-        "limits": "Rank by expected proof value per unit of lead-agent attention. "
+        "limits": "An obligation with prize 'none' has no prize bridge and ranks "
+                  "below any prize-linked obligation. "
+                  "Rank by expected proof value per unit of lead-agent attention. "
                   "A finite-prefix exclusion is not an asymptotic result. Controls "
                   "and nulls are not prize objects. Prefer an obligation whose "
                   "refutation is cheap and whose implication is concrete over one "
