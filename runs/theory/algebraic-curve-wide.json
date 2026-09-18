@@ -1,0 +1,94 @@
+{
+  "artifact_type": "rule30.algebraic_relation_curve",
+  "seed_convention": "single-black-cell for 'center'; controls are not prize objects",
+  "max_degree": 16,
+  "max_ext_degree": 16,
+  "random_seed": 30,
+  "results": [
+    {
+      "sequence": "center",
+      "fit_bits": 2048,
+      "holdout": 2048,
+      "elapsed_s": 1.157,
+      "coefficients": null,
+      "extrapolates": false
+    },
+    {
+      "sequence": "random",
+      "fit_bits": 2048,
+      "holdout": 2048,
+      "elapsed_s": 1.016,
+      "coefficients": null,
+      "extrapolates": false
+    },
+    {
+      "sequence": "thue-morse",
+      "fit_bits": 2048,
+      "holdout": 2048,
+      "elapsed_s": 0.03,
+      "coefficients": 12,
+      "degree": 2,
+      "ext_degree": 3,
+      "terms": 7,
+      "extrapolates": true,
+      "holdout_mismatches": 0
+    },
+    {
+      "sequence": "center",
+      "fit_bits": 4096,
+      "holdout": 4096,
+      "elapsed_s": 3.226,
+      "coefficients": null,
+      "extrapolates": false
+    },
+    {
+      "sequence": "random",
+      "fit_bits": 4096,
+      "holdout": 4096,
+      "elapsed_s": 2.651,
+      "coefficients": null,
+      "extrapolates": false
+    },
+    {
+      "sequence": "thue-morse",
+      "fit_bits": 4096,
+      "holdout": 4096,
+      "elapsed_s": 0.081,
+      "coefficients": 12,
+      "degree": 2,
+      "ext_degree": 3,
+      "terms": 7,
+      "extrapolates": true,
+      "holdout_mismatches": 0
+    },
+    {
+      "sequence": "center",
+      "fit_bits": 8192,
+      "holdout": 8192,
+      "elapsed_s": 10.553,
+      "coefficients": null,
+      "extrapolates": false
+    },
+    {
+      "sequence": "random",
+      "fit_bits": 8192,
+      "holdout": 8192,
+      "elapsed_s": 8.144,
+      "coefficients": null,
+      "extrapolates": false
+    },
+    {
+      "sequence": "thue-morse",
+      "fit_bits": 8192,
+      "holdout": 8192,
+      "elapsed_s": 0.255,
+      "coefficients": 12,
+      "degree": 2,
+      "ext_degree": 3,
+      "terms": 7,
+      "extrapolates": true,
+      "holdout_mismatches": 0
+    }
+  ],
+  "limits": "Finite-prefix search over bounded-degree algebraic relations. A negative excludes only this budget at this N and is not a proof of non-automaticity. A relation that extrapolates would be a finite shortcut and must be re-checked independently."
+}

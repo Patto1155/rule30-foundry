@@ -1,0 +1,95 @@
+{
+  "goal": "Produce conditional theorems about the single-seed Rule 30 center column, not more finite exclusions. Each obligation must name a lemma, the prize implication it buys, and the cheapest thing that could refute it.",
+  "settled": [
+    "s*(n) for base-2 MSD DFAOs is exact at s*(48)=12, s*(52)=12, s*(56)=13, s*(64)=15. Finite exclusions only.",
+    "Every left diagonal is eventually periodic; settle(d) ~ 1.3389*d, so the center column is unsettled at every horizon.",
+    "Left diagonal periods are UNBOUNDED: period(d) ~ 2*log2(d). The period-16 conjecture is refuted.",
+    "GF(2) linear complexity L(n)=n/2 is maximal; no LFSR shortcut.",
+    "Uniform Bernoulli is invariant, so Prize 2 is trivial for random ICs and its difficulty is entirely in the single seed."
+  ],
+  "obligations": [
+    {
+      "id": "christol-transcendence",
+      "prize": "3",
+      "lemma": "The generating function f(x) = sum c_n x^n of the single-seed center column is transcendental over F_2(x).",
+      "implication": "By Christol's theorem this is equivalent to the center column not being 2-automatic, which subsumes the entire s*(n) program at every n simultaneously rather than one prefix at a time, and removes automatic-sequence shortcuts from Prize 3 in base 2.",
+      "refutation": "experiments/algebraic_relation.py finds a bounded-degree relation that extrapolates onto held-out coefficients. The instrument is calibrated: it recovers the textbook Thue-Morse relation (D=2, E=3, C*=12) and that budget plateaus in N, which is the signature a genuine shortcut would show.",
+      "mechanism_check": {
+        "forced-outcome": "The search is a kernel over F_2 with C=(D+1)(E+1) unknowns against N constraints, so a fit is forced whenever C exceeds N. The instrument therefore reports the minimal budget C*(N) as a curve against a random null and a Thue-Morse positive control, and additionally requires any fit to predict coefficients it never saw, which is not forced at any budget.",
+        "finite-exclusion-as-asymptotic": "A negative at budget C and length N is recorded as a bounded finding. The asymptotic content is carried only by the shape of the C*(N) curve, plateau versus growth, and never by any single point."
+      },
+      "status": "open",
+      "quantitative": {
+        "class": "algebraic-relation",
+        "degree": 16,
+        "ext_degree": 16,
+        "n": 8192,
+        "evidence": "curve-shape",
+        "sizes": [
+          1024,
+          2048,
+          4096,
+          8192
+        ],
+        "controls": [
+          "random",
+          "thue-morse"
+        ]
+      }
+    },
+    {
+      "id": "unsettled-core-entropy-lower-bound",
+      "prize": "3",
+      "lemma": "Any description of the unsettled core of the light cone that supports O(polylog t) random access to the center column requires Omega(t) bits.",
+      "implication": "This is Prize 3 restricted to the only region that matters: the theory gate proves the settled wedge is O(t)-describable and disjoint from the center column, so a lower bound on the core is the whole of Prize 3 for cone-based methods.",
+      "refutation": "Exhibit a sub-linear description of the core that reproduces center bits, or show the core's block entropy falls below the matched random control at any scale. The gate already measures pre-settle block-entropy rate >= 0.9975 against 0.99961 for the control.",
+      "mechanism_check": {
+        "disjoint-from-prize-object": "The core is by construction the region the center column lives in, because settle(T) is about 1.34T which exceeds T at every horizon, so the center never enters the settled wedge.",
+        "ensemble-not-orbit": "The quantity is measured on the single seed light cone and is never averaged or perturbed over initial conditions, so it is a property of the prize orbit rather than of the rule."
+      },
+      "status": "open"
+    },
+    {
+      "id": "nonlinear-term-obstruction",
+      "prize": "3",
+      "lemma": "The single quadratic term a(t,i)*a(t,i+1) in the algebraic normal form is the exact obstruction: the same analysis that solves Rule 90 in closed form via Lucas' theorem fails for Rule 30 precisely and only at that term.",
+      "implication": "Turns an informal 'Rule 30 is nonlinear so it is hard' into a located obstruction, which is the standard route to either a transfer (adapt the Rule 90 machinery across the term) or a barrier (show no such adaptation can work).",
+      "refutation": "Carry out the Rule 90 derivation symbolically for Rule 30 and find the obstruction is elsewhere, or that the quadratic term is removable by a change of variables over F_2.",
+      "mechanism_check": {
+        "algebra-already-gives-it": "The theory gate derives left-permutivity, sideways determinism and Bernoulli invariance from the algebraic normal form, but it nowhere locates the Rule 90 obstruction, so this is new symbolic work rather than a re-measurement.",
+        "finite-exclusion-as-asymptotic": "The deliverable is a symbolic derivation valid for all t, not a computation on any finite prefix, so no extension argument is needed."
+      },
+      "status": "open"
+    },
+    {
+      "id": "diagonal-period-growth-law",
+      "prize": "1",
+      "lemma": "The left-diagonal period satisfies period(d) = Theta(log d), and the constant is exactly 2 in the measured regime.",
+      "implication": "The period-propagation lemma is already a theorem; a proved growth law would turn the refuted period-16 conjecture into a positive structural statement, and unbounded period along diagonals is the diagonal reading of Prize 1's non-periodicity.",
+      "refutation": "Find a diagonal whose period departs from the 2*log2(d) law, or show the doubling branch fires at a rate inconsistent with it. period 32 first appears at d=87867, which the law predicts.",
+      "mechanism_check": {
+        "partial-map-assumed-total": "The earlier cycle and reachability routes died because the pair of pattern words is not a complete state and the orbit escapes at every zero word. This obligation targets the rate at which the doubling branch fires, and never assumes a total map or looks for a cycle.",
+        "disjoint-from-prize-object": "Diagonal periodicity does not touch the center column directly, so the implication is stated as structure about the cone rather than as a Prize 1 proof, and it is scoped accordingly."
+      },
+      "status": "open"
+    },
+    {
+      "id": "wide-dfao-sweep",
+      "prize": "3",
+      "lemma": "No DFAO with at most 20 states in base 2 MSD generates the first 128 bits of the center column.",
+      "implication": "Would add one more point to the s*(n) curve. Note the 14-state n=64 refutation already cost 353s and a 2.26GB proof, and difficulty rose about 10x per state, so 20 states at n=128 is far beyond reach.",
+      "refutation": "A SAT witness at 20 states.",
+      "mechanism_check": {
+        "forced-outcome": "Not vacuous by counting: log2|M| for 20 states in base 2 is about 192.9 against n=128, so the negative would discriminate. The objection to this obligation is cost and value, not vacuity.",
+        "finite-exclusion-as-asymptotic": "This buys one more point on a curve that is already exact at four lengths, and says nothing about bit 129, so its implication is thin even if the search succeeds."
+      },
+      "status": "open",
+      "quantitative": {
+        "class": "dfao",
+        "states": 20,
+        "base": 2,
+        "n": 128
+      }
+    }
+  ]
+}
