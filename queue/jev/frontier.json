@@ -1,0 +1,113 @@
+{
+  "scope": "frontier",
+  "goal": "Tighten finite base-2 MSD DFAO bounds for the single-seed center column, with matched random and Thue-Morse controls. Prioritize unresolved state boundaries; stop when new proposals are needed.",
+  "cards": [
+    {
+      "id": "control-tm64-s2",
+      "sequence": "thue-morse",
+      "n": 64,
+      "states": 2,
+      "base": 2,
+      "direction": "msd",
+      "seed": 30,
+      "role": "calibration",
+      "hypothesis": "A 2-state base-2 MSD DFAO fits the first 64 bits of thue-morse.",
+      "if_sat": "A checked witness bounds this finite prefix from above; compare with matched controls. It is not a uniform nth-bit algorithm.",
+      "if_unsat": "A checked DRAT refutation bounds this finite class from below; prune only by prefix/state monotonicity. It is not a general complexity lower bound.",
+      "expected": "SAT"
+    },
+    {
+      "id": "control-center16-s4",
+      "sequence": "center",
+      "n": 16,
+      "states": 4,
+      "base": 2,
+      "direction": "msd",
+      "seed": 30,
+      "role": "calibration",
+      "hypothesis": "A 4-state base-2 MSD DFAO fits the first 16 bits of center.",
+      "if_sat": "A checked witness bounds this finite prefix from above; compare with matched controls. It is not a uniform nth-bit algorithm.",
+      "if_unsat": "A checked DRAT refutation bounds this finite class from below; prune only by prefix/state monotonicity. It is not a general complexity lower bound.",
+      "expected": "UNSAT"
+    },
+    {
+      "id": "control-center64-s15",
+      "sequence": "center",
+      "n": 64,
+      "states": 15,
+      "base": 2,
+      "direction": "msd",
+      "seed": 30,
+      "role": "calibration",
+      "hypothesis": "Reproduce the existing 15-state upper bound at n=64 before probing its unresolved 13/14-state boundary.",
+      "if_sat": "A checked witness bounds this finite prefix from above; compare with matched controls. It is not a uniform nth-bit algorithm.",
+      "if_unsat": "A checked DRAT refutation bounds this finite class from below; prune only by prefix/state monotonicity. It is not a general complexity lower bound.",
+      "expected": "SAT"
+    },
+    {
+      "id": "center64-s13",
+      "sequence": "center",
+      "n": 64,
+      "states": 13,
+      "base": 2,
+      "direction": "msd",
+      "seed": 30,
+      "role": "frontier",
+      "hypothesis": "A 13-state base-2 MSD DFAO fits the first 64 bits of center.",
+      "if_sat": "A checked witness bounds this finite prefix from above; compare with matched controls. It is not a uniform nth-bit algorithm.",
+      "if_unsat": "A checked DRAT refutation bounds this finite class from below; prune only by prefix/state monotonicity. It is not a general complexity lower bound."
+    },
+    {
+      "id": "random64-s13",
+      "sequence": "random",
+      "n": 64,
+      "states": 13,
+      "base": 2,
+      "direction": "msd",
+      "seed": 30,
+      "role": "frontier",
+      "hypothesis": "A 13-state base-2 MSD DFAO fits the first 64 bits of random.",
+      "if_sat": "A checked witness bounds this finite prefix from above; compare with matched controls. It is not a uniform nth-bit algorithm.",
+      "if_unsat": "A checked DRAT refutation bounds this finite class from below; prune only by prefix/state monotonicity. It is not a general complexity lower bound."
+    },
+    {
+      "id": "center64-s14",
+      "sequence": "center",
+      "n": 64,
+      "states": 14,
+      "base": 2,
+      "direction": "msd",
+      "seed": 30,
+      "role": "frontier",
+      "hypothesis": "A 14-state base-2 MSD DFAO fits the first 64 bits of center.",
+      "if_sat": "A checked witness bounds this finite prefix from above; compare with matched controls. It is not a uniform nth-bit algorithm.",
+      "if_unsat": "A checked DRAT refutation bounds this finite class from below; prune only by prefix/state monotonicity. It is not a general complexity lower bound."
+    },
+    {
+      "id": "random64-s14",
+      "sequence": "random",
+      "n": 64,
+      "states": 14,
+      "base": 2,
+      "direction": "msd",
+      "seed": 30,
+      "role": "frontier",
+      "hypothesis": "A 14-state base-2 MSD DFAO fits the first 64 bits of random.",
+      "if_sat": "A checked witness bounds this finite prefix from above; compare with matched controls. It is not a uniform nth-bit algorithm.",
+      "if_unsat": "A checked DRAT refutation bounds this finite class from below; prune only by prefix/state monotonicity. It is not a general complexity lower bound."
+    },
+    {
+      "id": "random64-s15",
+      "sequence": "random",
+      "n": 64,
+      "states": 15,
+      "base": 2,
+      "direction": "msd",
+      "seed": 30,
+      "role": "frontier",
+      "hypothesis": "A 15-state base-2 MSD DFAO fits the first 64 bits of random.",
+      "if_sat": "A checked witness bounds this finite prefix from above; compare with matched controls. It is not a uniform nth-bit algorithm.",
+      "if_unsat": "A checked DRAT refutation bounds this finite class from below; prune only by prefix/state monotonicity. It is not a general complexity lower bound."
+    }
+  ]
+}

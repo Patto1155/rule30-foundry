@@ -1,0 +1,102 @@
+{
+  "scope": "calibration-replay",
+  "policy": "fixed",
+  "stop_reason": "plan-exhausted",
+  "attempted": 7,
+  "inferred": [
+    {
+      "id": "center20-s4",
+      "status": "UNSAT",
+      "from": "control-center16-s4"
+    },
+    {
+      "id": "center20-s7",
+      "status": "SAT",
+      "from": "center20-s6"
+    },
+    {
+      "id": "random20-s7",
+      "status": "SAT",
+      "from": "random20-s6"
+    }
+  ],
+  "decisions": [
+    {
+      "choice": "random20-s4",
+      "policy": "fixed"
+    },
+    {
+      "choice": "center20-s5",
+      "policy": "fixed"
+    },
+    {
+      "choice": "random20-s5",
+      "policy": "fixed"
+    },
+    {
+      "choice": "center20-s6",
+      "policy": "fixed"
+    },
+    {
+      "choice": "random20-s6",
+      "policy": "fixed"
+    }
+  ],
+  "results": [
+    {
+      "id": "control-tm64-s2",
+      "sequence": "thue-morse",
+      "role": "calibration",
+      "status": "SAT",
+      "verified": true
+    },
+    {
+      "id": "control-center16-s4",
+      "sequence": "center",
+      "role": "calibration",
+      "status": "UNSAT",
+      "verified": true
+    },
+    {
+      "id": "random20-s4",
+      "sequence": "random",
+      "role": "frontier",
+      "status": "UNSAT",
+      "verified": true
+    },
+    {
+      "id": "center20-s5",
+      "sequence": "center",
+      "role": "frontier",
+      "status": "UNSAT",
+      "verified": true
+    },
+    {
+      "id": "random20-s5",
+      "sequence": "random",
+      "role": "frontier",
+      "status": "UNSAT",
+      "verified": true
+    },
+    {
+      "id": "center20-s6",
+      "sequence": "center",
+      "role": "frontier",
+      "status": "SAT",
+      "verified": true
+    },
+    {
+      "id": "random20-s6",
+      "sequence": "random",
+      "role": "frontier",
+      "status": "SAT",
+      "verified": true
+    }
+  ],
+  "verified_center_frontier": 0,
+  "jev_calls": 0,
+  "input_tokens_or_conservative_reserve": 0,
+  "estimated_usd_or_reserve": 0.0,
+  "elapsed_s": 0.2553424410000389,
+  "claim_limit": "Finite DFAO instances only. No prize solution, global complexity lower bound, or empirical claim of Jev benefit."
+}

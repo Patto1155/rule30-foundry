@@ -6,7 +6,7 @@ lives here. Overwrite this file in place; git history keeps the old versions.
 No other file may carry a "current state as of" section —
 `tools/lint_ledger.py` enforces it.
 
-Updated: 2026-09-15 · Newest log: `docs/experiment-logs/2026-09-15-delegation-pipeline-end-to-end.md`
+Updated: 2026-09-17 · Newest log: `docs/experiment-logs/2026-09-17-jev-selector-pilot.md`
 
 ## Where the three prize problems stand
 
@@ -77,6 +77,12 @@ happened anyway. See [`BRANCHING.md`](BRANCHING.md).
 
 ## Recently closed
 
+- **Jev selector pilot**: `tools/jev_search.py` selects bounded DFAO instances
+  using fixed, random or Jev policies, verifies witnesses/DRAT, and prunes only
+  checked implications. CPU fixed/random replays passed; n=64 reproduced the
+  known 15-state upper bound, with tighter cases still UNKNOWN at 10 seconds.
+  No live Jev call or evidence of model benefit yet (API key absent).
+  `docs/JEV_SEARCH.md`; `docs/experiment-logs/2026-09-17-jev-selector-pilot.md`.
 - **G1**: #33 wired the existing annihilator helper into preflight for positive,
   negative, and undeclared search claims. Strict distinct-window parameters and
   both boundaries are checked. A heuristic safety-margin shortfall is explicitly

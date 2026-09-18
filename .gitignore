@@ -50,6 +50,7 @@ third_party/
 # runs/<name>/, which workhorse.py commits because it IS the experiment record.
 runs/codex/
 runs/pool/
+runs/jev/
 
 # The trap manifest's refusal record. tests/test_workhorse.py drives a real
 # workhorse refusal to prove the counting-bound gate still bites, and
