@@ -45,3 +45,26 @@ Not agreement, and not a high probability. Only one of:
 
 Call count, token count and reported probabilities are not evidence of
 benefit and are not used as such.
+
+---
+
+# Frozen ordering 2: the alternating-trace hour
+
+Written and committed before `theory_triage.py --policy jev` was run on
+`queue/theory/alternating.json`.
+
+| Rank | Candidate | Why here |
+|---|---|---|
+| 1 | `left-column-constant` | D1 already gives half of it free and independent of the right half; D4' reduces the rest to ONE condition, and Condrey Cor. 5 finishes in a line. Cheapest falsifier of the four, and the most informative either way. |
+| 2 | `alternating-fiber-support` | Same destination by the faithful transfer of the method that settles p=1, but it needs a full closed-form classification — the days-long project this hour is explicitly not to begin. |
+| 3 | `mirror-collapse` | A lever with no bridge. Cheap, and it feeds ranks 1 and 2, but it excludes nothing on its own. |
+| 4 | `left-density-obstruction` | Temporal density in a column says nothing about spatial support at time zero, and that step is the whole problem. |
+
+Predicted action: enumerate rows achieving the longest alternating prefixes and
+ask whether the double-zero event `(a(t,1), a(t,2)) = (0,0)` still occurs at a
+1-phase. Persisting at maximal prefix length means the sub-lemma has no local
+mechanism; vanishing means it tightens with alternation length and is worth
+proving.
+
+Selector earns its place only by picking a lower-ranked candidate that then
+changes what is learned. Agreement is not benefit.

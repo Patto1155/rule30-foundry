@@ -1,0 +1,83 @@
+{
+  "goal": "One focused hour on the alternating centre trace. Given the proved constraints D1-D5, which candidate invariant or forced-tail lemma is the best next falsification or symbolic step towards excluding an eventually alternating centre trace for a nonzero finitely supported Rule 30 row? Excluding period 2 is a PARTIAL result: every period at least 3 would remain open. Do not begin a days-long classification.",
+  "settled": [
+    "D1: if the centre alternates and c_t=1 then a(t,-1)=1. The OR latches; independent of the right half.",
+    "D2: if the centre alternates and c_t=0 then a(t,-1)=1 XOR a(t,1).",
+    "D3: a(t,-2) = a(t+1,1) when c_t=1 and = a(t,1) when c_t=0. Column -2 is a time-shifted copy of column +1.",
+    "D4': if c_t=1 then a(t+1,-1) = a(t,1) OR a(t,2).",
+    "D5: if c_t=1 then a(t+1,1) = 1 XOR (a(t,1) OR a(t,2)).",
+    "Consequence of D1 and D4': column -1 is identically 1 on an alternating stretch exactly when (a(t,1), a(t,2)) is never (0,0) at a 1-phase in it.",
+    "Condrey 2026 Cor. 5 (primary source read): no column of a nonzero finite Rule 30 orbit is eventually constant. This is the theorem that would finish any argument reaching an eventually constant column.",
+    "Condrey Lemma 1 (triangular uniqueness): a prescribed trace plus a right half determines the left half uniquely. The alternating fiber therefore has exactly one left half per right half, like the constant fiber.",
+    "A finite horizon is evidence for designing a lemma, never a proof of one, and a finite-prefix violation does not refute an asymptotic lemma either."
+  ],
+  "obligations": [
+    {
+      "id": "left-column-constant",
+      "prize": "1",
+      "status": "open",
+      "lemma": "If a nonzero finitely supported row has an eventually alternating centre trace, then column -1 is eventually identically 1.",
+      "implication": "Excludes eventual period 2 (nonconstant) for every nonzero finite configuration, via Condrey Cor. 5: an eventually constant column is impossible. PARTIAL - every eventual period at least 3 remains open, so this is not Prize 1.",
+      "bridge": "COMPLETE for p=2 and only for p=2. D1 already gives column -1 equal to 1 at every 1-phase, for free and independent of the right half. D4' turns the remaining half into a single condition: (a(t,1), a(t,2)) is never (0,0) at a 1-phase. So the lemma reduces to one sub-statement, and Condrey Cor. 5 finishes it in one line. Residue to reach all periods: p>=3, untouched, and no uniform argument over p is known.",
+      "missing_lemma": "That (a(t,1), a(t,2)) != (0,0) at every large 1-phase, given the centre alternates forever and the row is finitely supported.",
+      "refutation": "Among rows achieving the LONGEST alternating prefixes, does the double-zero event still occur at a 1-phase? If it persists at maximal prefix length the sub-lemma cannot come from local structure and must be derived from infinite alternation plus finite support.",
+      "falsifier_cost": "Claude: under an hour. Compute: seconds, exhaustive over small support radius. Verification: exact enumeration against the repo's naive stepper.",
+      "stop": "Stop if the double-zero event occurs at a 1-phase in rows with maximal alternating prefixes AND no finite-support ingredient can be identified, since then the sub-lemma has no visible mechanism.",
+      "mechanism_check": {
+        "prize-restatement": "This escapes the mechanism because it is a strictly partial exclusion, not an equivalent form: proving no finite row has an eventually alternating trace leaves every period at least 3 open, so it neither proves Prize 1 nor follows vacuously from Prize 1 being true.",
+        "finite-exclusion-as-asymptotic": "The enumeration is used only to design and stress the sub-lemma and is recorded as a bounded finding about small radius; the deliverable is a symbolic implication valid for all t, and a finite-prefix violation is explicitly not treated as a refutation.",
+        "ensemble-not-orbit": "Finitely supported configurations are a restricted class containing the lone seed rather than an average over initial conditions, and Condrey's Cor. 5 is proved for exactly that class."
+      }
+    },
+    {
+      "id": "alternating-fiber-support",
+      "prize": "1",
+      "status": "open",
+      "lemma": "For a prescribed right half, the unique left half compatible with an eventually alternating centre trace carries ones at arbitrarily large left depth, so no member is finitely supported.",
+      "implication": "Excludes eventual period 2 (nonconstant) for every nonzero finite configuration, by exactly Condrey Cor. 4's argument. PARTIAL: every eventual period at least 3 remains open.",
+      "bridge": "COMPLETE for p=2 and only for p=2, and it is the faithful transfer of the method that settles p=1. Condrey Lemma 1 already supplies uniqueness of the left half; what is missing is the closed form and the infinite-ones property. Residue to reach all periods: p>=3.",
+      "missing_lemma": "The closed form of the alternating-trace left half, the analogue of Condrey's prefix-OR formulas, and the proof that every nonzero member has ones at arbitrarily large depth.",
+      "refutation": "Compute the forced left half for many right halves and inspect its depth profile: a left half that terminates would refute the lemma outright.",
+      "falsifier_cost": "Claude: days for the classification, which is out of scope this hour; the depth-profile probe alone is minutes. Verification: exact inversion checked against forward simulation.",
+      "stop": "Stop if any forced left half terminates. Do not begin the full classification inside a one-hour block.",
+      "mechanism_check": {
+        "prize-restatement": "Partial exclusion, not an equivalent form: p>=3 is untouched, so it neither proves nor is vacuously implied by Prize 1.",
+        "algebra-already-gives-it": "Left permutivity gives uniqueness of the left half and nothing more; the closed form and the infinite-ones property are exactly what permutivity does not supply, which is why Condrey needed separate theorems for the constant case.",
+        "finite-exclusion-as-asymptotic": "The deliverable is a classification valid at every depth, and the depth probe is recorded as a bounded finding used to design it."
+      }
+    },
+    {
+      "id": "mirror-collapse",
+      "prize": "none",
+      "status": "open",
+      "lemma": "D3 extends: under an alternating centre trace, column -(k+1) is a time-shifted function of column k for every k, so the left half-plane is a reflection of the right.",
+      "implication": "NONE directly, filed honestly as prize 'none'. It would make the left half explicit in terms of the right, which is the input alternating-fiber-support needs and which left-column-constant could use to control the double-zero event.",
+      "bridge": "EXPLICITLY MISSING. A structural collapse is not an exclusion; on its own it yields no contradiction with finite support.",
+      "missing_lemma": "Whether the D3 pattern continues past depth 2, and in what shifted form.",
+      "refutation": "Check a(t,-3) against column 2 and a(t,-4) against column 3 on rows with long alternating prefixes. One mismatch kills the general form.",
+      "falsifier_cost": "Claude: minutes. Compute: seconds, same enumeration already written. Verification: exact.",
+      "stop": "Stop at the first depth where no shifted identity holds; record the depth reached as the bounded finding.",
+      "mechanism_check": {
+        "algebra-already-gives-it": "Sideways determinism gives that the left half is determined, but not that it is a reflection of the right half in this shifted form; D3 at depth 2 was derived and checked here rather than quoted.",
+        "disjoint-from-prize-object": "The columns are those of the same single orbit whose centre trace is hypothesised alternating, so the object intersects the prize object rather than sitting in the cone's settled wedge."
+      }
+    },
+    {
+      "id": "left-density-obstruction",
+      "prize": "1",
+      "status": "open",
+      "lemma": "D1 forces ones at density at least one half in column -1, and that density propagates into a growing family of left columns, contradicting finite support.",
+      "implication": "Would exclude eventual period 2 (nonconstant) for finite configurations. PARTIAL: p>=3 remains.",
+      "bridge": "EXPLICITLY MISSING. Ones at positive density in TIME in a column says nothing about SPATIAL support at time zero, and the step from one to the other is exactly what is absent.",
+      "missing_lemma": "Any argument connecting temporal density in left columns to spatial extent of the support.",
+      "refutation": "Measure one-density in columns -1 to -k on rows with long alternating prefixes; a density collapsing to zero with depth would kill it.",
+      "falsifier_cost": "Claude: hours, with no technique. Compute: seconds. Verification: measurement only, which verifies itself and nothing else.",
+      "stop": "Park unless the missing space-time step is supplied by another candidate.",
+      "mechanism_check": {
+        "prize-restatement": "Partial exclusion, not an equivalent form; p>=3 untouched.",
+        "disjoint-from-prize-object": "The measured columns belong to the hypothesised orbit itself, not to the settled wedge, so the object is the right one even though the bridge is missing.",
+        "finite-exclusion-as-asymptotic": "Density measured over a finite alternating prefix is recorded as a bounded finding and is explicitly not read as an asymptotic density."
+      }
+    }
+  ]
+}
