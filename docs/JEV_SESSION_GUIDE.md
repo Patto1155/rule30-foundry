@@ -122,9 +122,15 @@ of progress just buys more of them.
 
 Score a session on **new verified center results per total wall time**, soundly
 pruned solver calls, useful refutations and duplicate work avoided. Count
-controls, random nulls, inferred answers and model calls separately. Jev earns
-its place only if it beats the fixed selector on that measure; if it does not,
-keep the deterministic selector.
+controls, random nulls, inferred answers and model calls separately.
+
+**Jev has now met that bar once.** On a frozen n=56 plan at matched budgets it
+returned 0.041 verified center results per second against 0.017 for fixed
+(~2.4x), reproducibly across two runs, for $0.00052 — and it stopped early
+rather than spending the remainder on controls. The caveats matter: Jev reads
+the plan's `goal` and the baselines cannot, it is one plan at one budget, and
+the edge exists only while the budget binds. See section 3b of
+`docs/experiment-logs/2026-09-18-jev-openrouter-live-and-campaign-scaling.md`.
 
 ## Prompt to give the next SOL agent
 

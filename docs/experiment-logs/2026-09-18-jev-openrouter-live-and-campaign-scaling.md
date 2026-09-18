@@ -136,6 +136,61 @@ column at n=52 and n=56. This is *not* evidence of structure: the ledger's
 certified separation rests on a 7-seed band, and one seed is not a band. Left
 as an observation requiring the full null before it means anything.
 
+## 3b. The matched comparison: Jev vs fixed vs random
+
+The earlier sections said the fixed-vs-jev comparison had not been run. It has
+now. One frozen plan, six runs, identical `--seconds 180 --solve-seconds 60
+--check-seconds 120`, three processes at a time on four cores so no run was
+starved.
+
+The plan is n=56, center and matched random nulls at states 9..13, in
+**interleaved ascending order** — the order a researcher writes by hand and the
+order `queue/jev/frontier.json` already uses. It was not arranged for or
+against any policy. Known costs from section 2 make the budget bind: the centre
+cards total ~119 s, the nulls ~241 s, so 180 s buys about half the plan and
+ordering decides which half.
+
+| policy | center established | verified | inferred | nulls run | UNKNOWN | elapsed | stop |
+|---|---|---|---|---|---|---|---|
+| fixed | 3 | 3 | 0 | 3 | 0 | 180 s | `verification-failed` |
+| random seed 30 | 4 | 2 | 2 | 1 | 1 | 180 s | wall-budget |
+| random seed 7 | 5 | 4 | 1 | 2 | 1 | 180 s | wall-budget |
+| random seed 99 | 4 | 1 | 3 | 1 | 0 | 180 s | `verification-failed` |
+| **jev run 1** | **5** | **5** | 0 | 0 | 0 | **122 s** | `return-to-lead` |
+| **jev run 2** | **5** | **5** | 0 | 0 | 0 | **132 s** | `return-to-lead` |
+
+Both Jev runs took the five centre cards in ascending order, ran no nulls,
+finished under budget, and then returned to lead rather than spending the
+remainder on controls. On verified centre results per wall second that is
+**0.041/s against 0.017/s for fixed**, about 2.4x, and it reproduced exactly
+across two runs. Six Jev calls cost $0.00052.
+
+Fixed lost twice over: it spent ~62 s on nulls before reaching the expensive
+centre cards, and then the wall clock cut `center56-s12`'s proof check, so a
+refutation it had already solved went unverified and halted the run. Random was
+erratic, as expected — 4, 5 and 4 established, but much of it merely inferred,
+and two of three seeds wasted a full 60 s budget on an UNKNOWN.
+
+### What this does and does not show
+
+It **does** show that on this plan, under a binding budget, the selector
+delivered more verified centre results, faster, with no wasted budget, twice.
+
+It **does not** show that the model is a better reasoner. Jev reads the plan's
+`goal` and the state text telling it that random cards are matched nulls rather
+than the prize orbit. The fixed and random policies have no channel to receive
+that at all. The honest description is **a goal-aware policy against two
+goal-blind ones**, which is what a selector is for, but it is not evidence of
+mathematical insight.
+
+Three further limits. This is one plan at one budget; generalisation is
+untested. Jev **deferred** the null work rather than removing it — the five
+exclusions are individually sound, each carrying its own verified refutation,
+but the centre-versus-null comparison at these states rests on the separate
+n=56 sweep in section 3, not on these runs. And the advantage exists only
+because the budget binds; with enough wall clock every policy finishes the plan
+and ordering stops mattering.
+
 ## 4. Reproduce
 
 ```bash

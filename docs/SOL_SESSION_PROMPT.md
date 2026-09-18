@@ -52,15 +52,25 @@ paste it into the prompt, a plan, a tracked file, or a run log.
 >   2026-09-18 run a control consumed the whole wall budget and stranded the
 >   single card that would have settled `s*(64)`.
 >
-> **The one comparison worth running.** There is now a concrete mechanism by
-> which a selector could beat the fixed order — a fixed walk cannot tell a
-> cheap card from one that will eat the budget, and Jev's observed ordering
-> put the decisive cards first and scored the expensive null at p=0.01. That
-> is one trace, not a result. Run the same frozen plan under `--policy fixed`
-> and `--policy jev` at identical `--seconds`, `--solve-seconds` and
-> `--check-seconds`, and compare *verified center frontier results*, not Jev
-> calls. Report the negative if it is negative; if Jev does not win, say so and
-> keep the deterministic selector.
+> **The comparison has already been run — do not repeat it.** On 2026-09-18,
+> one frozen n=56 plan at identical budgets, six runs: Jev established 5/5
+> center results, all verified, in 122 s and 132 s with zero nulls run and zero
+> wasted budget, reproducing exactly across two runs. Fixed got 3 and halted
+> `verification-failed`; three random seeds got 4, 5 and 4, much of it merely
+> inferred, two wasting a full budget on an UNKNOWN. That is **0.041 verified
+> center results per second against 0.017 for fixed**, about 2.4x, for
+> $0.00052.
+>
+> Read the caveats in section 3b of the log before you lean on this. Jev reads
+> the plan's `goal`; fixed and random have no channel to receive it, so this is
+> a goal-aware policy beating goal-blind ones, not evidence of mathematical
+> insight. It is one plan at one budget, the advantage exists only while the
+> budget binds, and Jev **deferred** the null work rather than removing it.
+>
+> **So use the selector and spend your session on new mathematics.** If you
+> want to strengthen the methods result, the open question is whether the
+> advantage holds at a different `n`, a different budget, or a plan whose
+> optimal order is not ascending — not another replication at n=56.
 >
 > **Run the counting bound before any "searched class M, found no fit"
 > experiment:** `python experiments/counting_bound.py --pretty`. If
