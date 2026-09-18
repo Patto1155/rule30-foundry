@@ -1,0 +1,129 @@
+{
+  "scope": "exact s*(64) for base-2 MSD DFAOs on the single-seed center column: 14-state exclusion plus the 15-state witness that meets it",
+  "n": 64,
+  "direction": "msd",
+  "base": 2,
+  "seed": "single-black-cell",
+  "s_star": 15,
+  "lower_bound": {
+    "states": 14,
+    "variables": 1316,
+    "clauses": 21997,
+    "cnf_sha256": "a3bd3da1570b7af4c1023278039bec70fa758ac3b22712fa56a079742ff668a9",
+    "bits_sha256": "e12b3d645c909859374d000a3503188fb58e3d0c143d0e03cb79286e2e82147f",
+    "solve_s": 353.084,
+    "status": "UNSAT",
+    "proof_bytes": 2260733067,
+    "proof_sha256": "a1a4011b68c11703723902fd30d081817b6875fada23d037fa7ba9dfae7bd827",
+    "check_s": 598.155,
+    "drat": "VERIFIED",
+    "verified": true
+  },
+  "upper_bound": {
+    "states": 15,
+    "variables": 1440,
+    "clauses": 25431,
+    "cnf_sha256": "f2cb63639ba8434809f1a96928181b194750b3fce6a420a35e969d452b8687a8",
+    "bits_sha256": "e12b3d645c909859374d000a3503188fb58e3d0c143d0e03cb79286e2e82147f",
+    "solve_s": 0.057,
+    "status": "SAT",
+    "witness": {
+      "artifact_type": "rule30.dfao_candidate",
+      "artifact_version": 1,
+      "states": 15,
+      "base": 2,
+      "direction": "msd",
+      "initial_state": 0,
+      "transitions": [
+        [
+          11,
+          12
+        ],
+        [
+          14,
+          5
+        ],
+        [
+          9,
+          14
+        ],
+        [
+          2,
+          9
+        ],
+        [
+          10,
+          13
+        ],
+        [
+          7,
+          11
+        ],
+        [
+          13,
+          1
+        ],
+        [
+          4,
+          10
+        ],
+        [
+          2,
+          6
+        ],
+        [
+          4,
+          6
+        ],
+        [
+          2,
+          12
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          5,
+          8
+        ],
+        [
+          4,
+          1
+        ],
+        [
+          12,
+          2
+        ]
+      ],
+      "outputs": [
+        0,
+        1,
+        0,
+        0,
+        1,
+        0,
+        0,
+        1,
+        1,
+        0,
+        1,
+        1,
+        1,
+        0,
+        1
+      ]
+    },
+    "independently_evaluated": true
+  },
+  "counting_bound": {
+    "log2_class_size_at_s14": 120.6,
+    "conservative_threshold_states_at_n64": 11,
+    "vacuous": false
+  },
+  "tools": {
+    "solver": "CaDiCaL 3.0.1",
+    "checker": "drat-trim"
+  },
+  "limits": "Finite base-2 MSD DFAO model class on a 64-bit prefix. Not a prize result, not a general shortcut lower bound, not an asymptotic claim."
+}

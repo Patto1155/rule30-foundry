@@ -26,29 +26,25 @@ packed bitstreams may be absent and explicitly SKIP in a fresh clone.
 
 ## Credentials and live Jev calibration
 
-The client supports OpenRouter's `POST /api/alpha/decisions` with model
-`~typesafe/jev-latest` and `OPENROUTER_API_KEY`, or TypeSafe's direct
-`POST /v1/systemone` with `TYPESAFE_API_KEY`. Select with `--jev-provider`; the
-default selects OpenRouter when its key is present. Do not put either key in
-plans, commands, tracked files, run logs, or agent transcripts. Supply the
-appropriate key as an environment variable in a terminal with network
-access. Mocked adapter tests do not constitute a live model check.
+**Verified live 2026-09-18 via OpenRouter.** The client speaks two endpoints,
+selected by `--jev-provider` (`auto` picks OpenRouter when `OPENROUTER_API_KEY`
+is set):
 
-When Jev access is available, freeze one plan and run a small
-comparison:
+| provider | endpoint | model | key |
+|---|---|---|---|
+| `openrouter` | `POST https://openrouter.ai/api/alpha/decisions` | `~typesafe/jev-latest` | `OPENROUTER_API_KEY` |
+| `typesafe` | `POST https://api.typesafe.ai/v1/systemone` | `jev-latest` | `TYPESAFE_API_KEY` |
 
-```bash
-python tools/jev_search.py queue/jev/frontier.json --policy fixed --seconds 180 --out runs/jev/fixed-001
-python tools/jev_search.py queue/jev/frontier.json --policy random --seed 30 --seconds 180 --out runs/jev/random-001
-python tools/jev_search.py queue/jev/frontier.json --policy jev --jev-provider openrouter --seconds 180 --out runs/jev/jev-001
-```
+The OpenRouter Decisions response was confirmed against `validate_choice`: it
+returns `answers.<name>.type`, `choice`, a `probabilities` map summing to 1, and
+`usage.input_tokens`. Observed cost is ~$0.00006 per decision at ~1.3 s latency,
+so **the model is never the bottleneck** — see "Scale and score".
 
-Inspect `decision-*/request.json`, `response.json`, `decision.json`, and
-`summary.json`. A real Jev check requires an authenticated answer with a valid
-choice distribution, recorded usage, and a selected card followed by a
-verified solver result. Model agreement or a high probability does not verify
-a mathematical claim. If the route cannot be reached, report the network
-failure and continue the exact fixed/random experiments.
+Export the key in the shell only. Do not put it in plans, commands, tracked
+files, run logs, or agent transcripts. Mocked adapter tests are not a live
+check; a live check means an authenticated answer with a valid choice
+distribution, recorded usage, and a selected card followed by a *verified*
+solver result. Model agreement or a high probability verifies no mathematics.
 
 ## The lead agent's research loop
 
@@ -88,19 +84,53 @@ failure and continue the exact fixed/random experiments.
 
 ## Scale and score
 
-The old 12-attempt/120-second default is a safety budget. A target of
-100–300 cheap checks in a session is **conditional**, not measured: the
-current `jev_search.py` can attempt at most 200 cards per plan, and hard
-`n=64` SAT cases timed out at ten seconds in the pilot. For the current
-frontier, 5–10 deeper checks may consume most of a session. Hundreds of Jev
-calls are useful only if there are hundreds of distinct, worthwhile decisions;
-otherwise the additional calls buy no new mathematical evidence.
+Measured on this 4-core container, 2026-09-18. These replace the earlier
+conditional 100-300 estimate, which was never measured.
 
-Measure **new verified center results per total wall time**, soundly pruned
-solver calls, useful refutations, duplicate work avoided, and full cost.
-Compare these with the fixed selector. Count controls, random cases, inferred
-answers, and model calls separately. If Jev does not improve verified research
-yield, keep the deterministic selector.
+| stage | cost | note |
+|---|---|---|
+| Jev decision | ~1.3 s, ~$0.00006 | never the bottleneck |
+| cheap card (n<=24) | ~5 ms solve + ~60 ms check | ~900/min sequential |
+| frontier card (n=52, s=11) | 18 s solve + **21 s check** | checker dominates |
+| open-gap card (n=64, s=13) | >600 s, UNKNOWN | buys nothing at 10 s |
+
+Three findings govern any scale-up:
+
+1. **`drat-trim` is the binding cost, not CaDiCaL.** An n=52 refutation solved
+   in 18.5 s and needed 21.2 s to check. With `--check-seconds 20` the shard
+   halted `verification-failed` — **1.2 s short**, and the whole shard's
+   remaining cards were lost. Set `--check-seconds` to several times
+   `--solve-seconds`. This is the opposite of the intuitive budget split.
+2. **Proofs, not time, exhaust the session.** One 5.6-minute sweep wrote
+   **3.7 GB** of DRAT; a single n=52 proof is 112 MB. CNF and DRAT are 99.8%
+   of a run's footprint and are regenerable from the plan, so
+   `tools/jev_campaign.py` prunes them by default and keeps `result.json`,
+   witnesses and hashes. Pass `--keep-proofs` only for a retained artifact.
+3. **Parallelism is free; sharding by `n` loses no pruning.** The runner is
+   sequential so its verified-implication pruning stays sound, but shards are
+   independent. Cards sharing an `n` are exactly the cards that prune each
+   other, so splitting on `n` keeps every implication inside one shard.
+   Measured: 72 cards across 4 shards in **4.3 s wall**, 25 of them discharged
+   by implication rather than solved.
+
+So the realistic session shape is **not** "hundreds of Jev calls". It is
+hundreds of cheap cards resolved in seconds, a few dozen mid-range cards, and
+a handful of genuinely open cards that may each consume ten minutes and still
+return UNKNOWN. An UNKNOWN costs a full budget and yields no evidence; it is
+the expensive failure mode, and pushing `--solve-seconds` up without evidence
+of progress just buys more of them.
+
+Score a session on **new verified center results per total wall time**, soundly
+pruned solver calls, useful refutations and duplicate work avoided. Count
+controls, random nulls, inferred answers and model calls separately.
+
+**Jev has now met that bar once.** On a frozen n=56 plan at matched budgets it
+returned 0.041 verified center results per second against 0.017 for fixed
+(~2.4x), reproducibly across two runs, for $0.00052 — and it stopped early
+rather than spending the remainder on controls. The caveats matter: Jev reads
+the plan's `goal` and the baselines cannot, it is one plan at one budget, and
+the edge exists only while the budget binds. See section 3b of
+`docs/experiment-logs/2026-09-18-jev-openrouter-live-and-campaign-scaling.md`.
 
 ## Prompt to give the next SOL agent
 

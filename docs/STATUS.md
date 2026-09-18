@@ -14,7 +14,7 @@ Updated: 2026-09-17 · Newest log: `docs/experiment-logs/2026-09-17-jev-selector
 |---|---|---|---|
 | 1 | Does the center column repeat? | No period `p <= 5,000,000` in the first 10M bits — **decided exactly**, all 9,999,936 candidates, 0 survivors. Cannot resolve the problem: eventual periodicity is asymptotic. | Certificate |
 | 2 | Are 0s and 1s equidistributed? | Bias < 0.05% over 10M bits. Uniform Bernoulli(1/2) is invariant (proved, left-permutivity) — which is *not* the same as the single seed's limiting frequency, the actual question. | Theorem + Observation |
-| 3 | Is there a shortcut for the nth bit? | None found. Base-2 minimal-DFAO size is now certified through MSD `s*(56)=13` (LSD remains certified through n=48). No GF(2) annihilator of degree `<= 3` over windows to 64 bits, nor degree `<= 4` to 32 bits. ML routes (I/K/L) are scoped down. A published shortcut claim is under audit, separating warm query from cold `n -> c_n` cost. | Certificate (s*(n)) |
+| 3 | Is there a shortcut for the nth bit? | None found. Base-2 minimal-DFAO size is now certified through MSD `s*(64)=15` (LSD remains certified through n=48). No GF(2) annihilator of degree `<= 3` over windows to 64 bits, nor degree `<= 4` to 32 bits. ML routes (I/K/L) are scoped down. A published shortcut claim is under audit, separating warm query from cold `n -> c_n` cost. | Certificate (s*(n)) |
 
 ## Open work, ranked
 
@@ -27,7 +27,7 @@ A1, A2, C2 and C2b are done (see *Recently closed*); **B3 is next**.
 | A3 | **Make bitstreams reachable** — no local, release, Actions, or LFS copy found on 2026-09-09; manifest hashes remain anchored | Infra | ~½ day | B2 |
 | C2c | **Annihilators over non-consecutive bit selections** — every window searched so far is a run of adjacent bits, so long-lag structure (the I/K/L blind spot) is untested | Research | Days | — |
 | C2d | **Multi-word window codes**, lifting `w` past the `uint64` cap of 64 | Research | ~½ day | — |
-| B3 | Extend `s*(n)` — MSD n=56 is now exact at 13 states; benchmark MSD n=64 next, then the harder LSD n=56 states individually | Research | Hours | — |
+| B3 | Extend `s*(n)` — **MSD n=64 is now exact at `s*(64)=15`** (2026-09-18), with `s*(52)=12` and the certified `s*(56)=13` independently reproduced. The deciding 14-state refutation cost 353 s to solve and 598 s to check on a 2.26 GB proof, ~10x its n=64 s=13 predecessor, so n=72+ needs a better encoding rather than more wall clock (`docs/experiment-logs/2026-09-18-jev-openrouter-live-and-campaign-scaling.md`). Next: **LSD n=56, now scoped to `s* in {12,13,14}`** by a verified 11-state refutation and 14-state witness (`queue/jev/lsd56.json` is ready to run; LSD costs ~4-5x MSD per card), then bases 3/4 | Research | Hours | — |
 | E1 | Write up the eight Theorem rows; `s*(n)` is citable | Writing | Days | — |
 | B2 | Exact period search on 46M — no code change, extends to `p <= 2.3e7` | Research | Minutes | A3 |
 | B1 | All seven computationally reachable early zero words were tested. Phase plus one tail-boundary bit selects every successor (4 train, 3 held out), but computing that bit still depends on a transient cutoff growing to 117,323 (~1.335d). Settled-only rules fail; stop before the first period-32 branch at `d=1,420,878,969`. | Research | Proof target needed | — |
