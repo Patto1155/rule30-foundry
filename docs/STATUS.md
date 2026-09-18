@@ -27,7 +27,7 @@ A1, A2, C2 and C2b are done (see *Recently closed*); **B3 is next**.
 | A3 | **Make bitstreams reachable** — no local, release, Actions, or LFS copy found on 2026-09-09; manifest hashes remain anchored | Infra | ~½ day | B2 |
 | C2c | **Annihilators over non-consecutive bit selections** — every window searched so far is a run of adjacent bits, so long-lag structure (the I/K/L blind spot) is untested | Research | Days | — |
 | C2d | **Multi-word window codes**, lifting `w` past the `uint64` cap of 64 | Research | ~½ day | — |
-| B3 | Extend `s*(n)` — MSD n=56 is now exact at 13 states; benchmark MSD n=64 next, then the harder LSD n=56 states individually | Research | Hours | — |
+| B3 | Extend `s*(n)` — MSD n=56 exact at 13 states; `s*(52)=12` exact and MSD n=64 now bounded `s*(64) in {14,15}` by verified UNSAT at 13 states (`docs/experiment-logs/2026-09-18-jev-openrouter-live-and-campaign-scaling.md`). Settle `center64-s14`, then the harder LSD n=56 states individually | Research | Hours | — |
 | E1 | Write up the eight Theorem rows; `s*(n)` is citable | Writing | Days | — |
 | B2 | Exact period search on 46M — no code change, extends to `p <= 2.3e7` | Research | Minutes | A3 |
 | B1 | All seven computationally reachable early zero words were tested. Phase plus one tail-boundary bit selects every successor (4 train, 3 held out), but computing that bit still depends on a transient cutoff growing to 117,323 (~1.335d). Settled-only rules fail; stop before the first period-32 branch at `d=1,420,878,969`. | Research | Proof target needed | — |
