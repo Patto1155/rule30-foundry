@@ -239,16 +239,28 @@ class IndependentRankCrossCheckTest(unittest.TestCase):
                         break
                 if rank < cols:
                     total = (degree + 1) * (ext + 1)
-                    if best is None or total < best:
-                        best = total
+                    if best is None or total < best[0]:
+                        best = (total, degree, ext)
                     break
         return best
 
-    def test_two_implementations_agree(self):
+    def test_two_implementations_agree_on_budget_degree_and_ext(self):
+        # Comparing only the budget would let a disagreement about which (D, E)
+        # achieves it pass unnoticed, so compare the whole triple.
         for kind, seed in (("thue-morse", 0), ("center", 0), ("random", 30)):
             with self.subTest(kind=kind):
-                packed = complexity_point(kind, 64, 5, seed)["coefficients"]
-                self.assertEqual(packed, self.cstar_numpy(kind, 64, 5, seed))
+                p = complexity_point(kind, 64, 5, seed)
+                self.assertEqual((p["coefficients"], p["degree"], p["ext_degree"]),
+                                 self.cstar_numpy(kind, 64, 5, seed))
+
+    def test_budget_curve_reports_the_smallest_fitting_budget(self):
+        # Regression: `found` was overwritten on every pass, so a search with no
+        # extrapolating fit returned the LARGEST budget that fitted and called
+        # it C*. At N=64 with a cap of 81 the true minimum is 64.
+        r = budget_curve("random", 64, 8, 8, 64, 30)
+        self.assertIsNotNone(r)
+        self.assertEqual(r["coefficients"], 64)
+        self.assertFalse(r["extrapolates"])
 
 
 if __name__ == "__main__":

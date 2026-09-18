@@ -97,10 +97,19 @@ What that buys, measured:
 
 | | DFAO via SAT | algebraic relation |
 |---|---|---|
-| prefix reached | `n = 64` | `N = 8192` |
-| model class | 14 states (`log2|M|` 120.6) | 289 free coefficients |
+| prefix reached | `n = 64` | `N = 1024` (curve), `N = 8192` (bare negative) |
+| model class | 14 states (`log2|M|` 120.6, **clears** `n=64`) | 289 coefficients (**does not** clear `N=8192`) |
 | deciding instance | 353 s solve, 2.26 GB proof, 598 s check | under a second |
 | positive control | Thue-Morse `s*=2` | Thue-Morse `C*=12`, plateaus over 6 lengths |
+
+**Read that second column carefully.** The `D, E <= 16` negative at `N = 8192`
+is a *vacuous* negative by this repo's own gate: `log2|M| = 289 < 8192`, so a
+random string gives the same answer. The DFAO row it sits beside is not vacuous
+— 120.6 against `n = 64` clears the bound. A bigger `N` at a fixed budget is
+**not** a bigger class, and comparing the two as if it were is the mistake this
+document exists to prevent. What the algebraic route actually buys is the
+`C*(N)` *curve*, where the budget is allowed to reach `N` and the claim is the
+curve's shape against a null — not the bare negative at either length.
 
 The positive control is the strongest available: the instrument independently
 recovers the textbook relation `(1+x)^3 f^2 + (1+x)^2 f + x = 0`, returning
@@ -112,11 +121,13 @@ Result to date: the center column admits no algebraic relation with
 null while Thue-Morse separates cleanly.
 
 **This is still a finite-prefix exclusion.** It does not prove
-non-automaticity; no finite `N` can. What it buys is two orders of magnitude
-more prefix and a far larger class for a fraction of the compute, in a setting
-where the asymptotic content lives in a curve rather than a point — and where
-the question has landed in transcendence over `F_2(x)`, a field with real proof
-machinery, rather than in DFAO state counts, which has none.
+non-automaticity; no finite `N` can. And per the warning above, that bare
+negative does not clear the counting bound, so on its own it is vacuous. What
+the route buys is the `C*(N)` curve — a quantity that is always defined, read
+against a 7-seed null with a working positive control, for a fraction of the
+compute a single DFAO instance costs — and the fact that the question now sits
+in transcendence over `F_2(x)`, a field with real proof machinery, rather than
+in DFAO state counts, which has none.
 
 ## Running it
 

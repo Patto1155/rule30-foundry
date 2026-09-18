@@ -69,8 +69,8 @@ def clmul(a, b, limit):
     mask = (1 << limit) - 1
     a &= mask
     b &= mask
-    if a.bit_count() > b.bit_count():
-        a, b = b, a
+    if a.bit_count() < b.bit_count():
+        a, b = b, a          # walk the sparser operand, which is now b
     result = 0
     shift = 0
     while b:
@@ -171,13 +171,17 @@ def budget_curve(kind, fit_bits, max_degree, max_ext, holdout, seed):
             if terms is None:
                 continue
             holds, misses = extrapolates(kind, terms, fit_bits, holdout, seed)
-            found = {"coefficients": total, "degree": degree, "ext_degree": ext,
-                     "terms": len(terms), "extrapolates": holds,
-                     "holdout_mismatches": misses}
+            candidate = {"coefficients": total, "degree": degree, "ext_degree": ext,
+                         "terms": len(terms), "extrapolates": holds,
+                         "holdout_mismatches": misses}
             if holds:
-                return found
+                return candidate
             # A fit that fails its holdout is overfitting, not a shortcut: keep
-            # looking, but remember the smallest budget that fit at all.
+            # looking, but remember the SMALLEST budget that fit at all. Only
+            # record the first, since `total` ascends -- overwriting here would
+            # report the largest fitting budget and misname it C*.
+            if found is None:
+                found = candidate
     return found
 
 
@@ -215,10 +219,17 @@ def self_test():
           f"(N=256 -> {tm and tm['coefficients']}, N=1024 -> {tm_big and tm_big['coefficients']})")
     ok &= plateau
 
-    rnd = budget_curve("random", 256, 6, 6, 256, 30)
-    print(f"  [{'PASS' if not (rnd and rnd['extrapolates']) else 'FAIL'}] "
-          f"random admits no extrapolating relation in the same budget")
-    ok &= not (rnd and rnd["extrapolates"])
+    # The budget must exceed N so a fit is forced and the holdout is actually
+    # exercised; otherwise this passes vacuously by finding nothing at all.
+    rnd = budget_curve("random", 64, 8, 8, 64, 30)
+    fitted = bool(rnd)
+    print(f"  [{'PASS' if fitted else 'FAIL'}] random fits at a forced budget "
+          f"(C*={rnd and rnd['coefficients']} > N=64), so the holdout runs")
+    ok &= fitted
+    print(f"  [{'PASS' if fitted and not rnd['extrapolates'] else 'FAIL'}] "
+          f"that forced fit does NOT extrapolate "
+          f"({rnd and rnd['holdout_mismatches']} holdout mismatches)")
+    ok &= bool(fitted and not rnd["extrapolates"])
     return ok
 
 

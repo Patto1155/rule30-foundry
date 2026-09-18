@@ -193,12 +193,12 @@ def quantitative_gate(spec):
             return {"verdict": "FAIL",
                     "reason": "algebraic-relation needs integer degree and ext_degree"}
         log2_class = float((degree + 1) * (ext + 1))
-        if log2_class > n_bits:
-            return {"verdict": "FAIL", "class": kind, "log2_class_size": log2_class,
-                    "n": n_bits,
-                    "reason": f"forced positive: {log2_class:.0f} free coefficients "
-                              f"against {n_bits} constraints leaves a kernel by "
-                              f"dimension alone, whatever the sequence is"}
+        # The forced-positive refusal belongs to a BARE-NEGATIVE claim only, so
+        # it is applied in the `exclusion` branch below, after the evidence
+        # dispatch. Refusing it here would reject `extrapolation` and
+        # `curve-shape` designs precisely where they are meant to operate --
+        # a budget at or past N, where a fit is forced but held-out prediction
+        # and curve shape still are not.
     else:
         return {"verdict": "FAIL",
                 "reason": f"unknown quantitative.class {kind!r}; "
@@ -243,6 +243,14 @@ def quantitative_gate(spec):
                 "reason": f"unknown evidence {evidence!r}; use exclusion, "
                           f"extrapolation or curve-shape"}
 
+    if kind == "algebraic-relation" and log2_class > n_bits:
+        return {"verdict": "FAIL", "class": kind, "log2_class_size": log2_class,
+                "n": n_bits, "evidence": evidence,
+                "reason": f"forced positive: {log2_class:.0f} free coefficients against "
+                          f"{n_bits} constraints leaves a kernel by dimension alone, "
+                          f"whatever the sequence is; a bare negative here is vacuous "
+                          f"in both directions, so use evidence 'extrapolation' or "
+                          f"'curve-shape'"}
     if log2_class < n_bits:
         return {"verdict": "FAIL", "class": kind, "log2_class_size": round(log2_class, 1),
                 "n": n_bits,
