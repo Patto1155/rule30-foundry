@@ -13,8 +13,8 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 from experiments.algebraic_relation import (bits_to_poly, budget_curve, clmul,
-                                            kernel_vector, relation_for,
-                                            residual_bits)
+                                            complexity_point, kernel_vector,
+                                            relation_for, residual_bits)
 from prize_lab import sequence_bits
 from tools.theory_triage import MECHANISMS, load_queue, mechanism_gate, quantitative_gate
 
@@ -163,6 +163,91 @@ class InstrumentTest(unittest.TestCase):
         terms = relation_for(sequence_bits("thue-morse", 256), r["degree"],
                              r["ext_degree"], 256)
         self.assertEqual(residual_bits(sequence_bits("thue-morse", 512), terms, 512), 0)
+
+
+
+
+class ComplexityCurveTest(unittest.TestCase):
+    """C*(N) is always defined, which is what makes it a curve rather than an absence."""
+
+    def test_thue_morse_budget_is_flat_across_lengths(self):
+        for n in (128, 256, 512):
+            with self.subTest(n=n):
+                self.assertEqual(complexity_point("thue-morse", n, 6, 0)["coefficients"], 12)
+
+    def test_random_null_is_maximal(self):
+        # A fit is forced once the column count passes N, so the null must sit
+        # just under N. Anything well below would mean the search is broken.
+        for n in (128, 256):
+            with self.subTest(n=n):
+                self.assertGreater(complexity_point("random", n, 6, 30)["ratio_to_n"], 0.9)
+
+    def test_center_sits_with_the_null_not_with_the_positive_control(self):
+        point = complexity_point("center", 256, 6, 0)
+        self.assertGreater(point["ratio_to_n"], 0.9)
+
+    def test_curve_is_defined_for_every_sequence(self):
+        # The original budget search reported None for center and random, which
+        # is an absence. This quantity always exists.
+        for kind, seed in (("thue-morse", 0), ("random", 30), ("center", 0)):
+            with self.subTest(kind=kind):
+                self.assertIsNotNone(complexity_point(kind, 128, 6, seed))
+
+
+class IndependentRankCrossCheckTest(unittest.TestCase):
+    """Re-decide C* with numpy row reduction, sharing no code with the packed path.
+
+    The packed implementation builds powers with a hand-written carry-less
+    multiply and decides rank on row-bitmaps. This rebuilds both from numpy
+    convolution and uint8 Gaussian elimination, so agreement is a real check on
+    the instrument rather than a restatement of it.
+    """
+
+    @staticmethod
+    def cstar_numpy(kind, n, max_degree, seed):
+        import numpy as np
+
+        bits = sequence_bits(kind, n, seed=seed)
+        best = None
+        for degree in range(1, max_degree + 1):
+            f = np.array(bits[:n], dtype=np.int64)
+            power = np.zeros(n, dtype=np.int64)
+            power[0] = 1
+            fp = [power]
+            for _ in range(degree):
+                fp.append(np.convolve(fp[-1], f)[:n] % 2)
+            columns = []
+            for ext in range(n // (degree + 1) + 2):
+                for i in range(degree + 1):
+                    column = np.zeros(n, dtype=np.int64)
+                    if ext < n:
+                        column[ext:] = fp[i][:n - ext]
+                    columns.append(column)
+                matrix = (np.array(columns).T % 2).copy()
+                rows, cols = matrix.shape
+                rank = 0
+                for c in range(cols):
+                    pivot = next((r for r in range(rank, rows) if matrix[r, c]), None)
+                    if pivot is None:
+                        continue
+                    matrix[[rank, pivot]] = matrix[[pivot, rank]]
+                    hits = np.nonzero(matrix[rank + 1:, c])[0] + rank + 1
+                    matrix[hits] = (matrix[hits] + matrix[rank]) % 2
+                    rank += 1
+                    if rank == rows:
+                        break
+                if rank < cols:
+                    total = (degree + 1) * (ext + 1)
+                    if best is None or total < best:
+                        best = total
+                    break
+        return best
+
+    def test_two_implementations_agree(self):
+        for kind, seed in (("thue-morse", 0), ("center", 0), ("random", 30)):
+            with self.subTest(kind=kind):
+                packed = complexity_point(kind, 64, 5, seed)["coefficients"]
+                self.assertEqual(packed, self.cstar_numpy(kind, 64, 5, seed))
 
 
 if __name__ == "__main__":

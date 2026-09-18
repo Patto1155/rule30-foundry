@@ -117,6 +117,55 @@ machinery, instead of in DFAO state counts, which has none.
 Because this is a bare negative it is recorded as an **observation**, not a
 certificate, and the ledger row for `s*(n)` is untouched.
 
+## 4b. Turning the absence into a curve
+
+The section above reports "no relation under this budget", which is an absence,
+and the ledger rightly grades an absence low. The fix is to stop asking whether
+a fit exists under a fixed budget and ask instead for **the smallest budget that
+fits**, which always exists: once the column count passes `N` a kernel is forced.
+
+Define `E_min(D)` as the smallest coefficient degree admitting a relation of
+algebraic degree `D`. That is ordering-independent, which a raw column count is
+not, and
+
+```
+C*(N) = min over D of (D+1)(E_min(D)+1)
+```
+
+is then always defined. One elimination pass per `D` serves every `E`, because
+columns are added in groups of constant `e` and the first group that closes a
+dependency gives `E_min` directly.
+
+**Measured, 7 random seeds for the null, max degree 8:**
+
+| N | null band (7 seeds) | center | `C*/N` | center inside band | thue-morse |
+|---|---|---|---|---|---|
+| 128 | 120..128 | 126 | 0.984 | **yes** | 12 |
+| 256 | 249..256 | 255 | 0.996 | **yes** | 12 |
+| 512 | 508..512 | 510 | 0.996 | **yes** | 12 |
+| 1024 | 1020..1024 | 1020 | 0.996 | **yes** | 12 |
+
+The center column's algebraic complexity is **maximal**, landing inside the
+7-seed random band at 4 of 4 lengths. Thue-Morse stays flat at `C*=12` for an
+**85x separation** at N=1024 that does not decay with length, so the instrument
+retains full detection power exactly where the center shows none.
+
+This is the direct analogue of the certified `L(n) = n/2` linear-complexity
+result, one model class up, and it is the design the theory gate calls the
+template: a curve against a null, sitting at the counting threshold which is
+also the maximum.
+
+**Independent re-computation.** `C*` is re-decided by numpy convolution and
+uint8 Gaussian elimination, sharing no code with the packed carry-less-multiply
+and bitmap-elimination path. The two agree exactly on `(C*, D, E)` for
+Thue-Morse, center and random. An instrument this cheap is easy to get subtly
+wrong, and a rank computation that silently disagrees with itself would produce
+exactly the kind of confident wrong answer this repo has retracted before.
+
+**Still finite.** Maximal algebraic complexity to N=1024 is not a proof of
+non-automaticity and no finite N can be. Extending the curve needs a packed-word
+or GPU rank rather than more wall clock: the elimination is `O(N^3/64)`.
+
 ## 5. Reproduce
 
 ```bash

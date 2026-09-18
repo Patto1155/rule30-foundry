@@ -1,0 +1,390 @@
+{
+  "artifact_type": "rule30.algebraic_complexity_curve",
+  "quantity": "C*(N) = min over D of (D+1)(E_min(D)+1), the smallest coefficient budget admitting a relation over F_2(x). Always defined: a fit is forced once the column count passes N.",
+  "max_degree": 8,
+  "null_band": {
+    "128": {
+      "null_min": 120,
+      "null_max": 128,
+      "null_seeds": 7,
+      "center": 126,
+      "center_inside_band": true
+    },
+    "256": {
+      "null_min": 249,
+      "null_max": 256,
+      "null_seeds": 7,
+      "center": 255,
+      "center_inside_band": true
+    },
+    "512": {
+      "null_min": 508,
+      "null_max": 512,
+      "null_seeds": 7,
+      "center": 510,
+      "center_inside_band": true
+    },
+    "1024": {
+      "null_min": 1020,
+      "null_max": 1024,
+      "null_seeds": 7,
+      "center": 1020,
+      "center_inside_band": true
+    }
+  },
+  "results": [
+    {
+      "sequence": "thue-morse",
+      "fit_bits": 128,
+      "elapsed_s": 0.001,
+      "coefficients": 12,
+      "degree": 2,
+      "ext_degree": 3,
+      "ratio_to_n": 0.0938
+    },
+    {
+      "sequence": "random",
+      "seed": 30,
+      "fit_bits": 128,
+      "elapsed_s": 0.002,
+      "coefficients": 128,
+      "degree": 3,
+      "ext_degree": 31,
+      "ratio_to_n": 1.0
+    },
+    {
+      "sequence": "random",
+      "seed": 7,
+      "fit_bits": 128,
+      "elapsed_s": 0.002,
+      "coefficients": 126,
+      "degree": 8,
+      "ext_degree": 13,
+      "ratio_to_n": 0.9844
+    },
+    {
+      "sequence": "random",
+      "seed": 99,
+      "fit_bits": 128,
+      "elapsed_s": 0.002,
+      "coefficients": 126,
+      "degree": 8,
+      "ext_degree": 13,
+      "ratio_to_n": 0.9844
+    },
+    {
+      "sequence": "random",
+      "seed": 3,
+      "fit_bits": 128,
+      "elapsed_s": 0.002,
+      "coefficients": 126,
+      "degree": 1,
+      "ext_degree": 62,
+      "ratio_to_n": 0.9844
+    },
+    {
+      "sequence": "random",
+      "seed": 17,
+      "fit_bits": 128,
+      "elapsed_s": 0.002,
+      "coefficients": 120,
+      "degree": 4,
+      "ext_degree": 23,
+      "ratio_to_n": 0.9375
+    },
+    {
+      "sequence": "random",
+      "seed": 42,
+      "fit_bits": 128,
+      "elapsed_s": 0.002,
+      "coefficients": 128,
+      "degree": 1,
+      "ext_degree": 63,
+      "ratio_to_n": 1.0
+    },
+    {
+      "sequence": "random",
+      "seed": 77,
+      "fit_bits": 128,
+      "elapsed_s": 0.002,
+      "coefficients": 128,
+      "degree": 1,
+      "ext_degree": 63,
+      "ratio_to_n": 1.0
+    },
+    {
+      "sequence": "center",
+      "fit_bits": 128,
+      "elapsed_s": 0.002,
+      "coefficients": 126,
+      "degree": 2,
+      "ext_degree": 41,
+      "ratio_to_n": 0.9844
+    },
+    {
+      "sequence": "thue-morse",
+      "fit_bits": 256,
+      "elapsed_s": 0.001,
+      "coefficients": 12,
+      "degree": 2,
+      "ext_degree": 3,
+      "ratio_to_n": 0.0469
+    },
+    {
+      "sequence": "random",
+      "seed": 30,
+      "fit_bits": 256,
+      "elapsed_s": 0.005,
+      "coefficients": 255,
+      "degree": 4,
+      "ext_degree": 50,
+      "ratio_to_n": 0.9961
+    },
+    {
+      "sequence": "random",
+      "seed": 7,
+      "fit_bits": 256,
+      "elapsed_s": 0.005,
+      "coefficients": 256,
+      "degree": 1,
+      "ext_degree": 127,
+      "ratio_to_n": 1.0
+    },
+    {
+      "sequence": "random",
+      "seed": 99,
+      "fit_bits": 256,
+      "elapsed_s": 0.005,
+      "coefficients": 255,
+      "degree": 2,
+      "ext_degree": 84,
+      "ratio_to_n": 0.9961
+    },
+    {
+      "sequence": "random",
+      "seed": 3,
+      "fit_bits": 256,
+      "elapsed_s": 0.005,
+      "coefficients": 255,
+      "degree": 2,
+      "ext_degree": 84,
+      "ratio_to_n": 0.9961
+    },
+    {
+      "sequence": "random",
+      "seed": 17,
+      "fit_bits": 256,
+      "elapsed_s": 0.005,
+      "coefficients": 249,
+      "degree": 2,
+      "ext_degree": 82,
+      "ratio_to_n": 0.9727
+    },
+    {
+      "sequence": "random",
+      "seed": 42,
+      "fit_bits": 256,
+      "elapsed_s": 0.005,
+      "coefficients": 252,
+      "degree": 5,
+      "ext_degree": 41,
+      "ratio_to_n": 0.9844
+    },
+    {
+      "sequence": "random",
+      "seed": 77,
+      "fit_bits": 256,
+      "elapsed_s": 0.005,
+      "coefficients": 252,
+      "degree": 1,
+      "ext_degree": 125,
+      "ratio_to_n": 0.9844
+    },
+    {
+      "sequence": "center",
+      "fit_bits": 256,
+      "elapsed_s": 0.006,
+      "coefficients": 255,
+      "degree": 2,
+      "ext_degree": 84,
+      "ratio_to_n": 0.9961
+    },
+    {
+      "sequence": "thue-morse",
+      "fit_bits": 512,
+      "elapsed_s": 0.003,
+      "coefficients": 12,
+      "degree": 2,
+      "ext_degree": 3,
+      "ratio_to_n": 0.0234
+    },
+    {
+      "sequence": "random",
+      "seed": 30,
+      "fit_bits": 512,
+      "elapsed_s": 0.025,
+      "coefficients": 510,
+      "degree": 5,
+      "ext_degree": 84,
+      "ratio_to_n": 0.9961
+    },
+    {
+      "sequence": "random",
+      "seed": 7,
+      "fit_bits": 512,
+      "elapsed_s": 0.026,
+      "coefficients": 510,
+      "degree": 4,
+      "ext_degree": 101,
+      "ratio_to_n": 0.9961
+    },
+    {
+      "sequence": "random",
+      "seed": 99,
+      "fit_bits": 512,
+      "elapsed_s": 0.027,
+      "coefficients": 512,
+      "degree": 3,
+      "ext_degree": 127,
+      "ratio_to_n": 1.0
+    },
+    {
+      "sequence": "random",
+      "seed": 3,
+      "fit_bits": 512,
+      "elapsed_s": 0.027,
+      "coefficients": 511,
+      "degree": 6,
+      "ext_degree": 72,
+      "ratio_to_n": 0.998
+    },
+    {
+      "sequence": "random",
+      "seed": 17,
+      "fit_bits": 512,
+      "elapsed_s": 0.028,
+      "coefficients": 510,
+      "degree": 4,
+      "ext_degree": 101,
+      "ratio_to_n": 0.9961
+    },
+    {
+      "sequence": "random",
+      "seed": 42,
+      "fit_bits": 512,
+      "elapsed_s": 0.027,
+      "coefficients": 508,
+      "degree": 3,
+      "ext_degree": 126,
+      "ratio_to_n": 0.9922
+    },
+    {
+      "sequence": "random",
+      "seed": 77,
+      "fit_bits": 512,
+      "elapsed_s": 0.028,
+      "coefficients": 511,
+      "degree": 6,
+      "ext_degree": 72,
+      "ratio_to_n": 0.998
+    },
+    {
+      "sequence": "center",
+      "fit_bits": 512,
+      "elapsed_s": 0.027,
+      "coefficients": 510,
+      "degree": 1,
+      "ext_degree": 254,
+      "ratio_to_n": 0.9961
+    },
+    {
+      "sequence": "thue-morse",
+      "fit_bits": 1024,
+      "elapsed_s": 0.009,
+      "coefficients": 12,
+      "degree": 2,
+      "ext_degree": 3,
+      "ratio_to_n": 0.0117
+    },
+    {
+      "sequence": "random",
+      "seed": 30,
+      "fit_bits": 1024,
+      "elapsed_s": 0.113,
+      "coefficients": 1020,
+      "degree": 1,
+      "ext_degree": 509,
+      "ratio_to_n": 0.9961
+    },
+    {
+      "sequence": "random",
+      "seed": 7,
+      "fit_bits": 1024,
+      "elapsed_s": 0.114,
+      "coefficients": 1022,
+      "degree": 1,
+      "ext_degree": 510,
+      "ratio_to_n": 0.998
+    },
+    {
+      "sequence": "random",
+      "seed": 99,
+      "fit_bits": 1024,
+      "elapsed_s": 0.114,
+      "coefficients": 1024,
+      "degree": 3,
+      "ext_degree": 255,
+      "ratio_to_n": 1.0
+    },
+    {
+      "sequence": "random",
+      "seed": 3,
+      "fit_bits": 1024,
+      "elapsed_s": 0.115,
+      "coefficients": 1020,
+      "degree": 3,
+      "ext_degree": 254,
+      "ratio_to_n": 0.9961
+    },
+    {
+      "sequence": "random",
+      "seed": 17,
+      "fit_bits": 1024,
+      "elapsed_s": 0.114,
+      "coefficients": 1020,
+      "degree": 1,
+      "ext_degree": 509,
+      "ratio_to_n": 0.9961
+    },
+    {
+      "sequence": "random",
+      "seed": 42,
+      "fit_bits": 1024,
+      "elapsed_s": 0.105,
+      "coefficients": 1020,
+      "degree": 2,
+      "ext_degree": 339,
+      "ratio_to_n": 0.9961
+    },
+    {
+      "sequence": "random",
+      "seed": 77,
+      "fit_bits": 1024,
+      "elapsed_s": 0.105,
+      "coefficients": 1020,
+      "degree": 2,
+      "ext_degree": 339,
+      "ratio_to_n": 0.9961
+    },
+    {
+      "sequence": "center",
+      "fit_bits": 1024,
+      "elapsed_s": 0.101,
+      "coefficients": 1020,
+      "degree": 2,
+      "ext_degree": 339,
+      "ratio_to_n": 0.9961
+    }
+  ],
+  "limits": "Finite prefix. C*/N near 1 says the algebraic complexity is maximal on this prefix, the direct analogue of L(n)=n/2 for LFSRs. It is not a proof of non-automaticity."
+}

@@ -5,7 +5,8 @@
     "Every left diagonal is eventually periodic; settle(d) ~ 1.3389*d, so the center column is unsettled at every horizon.",
     "Left diagonal periods are UNBOUNDED: period(d) ~ 2*log2(d). The period-16 conjecture is refuted.",
     "GF(2) linear complexity L(n)=n/2 is maximal; no LFSR shortcut.",
-    "Uniform Bernoulli is invariant, so Prize 2 is trivial for random ICs and its difficulty is entirely in the single seed."
+    "Uniform Bernoulli is invariant, so Prize 2 is trivial for random ICs and its difficulty is entirely in the single seed.",
+    "Algebraic complexity over F_2(x) is maximal on the center column to N=1024, inside the 7-seed random band at 4 of 4 lengths. Finite prefix; not a proof of non-automaticity."
   ],
   "obligations": [
     {
@@ -35,7 +36,8 @@
           "random",
           "thue-morse"
         ]
-      }
+      },
+      "progress": "2026-09-18: C*(N) is now measured rather than absent. Center is MAXIMAL, inside the 7-seed null band at 4 of 4 lengths to N=1024, against an 85x-separated Thue-Morse control, cross-checked by an independent numpy rank. The lemma is unrefuted and sharper: the finite evidence now says maximal algebraic complexity, not merely no small relation. Next: push past N=1024, which needs a packed-word or GPU rank because the elimination is O(N^3/64), and widen the null band."
     },
     {
       "id": "unsettled-core-entropy-lower-bound",

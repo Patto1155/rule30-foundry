@@ -235,7 +235,60 @@ def main():
     p.add_argument("--seed", type=int, default=30)
     p.add_argument("--out", type=Path)
     p.add_argument("--pretty", action="store_true")
+    p.add_argument("--complexity", action="store_true",
+                   help="report the minimal-budget curve C*(N), which is always "
+                        "defined, instead of presence/absence at a fixed budget")
+    p.add_argument("--null-seeds", default="30,7,99,3,17,42,77",
+                   help="random-null band; the repo's standard is 7 seeds")
     args = p.parse_args()
+
+    if args.complexity:
+        sizes = [int(s) for s in args.sizes.split(",")]
+        seeds = [int(s) for s in args.null_seeds.split(",")]
+        rows = []
+        for size in sizes:
+            for kind in args.sequences.split(","):
+                if kind == "random":
+                    for seed in seeds:
+                        started = time.monotonic()
+                        point = complexity_point(kind, size, args.max_degree, seed)
+                        rows.append({"sequence": kind, "seed": seed, "fit_bits": size,
+                                     "elapsed_s": round(time.monotonic() - started, 3),
+                                     **(point or {"coefficients": None})})
+                else:
+                    started = time.monotonic()
+                    point = complexity_point(kind, size, args.max_degree, 0)
+                    rows.append({"sequence": kind, "fit_bits": size,
+                                 "elapsed_s": round(time.monotonic() - started, 3),
+                                 **(point or {"coefficients": None})})
+                r = rows[-1]
+                print(f"  {kind:<11} N={size:<6} C*={r['coefficients']} "
+                      f"C*/N={r.get('ratio_to_n')}", file=sys.stderr, flush=True)
+        band = {}
+        for size in sizes:
+            nulls = [r["coefficients"] for r in rows
+                     if r["sequence"] == "random" and r["fit_bits"] == size
+                     and r["coefficients"] is not None]
+            centre = next((r["coefficients"] for r in rows
+                           if r["sequence"] == "center" and r["fit_bits"] == size), None)
+            if nulls:
+                band[str(size)] = {"null_min": min(nulls), "null_max": max(nulls),
+                                   "null_seeds": len(nulls), "center": centre,
+                                   "center_inside_band": centre is not None
+                                   and min(nulls) <= centre <= max(nulls)}
+        report = {"artifact_type": "rule30.algebraic_complexity_curve",
+                  "quantity": "C*(N) = min over D of (D+1)(E_min(D)+1), the smallest "
+                              "coefficient budget admitting a relation over F_2(x). "
+                              "Always defined: a fit is forced once the column count "
+                              "passes N.",
+                  "max_degree": args.max_degree, "null_band": band, "results": rows,
+                  "limits": "Finite prefix. C*/N near 1 says the algebraic complexity is "
+                            "maximal on this prefix, the direct analogue of L(n)=n/2 for "
+                            "LFSRs. It is not a proof of non-automaticity."}
+        if args.out:
+            args.out.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
+        print(json.dumps(report, indent=2) if args.pretty else json.dumps(report))
+        return 0
 
     if args.self_test:
         print("algebraic_relation self-test")
@@ -261,6 +314,88 @@ def main():
         args.out.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
     print(json.dumps(report, indent=2) if args.pretty else json.dumps(report))
     return 0
+
+
+
+
+# --- Algebraic complexity: the curve where C*(N) is defined rather than absent ---
+#
+# Reporting "no relation at budget C" is an absence, and the ledger rightly grades
+# an absence as an observation. The measurable quantity underneath it is the
+# budget at which a relation DOES appear, which always exists: once the column
+# count passes N a kernel is forced. So instead of asking "is there a fit under
+# this budget", ask "what is the smallest budget that fits", and read the answer
+# against the null.
+#
+# For a fixed algebraic degree D the minimal coefficient degree E is
+# ordering-independent, which C = (D+1)(E+1) alone is not, so E_min(D) is the
+# primitive and C* is the minimum of (D+1)(E_min+1) over D.
+#
+# The expected readings, and what each would mean:
+#   thue-morse   C* constant in N                 -- algebraic, a real shortcut
+#   random       C*/N -> 1                        -- maximal, no structure
+#   center       C*/N -> 1 would be the direct analogue of L(n)=n/2 for LFSRs,
+#                                                   i.e. maximal algebraic
+#                                                   complexity, a positive
+#                                                   structural statement rather
+#                                                   than an absence
+
+def min_ext_for_degree(bits, degree, fit_bits, ext_cap):
+    """Smallest E with a relation sum_{i<=degree} P_i(x) f^i = 0 on fit_bits terms.
+
+    Columns are added in groups of constant e, so the first group that closes a
+    dependency gives E directly. One elimination pass serves every E.
+    """
+    mask = (1 << fit_bits) - 1
+    fp = powers(bits_to_poly(bits), degree, fit_bits)
+    pivots = {}
+    for ext in range(ext_cap + 1):
+        for i in range(degree + 1):
+            residual = (fp[i] << ext) & mask
+            while residual:
+                lead = residual.bit_length() - 1
+                if lead not in pivots:
+                    pivots[lead] = residual
+                    break
+                residual ^= pivots[lead]
+            else:
+                return ext          # column collapsed: a relation exists at this E
+    return None
+
+
+def complexity_point(kind, fit_bits, max_degree, seed):
+    """C*(N) = min over D of (D+1)(E_min(D)+1), with the D that achieves it."""
+    bits = sequence_bits(kind, fit_bits, seed=seed)
+    best = None
+    for degree in range(1, max_degree + 1):
+        # Beyond this E the column count exceeds fit_bits and a fit is forced,
+        # so there is nothing to learn from searching further.
+        ext_cap = fit_bits // (degree + 1) + 1
+        ext = min_ext_for_degree(bits, degree, fit_bits, ext_cap)
+        if ext is None:
+            continue
+        coefficients = (degree + 1) * (ext + 1)
+        if best is None or coefficients < best["coefficients"]:
+            best = {"coefficients": coefficients, "degree": degree, "ext_degree": ext}
+    if best:
+        best["ratio_to_n"] = round(best["coefficients"] / fit_bits, 4)
+    return best
+
+
+def complexity_curve(kinds, sizes, max_degree, seed):
+    rows = []
+    for fit_bits in sizes:
+        for kind in kinds:
+            started = time.monotonic()
+            point = complexity_point(kind, fit_bits, max_degree, seed)
+            rows.append({"sequence": kind, "fit_bits": fit_bits,
+                         "elapsed_s": round(time.monotonic() - started, 3),
+                         **(point or {"coefficients": None})})
+            r = rows[-1]
+            print(f"  {kind:<11} N={fit_bits:<6} C*={r['coefficients']} "
+                  f"C*/N={r.get('ratio_to_n')} (D={r.get('degree')},E={r.get('ext_degree')})",
+                  file=sys.stderr, flush=True)
+    return rows
 
 
 if __name__ == "__main__":
