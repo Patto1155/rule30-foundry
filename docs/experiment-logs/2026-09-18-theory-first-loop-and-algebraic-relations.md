@@ -114,8 +114,11 @@ where the asymptotic content lives in a curve rather than a point — and where
 the question now sits in transcendence over `F_2(x)`, which has real proof
 machinery, instead of in DFAO state counts, which has none.
 
-Because this is a bare negative it is recorded as an **observation**, not a
-certificate, and the ledger row for `s*(n)` is untouched.
+Because this is a bare negative it would rank as a plain observation. Section 4b
+supersedes it: the measurable quantity underneath is the *smallest budget that
+fits*, which is always defined, and that curve against a 7-seed null is what the
+ledger records at **Robust observation**. The `s*(n)` row is untouched either
+way, and nothing here is a Certificate or a Theorem.
 
 ## 4b. Turning the absence into a curve
 
