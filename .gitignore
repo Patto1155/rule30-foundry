@@ -62,3 +62,5 @@ runs/jev/
 # the directory.
 queue/refused/t-trap-*.json
 runs/theory/triage-*/
+runs/theory/jev-conjecture-*/
+runs/theory/alternating-fiber-prefix-*.json

@@ -1,0 +1,729 @@
+{
+  "experiment": "alternating-left-weight",
+  "macrosteps": 22,
+  "initial_left_prefix_length": 44,
+  "free_boundary_words": 4194304,
+  "self_test": {
+    "sideways_vs_spacetime_bit_mismatches": 0,
+    "small_even_prefix_minima": [
+      1,
+      1,
+      1,
+      2
+    ],
+    "small_profile_matches": true
+  },
+  "profile": [
+    {
+      "prefix_length": 1,
+      "free_s_bits": 1,
+      "minimum_weight": 0,
+      "extremizer_prefixes": 1,
+      "example_s_lsb_first": "1",
+      "example_one_depths": [],
+      "conjectured_lower_bound": 0,
+      "cone_charge_survives": true,
+      "minimum_8weight_minus_length": -1
+    },
+    {
+      "prefix_length": 2,
+      "free_s_bits": 1,
+      "minimum_weight": 1,
+      "extremizer_prefixes": 2,
+      "example_s_lsb_first": "0",
+      "example_one_depths": [
+        1
+      ],
+      "conjectured_lower_bound": 1,
+      "cone_charge_survives": true,
+      "minimum_8weight_minus_length": 6
+    },
+    {
+      "prefix_length": 3,
+      "free_s_bits": 2,
+      "minimum_weight": 1,
+      "extremizer_prefixes": 2,
+      "example_s_lsb_first": "01",
+      "example_one_depths": [
+        1
+      ],
+      "conjectured_lower_bound": 1,
+      "cone_charge_survives": true,
+      "minimum_8weight_minus_length": 5
+    },
+    {
+      "prefix_length": 4,
+      "free_s_bits": 2,
+      "minimum_weight": 1,
+      "extremizer_prefixes": 1,
+      "example_s_lsb_first": "01",
+      "example_one_depths": [
+        1
+      ],
+      "conjectured_lower_bound": 1,
+      "cone_charge_survives": true,
+      "minimum_8weight_minus_length": 4
+    },
+    {
+      "prefix_length": 5,
+      "free_s_bits": 3,
+      "minimum_weight": 1,
+      "extremizer_prefixes": 1,
+      "example_s_lsb_first": "010",
+      "example_one_depths": [
+        1
+      ],
+      "conjectured_lower_bound": 1,
+      "cone_charge_survives": true,
+      "minimum_8weight_minus_length": 3
+    },
+    {
+      "prefix_length": 6,
+      "free_s_bits": 3,
+      "minimum_weight": 1,
+      "extremizer_prefixes": 1,
+      "example_s_lsb_first": "010",
+      "example_one_depths": [
+        1
+      ],
+      "conjectured_lower_bound": 1,
+      "cone_charge_survives": true,
+      "minimum_8weight_minus_length": 2
+    },
+    {
+      "prefix_length": 7,
+      "free_s_bits": 4,
+      "minimum_weight": 1,
+      "extremizer_prefixes": 1,
+      "example_s_lsb_first": "0101",
+      "example_one_depths": [
+        1
+      ],
+      "conjectured_lower_bound": 1,
+      "cone_charge_survives": true,
+      "minimum_8weight_minus_length": 1
+    },
+    {
+      "prefix_length": 8,
+      "free_s_bits": 4,
+      "minimum_weight": 2,
+      "extremizer_prefixes": 2,
+      "example_s_lsb_first": "0100",
+      "example_one_depths": [
+        1,
+        7
+      ],
+      "conjectured_lower_bound": 1,
+      "cone_charge_survives": true,
+      "minimum_8weight_minus_length": 8
+    },
+    {
+      "prefix_length": 9,
+      "free_s_bits": 5,
+      "minimum_weight": 2,
+      "extremizer_prefixes": 2,
+      "example_s_lsb_first": "01010",
+      "example_one_depths": [
+        1,
+        8
+      ],
+      "conjectured_lower_bound": 1,
+      "cone_charge_survives": true,
+      "minimum_8weight_minus_length": 7
+    },
+    {
+      "prefix_length": 10,
+      "free_s_bits": 5,
+      "minimum_weight": 2,
+      "extremizer_prefixes": 1,
+      "example_s_lsb_first": "01010",
+      "example_one_depths": [
+        1,
+        8
+      ],
+      "conjectured_lower_bound": 2,
+      "cone_charge_survives": true,
+      "minimum_8weight_minus_length": 6
+    },
+    {
+      "prefix_length": 11,
+      "free_s_bits": 6,
+      "minimum_weight": 2,
+      "extremizer_prefixes": 1,
+      "example_s_lsb_first": "010101",
+      "example_one_depths": [
+        1,
+        8
+      ],
+      "conjectured_lower_bound": 2,
+      "cone_charge_survives": true,
+      "minimum_8weight_minus_length": 5
+    },
+    {
+      "prefix_length": 12,
+      "free_s_bits": 6,
+      "minimum_weight": 2,
+      "extremizer_prefixes": 1,
+      "example_s_lsb_first": "010101",
+      "example_one_depths": [
+        1,
+        8
+      ],
+      "conjectured_lower_bound": 2,
+      "cone_charge_survives": true,
+      "minimum_8weight_minus_length": 4
+    },
+    {
+      "prefix_length": 13,
+      "free_s_bits": 7,
+      "minimum_weight": 2,
+      "extremizer_prefixes": 1,
+      "example_s_lsb_first": "0101010",
+      "example_one_depths": [
+        1,
+        8
+      ],
+      "conjectured_lower_bound": 2,
+      "cone_charge_survives": true,
+      "minimum_8weight_minus_length": 3
+    },
+    {
+      "prefix_length": 14,
+      "free_s_bits": 7,
+      "minimum_weight": 2,
+      "extremizer_prefixes": 1,
+      "example_s_lsb_first": "0101010",
+      "example_one_depths": [
+        1,
+        8
+      ],
+      "conjectured_lower_bound": 2,
+      "cone_charge_survives": true,
+      "minimum_8weight_minus_length": 2
+    },
+    {
+      "prefix_length": 15,
+      "free_s_bits": 8,
+      "minimum_weight": 2,
+      "extremizer_prefixes": 1,
+      "example_s_lsb_first": "01010100",
+      "example_one_depths": [
+        1,
+        8
+      ],
+      "conjectured_lower_bound": 2,
+      "cone_charge_survives": true,
+      "minimum_8weight_minus_length": 1
+    },
+    {
+      "prefix_length": 16,
+      "free_s_bits": 8,
+      "minimum_weight": 2,
+      "extremizer_prefixes": 1,
+      "example_s_lsb_first": "01010100",
+      "example_one_depths": [
+        1,
+        8
+      ],
+      "conjectured_lower_bound": 2,
+      "cone_charge_survives": true,
+      "minimum_8weight_minus_length": 0
+    },
+    {
+      "prefix_length": 17,
+      "free_s_bits": 9,
+      "minimum_weight": 2,
+      "extremizer_prefixes": 1,
+      "example_s_lsb_first": "010101001",
+      "example_one_depths": [
+        1,
+        8
+      ],
+      "conjectured_lower_bound": 2,
+      "cone_charge_survives": true,
+      "minimum_8weight_minus_length": -1
+    },
+    {
+      "prefix_length": 18,
+      "free_s_bits": 9,
+      "minimum_weight": 3,
+      "extremizer_prefixes": 3,
+      "example_s_lsb_first": "010101010",
+      "example_one_depths": [
+        1,
+        8,
+        15
+      ],
+      "conjectured_lower_bound": 3,
+      "cone_charge_survives": true,
+      "minimum_8weight_minus_length": 6
+    },
+    {
+      "prefix_length": 19,
+      "free_s_bits": 10,
+      "minimum_weight": 3,
+      "extremizer_prefixes": 3,
+      "example_s_lsb_first": "0101011110",
+      "example_one_depths": [
+        1,
+        8,
+        13
+      ],
+      "conjectured_lower_bound": 3,
+      "cone_charge_survives": true,
+      "minimum_8weight_minus_length": 5
+    },
+    {
+      "prefix_length": 20,
+      "free_s_bits": 10,
+      "minimum_weight": 3,
+      "extremizer_prefixes": 2,
+      "example_s_lsb_first": "0101011110",
+      "example_one_depths": [
+        1,
+        8,
+        13
+      ],
+      "conjectured_lower_bound": 3,
+      "cone_charge_survives": true,
+      "minimum_8weight_minus_length": 4
+    },
+    {
+      "prefix_length": 21,
+      "free_s_bits": 11,
+      "minimum_weight": 3,
+      "extremizer_prefixes": 2,
+      "example_s_lsb_first": "01010111100",
+      "example_one_depths": [
+        1,
+        8,
+        13
+      ],
+      "conjectured_lower_bound": 3,
+      "cone_charge_survives": true,
+      "minimum_8weight_minus_length": 3
+    },
+    {
+      "prefix_length": 22,
+      "free_s_bits": 11,
+      "minimum_weight": 3,
+      "extremizer_prefixes": 1,
+      "example_s_lsb_first": "01010111100",
+      "example_one_depths": [
+        1,
+        8,
+        13
+      ],
+      "conjectured_lower_bound": 3,
+      "cone_charge_survives": true,
+      "minimum_8weight_minus_length": 2
+    },
+    {
+      "prefix_length": 23,
+      "free_s_bits": 12,
+      "minimum_weight": 3,
+      "extremizer_prefixes": 1,
+      "example_s_lsb_first": "010101111000",
+      "example_one_depths": [
+        1,
+        8,
+        13
+      ],
+      "conjectured_lower_bound": 3,
+      "cone_charge_survives": true,
+      "minimum_8weight_minus_length": 1
+    },
+    {
+      "prefix_length": 24,
+      "free_s_bits": 12,
+      "minimum_weight": 4,
+      "extremizer_prefixes": 6,
+      "example_s_lsb_first": "010101111000",
+      "example_one_depths": [
+        1,
+        8,
+        13,
+        24
+      ],
+      "conjectured_lower_bound": 3,
+      "cone_charge_survives": true,
+      "minimum_8weight_minus_length": 8
+    },
+    {
+      "prefix_length": 25,
+      "free_s_bits": 13,
+      "minimum_weight": 4,
+      "extremizer_prefixes": 6,
+      "example_s_lsb_first": "0101010101010",
+      "example_one_depths": [
+        1,
+        8,
+        15,
+        22
+      ],
+      "conjectured_lower_bound": 3,
+      "cone_charge_survives": true,
+      "minimum_8weight_minus_length": 7
+    },
+    {
+      "prefix_length": 26,
+      "free_s_bits": 13,
+      "minimum_weight": 4,
+      "extremizer_prefixes": 3,
+      "example_s_lsb_first": "0101010101010",
+      "example_one_depths": [
+        1,
+        8,
+        15,
+        22
+      ],
+      "conjectured_lower_bound": 4,
+      "cone_charge_survives": true,
+      "minimum_8weight_minus_length": 6
+    },
+    {
+      "prefix_length": 27,
+      "free_s_bits": 14,
+      "minimum_weight": 4,
+      "extremizer_prefixes": 3,
+      "example_s_lsb_first": "01010101010101",
+      "example_one_depths": [
+        1,
+        8,
+        15,
+        22
+      ],
+      "conjectured_lower_bound": 4,
+      "cone_charge_survives": true,
+      "minimum_8weight_minus_length": 5
+    },
+    {
+      "prefix_length": 28,
+      "free_s_bits": 14,
+      "minimum_weight": 4,
+      "extremizer_prefixes": 3,
+      "example_s_lsb_first": "01010101010101",
+      "example_one_depths": [
+        1,
+        8,
+        15,
+        22
+      ],
+      "conjectured_lower_bound": 4,
+      "cone_charge_survives": true,
+      "minimum_8weight_minus_length": 4
+    },
+    {
+      "prefix_length": 29,
+      "free_s_bits": 15,
+      "minimum_weight": 4,
+      "extremizer_prefixes": 3,
+      "example_s_lsb_first": "010101010111110",
+      "example_one_depths": [
+        1,
+        8,
+        15,
+        21
+      ],
+      "conjectured_lower_bound": 4,
+      "cone_charge_survives": true,
+      "minimum_8weight_minus_length": 3
+    },
+    {
+      "prefix_length": 30,
+      "free_s_bits": 15,
+      "minimum_weight": 4,
+      "extremizer_prefixes": 3,
+      "example_s_lsb_first": "010101010111110",
+      "example_one_depths": [
+        1,
+        8,
+        15,
+        21
+      ],
+      "conjectured_lower_bound": 4,
+      "cone_charge_survives": true,
+      "minimum_8weight_minus_length": 2
+    },
+    {
+      "prefix_length": 31,
+      "free_s_bits": 16,
+      "minimum_weight": 4,
+      "extremizer_prefixes": 3,
+      "example_s_lsb_first": "0101010101111100",
+      "example_one_depths": [
+        1,
+        8,
+        15,
+        21
+      ],
+      "conjectured_lower_bound": 4,
+      "cone_charge_survives": true,
+      "minimum_8weight_minus_length": 1
+    },
+    {
+      "prefix_length": 32,
+      "free_s_bits": 16,
+      "minimum_weight": 4,
+      "extremizer_prefixes": 2,
+      "example_s_lsb_first": "0101010101111100",
+      "example_one_depths": [
+        1,
+        8,
+        15,
+        21
+      ],
+      "conjectured_lower_bound": 4,
+      "cone_charge_survives": true,
+      "minimum_8weight_minus_length": 0
+    },
+    {
+      "prefix_length": 33,
+      "free_s_bits": 17,
+      "minimum_weight": 4,
+      "extremizer_prefixes": 2,
+      "example_s_lsb_first": "01010101011111001",
+      "example_one_depths": [
+        1,
+        8,
+        15,
+        21
+      ],
+      "conjectured_lower_bound": 4,
+      "cone_charge_survives": true,
+      "minimum_8weight_minus_length": -1
+    },
+    {
+      "prefix_length": 34,
+      "free_s_bits": 17,
+      "minimum_weight": 5,
+      "extremizer_prefixes": 9,
+      "example_s_lsb_first": "01010101011100000",
+      "example_one_depths": [
+        1,
+        8,
+        15,
+        21,
+        25
+      ],
+      "conjectured_lower_bound": 5,
+      "cone_charge_survives": true,
+      "minimum_8weight_minus_length": 6
+    },
+    {
+      "prefix_length": 35,
+      "free_s_bits": 18,
+      "minimum_weight": 5,
+      "extremizer_prefixes": 9,
+      "example_s_lsb_first": "010101010111000000",
+      "example_one_depths": [
+        1,
+        8,
+        15,
+        21,
+        25
+      ],
+      "conjectured_lower_bound": 5,
+      "cone_charge_survives": true,
+      "minimum_8weight_minus_length": 5
+    },
+    {
+      "prefix_length": 36,
+      "free_s_bits": 18,
+      "minimum_weight": 5,
+      "extremizer_prefixes": 3,
+      "example_s_lsb_first": "010101010111000000",
+      "example_one_depths": [
+        1,
+        8,
+        15,
+        21,
+        25
+      ],
+      "conjectured_lower_bound": 5,
+      "cone_charge_survives": true,
+      "minimum_8weight_minus_length": 4
+    },
+    {
+      "prefix_length": 37,
+      "free_s_bits": 19,
+      "minimum_weight": 5,
+      "extremizer_prefixes": 3,
+      "example_s_lsb_first": "0101010101110000000",
+      "example_one_depths": [
+        1,
+        8,
+        15,
+        21,
+        25
+      ],
+      "conjectured_lower_bound": 5,
+      "cone_charge_survives": true,
+      "minimum_8weight_minus_length": 3
+    },
+    {
+      "prefix_length": 38,
+      "free_s_bits": 19,
+      "minimum_weight": 5,
+      "extremizer_prefixes": 1,
+      "example_s_lsb_first": "0101010101010110101",
+      "example_one_depths": [
+        1,
+        8,
+        15,
+        22,
+        31
+      ],
+      "conjectured_lower_bound": 5,
+      "cone_charge_survives": true,
+      "minimum_8weight_minus_length": 2
+    },
+    {
+      "prefix_length": 39,
+      "free_s_bits": 20,
+      "minimum_weight": 5,
+      "extremizer_prefixes": 1,
+      "example_s_lsb_first": "01010101010101101010",
+      "example_one_depths": [
+        1,
+        8,
+        15,
+        22,
+        31
+      ],
+      "conjectured_lower_bound": 5,
+      "cone_charge_survives": true,
+      "minimum_8weight_minus_length": 1
+    },
+    {
+      "prefix_length": 40,
+      "free_s_bits": 20,
+      "minimum_weight": 6,
+      "extremizer_prefixes": 9,
+      "example_s_lsb_first": "01010101010101111100",
+      "example_one_depths": [
+        1,
+        8,
+        15,
+        22,
+        34,
+        36
+      ],
+      "conjectured_lower_bound": 5,
+      "cone_charge_survives": true,
+      "minimum_8weight_minus_length": 8
+    },
+    {
+      "prefix_length": 41,
+      "free_s_bits": 21,
+      "minimum_weight": 6,
+      "extremizer_prefixes": 9,
+      "example_s_lsb_first": "010101001101011000100",
+      "example_one_depths": [
+        1,
+        8,
+        18,
+        20,
+        26,
+        34
+      ],
+      "conjectured_lower_bound": 5,
+      "cone_charge_survives": true,
+      "minimum_8weight_minus_length": 7
+    },
+    {
+      "prefix_length": 42,
+      "free_s_bits": 21,
+      "minimum_weight": 6,
+      "extremizer_prefixes": 8,
+      "example_s_lsb_first": "010101001101011000100",
+      "example_one_depths": [
+        1,
+        8,
+        18,
+        20,
+        26,
+        34
+      ],
+      "conjectured_lower_bound": 6,
+      "cone_charge_survives": true,
+      "minimum_8weight_minus_length": 6
+    },
+    {
+      "prefix_length": 43,
+      "free_s_bits": 22,
+      "minimum_weight": 6,
+      "extremizer_prefixes": 8,
+      "example_s_lsb_first": "0101010101010101010100",
+      "example_one_depths": [
+        1,
+        8,
+        15,
+        22,
+        29,
+        36
+      ],
+      "conjectured_lower_bound": 6,
+      "cone_charge_survives": true,
+      "minimum_8weight_minus_length": 5
+    },
+    {
+      "prefix_length": 44,
+      "free_s_bits": 22,
+      "minimum_weight": 6,
+      "extremizer_prefixes": 3,
+      "example_s_lsb_first": "0101010101010110101010",
+      "example_one_depths": [
+        1,
+        8,
+        15,
+        22,
+        31,
+        40
+      ],
+      "conjectured_lower_bound": 6,
+      "cone_charge_survives": true,
+      "minimum_8weight_minus_length": 4
+    }
+  ],
+  "naive_vertical_window_relaxation": [
+    {
+      "height": 2,
+      "distance_to_spurious_all_zero_cycle": 2
+    },
+    {
+      "height": 3,
+      "distance_to_spurious_all_zero_cycle": 5
+    },
+    {
+      "height": 4,
+      "distance_to_spurious_all_zero_cycle": 6
+    },
+    {
+      "height": 5,
+      "distance_to_spurious_all_zero_cycle": 7
+    },
+    {
+      "height": 6,
+      "distance_to_spurious_all_zero_cycle": 8
+    },
+    {
+      "height": 7,
+      "distance_to_spurious_all_zero_cycle": 9
+    },
+    {
+      "height": 8,
+      "distance_to_spurious_all_zero_cycle": 10
+    },
+    {
+      "height": 9,
+      "distance_to_spurious_all_zero_cycle": 15
+    },
+    {
+      "height": 10,
+      "distance_to_spurious_all_zero_cycle": 16
+    }
+  ],
+  "cone_charge_survives_all_prefixes": true,
+  "claim_limit": "Exact exhaustive minima over the stated finite prefix only. The cone-charge inequality remains a conjecture until a uniform local potential, induction, or other proof is supplied. The vertical-window result is a falsifier for that relaxation, not for slanted cut potentials or the cone-charge conjecture."
+}

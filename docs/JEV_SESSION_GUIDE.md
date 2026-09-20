@@ -1,5 +1,8 @@
 # Running more useful experiments in one research session
 
+For the separate, measured use of Jev as a wide conjecture-search controller,
+including its negative first benchmark, see [`JEV_LATERAL_SEARCH.md`](JEV_LATERAL_SEARCH.md).
+
 This is the operating brief for a fresh lead agent. Read `CLAUDE.md`,
 `docs/STATUS.md`, `docs/CLAIM_LEDGER.md`, `docs/theory/README.md`, and
 `docs/JEV_SEARCH.md` before generating a plan. The implemented lane is a

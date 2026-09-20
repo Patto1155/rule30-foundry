@@ -6,7 +6,10 @@ lives here. Overwrite this file in place; git history keeps the old versions.
 No other file may carry a "current state as of" section —
 `tools/lint_ledger.py` enforces it.
 
-Updated: 2026-09-17 · Newest log: `docs/experiment-logs/2026-09-17-jev-selector-pilot.md`
+Updated: 2026-09-20 · Newest log: `docs/experiment-logs/2026-09-20-transport-entry-phase.md`
+
+Continues `docs/experiment-logs/2026-09-19-zero-tail-composition.md` and
+`docs/experiment-logs/2026-09-19-slanted-cone-charge.md`.
 
 ## Where the three prize problems stand
 
@@ -20,7 +23,9 @@ Updated: 2026-09-17 · Newest log: `docs/experiment-logs/2026-09-17-jev-selector
 
 Sequence approved 2026-09-02: **A1 → A2 → C2**, with B3 as filler. Reasoning
 and the full option analysis: [`handover/CURRENT.md`](handover/CURRENT.md).
-A1, A2, C2 and C2b are done (see *Recently closed*); **B3 is next**.
+A1, A2, C2 and C2b are done (see *Recently closed*). The active theoretical
+priority is **P1-fibre** below. B3 remains the bounded-computation follow-up
+from that earlier roadmap; it is not a substitute for the transport proof.
 
 | # | Work | Kind | Cost | Blocks |
 |---|---|---|---|---|
@@ -33,6 +38,7 @@ A1, A2, C2 and C2b are done (see *Recently closed*); **B3 is next**.
 | B2 | Exact period search on 46M — no code change, extends to `p <= 2.3e7` | Research | Minutes | A3 |
 | B1 | All seven computationally reachable early zero words were tested. Phase plus one tail-boundary bit selects every successor (4 train, 3 held out), but computing that bit still depends on a transient cutoff growing to 117,323 (~1.335d). Settled-only rules fail; stop before the first period-32 branch at `d=1,420,878,969`. | Research | Proof target needed | — |
 | P1-local | Actual seed rows reject most saved alternating-loop alignments before the center mismatch (5,574 exact starts tested), but this excludes only those walks. Period-word sieve still yields no nonconstant all-onset exclusion. | Research | Proof target needed | — |
+| P1-fibre | **Coherent transport and exceptional nonentry:** no nonconstant period excluded. The universal right-entry basin now has 21,457 sixteen-bit states with entry rank at most twelve. Exact shared-predecessor lifts eliminate two apparent recurrent components: every actual forced-right trajectory either enters the renewal invariant `K` or remains in one 2,445-state component `Q` from some macrotime at most 100. Finite-tail persistence in `Q` is open. Forty-five physical zero-weight slabs refute the specified nonnegative width-three cut-density potentials, including a locally bounded signed width-two corollary, for every finite coefficient. A separate bulk argument excludes homogeneous finite-range additive decreasing ranks through range eight, even conditional on right-invariant entry. Neither result excludes order-sensitive, unbounded cut information. Event sampling after centre-one updates gives an all-gap NOR identity and phase-threshold encoding for arbitrary centre words; the alternating bounded-zero-run rank fails already for forced period three. Next: transport a signed, order-sensitive or cone-conditioned credit on exact growing cuts with one-sided endpoint bounds; handle the exceptional component using finite support; carry full event thresholds and shared predecessors into arbitrary periods. The broader no-11 charge remains sufficient if proved. See `docs/experiment-logs/2026-09-20-transport-entry-phase.md`. | Research | Growing-cut transport and exceptional-component obligations | — |
 
 **De-prioritised:** more neural experiments (the ceiling is partly the models'
 — I/K/L are blind to long-lag XOR). Item 14 is worth closing but the ledger
@@ -77,6 +83,35 @@ is and the merge was resolved by updating this file, which is what should have
 happened anyway. See [`BRANCHING.md`](BRANCHING.md).
 
 ## Recently closed
+
+- **Periodic-fibre and left-transfer search** (2026-09-19): generalized triangular
+  inversion from alternating traces to arbitrary periodic words and
+  left-permutive elementary rules.  The exact first forced escape beyond finite
+  support reproduces the prior horizons and extends them through radius 18.
+  A training-only slope-one law fails holdout; the `2w+5` envelope survives but
+  has no induction, and both affine and quadratic finite-memory recurrences are
+  absent in the tested languages.  This is a bounded Prize 1 certificate, not
+  a period-two exclusion.  Further enumeration is stopped pending a uniform
+  mechanism.  Follow-up work eliminates the right half for period two via the
+  exact integer map `G=T_1 o T_0`.  All left supports through width 20 exit the
+  necessary residue condition, and all `2^22` free boundary words satisfy the
+  cone-charge conjecture through 44 initial-left cells. The original
+  unrestricted sharp uniform charge target was later refuted;
+  the physical-boundary refinement is described in P1-fibre above.
+  Rule 15 supplies a genuine finite alternating-fibre negative control.  See
+  `docs/experiment-logs/2026-09-19-periodic-fiber-invariants.md`.
+
+- **Jev-guided local conjecture search** (2026-09-19): a 4,728-claim grammar
+  around an alternating centre trace produced 900 exact finite-window
+  implications after complete light-cone enumeration, reducing to 170 after
+  subset redundancy removal. A 200-call live Jev screen cost about 182k input
+  tokens but matched random selection on both counterexamples and irredundant
+  claims; the frozen structural ordering was substantially better. Following
+  the selected forced-tail route through every right half of support <=14 and
+  left depth 80 found no terminating left prefix, but supplies no induction and
+  no period-two result. The next useful target is a recursive forced-tail
+  invariant, not more raw local implications. See
+  `docs/experiment-logs/2026-09-19-jev-lateral-conjecture-search.md`.
 
 - **Right-special-factor route audited and reclassified** (2026-09-18, no compute).
   "For every `n` the centre column has a right-special factor of length `n`" is

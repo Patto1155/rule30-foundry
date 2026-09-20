@@ -1,0 +1,1722 @@
+{
+  "claim_limit": "A cycle refutes this quotient; absence of sampled cycles proves no all-horizon claim.",
+  "enumeration_evidence": {
+    "global_rule15_control": {
+      "conclusion": "No potential of the declared finite features satisfies all genuine sampled edges. This check alone does not decide whether quotient edges concatenate into an infinite cone.",
+      "cycle_charge": -8,
+      "cycle_edges": 1,
+      "full_cut_seams": [
+        {
+          "differing_overlap_indices": [
+            [],
+            []
+          ],
+          "edge": 0,
+          "full_cuts_equal": false,
+          "next_source_diagonal_lengths": [
+            0,
+            1
+          ],
+          "next_source_full_diagonals": [
+            0,
+            0
+          ],
+          "target_diagonal_lengths": [
+            8,
+            9
+          ],
+          "target_full_diagonals": [
+            170,
+            170
+          ]
+        }
+      ],
+      "verified": true
+    },
+    "scope": "Finite witness-induced graph with minimum charge per ordered state pair; not all-depth legal transitions.",
+    "sha256": "8cc6b3c2fb7ed354e8ffaf63824ecdb2d2e32ba66c13453292e99b06984f96b4",
+    "source": "runs/theory/slanted-cone-potential-2026-09-19.json"
+  },
+  "exact_metadata_scope": "Counts describe the finite witness-induced graph, not all legal transitions at every depth. Exact-count feature ranges grow with depth.",
+  "frozen_design": {
+    "baseline_order": [
+      "diag-b0-t0-none",
+      "diag-b0-t0-parity",
+      "diag-b0-t1-none",
+      "diag-b1-t0-none",
+      "diag-b0-t1-parity",
+      "diag-b0-t2-none",
+      "diag-b1-t0-parity",
+      "diag-b1-t1-none",
+      "diag-b2-t0-none",
+      "diag-b0-t2-parity",
+      "diag-b0-t3-none",
+      "diag-b1-t1-parity",
+      "diag-b1-t2-none",
+      "diag-b2-t0-parity",
+      "diag-b2-t1-none",
+      "diag-b3-t0-none",
+      "diag-b0-t3-parity",
+      "diag-b0-t4-none",
+      "diag-b1-t2-parity",
+      "diag-b1-t3-none",
+      "diag-b2-t1-parity",
+      "diag-b2-t2-none",
+      "diag-b3-t0-parity",
+      "diag-b3-t1-none",
+      "diag-b4-t0-none",
+      "diag-b0-t0-exact",
+      "diag-b0-t4-parity",
+      "diag-b1-t3-parity",
+      "diag-b1-t4-none",
+      "diag-b2-t2-parity",
+      "diag-b2-t3-none",
+      "diag-b3-t1-parity",
+      "diag-b3-t2-none",
+      "diag-b4-t0-parity",
+      "diag-b4-t1-none",
+      "diag-b0-t1-exact",
+      "diag-b1-t0-exact",
+      "diag-b1-t4-parity",
+      "diag-b2-t3-parity",
+      "diag-b2-t4-none",
+      "diag-b3-t2-parity",
+      "diag-b3-t3-none",
+      "diag-b4-t1-parity",
+      "diag-b4-t2-none",
+      "diag-b0-t2-exact",
+      "diag-b1-t1-exact",
+      "diag-b2-t0-exact",
+      "diag-b2-t4-parity",
+      "diag-b3-t3-parity",
+      "diag-b3-t4-none",
+      "diag-b4-t2-parity",
+      "diag-b4-t3-none",
+      "diag-b0-t3-exact",
+      "diag-b1-t2-exact",
+      "diag-b2-t1-exact",
+      "diag-b3-t0-exact",
+      "diag-b3-t4-parity",
+      "diag-b4-t3-parity",
+      "diag-b4-t4-none",
+      "diag-b0-t4-exact",
+      "diag-b1-t3-exact",
+      "diag-b2-t2-exact",
+      "diag-b3-t1-exact",
+      "diag-b4-t0-exact",
+      "diag-b4-t4-parity",
+      "diag-b1-t4-exact",
+      "diag-b2-t3-exact",
+      "diag-b3-t2-exact",
+      "diag-b4-t1-exact",
+      "diag-b2-t4-exact",
+      "diag-b3-t3-exact",
+      "diag-b4-t2-exact",
+      "diag-b3-t4-exact",
+      "diag-b4-t3-exact",
+      "diag-b4-t4-exact"
+    ],
+    "boundary_macrosteps": 12,
+    "candidate_family": "two-diagonal-bottom-top-popcount-quotient",
+    "cards": [
+      {
+        "baseline_feature_cost": 0,
+        "bottom_bits_per_diagonal": 0,
+        "id": "diag-b0-t0-none",
+        "popcount_feature": "none",
+        "top_bits_per_diagonal": 0
+      },
+      {
+        "baseline_feature_cost": 2,
+        "bottom_bits_per_diagonal": 0,
+        "id": "diag-b0-t0-parity",
+        "popcount_feature": "parity",
+        "top_bits_per_diagonal": 0
+      },
+      {
+        "baseline_feature_cost": 2,
+        "bottom_bits_per_diagonal": 0,
+        "id": "diag-b0-t1-none",
+        "popcount_feature": "none",
+        "top_bits_per_diagonal": 1
+      },
+      {
+        "baseline_feature_cost": 2,
+        "bottom_bits_per_diagonal": 1,
+        "id": "diag-b1-t0-none",
+        "popcount_feature": "none",
+        "top_bits_per_diagonal": 0
+      },
+      {
+        "baseline_feature_cost": 4,
+        "bottom_bits_per_diagonal": 0,
+        "id": "diag-b0-t1-parity",
+        "popcount_feature": "parity",
+        "top_bits_per_diagonal": 1
+      },
+      {
+        "baseline_feature_cost": 4,
+        "bottom_bits_per_diagonal": 0,
+        "id": "diag-b0-t2-none",
+        "popcount_feature": "none",
+        "top_bits_per_diagonal": 2
+      },
+      {
+        "baseline_feature_cost": 4,
+        "bottom_bits_per_diagonal": 1,
+        "id": "diag-b1-t0-parity",
+        "popcount_feature": "parity",
+        "top_bits_per_diagonal": 0
+      },
+      {
+        "baseline_feature_cost": 4,
+        "bottom_bits_per_diagonal": 1,
+        "id": "diag-b1-t1-none",
+        "popcount_feature": "none",
+        "top_bits_per_diagonal": 1
+      },
+      {
+        "baseline_feature_cost": 4,
+        "bottom_bits_per_diagonal": 2,
+        "id": "diag-b2-t0-none",
+        "popcount_feature": "none",
+        "top_bits_per_diagonal": 0
+      },
+      {
+        "baseline_feature_cost": 6,
+        "bottom_bits_per_diagonal": 0,
+        "id": "diag-b0-t2-parity",
+        "popcount_feature": "parity",
+        "top_bits_per_diagonal": 2
+      },
+      {
+        "baseline_feature_cost": 6,
+        "bottom_bits_per_diagonal": 0,
+        "id": "diag-b0-t3-none",
+        "popcount_feature": "none",
+        "top_bits_per_diagonal": 3
+      },
+      {
+        "baseline_feature_cost": 6,
+        "bottom_bits_per_diagonal": 1,
+        "id": "diag-b1-t1-parity",
+        "popcount_feature": "parity",
+        "top_bits_per_diagonal": 1
+      },
+      {
+        "baseline_feature_cost": 6,
+        "bottom_bits_per_diagonal": 1,
+        "id": "diag-b1-t2-none",
+        "popcount_feature": "none",
+        "top_bits_per_diagonal": 2
+      },
+      {
+        "baseline_feature_cost": 6,
+        "bottom_bits_per_diagonal": 2,
+        "id": "diag-b2-t0-parity",
+        "popcount_feature": "parity",
+        "top_bits_per_diagonal": 0
+      },
+      {
+        "baseline_feature_cost": 6,
+        "bottom_bits_per_diagonal": 2,
+        "id": "diag-b2-t1-none",
+        "popcount_feature": "none",
+        "top_bits_per_diagonal": 1
+      },
+      {
+        "baseline_feature_cost": 6,
+        "bottom_bits_per_diagonal": 3,
+        "id": "diag-b3-t0-none",
+        "popcount_feature": "none",
+        "top_bits_per_diagonal": 0
+      },
+      {
+        "baseline_feature_cost": 8,
+        "bottom_bits_per_diagonal": 0,
+        "id": "diag-b0-t3-parity",
+        "popcount_feature": "parity",
+        "top_bits_per_diagonal": 3
+      },
+      {
+        "baseline_feature_cost": 8,
+        "bottom_bits_per_diagonal": 0,
+        "id": "diag-b0-t4-none",
+        "popcount_feature": "none",
+        "top_bits_per_diagonal": 4
+      },
+      {
+        "baseline_feature_cost": 8,
+        "bottom_bits_per_diagonal": 1,
+        "id": "diag-b1-t2-parity",
+        "popcount_feature": "parity",
+        "top_bits_per_diagonal": 2
+      },
+      {
+        "baseline_feature_cost": 8,
+        "bottom_bits_per_diagonal": 1,
+        "id": "diag-b1-t3-none",
+        "popcount_feature": "none",
+        "top_bits_per_diagonal": 3
+      },
+      {
+        "baseline_feature_cost": 8,
+        "bottom_bits_per_diagonal": 2,
+        "id": "diag-b2-t1-parity",
+        "popcount_feature": "parity",
+        "top_bits_per_diagonal": 1
+      },
+      {
+        "baseline_feature_cost": 8,
+        "bottom_bits_per_diagonal": 2,
+        "id": "diag-b2-t2-none",
+        "popcount_feature": "none",
+        "top_bits_per_diagonal": 2
+      },
+      {
+        "baseline_feature_cost": 8,
+        "bottom_bits_per_diagonal": 3,
+        "id": "diag-b3-t0-parity",
+        "popcount_feature": "parity",
+        "top_bits_per_diagonal": 0
+      },
+      {
+        "baseline_feature_cost": 8,
+        "bottom_bits_per_diagonal": 3,
+        "id": "diag-b3-t1-none",
+        "popcount_feature": "none",
+        "top_bits_per_diagonal": 1
+      },
+      {
+        "baseline_feature_cost": 8,
+        "bottom_bits_per_diagonal": 4,
+        "id": "diag-b4-t0-none",
+        "popcount_feature": "none",
+        "top_bits_per_diagonal": 0
+      },
+      {
+        "baseline_feature_cost": 10,
+        "bottom_bits_per_diagonal": 0,
+        "id": "diag-b0-t0-exact",
+        "popcount_feature": "exact",
+        "top_bits_per_diagonal": 0
+      },
+      {
+        "baseline_feature_cost": 10,
+        "bottom_bits_per_diagonal": 0,
+        "id": "diag-b0-t4-parity",
+        "popcount_feature": "parity",
+        "top_bits_per_diagonal": 4
+      },
+      {
+        "baseline_feature_cost": 10,
+        "bottom_bits_per_diagonal": 1,
+        "id": "diag-b1-t3-parity",
+        "popcount_feature": "parity",
+        "top_bits_per_diagonal": 3
+      },
+      {
+        "baseline_feature_cost": 10,
+        "bottom_bits_per_diagonal": 1,
+        "id": "diag-b1-t4-none",
+        "popcount_feature": "none",
+        "top_bits_per_diagonal": 4
+      },
+      {
+        "baseline_feature_cost": 10,
+        "bottom_bits_per_diagonal": 2,
+        "id": "diag-b2-t2-parity",
+        "popcount_feature": "parity",
+        "top_bits_per_diagonal": 2
+      },
+      {
+        "baseline_feature_cost": 10,
+        "bottom_bits_per_diagonal": 2,
+        "id": "diag-b2-t3-none",
+        "popcount_feature": "none",
+        "top_bits_per_diagonal": 3
+      },
+      {
+        "baseline_feature_cost": 10,
+        "bottom_bits_per_diagonal": 3,
+        "id": "diag-b3-t1-parity",
+        "popcount_feature": "parity",
+        "top_bits_per_diagonal": 1
+      },
+      {
+        "baseline_feature_cost": 10,
+        "bottom_bits_per_diagonal": 3,
+        "id": "diag-b3-t2-none",
+        "popcount_feature": "none",
+        "top_bits_per_diagonal": 2
+      },
+      {
+        "baseline_feature_cost": 10,
+        "bottom_bits_per_diagonal": 4,
+        "id": "diag-b4-t0-parity",
+        "popcount_feature": "parity",
+        "top_bits_per_diagonal": 0
+      },
+      {
+        "baseline_feature_cost": 10,
+        "bottom_bits_per_diagonal": 4,
+        "id": "diag-b4-t1-none",
+        "popcount_feature": "none",
+        "top_bits_per_diagonal": 1
+      },
+      {
+        "baseline_feature_cost": 12,
+        "bottom_bits_per_diagonal": 0,
+        "id": "diag-b0-t1-exact",
+        "popcount_feature": "exact",
+        "top_bits_per_diagonal": 1
+      },
+      {
+        "baseline_feature_cost": 12,
+        "bottom_bits_per_diagonal": 1,
+        "id": "diag-b1-t0-exact",
+        "popcount_feature": "exact",
+        "top_bits_per_diagonal": 0
+      },
+      {
+        "baseline_feature_cost": 12,
+        "bottom_bits_per_diagonal": 1,
+        "id": "diag-b1-t4-parity",
+        "popcount_feature": "parity",
+        "top_bits_per_diagonal": 4
+      },
+      {
+        "baseline_feature_cost": 12,
+        "bottom_bits_per_diagonal": 2,
+        "id": "diag-b2-t3-parity",
+        "popcount_feature": "parity",
+        "top_bits_per_diagonal": 3
+      },
+      {
+        "baseline_feature_cost": 12,
+        "bottom_bits_per_diagonal": 2,
+        "id": "diag-b2-t4-none",
+        "popcount_feature": "none",
+        "top_bits_per_diagonal": 4
+      },
+      {
+        "baseline_feature_cost": 12,
+        "bottom_bits_per_diagonal": 3,
+        "id": "diag-b3-t2-parity",
+        "popcount_feature": "parity",
+        "top_bits_per_diagonal": 2
+      },
+      {
+        "baseline_feature_cost": 12,
+        "bottom_bits_per_diagonal": 3,
+        "id": "diag-b3-t3-none",
+        "popcount_feature": "none",
+        "top_bits_per_diagonal": 3
+      },
+      {
+        "baseline_feature_cost": 12,
+        "bottom_bits_per_diagonal": 4,
+        "id": "diag-b4-t1-parity",
+        "popcount_feature": "parity",
+        "top_bits_per_diagonal": 1
+      },
+      {
+        "baseline_feature_cost": 12,
+        "bottom_bits_per_diagonal": 4,
+        "id": "diag-b4-t2-none",
+        "popcount_feature": "none",
+        "top_bits_per_diagonal": 2
+      },
+      {
+        "baseline_feature_cost": 14,
+        "bottom_bits_per_diagonal": 0,
+        "id": "diag-b0-t2-exact",
+        "popcount_feature": "exact",
+        "top_bits_per_diagonal": 2
+      },
+      {
+        "baseline_feature_cost": 14,
+        "bottom_bits_per_diagonal": 1,
+        "id": "diag-b1-t1-exact",
+        "popcount_feature": "exact",
+        "top_bits_per_diagonal": 1
+      },
+      {
+        "baseline_feature_cost": 14,
+        "bottom_bits_per_diagonal": 2,
+        "id": "diag-b2-t0-exact",
+        "popcount_feature": "exact",
+        "top_bits_per_diagonal": 0
+      },
+      {
+        "baseline_feature_cost": 14,
+        "bottom_bits_per_diagonal": 2,
+        "id": "diag-b2-t4-parity",
+        "popcount_feature": "parity",
+        "top_bits_per_diagonal": 4
+      },
+      {
+        "baseline_feature_cost": 14,
+        "bottom_bits_per_diagonal": 3,
+        "id": "diag-b3-t3-parity",
+        "popcount_feature": "parity",
+        "top_bits_per_diagonal": 3
+      },
+      {
+        "baseline_feature_cost": 14,
+        "bottom_bits_per_diagonal": 3,
+        "id": "diag-b3-t4-none",
+        "popcount_feature": "none",
+        "top_bits_per_diagonal": 4
+      },
+      {
+        "baseline_feature_cost": 14,
+        "bottom_bits_per_diagonal": 4,
+        "id": "diag-b4-t2-parity",
+        "popcount_feature": "parity",
+        "top_bits_per_diagonal": 2
+      },
+      {
+        "baseline_feature_cost": 14,
+        "bottom_bits_per_diagonal": 4,
+        "id": "diag-b4-t3-none",
+        "popcount_feature": "none",
+        "top_bits_per_diagonal": 3
+      },
+      {
+        "baseline_feature_cost": 16,
+        "bottom_bits_per_diagonal": 0,
+        "id": "diag-b0-t3-exact",
+        "popcount_feature": "exact",
+        "top_bits_per_diagonal": 3
+      },
+      {
+        "baseline_feature_cost": 16,
+        "bottom_bits_per_diagonal": 1,
+        "id": "diag-b1-t2-exact",
+        "popcount_feature": "exact",
+        "top_bits_per_diagonal": 2
+      },
+      {
+        "baseline_feature_cost": 16,
+        "bottom_bits_per_diagonal": 2,
+        "id": "diag-b2-t1-exact",
+        "popcount_feature": "exact",
+        "top_bits_per_diagonal": 1
+      },
+      {
+        "baseline_feature_cost": 16,
+        "bottom_bits_per_diagonal": 3,
+        "id": "diag-b3-t0-exact",
+        "popcount_feature": "exact",
+        "top_bits_per_diagonal": 0
+      },
+      {
+        "baseline_feature_cost": 16,
+        "bottom_bits_per_diagonal": 3,
+        "id": "diag-b3-t4-parity",
+        "popcount_feature": "parity",
+        "top_bits_per_diagonal": 4
+      },
+      {
+        "baseline_feature_cost": 16,
+        "bottom_bits_per_diagonal": 4,
+        "id": "diag-b4-t3-parity",
+        "popcount_feature": "parity",
+        "top_bits_per_diagonal": 3
+      },
+      {
+        "baseline_feature_cost": 16,
+        "bottom_bits_per_diagonal": 4,
+        "id": "diag-b4-t4-none",
+        "popcount_feature": "none",
+        "top_bits_per_diagonal": 4
+      },
+      {
+        "baseline_feature_cost": 18,
+        "bottom_bits_per_diagonal": 0,
+        "id": "diag-b0-t4-exact",
+        "popcount_feature": "exact",
+        "top_bits_per_diagonal": 4
+      },
+      {
+        "baseline_feature_cost": 18,
+        "bottom_bits_per_diagonal": 1,
+        "id": "diag-b1-t3-exact",
+        "popcount_feature": "exact",
+        "top_bits_per_diagonal": 3
+      },
+      {
+        "baseline_feature_cost": 18,
+        "bottom_bits_per_diagonal": 2,
+        "id": "diag-b2-t2-exact",
+        "popcount_feature": "exact",
+        "top_bits_per_diagonal": 2
+      },
+      {
+        "baseline_feature_cost": 18,
+        "bottom_bits_per_diagonal": 3,
+        "id": "diag-b3-t1-exact",
+        "popcount_feature": "exact",
+        "top_bits_per_diagonal": 1
+      },
+      {
+        "baseline_feature_cost": 18,
+        "bottom_bits_per_diagonal": 4,
+        "id": "diag-b4-t0-exact",
+        "popcount_feature": "exact",
+        "top_bits_per_diagonal": 0
+      },
+      {
+        "baseline_feature_cost": 18,
+        "bottom_bits_per_diagonal": 4,
+        "id": "diag-b4-t4-parity",
+        "popcount_feature": "parity",
+        "top_bits_per_diagonal": 4
+      },
+      {
+        "baseline_feature_cost": 20,
+        "bottom_bits_per_diagonal": 1,
+        "id": "diag-b1-t4-exact",
+        "popcount_feature": "exact",
+        "top_bits_per_diagonal": 4
+      },
+      {
+        "baseline_feature_cost": 20,
+        "bottom_bits_per_diagonal": 2,
+        "id": "diag-b2-t3-exact",
+        "popcount_feature": "exact",
+        "top_bits_per_diagonal": 3
+      },
+      {
+        "baseline_feature_cost": 20,
+        "bottom_bits_per_diagonal": 3,
+        "id": "diag-b3-t2-exact",
+        "popcount_feature": "exact",
+        "top_bits_per_diagonal": 2
+      },
+      {
+        "baseline_feature_cost": 20,
+        "bottom_bits_per_diagonal": 4,
+        "id": "diag-b4-t1-exact",
+        "popcount_feature": "exact",
+        "top_bits_per_diagonal": 1
+      },
+      {
+        "baseline_feature_cost": 22,
+        "bottom_bits_per_diagonal": 2,
+        "id": "diag-b2-t4-exact",
+        "popcount_feature": "exact",
+        "top_bits_per_diagonal": 4
+      },
+      {
+        "baseline_feature_cost": 22,
+        "bottom_bits_per_diagonal": 3,
+        "id": "diag-b3-t3-exact",
+        "popcount_feature": "exact",
+        "top_bits_per_diagonal": 3
+      },
+      {
+        "baseline_feature_cost": 22,
+        "bottom_bits_per_diagonal": 4,
+        "id": "diag-b4-t2-exact",
+        "popcount_feature": "exact",
+        "top_bits_per_diagonal": 2
+      },
+      {
+        "baseline_feature_cost": 24,
+        "bottom_bits_per_diagonal": 3,
+        "id": "diag-b3-t4-exact",
+        "popcount_feature": "exact",
+        "top_bits_per_diagonal": 4
+      },
+      {
+        "baseline_feature_cost": 24,
+        "bottom_bits_per_diagonal": 4,
+        "id": "diag-b4-t3-exact",
+        "popcount_feature": "exact",
+        "top_bits_per_diagonal": 3
+      },
+      {
+        "baseline_feature_cost": 26,
+        "bottom_bits_per_diagonal": 4,
+        "id": "diag-b4-t4-exact",
+        "popcount_feature": "exact",
+        "top_bits_per_diagonal": 4
+      }
+    ],
+    "random_order": [
+      "diag-b0-t3-exact",
+      "diag-b3-t0-none",
+      "diag-b4-t0-parity",
+      "diag-b3-t3-exact",
+      "diag-b0-t1-parity",
+      "diag-b3-t4-none",
+      "diag-b4-t4-exact",
+      "diag-b1-t3-parity",
+      "diag-b2-t2-parity",
+      "diag-b3-t3-parity",
+      "diag-b1-t1-exact",
+      "diag-b1-t3-none",
+      "diag-b3-t3-none",
+      "diag-b0-t0-exact",
+      "diag-b1-t4-none",
+      "diag-b3-t2-none",
+      "diag-b4-t4-none",
+      "diag-b3-t0-parity",
+      "diag-b3-t4-parity",
+      "diag-b1-t0-none",
+      "diag-b4-t1-exact",
+      "diag-b2-t0-exact",
+      "diag-b1-t2-parity",
+      "diag-b0-t4-parity",
+      "diag-b2-t3-exact",
+      "diag-b2-t2-none",
+      "diag-b2-t4-parity",
+      "diag-b3-t1-none",
+      "diag-b1-t0-exact",
+      "diag-b3-t0-exact",
+      "diag-b1-t4-exact",
+      "diag-b1-t2-exact",
+      "diag-b2-t3-parity",
+      "diag-b0-t2-parity",
+      "diag-b0-t3-parity",
+      "diag-b2-t0-parity",
+      "diag-b3-t1-exact",
+      "diag-b4-t3-parity",
+      "diag-b0-t2-none",
+      "diag-b4-t0-exact",
+      "diag-b1-t0-parity",
+      "diag-b2-t3-none",
+      "diag-b2-t1-parity",
+      "diag-b3-t2-exact",
+      "diag-b4-t3-exact",
+      "diag-b0-t3-none",
+      "diag-b4-t2-parity",
+      "diag-b2-t4-exact",
+      "diag-b3-t4-exact",
+      "diag-b0-t4-exact",
+      "diag-b4-t1-none",
+      "diag-b2-t1-none",
+      "diag-b2-t4-none",
+      "diag-b3-t1-parity",
+      "diag-b4-t1-parity",
+      "diag-b1-t3-exact",
+      "diag-b4-t4-parity",
+      "diag-b0-t0-none",
+      "diag-b4-t0-none",
+      "diag-b0-t0-parity",
+      "diag-b4-t2-exact",
+      "diag-b2-t2-exact",
+      "diag-b1-t4-parity",
+      "diag-b3-t2-parity",
+      "diag-b0-t1-none",
+      "diag-b1-t1-parity",
+      "diag-b2-t1-exact",
+      "diag-b2-t0-none",
+      "diag-b1-t1-none",
+      "diag-b0-t1-exact",
+      "diag-b4-t3-none",
+      "diag-b4-t2-none",
+      "diag-b0-t4-none",
+      "diag-b0-t2-exact",
+      "diag-b1-t2-none"
+    ],
+    "random_seed": 20260919,
+    "spatial_block_length": 8,
+    "two_diagonal_cut": "q=t+j; retain features of D_(q-1) and D_q"
+  },
+  "frozen_design_sha256": "89590323d4d2c1f5284c9eaff6c245d9be746a79faff15ee12c0f03ad2d1a247",
+  "goal": "Falsify insufficient finite cut potentials using exact negative cycles.",
+  "measurements": {
+    "diag-b0-t0-exact": {
+      "evidence_source": "runs/theory/slanted-cone-potential-2026-09-19.json",
+      "negative_cycle": {
+        "edge_count": null,
+        "status": "none_in_bounded_witness_graph",
+        "total_charge": null
+      },
+      "projected_certificate_bytes": null,
+      "reachable_transitions": 423,
+      "residual_collisions": null,
+      "rule15_outcome": null,
+      "state_count": 69
+    },
+    "diag-b0-t0-none": {
+      "evidence_source": "runs/theory/slanted-cone-potential-2026-09-19.json",
+      "negative_cycle": {
+        "edge_count": 1,
+        "status": "checked_negative_cycle",
+        "total_charge": -8
+      },
+      "projected_certificate_bytes": null,
+      "reachable_transitions": 1,
+      "residual_collisions": null,
+      "rule15_outcome": null,
+      "state_count": 1
+    },
+    "diag-b0-t0-parity": {
+      "evidence_source": "runs/theory/slanted-cone-potential-2026-09-19.json",
+      "negative_cycle": {
+        "edge_count": 1,
+        "status": "checked_negative_cycle",
+        "total_charge": -8
+      },
+      "projected_certificate_bytes": null,
+      "reachable_transitions": 16,
+      "residual_collisions": null,
+      "rule15_outcome": null,
+      "state_count": 4
+    },
+    "diag-b0-t1-exact": {
+      "evidence_source": "runs/theory/slanted-cone-potential-2026-09-19.json",
+      "negative_cycle": {
+        "edge_count": null,
+        "status": "none_in_bounded_witness_graph",
+        "total_charge": null
+      },
+      "projected_certificate_bytes": null,
+      "reachable_transitions": 423,
+      "residual_collisions": null,
+      "rule15_outcome": null,
+      "state_count": 69
+    },
+    "diag-b0-t1-none": {
+      "evidence_source": "runs/theory/slanted-cone-potential-2026-09-19.json",
+      "negative_cycle": {
+        "edge_count": 1,
+        "status": "checked_negative_cycle",
+        "total_charge": -8
+      },
+      "projected_certificate_bytes": null,
+      "reachable_transitions": 2,
+      "residual_collisions": null,
+      "rule15_outcome": null,
+      "state_count": 2
+    },
+    "diag-b0-t1-parity": {
+      "evidence_source": "runs/theory/slanted-cone-potential-2026-09-19.json",
+      "negative_cycle": {
+        "edge_count": 1,
+        "status": "checked_negative_cycle",
+        "total_charge": -8
+      },
+      "projected_certificate_bytes": null,
+      "reachable_transitions": 20,
+      "residual_collisions": null,
+      "rule15_outcome": null,
+      "state_count": 5
+    },
+    "diag-b0-t2-exact": {
+      "evidence_source": "runs/theory/slanted-cone-potential-2026-09-19.json",
+      "negative_cycle": {
+        "edge_count": null,
+        "status": "none_in_bounded_witness_graph",
+        "total_charge": null
+      },
+      "projected_certificate_bytes": null,
+      "reachable_transitions": 650,
+      "residual_collisions": null,
+      "rule15_outcome": null,
+      "state_count": 101
+    },
+    "diag-b0-t2-none": {
+      "evidence_source": "runs/theory/slanted-cone-potential-2026-09-19.json",
+      "negative_cycle": {
+        "edge_count": 1,
+        "status": "checked_negative_cycle",
+        "total_charge": -8
+      },
+      "projected_certificate_bytes": null,
+      "reachable_transitions": 6,
+      "residual_collisions": null,
+      "rule15_outcome": null,
+      "state_count": 3
+    },
+    "diag-b0-t2-parity": {
+      "evidence_source": "runs/theory/slanted-cone-potential-2026-09-19.json",
+      "negative_cycle": {
+        "edge_count": 1,
+        "status": "checked_negative_cycle",
+        "total_charge": -8
+      },
+      "projected_certificate_bytes": null,
+      "reachable_transitions": 71,
+      "residual_collisions": null,
+      "rule15_outcome": null,
+      "state_count": 9
+    },
+    "diag-b0-t3-exact": {
+      "evidence_source": "runs/theory/slanted-cone-potential-2026-09-19.json",
+      "negative_cycle": {
+        "edge_count": null,
+        "status": "none_in_bounded_witness_graph",
+        "total_charge": null
+      },
+      "projected_certificate_bytes": null,
+      "reachable_transitions": 650,
+      "residual_collisions": null,
+      "rule15_outcome": null,
+      "state_count": 101
+    },
+    "diag-b0-t3-none": {
+      "evidence_source": "runs/theory/slanted-cone-potential-2026-09-19.json",
+      "negative_cycle": {
+        "edge_count": 1,
+        "status": "checked_negative_cycle",
+        "total_charge": -8
+      },
+      "projected_certificate_bytes": null,
+      "reachable_transitions": 6,
+      "residual_collisions": null,
+      "rule15_outcome": null,
+      "state_count": 3
+    },
+    "diag-b0-t3-parity": {
+      "evidence_source": "runs/theory/slanted-cone-potential-2026-09-19.json",
+      "negative_cycle": {
+        "edge_count": 1,
+        "status": "checked_negative_cycle",
+        "total_charge": -8
+      },
+      "projected_certificate_bytes": null,
+      "reachable_transitions": 71,
+      "residual_collisions": null,
+      "rule15_outcome": null,
+      "state_count": 9
+    },
+    "diag-b0-t4-exact": {
+      "evidence_source": "runs/theory/slanted-cone-potential-2026-09-19.json",
+      "negative_cycle": {
+        "edge_count": null,
+        "status": "none_in_bounded_witness_graph",
+        "total_charge": null
+      },
+      "projected_certificate_bytes": null,
+      "reachable_transitions": 650,
+      "residual_collisions": null,
+      "rule15_outcome": null,
+      "state_count": 101
+    },
+    "diag-b0-t4-none": {
+      "evidence_source": "runs/theory/slanted-cone-potential-2026-09-19.json",
+      "negative_cycle": {
+        "edge_count": 1,
+        "status": "checked_negative_cycle",
+        "total_charge": -8
+      },
+      "projected_certificate_bytes": null,
+      "reachable_transitions": 6,
+      "residual_collisions": null,
+      "rule15_outcome": null,
+      "state_count": 3
+    },
+    "diag-b0-t4-parity": {
+      "evidence_source": "runs/theory/slanted-cone-potential-2026-09-19.json",
+      "negative_cycle": {
+        "edge_count": 1,
+        "status": "checked_negative_cycle",
+        "total_charge": -8
+      },
+      "projected_certificate_bytes": null,
+      "reachable_transitions": 71,
+      "residual_collisions": null,
+      "rule15_outcome": null,
+      "state_count": 9
+    },
+    "diag-b1-t0-exact": {
+      "evidence_source": "runs/theory/slanted-cone-potential-2026-09-19.json",
+      "negative_cycle": {
+        "edge_count": null,
+        "status": "none_in_bounded_witness_graph",
+        "total_charge": null
+      },
+      "projected_certificate_bytes": null,
+      "reachable_transitions": 1156,
+      "residual_collisions": null,
+      "rule15_outcome": null,
+      "state_count": 163
+    },
+    "diag-b1-t0-none": {
+      "evidence_source": "runs/theory/slanted-cone-potential-2026-09-19.json",
+      "negative_cycle": {
+        "edge_count": 1,
+        "status": "checked_negative_cycle",
+        "total_charge": -8
+      },
+      "projected_certificate_bytes": null,
+      "reachable_transitions": 20,
+      "residual_collisions": null,
+      "rule15_outcome": null,
+      "state_count": 5
+    },
+    "diag-b1-t0-parity": {
+      "evidence_source": "runs/theory/slanted-cone-potential-2026-09-19.json",
+      "negative_cycle": {
+        "edge_count": 1,
+        "status": "checked_negative_cycle",
+        "total_charge": -8
+      },
+      "projected_certificate_bytes": null,
+      "reachable_transitions": 265,
+      "residual_collisions": null,
+      "rule15_outcome": null,
+      "state_count": 17
+    },
+    "diag-b1-t1-exact": {
+      "evidence_source": "runs/theory/slanted-cone-potential-2026-09-19.json",
+      "negative_cycle": {
+        "edge_count": null,
+        "status": "none_in_bounded_witness_graph",
+        "total_charge": null
+      },
+      "projected_certificate_bytes": null,
+      "reachable_transitions": 1156,
+      "residual_collisions": null,
+      "rule15_outcome": null,
+      "state_count": 163
+    },
+    "diag-b1-t1-none": {
+      "evidence_source": "runs/theory/slanted-cone-potential-2026-09-19.json",
+      "negative_cycle": {
+        "edge_count": 1,
+        "status": "checked_negative_cycle",
+        "total_charge": -8
+      },
+      "projected_certificate_bytes": null,
+      "reachable_transitions": 20,
+      "residual_collisions": null,
+      "rule15_outcome": null,
+      "state_count": 5
+    },
+    "diag-b1-t1-parity": {
+      "evidence_source": "runs/theory/slanted-cone-potential-2026-09-19.json",
+      "negative_cycle": {
+        "edge_count": 1,
+        "status": "checked_negative_cycle",
+        "total_charge": -8
+      },
+      "projected_certificate_bytes": null,
+      "reachable_transitions": 265,
+      "residual_collisions": null,
+      "rule15_outcome": null,
+      "state_count": 17
+    },
+    "diag-b1-t2-exact": {
+      "evidence_source": "runs/theory/slanted-cone-potential-2026-09-19.json",
+      "negative_cycle": {
+        "edge_count": null,
+        "status": "none_in_bounded_witness_graph",
+        "total_charge": null
+      },
+      "projected_certificate_bytes": null,
+      "reachable_transitions": 1389,
+      "residual_collisions": null,
+      "rule15_outcome": null,
+      "state_count": 232
+    },
+    "diag-b1-t2-none": {
+      "evidence_source": "runs/theory/slanted-cone-potential-2026-09-19.json",
+      "negative_cycle": {
+        "edge_count": 2,
+        "status": "checked_negative_cycle",
+        "total_charge": -16
+      },
+      "projected_certificate_bytes": null,
+      "reachable_transitions": 70,
+      "residual_collisions": null,
+      "rule15_outcome": null,
+      "state_count": 9
+    },
+    "diag-b1-t2-parity": {
+      "evidence_source": "runs/theory/slanted-cone-potential-2026-09-19.json",
+      "negative_cycle": {
+        "edge_count": 7,
+        "status": "checked_negative_cycle",
+        "total_charge": -24
+      },
+      "projected_certificate_bytes": null,
+      "reachable_transitions": 802,
+      "residual_collisions": null,
+      "rule15_outcome": null,
+      "state_count": 33
+    },
+    "diag-b1-t3-exact": {
+      "evidence_source": "runs/theory/slanted-cone-potential-2026-09-19.json",
+      "negative_cycle": {
+        "edge_count": null,
+        "status": "none_in_bounded_witness_graph",
+        "total_charge": null
+      },
+      "projected_certificate_bytes": null,
+      "reachable_transitions": 1389,
+      "residual_collisions": null,
+      "rule15_outcome": null,
+      "state_count": 232
+    },
+    "diag-b1-t3-none": {
+      "evidence_source": "runs/theory/slanted-cone-potential-2026-09-19.json",
+      "negative_cycle": {
+        "edge_count": 2,
+        "status": "checked_negative_cycle",
+        "total_charge": -16
+      },
+      "projected_certificate_bytes": null,
+      "reachable_transitions": 70,
+      "residual_collisions": null,
+      "rule15_outcome": null,
+      "state_count": 9
+    },
+    "diag-b1-t3-parity": {
+      "evidence_source": "runs/theory/slanted-cone-potential-2026-09-19.json",
+      "negative_cycle": {
+        "edge_count": 7,
+        "status": "checked_negative_cycle",
+        "total_charge": -24
+      },
+      "projected_certificate_bytes": null,
+      "reachable_transitions": 802,
+      "residual_collisions": null,
+      "rule15_outcome": null,
+      "state_count": 33
+    },
+    "diag-b1-t4-exact": {
+      "evidence_source": "runs/theory/slanted-cone-potential-2026-09-19.json",
+      "negative_cycle": {
+        "edge_count": null,
+        "status": "none_in_bounded_witness_graph",
+        "total_charge": null
+      },
+      "projected_certificate_bytes": null,
+      "reachable_transitions": 1389,
+      "residual_collisions": null,
+      "rule15_outcome": null,
+      "state_count": 232
+    },
+    "diag-b1-t4-none": {
+      "evidence_source": "runs/theory/slanted-cone-potential-2026-09-19.json",
+      "negative_cycle": {
+        "edge_count": 2,
+        "status": "checked_negative_cycle",
+        "total_charge": -16
+      },
+      "projected_certificate_bytes": null,
+      "reachable_transitions": 70,
+      "residual_collisions": null,
+      "rule15_outcome": null,
+      "state_count": 9
+    },
+    "diag-b1-t4-parity": {
+      "evidence_source": "runs/theory/slanted-cone-potential-2026-09-19.json",
+      "negative_cycle": {
+        "edge_count": 7,
+        "status": "checked_negative_cycle",
+        "total_charge": -24
+      },
+      "projected_certificate_bytes": null,
+      "reachable_transitions": 802,
+      "residual_collisions": null,
+      "rule15_outcome": null,
+      "state_count": 33
+    },
+    "diag-b2-t0-exact": {
+      "evidence_source": "runs/theory/slanted-cone-potential-2026-09-19.json",
+      "negative_cycle": {
+        "edge_count": null,
+        "status": "none_in_bounded_witness_graph",
+        "total_charge": null
+      },
+      "projected_certificate_bytes": null,
+      "reachable_transitions": 1459,
+      "residual_collisions": null,
+      "rule15_outcome": null,
+      "state_count": 279
+    },
+    "diag-b2-t0-none": {
+      "evidence_source": "runs/theory/slanted-cone-potential-2026-09-19.json",
+      "negative_cycle": {
+        "edge_count": 1,
+        "status": "checked_negative_cycle",
+        "total_charge": -8
+      },
+      "projected_certificate_bytes": null,
+      "reachable_transitions": 107,
+      "residual_collisions": null,
+      "rule15_outcome": null,
+      "state_count": 11
+    },
+    "diag-b2-t0-parity": {
+      "evidence_source": "runs/theory/slanted-cone-potential-2026-09-19.json",
+      "negative_cycle": {
+        "edge_count": 1,
+        "status": "checked_negative_cycle",
+        "total_charge": -8
+      },
+      "projected_certificate_bytes": null,
+      "reachable_transitions": 857,
+      "residual_collisions": null,
+      "rule15_outcome": null,
+      "state_count": 41
+    },
+    "diag-b2-t1-exact": {
+      "evidence_source": "runs/theory/slanted-cone-potential-2026-09-19.json",
+      "negative_cycle": {
+        "edge_count": null,
+        "status": "none_in_bounded_witness_graph",
+        "total_charge": null
+      },
+      "projected_certificate_bytes": null,
+      "reachable_transitions": 1459,
+      "residual_collisions": null,
+      "rule15_outcome": null,
+      "state_count": 279
+    },
+    "diag-b2-t1-none": {
+      "evidence_source": "runs/theory/slanted-cone-potential-2026-09-19.json",
+      "negative_cycle": {
+        "edge_count": 1,
+        "status": "checked_negative_cycle",
+        "total_charge": -8
+      },
+      "projected_certificate_bytes": null,
+      "reachable_transitions": 107,
+      "residual_collisions": null,
+      "rule15_outcome": null,
+      "state_count": 11
+    },
+    "diag-b2-t1-parity": {
+      "evidence_source": "runs/theory/slanted-cone-potential-2026-09-19.json",
+      "negative_cycle": {
+        "edge_count": 1,
+        "status": "checked_negative_cycle",
+        "total_charge": -8
+      },
+      "projected_certificate_bytes": null,
+      "reachable_transitions": 857,
+      "residual_collisions": null,
+      "rule15_outcome": null,
+      "state_count": 41
+    },
+    "diag-b2-t2-exact": {
+      "evidence_source": "runs/theory/slanted-cone-potential-2026-09-19.json",
+      "negative_cycle": {
+        "edge_count": null,
+        "status": "none_in_bounded_witness_graph",
+        "total_charge": null
+      },
+      "projected_certificate_bytes": null,
+      "reachable_transitions": 1592,
+      "residual_collisions": null,
+      "rule15_outcome": null,
+      "state_count": 369
+    },
+    "diag-b2-t2-none": {
+      "evidence_source": "runs/theory/slanted-cone-potential-2026-09-19.json",
+      "negative_cycle": {
+        "edge_count": 4,
+        "status": "checked_negative_cycle",
+        "total_charge": -16
+      },
+      "projected_certificate_bytes": null,
+      "reachable_transitions": 347,
+      "residual_collisions": null,
+      "rule15_outcome": null,
+      "state_count": 21
+    },
+    "diag-b2-t2-parity": {
+      "evidence_source": "runs/theory/slanted-cone-potential-2026-09-19.json",
+      "negative_cycle": {
+        "edge_count": null,
+        "status": "none_in_bounded_witness_graph",
+        "total_charge": null
+      },
+      "projected_certificate_bytes": null,
+      "reachable_transitions": 1279,
+      "residual_collisions": null,
+      "rule15_outcome": null,
+      "state_count": 81
+    },
+    "diag-b2-t3-exact": {
+      "evidence_source": "runs/theory/slanted-cone-potential-2026-09-19.json",
+      "negative_cycle": {
+        "edge_count": null,
+        "status": "none_in_bounded_witness_graph",
+        "total_charge": null
+      },
+      "projected_certificate_bytes": null,
+      "reachable_transitions": 1592,
+      "residual_collisions": null,
+      "rule15_outcome": null,
+      "state_count": 369
+    },
+    "diag-b2-t3-none": {
+      "evidence_source": "runs/theory/slanted-cone-potential-2026-09-19.json",
+      "negative_cycle": {
+        "edge_count": 4,
+        "status": "checked_negative_cycle",
+        "total_charge": -16
+      },
+      "projected_certificate_bytes": null,
+      "reachable_transitions": 347,
+      "residual_collisions": null,
+      "rule15_outcome": null,
+      "state_count": 21
+    },
+    "diag-b2-t3-parity": {
+      "evidence_source": "runs/theory/slanted-cone-potential-2026-09-19.json",
+      "negative_cycle": {
+        "edge_count": null,
+        "status": "none_in_bounded_witness_graph",
+        "total_charge": null
+      },
+      "projected_certificate_bytes": null,
+      "reachable_transitions": 1279,
+      "residual_collisions": null,
+      "rule15_outcome": null,
+      "state_count": 81
+    },
+    "diag-b2-t4-exact": {
+      "evidence_source": "runs/theory/slanted-cone-potential-2026-09-19.json",
+      "negative_cycle": {
+        "edge_count": null,
+        "status": "none_in_bounded_witness_graph",
+        "total_charge": null
+      },
+      "projected_certificate_bytes": null,
+      "reachable_transitions": 1592,
+      "residual_collisions": null,
+      "rule15_outcome": null,
+      "state_count": 369
+    },
+    "diag-b2-t4-none": {
+      "evidence_source": "runs/theory/slanted-cone-potential-2026-09-19.json",
+      "negative_cycle": {
+        "edge_count": 4,
+        "status": "checked_negative_cycle",
+        "total_charge": -16
+      },
+      "projected_certificate_bytes": null,
+      "reachable_transitions": 347,
+      "residual_collisions": null,
+      "rule15_outcome": null,
+      "state_count": 21
+    },
+    "diag-b2-t4-parity": {
+      "evidence_source": "runs/theory/slanted-cone-potential-2026-09-19.json",
+      "negative_cycle": {
+        "edge_count": null,
+        "status": "none_in_bounded_witness_graph",
+        "total_charge": null
+      },
+      "projected_certificate_bytes": null,
+      "reachable_transitions": 1279,
+      "residual_collisions": null,
+      "rule15_outcome": null,
+      "state_count": 81
+    },
+    "diag-b3-t0-exact": {
+      "evidence_source": "runs/theory/slanted-cone-potential-2026-09-19.json",
+      "negative_cycle": {
+        "edge_count": null,
+        "status": "none_in_bounded_witness_graph",
+        "total_charge": null
+      },
+      "projected_certificate_bytes": null,
+      "reachable_transitions": 1656,
+      "residual_collisions": null,
+      "rule15_outcome": null,
+      "state_count": 414
+    },
+    "diag-b3-t0-none": {
+      "evidence_source": "runs/theory/slanted-cone-potential-2026-09-19.json",
+      "negative_cycle": {
+        "edge_count": null,
+        "status": "none_in_bounded_witness_graph",
+        "total_charge": null
+      },
+      "projected_certificate_bytes": null,
+      "reachable_transitions": 408,
+      "residual_collisions": null,
+      "rule15_outcome": null,
+      "state_count": 23
+    },
+    "diag-b3-t0-parity": {
+      "evidence_source": "runs/theory/slanted-cone-potential-2026-09-19.json",
+      "negative_cycle": {
+        "edge_count": null,
+        "status": "none_in_bounded_witness_graph",
+        "total_charge": null
+      },
+      "projected_certificate_bytes": null,
+      "reachable_transitions": 1356,
+      "residual_collisions": null,
+      "rule15_outcome": null,
+      "state_count": 89
+    },
+    "diag-b3-t1-exact": {
+      "evidence_source": "runs/theory/slanted-cone-potential-2026-09-19.json",
+      "negative_cycle": {
+        "edge_count": null,
+        "status": "none_in_bounded_witness_graph",
+        "total_charge": null
+      },
+      "projected_certificate_bytes": null,
+      "reachable_transitions": 1656,
+      "residual_collisions": null,
+      "rule15_outcome": null,
+      "state_count": 414
+    },
+    "diag-b3-t1-none": {
+      "evidence_source": "runs/theory/slanted-cone-potential-2026-09-19.json",
+      "negative_cycle": {
+        "edge_count": null,
+        "status": "none_in_bounded_witness_graph",
+        "total_charge": null
+      },
+      "projected_certificate_bytes": null,
+      "reachable_transitions": 408,
+      "residual_collisions": null,
+      "rule15_outcome": null,
+      "state_count": 23
+    },
+    "diag-b3-t1-parity": {
+      "evidence_source": "runs/theory/slanted-cone-potential-2026-09-19.json",
+      "negative_cycle": {
+        "edge_count": null,
+        "status": "none_in_bounded_witness_graph",
+        "total_charge": null
+      },
+      "projected_certificate_bytes": null,
+      "reachable_transitions": 1356,
+      "residual_collisions": null,
+      "rule15_outcome": null,
+      "state_count": 89
+    },
+    "diag-b3-t2-exact": {
+      "evidence_source": "runs/theory/slanted-cone-potential-2026-09-19.json",
+      "negative_cycle": {
+        "edge_count": null,
+        "status": "none_in_bounded_witness_graph",
+        "total_charge": null
+      },
+      "projected_certificate_bytes": null,
+      "reachable_transitions": 1702,
+      "residual_collisions": null,
+      "rule15_outcome": null,
+      "state_count": 517
+    },
+    "diag-b3-t2-none": {
+      "evidence_source": "runs/theory/slanted-cone-potential-2026-09-19.json",
+      "negative_cycle": {
+        "edge_count": null,
+        "status": "none_in_bounded_witness_graph",
+        "total_charge": null
+      },
+      "projected_certificate_bytes": null,
+      "reachable_transitions": 904,
+      "residual_collisions": null,
+      "rule15_outcome": null,
+      "state_count": 45
+    },
+    "diag-b3-t2-parity": {
+      "evidence_source": "runs/theory/slanted-cone-potential-2026-09-19.json",
+      "negative_cycle": {
+        "edge_count": null,
+        "status": "none_in_bounded_witness_graph",
+        "total_charge": null
+      },
+      "projected_certificate_bytes": null,
+      "reachable_transitions": 1560,
+      "residual_collisions": null,
+      "rule15_outcome": null,
+      "state_count": 170
+    },
+    "diag-b3-t3-exact": {
+      "evidence_source": "runs/theory/slanted-cone-potential-2026-09-19.json",
+      "negative_cycle": {
+        "edge_count": null,
+        "status": "none_in_bounded_witness_graph",
+        "total_charge": null
+      },
+      "projected_certificate_bytes": null,
+      "reachable_transitions": 1702,
+      "residual_collisions": null,
+      "rule15_outcome": null,
+      "state_count": 517
+    },
+    "diag-b3-t3-none": {
+      "evidence_source": "runs/theory/slanted-cone-potential-2026-09-19.json",
+      "negative_cycle": {
+        "edge_count": null,
+        "status": "none_in_bounded_witness_graph",
+        "total_charge": null
+      },
+      "projected_certificate_bytes": null,
+      "reachable_transitions": 904,
+      "residual_collisions": null,
+      "rule15_outcome": null,
+      "state_count": 45
+    },
+    "diag-b3-t3-parity": {
+      "evidence_source": "runs/theory/slanted-cone-potential-2026-09-19.json",
+      "negative_cycle": {
+        "edge_count": null,
+        "status": "none_in_bounded_witness_graph",
+        "total_charge": null
+      },
+      "projected_certificate_bytes": null,
+      "reachable_transitions": 1560,
+      "residual_collisions": null,
+      "rule15_outcome": null,
+      "state_count": 170
+    },
+    "diag-b3-t4-exact": {
+      "evidence_source": "runs/theory/slanted-cone-potential-2026-09-19.json",
+      "negative_cycle": {
+        "edge_count": null,
+        "status": "none_in_bounded_witness_graph",
+        "total_charge": null
+      },
+      "projected_certificate_bytes": null,
+      "reachable_transitions": 1702,
+      "residual_collisions": null,
+      "rule15_outcome": null,
+      "state_count": 517
+    },
+    "diag-b3-t4-none": {
+      "evidence_source": "runs/theory/slanted-cone-potential-2026-09-19.json",
+      "negative_cycle": {
+        "edge_count": null,
+        "status": "none_in_bounded_witness_graph",
+        "total_charge": null
+      },
+      "projected_certificate_bytes": null,
+      "reachable_transitions": 904,
+      "residual_collisions": null,
+      "rule15_outcome": null,
+      "state_count": 45
+    },
+    "diag-b3-t4-parity": {
+      "evidence_source": "runs/theory/slanted-cone-potential-2026-09-19.json",
+      "negative_cycle": {
+        "edge_count": null,
+        "status": "none_in_bounded_witness_graph",
+        "total_charge": null
+      },
+      "projected_certificate_bytes": null,
+      "reachable_transitions": 1560,
+      "residual_collisions": null,
+      "rule15_outcome": null,
+      "state_count": 170
+    },
+    "diag-b4-t0-exact": {
+      "evidence_source": "runs/theory/slanted-cone-potential-2026-09-19.json",
+      "negative_cycle": {
+        "edge_count": null,
+        "status": "none_in_bounded_witness_graph",
+        "total_charge": null
+      },
+      "projected_certificate_bytes": null,
+      "reachable_transitions": 1715,
+      "residual_collisions": null,
+      "rule15_outcome": null,
+      "state_count": 577
+    },
+    "diag-b4-t0-none": {
+      "evidence_source": "runs/theory/slanted-cone-potential-2026-09-19.json",
+      "negative_cycle": {
+        "edge_count": null,
+        "status": "none_in_bounded_witness_graph",
+        "total_charge": null
+      },
+      "projected_certificate_bytes": null,
+      "reachable_transitions": 870,
+      "residual_collisions": null,
+      "rule15_outcome": null,
+      "state_count": 51
+    },
+    "diag-b4-t0-parity": {
+      "evidence_source": "runs/theory/slanted-cone-potential-2026-09-19.json",
+      "negative_cycle": {
+        "edge_count": null,
+        "status": "none_in_bounded_witness_graph",
+        "total_charge": null
+      },
+      "projected_certificate_bytes": null,
+      "reachable_transitions": 1553,
+      "residual_collisions": null,
+      "rule15_outcome": null,
+      "state_count": 198
+    },
+    "diag-b4-t1-exact": {
+      "evidence_source": "runs/theory/slanted-cone-potential-2026-09-19.json",
+      "negative_cycle": {
+        "edge_count": null,
+        "status": "none_in_bounded_witness_graph",
+        "total_charge": null
+      },
+      "projected_certificate_bytes": null,
+      "reachable_transitions": 1715,
+      "residual_collisions": null,
+      "rule15_outcome": null,
+      "state_count": 577
+    },
+    "diag-b4-t1-none": {
+      "evidence_source": "runs/theory/slanted-cone-potential-2026-09-19.json",
+      "negative_cycle": {
+        "edge_count": null,
+        "status": "none_in_bounded_witness_graph",
+        "total_charge": null
+      },
+      "projected_certificate_bytes": null,
+      "reachable_transitions": 870,
+      "residual_collisions": null,
+      "rule15_outcome": null,
+      "state_count": 51
+    },
+    "diag-b4-t1-parity": {
+      "evidence_source": "runs/theory/slanted-cone-potential-2026-09-19.json",
+      "negative_cycle": {
+        "edge_count": null,
+        "status": "none_in_bounded_witness_graph",
+        "total_charge": null
+      },
+      "projected_certificate_bytes": null,
+      "reachable_transitions": 1553,
+      "residual_collisions": null,
+      "rule15_outcome": null,
+      "state_count": 198
+    },
+    "diag-b4-t2-exact": {
+      "evidence_source": "runs/theory/slanted-cone-potential-2026-09-19.json",
+      "negative_cycle": {
+        "edge_count": null,
+        "status": "none_in_bounded_witness_graph",
+        "total_charge": null
+      },
+      "projected_certificate_bytes": null,
+      "reachable_transitions": 1742,
+      "residual_collisions": null,
+      "rule15_outcome": null,
+      "state_count": 682
+    },
+    "diag-b4-t2-none": {
+      "evidence_source": "runs/theory/slanted-cone-potential-2026-09-19.json",
+      "negative_cycle": {
+        "edge_count": null,
+        "status": "none_in_bounded_witness_graph",
+        "total_charge": null
+      },
+      "projected_certificate_bytes": null,
+      "reachable_transitions": 1308,
+      "residual_collisions": null,
+      "rule15_outcome": null,
+      "state_count": 101
+    },
+    "diag-b4-t2-parity": {
+      "evidence_source": "runs/theory/slanted-cone-potential-2026-09-19.json",
+      "negative_cycle": {
+        "edge_count": null,
+        "status": "none_in_bounded_witness_graph",
+        "total_charge": null
+      },
+      "projected_certificate_bytes": null,
+      "reachable_transitions": 1659,
+      "residual_collisions": null,
+      "rule15_outcome": null,
+      "state_count": 347
+    },
+    "diag-b4-t3-exact": {
+      "evidence_source": "runs/theory/slanted-cone-potential-2026-09-19.json",
+      "negative_cycle": {
+        "edge_count": null,
+        "status": "none_in_bounded_witness_graph",
+        "total_charge": null
+      },
+      "projected_certificate_bytes": null,
+      "reachable_transitions": 1742,
+      "residual_collisions": null,
+      "rule15_outcome": null,
+      "state_count": 682
+    },
+    "diag-b4-t3-none": {
+      "evidence_source": "runs/theory/slanted-cone-potential-2026-09-19.json",
+      "negative_cycle": {
+        "edge_count": null,
+        "status": "none_in_bounded_witness_graph",
+        "total_charge": null
+      },
+      "projected_certificate_bytes": null,
+      "reachable_transitions": 1308,
+      "residual_collisions": null,
+      "rule15_outcome": null,
+      "state_count": 101
+    },
+    "diag-b4-t3-parity": {
+      "evidence_source": "runs/theory/slanted-cone-potential-2026-09-19.json",
+      "negative_cycle": {
+        "edge_count": null,
+        "status": "none_in_bounded_witness_graph",
+        "total_charge": null
+      },
+      "projected_certificate_bytes": null,
+      "reachable_transitions": 1659,
+      "residual_collisions": null,
+      "rule15_outcome": null,
+      "state_count": 347
+    },
+    "diag-b4-t4-exact": {
+      "evidence_source": "runs/theory/slanted-cone-potential-2026-09-19.json",
+      "negative_cycle": {
+        "edge_count": null,
+        "status": "none_in_bounded_witness_graph",
+        "total_charge": null
+      },
+      "projected_certificate_bytes": null,
+      "reachable_transitions": 1742,
+      "residual_collisions": null,
+      "rule15_outcome": null,
+      "state_count": 682
+    },
+    "diag-b4-t4-none": {
+      "evidence_source": "runs/theory/slanted-cone-potential-2026-09-19.json",
+      "negative_cycle": {
+        "edge_count": null,
+        "status": "none_in_bounded_witness_graph",
+        "total_charge": null
+      },
+      "projected_certificate_bytes": null,
+      "reachable_transitions": 1308,
+      "residual_collisions": null,
+      "rule15_outcome": null,
+      "state_count": 101
+    },
+    "diag-b4-t4-parity": {
+      "evidence_source": "runs/theory/slanted-cone-potential-2026-09-19.json",
+      "negative_cycle": {
+        "edge_count": null,
+        "status": "none_in_bounded_witness_graph",
+        "total_charge": null
+      },
+      "projected_certificate_bytes": null,
+      "reachable_transitions": 1659,
+      "residual_collisions": null,
+      "rule15_outcome": null,
+      "state_count": 347
+    }
+  },
+  "schema": "jev-cone-triage-v1",
+  "schema_correction": {
+    "original_design_sha256": "c92964ff09cf4d6d20085f0e71fba03f69ca1c9647454cfb34edc51cc004ddde",
+    "reason": "Renamed static feature cost from encoding_bits_upper_bound to baseline_feature_cost because the actual quotient also retains endpoint-length flags. Every candidate ID and both policy orders are unchanged."
+  },
+  "selector_run": {
+    "attempted_authenticated_requests": 1,
+    "blocker": "Automatic approval review rejected the authenticated OpenRouter request as external credential disclosure. No retry or indirect workaround attempted.",
+    "changed_decisions": false,
+    "matched_policy_comparison": null,
+    "outside_review": "Unavailable: CODEX_COUNCIL_URL and CODEX_COUNCIL_TOKEN are not configured.",
+    "status": "blocked_by_automatic_approval_review",
+    "successful_calls": 0
+  }
+}

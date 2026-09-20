@@ -1,0 +1,38 @@
+{
+  "claim_limit": "Exact finite fibre enumeration at support radii 17 and 18 and construction depth 64. This does not prove a uniform horizon or exclude eventual period two.",
+  "depth": 64,
+  "rows": [
+    {
+      "support": 17,
+      "phase": 0,
+      "right_halves": 131072,
+      "maximum_first_escape_depth": 26,
+      "extremizer_count": 203,
+      "saturated_count": 0
+    },
+    {
+      "support": 17,
+      "phase": 1,
+      "right_halves": 131072,
+      "maximum_first_escape_depth": 25,
+      "extremizer_count": 6323,
+      "saturated_count": 0
+    },
+    {
+      "support": 18,
+      "phase": 0,
+      "right_halves": 262144,
+      "maximum_first_escape_depth": 26,
+      "extremizer_count": 406,
+      "saturated_count": 0
+    },
+    {
+      "support": 18,
+      "phase": 1,
+      "right_halves": 262144,
+      "maximum_first_escape_depth": 25,
+      "extremizer_count": 12647,
+      "saturated_count": 0
+    }
+  ]
+}

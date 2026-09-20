@@ -1,0 +1,340 @@
+{
+  "experiment": "periodic-boundary-density",
+  "rule": 30,
+  "target_trace": "01",
+  "boundary_family": "all p-bit free even-right words; odd-right normalized to zero",
+  "declared_limits": {
+    "max_period": 6,
+    "max_states_per_word": 100000,
+    "automatic_horizon_growth": false
+  },
+  "cross_checks": {
+    "truth_table_period_wrap_mismatches": 0,
+    "finite_cone_mismatches": 0
+  },
+  "controls": {
+    "scope": "Exact finite-cone constructor baselines only; these controls do not exercise the Rule 30 periodic word map or orbit scanner.",
+    "rule15": {
+      "trace_mismatches": 0,
+      "all_boundaries_have_zero_left_prefix": true,
+      "cases": 4
+    },
+    "rule90": {
+      "trace_mismatches": 0,
+      "right_initial_values": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "left_prefixes": [
+        "100010100010",
+        "000010100010",
+        "110010100010",
+        "010010100010"
+      ],
+      "distinct_left_prefixes": 4,
+      "boundary_constraint_is_distinct": true
+    }
+  },
+  "period_four_space_time_ether": {
+    "spatial_period": 7,
+    "temporal_period": 4,
+    "rows": [
+      "1000000",
+      "1100001",
+      "0010011",
+      "1111110",
+      "1000000"
+    ],
+    "truth_table_step_mismatches": 0,
+    "alternating_centre_column_index": 1,
+    "alternating_centre_column": "0101",
+    "initial_row_density": {
+      "numerator": 1,
+      "denominator": 7
+    },
+    "uniform_alpha_lower_bound": 7
+  },
+  "periods": [
+    {
+      "period": 1,
+      "boundary_words": 2,
+      "resolved_cycles": 2,
+      "right_censored": 0,
+      "minimum_cycle_density": {
+        "numerator": 1,
+        "denominator": 2
+      },
+      "minimum_example_count": 2,
+      "minimum_examples": [
+        {
+          "boundary_lsb_first": "0",
+          "visited_states": 4,
+          "status": "cycle",
+          "transient_length": 2,
+          "cycle_length": 2,
+          "cycle_ones": 1,
+          "cycle_density": {
+            "numerator": 1,
+            "denominator": 2
+          },
+          "cycle_output_lsb_spatial_order": "10",
+          "charge_slope_numerator": 6,
+          "charge_slope_denominator": 2
+        },
+        {
+          "boundary_lsb_first": "1",
+          "visited_states": 5,
+          "status": "cycle",
+          "transient_length": 3,
+          "cycle_length": 2,
+          "cycle_ones": 1,
+          "cycle_density": {
+            "numerator": 1,
+            "denominator": 2
+          },
+          "cycle_output_lsb_spatial_order": "10",
+          "charge_slope_numerator": 6,
+          "charge_slope_denominator": 2
+        }
+      ],
+      "cycles_below_one_eighth": 0,
+      "maximum_visited_states": 5
+    },
+    {
+      "period": 2,
+      "boundary_words": 4,
+      "resolved_cycles": 4,
+      "right_censored": 0,
+      "minimum_cycle_density": {
+        "numerator": 1,
+        "denominator": 7
+      },
+      "minimum_example_count": 1,
+      "minimum_examples": [
+        {
+          "boundary_lsb_first": "01",
+          "visited_states": 8,
+          "status": "cycle",
+          "transient_length": 1,
+          "cycle_length": 7,
+          "cycle_ones": 1,
+          "cycle_density": {
+            "numerator": 1,
+            "denominator": 7
+          },
+          "cycle_output_lsb_spatial_order": "0000001",
+          "charge_slope_numerator": 1,
+          "charge_slope_denominator": 7
+        }
+      ],
+      "cycles_below_one_eighth": 0,
+      "maximum_visited_states": 8
+    },
+    {
+      "period": 3,
+      "boundary_words": 8,
+      "resolved_cycles": 8,
+      "right_censored": 0,
+      "minimum_cycle_density": {
+        "numerator": 1,
+        "denominator": 2
+      },
+      "minimum_example_count": 2,
+      "minimum_examples": [
+        {
+          "boundary_lsb_first": "000",
+          "visited_states": 4,
+          "status": "cycle",
+          "transient_length": 2,
+          "cycle_length": 2,
+          "cycle_ones": 1,
+          "cycle_density": {
+            "numerator": 1,
+            "denominator": 2
+          },
+          "cycle_output_lsb_spatial_order": "10",
+          "charge_slope_numerator": 6,
+          "charge_slope_denominator": 2
+        },
+        {
+          "boundary_lsb_first": "111",
+          "visited_states": 5,
+          "status": "cycle",
+          "transient_length": 3,
+          "cycle_length": 2,
+          "cycle_ones": 1,
+          "cycle_density": {
+            "numerator": 1,
+            "denominator": 2
+          },
+          "cycle_output_lsb_spatial_order": "10",
+          "charge_slope_numerator": 6,
+          "charge_slope_denominator": 2
+        }
+      ],
+      "cycles_below_one_eighth": 0,
+      "maximum_visited_states": 86
+    },
+    {
+      "period": 4,
+      "boundary_words": 16,
+      "resolved_cycles": 16,
+      "right_censored": 0,
+      "minimum_cycle_density": {
+        "numerator": 1,
+        "denominator": 7
+      },
+      "minimum_example_count": 5,
+      "minimum_examples": [
+        {
+          "boundary_lsb_first": "0100",
+          "visited_states": 17,
+          "status": "cycle",
+          "transient_length": 10,
+          "cycle_length": 7,
+          "cycle_ones": 1,
+          "cycle_density": {
+            "numerator": 1,
+            "denominator": 7
+          },
+          "cycle_output_lsb_spatial_order": "0000010",
+          "charge_slope_numerator": 1,
+          "charge_slope_denominator": 7
+        },
+        {
+          "boundary_lsb_first": "1100",
+          "visited_states": 36,
+          "status": "cycle",
+          "transient_length": 29,
+          "cycle_length": 7,
+          "cycle_ones": 1,
+          "cycle_density": {
+            "numerator": 1,
+            "denominator": 7
+          },
+          "cycle_output_lsb_spatial_order": "0000010",
+          "charge_slope_numerator": 1,
+          "charge_slope_denominator": 7
+        },
+        {
+          "boundary_lsb_first": "0001",
+          "visited_states": 17,
+          "status": "cycle",
+          "transient_length": 10,
+          "cycle_length": 7,
+          "cycle_ones": 1,
+          "cycle_density": {
+            "numerator": 1,
+            "denominator": 7
+          },
+          "cycle_output_lsb_spatial_order": "0000010",
+          "charge_slope_numerator": 1,
+          "charge_slope_denominator": 7
+        }
+      ],
+      "cycles_below_one_eighth": 0,
+      "maximum_visited_states": 36
+    },
+    {
+      "period": 5,
+      "boundary_words": 32,
+      "resolved_cycles": 32,
+      "right_censored": 0,
+      "minimum_cycle_density": {
+        "numerator": 68,
+        "denominator": 155
+      },
+      "minimum_example_count": 25,
+      "minimum_examples": [
+        {
+          "boundary_lsb_first": "10000",
+          "visited_states": 156,
+          "status": "cycle",
+          "transient_length": 1,
+          "cycle_length": 155,
+          "cycle_ones": 68,
+          "cycle_density": {
+            "numerator": 68,
+            "denominator": 155
+          },
+          "cycle_output_lsb_spatial_order": "11010101000000100110110001110010101010011001000101110101110001010100010000010011011011010100101001000110100010111111101000010000010101001001100000110011100",
+          "charge_slope_numerator": 389,
+          "charge_slope_denominator": 155
+        },
+        {
+          "boundary_lsb_first": "01000",
+          "visited_states": 156,
+          "status": "cycle",
+          "transient_length": 1,
+          "cycle_length": 155,
+          "cycle_ones": 68,
+          "cycle_density": {
+            "numerator": 68,
+            "denominator": 155
+          },
+          "cycle_output_lsb_spatial_order": "00000101010010011000001100111001101010100000010011011000111001010101001100100010111010111000101010001000001001101101101010010100100011010001011111110100001",
+          "charge_slope_numerator": 389,
+          "charge_slope_denominator": 155
+        },
+        {
+          "boundary_lsb_first": "11000",
+          "visited_states": 159,
+          "status": "cycle",
+          "transient_length": 4,
+          "cycle_length": 155,
+          "cycle_ones": 68,
+          "cycle_density": {
+            "numerator": 68,
+            "denominator": 155
+          },
+          "cycle_output_lsb_spatial_order": "11000101010001000001001101101101010010100100011010001011111110100001000001010100100110000011001110011010101000000100110110001110010101010011001000101110101",
+          "charge_slope_numerator": 389,
+          "charge_slope_denominator": 155
+        }
+      ],
+      "cycles_below_one_eighth": 0,
+      "maximum_visited_states": 188
+    },
+    {
+      "period": 6,
+      "boundary_words": 64,
+      "resolved_cycles": 64,
+      "right_censored": 0,
+      "minimum_cycle_density": {
+        "numerator": 1,
+        "denominator": 7
+      },
+      "minimum_example_count": 1,
+      "minimum_examples": [
+        {
+          "boundary_lsb_first": "010101",
+          "visited_states": 8,
+          "status": "cycle",
+          "transient_length": 1,
+          "cycle_length": 7,
+          "cycle_ones": 1,
+          "cycle_density": {
+            "numerator": 1,
+            "denominator": 7
+          },
+          "cycle_output_lsb_spatial_order": "0000001",
+          "charge_slope_numerator": 1,
+          "charge_slope_denominator": 7
+        }
+      ],
+      "cycles_below_one_eighth": 0,
+      "maximum_visited_states": 230
+    }
+  ],
+  "total_right_censored": 0,
+  "global_minimum_cycle_density": {
+    "numerator": 1,
+    "denominator": 7
+  },
+  "cycles_below_one_eighth": [],
+  "falsifies_uniform_charge_bound": false,
+  "periodic_nonzero_density_lemma": "On a spatial cycle, zero emitted phase-0 E bits force phase-0 O bits to zero by the E recurrence. The O recurrence then forces phase-1 E to zero, and induction around the p temporal phases forces E=O=0. The all-zero four-word state has only itself as a predecessor, so it is unreachable from the prescribed initial state, whose O word is all ones. Thus every finite-period boundary has positive eventual density; this gives no lower bound uniform in p.",
+  "claim_limit": "Exact only for periodic free even-right boundary words in the declared period range and for resolved orbits. A finite negative charge prefix does not refute a bound with an unspecified additive constant; only an eventual cycle density below 1/8 does so."
+}

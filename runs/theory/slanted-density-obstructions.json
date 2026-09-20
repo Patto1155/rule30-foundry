@@ -1,0 +1,4505 @@
+{
+  "experiment": "slanted-local-density-flux",
+  "claim_limit": "Refutes specified sufficient certificate languages, not the cone-charge conjecture.",
+  "candidates": [
+    {
+      "mode": "newest",
+      "time_parity": false,
+      "bottom_correction": false,
+      "terminal_flux": false,
+      "variables": 26,
+      "inequalities": 94,
+      "optimizer_status": 2,
+      "outcome": "certificate_language_refuted",
+      "farkas_multipliers": [
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "verification": {
+        "verified": true,
+        "nonzero_rows": 6,
+        "identity": "0 >= 2",
+        "contradiction": 2
+      },
+      "contributing_constraints": [
+        {
+          "label": [
+            "nonpositive",
+            [
+              "F",
+              0,
+              0,
+              1,
+              0
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "nonpositive",
+            [
+              "F",
+              1,
+              0,
+              1,
+              0
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "bottom",
+            0,
+            [
+              0,
+              1,
+              0
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "top",
+            0,
+            1
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "bottom",
+            1,
+            [
+              1,
+              1,
+              0
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "top",
+            1,
+            1
+          ],
+          "multiplier": 1
+        }
+      ]
+    },
+    {
+      "mode": "two",
+      "time_parity": false,
+      "bottom_correction": false,
+      "terminal_flux": false,
+      "variables": 26,
+      "inequalities": 78,
+      "optimizer_status": 2,
+      "outcome": "certificate_language_refuted",
+      "farkas_multipliers": [
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "verification": {
+        "verified": true,
+        "nonzero_rows": 6,
+        "identity": "0 >= 2",
+        "contradiction": 2
+      },
+      "contributing_constraints": [
+        {
+          "label": [
+            "nonpositive",
+            [
+              "F",
+              0,
+              0,
+              1,
+              0
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "nonpositive",
+            [
+              "F",
+              1,
+              0,
+              1,
+              0
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "bottom",
+            0,
+            [
+              0,
+              1,
+              0
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "top",
+            0,
+            1
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "bottom",
+            1,
+            [
+              1,
+              1,
+              0
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "top",
+            1,
+            1
+          ],
+          "multiplier": 1
+        }
+      ]
+    },
+    {
+      "mode": "three",
+      "time_parity": false,
+      "bottom_correction": false,
+      "terminal_flux": false,
+      "variables": 26,
+      "inequalities": 70,
+      "optimizer_status": 2,
+      "outcome": "certificate_language_refuted",
+      "farkas_multipliers": [
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "verification": {
+        "verified": true,
+        "nonzero_rows": 6,
+        "identity": "0 >= 2",
+        "contradiction": 2
+      },
+      "contributing_constraints": [
+        {
+          "label": [
+            "nonpositive",
+            [
+              "F",
+              0,
+              0,
+              1,
+              0
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "nonpositive",
+            [
+              "F",
+              1,
+              0,
+              1,
+              0
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "bottom",
+            0,
+            [
+              0,
+              1,
+              0
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "top",
+            0,
+            1
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "bottom",
+            1,
+            [
+              1,
+              1,
+              0
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "top",
+            1,
+            1
+          ],
+          "multiplier": 1
+        }
+      ]
+    },
+    {
+      "mode": "newest",
+      "time_parity": true,
+      "bottom_correction": false,
+      "terminal_flux": false,
+      "variables": 50,
+      "inequalities": 166,
+      "optimizer_status": 2,
+      "outcome": "certificate_language_refuted",
+      "farkas_multipliers": [
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        0,
+        0
+      ],
+      "verification": {
+        "verified": true,
+        "nonzero_rows": 16,
+        "identity": "0 >= 4",
+        "contradiction": 4
+      },
+      "contributing_constraints": [
+        {
+          "label": [
+            "nonpositive",
+            [
+              "F",
+              0,
+              0,
+              1,
+              0
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "nonpositive",
+            [
+              "F",
+              0,
+              1,
+              1,
+              0
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "nonpositive",
+            [
+              "F",
+              1,
+              0,
+              1,
+              0
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "nonpositive",
+            [
+              "F",
+              1,
+              1,
+              1,
+              0
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "interior",
+            0,
+            0,
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              1,
+              1,
+              0
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "interior",
+            0,
+            1,
+            [
+              1,
+              1,
+              0
+            ],
+            [
+              0,
+              0,
+              1
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "bottom",
+            0,
+            [
+              0,
+              0,
+              0
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "bottom",
+            0,
+            [
+              0,
+              1,
+              0
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "top",
+            0,
+            0
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "top",
+            0,
+            1
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "interior",
+            1,
+            0,
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              1,
+              1,
+              0
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "interior",
+            1,
+            0,
+            [
+              0,
+              1,
+              0
+            ],
+            [
+              1,
+              1,
+              1
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "bottom",
+            1,
+            [
+              0,
+              0,
+              0
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "bottom",
+            1,
+            [
+              0,
+              1,
+              0
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "top",
+            1,
+            0
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "top",
+            1,
+            1
+          ],
+          "multiplier": 1
+        }
+      ]
+    },
+    {
+      "mode": "two",
+      "time_parity": true,
+      "bottom_correction": false,
+      "terminal_flux": false,
+      "variables": 50,
+      "inequalities": 134,
+      "optimizer_status": 2,
+      "outcome": "certificate_language_refuted",
+      "farkas_multipliers": [
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        1,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        0,
+        0
+      ],
+      "verification": {
+        "verified": true,
+        "nonzero_rows": 16,
+        "identity": "0 >= 4",
+        "contradiction": 4
+      },
+      "contributing_constraints": [
+        {
+          "label": [
+            "nonpositive",
+            [
+              "F",
+              0,
+              0,
+              1,
+              0
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "nonpositive",
+            [
+              "F",
+              0,
+              1,
+              1,
+              0
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "nonpositive",
+            [
+              "F",
+              1,
+              0,
+              1,
+              0
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "nonpositive",
+            [
+              "F",
+              1,
+              1,
+              1,
+              0
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "interior",
+            0,
+            0,
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              1,
+              1,
+              0
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "interior",
+            0,
+            1,
+            [
+              1,
+              1,
+              0
+            ],
+            [
+              0,
+              0,
+              1
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "bottom",
+            0,
+            [
+              0,
+              0,
+              0
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "bottom",
+            0,
+            [
+              0,
+              1,
+              0
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "top",
+            0,
+            0
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "top",
+            0,
+            1
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "interior",
+            1,
+            0,
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              1,
+              1,
+              0
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "interior",
+            1,
+            0,
+            [
+              0,
+              1,
+              0
+            ],
+            [
+              1,
+              1,
+              1
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "bottom",
+            1,
+            [
+              0,
+              0,
+              0
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "bottom",
+            1,
+            [
+              0,
+              1,
+              0
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "top",
+            1,
+            0
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "top",
+            1,
+            1
+          ],
+          "multiplier": 1
+        }
+      ]
+    },
+    {
+      "mode": "three",
+      "time_parity": true,
+      "bottom_correction": false,
+      "terminal_flux": false,
+      "variables": 50,
+      "inequalities": 118,
+      "optimizer_status": 2,
+      "outcome": "certificate_language_refuted",
+      "farkas_multipliers": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        1,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        1,
+        1,
+        0,
+        0
+      ],
+      "verification": {
+        "verified": true,
+        "nonzero_rows": 16,
+        "identity": "0 >= 4",
+        "contradiction": 4
+      },
+      "contributing_constraints": [
+        {
+          "label": [
+            "nonpositive",
+            [
+              "F",
+              0,
+              0,
+              0,
+              1
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "nonpositive",
+            [
+              "F",
+              0,
+              1,
+              1,
+              0
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "nonpositive",
+            [
+              "F",
+              1,
+              0,
+              0,
+              0
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "nonpositive",
+            [
+              "F",
+              1,
+              1,
+              1,
+              0
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "interior",
+            0,
+            0,
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              1,
+              1,
+              0
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "interior",
+            0,
+            1,
+            [
+              1,
+              1,
+              0
+            ],
+            [
+              0,
+              0,
+              1
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "bottom",
+            0,
+            [
+              0,
+              0,
+              0
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "bottom",
+            0,
+            [
+              0,
+              1,
+              0
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "top",
+            0,
+            0
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "top",
+            0,
+            1
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "interior",
+            1,
+            0,
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              1,
+              1,
+              0
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "interior",
+            1,
+            0,
+            [
+              1,
+              0,
+              0
+            ],
+            [
+              1,
+              1,
+              1
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "bottom",
+            1,
+            [
+              0,
+              0,
+              0
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "bottom",
+            1,
+            [
+              1,
+              0,
+              0
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "top",
+            1,
+            0
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "top",
+            1,
+            1
+          ],
+          "multiplier": 1
+        }
+      ]
+    },
+    {
+      "mode": "newest",
+      "time_parity": false,
+      "bottom_correction": true,
+      "terminal_flux": false,
+      "variables": 34,
+      "inequalities": 102,
+      "optimizer_status": 2,
+      "outcome": "certificate_language_refuted",
+      "farkas_multipliers": [
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "verification": {
+        "verified": true,
+        "nonzero_rows": 8,
+        "identity": "0 >= 2",
+        "contradiction": 2
+      },
+      "contributing_constraints": [
+        {
+          "label": [
+            "nonpositive",
+            [
+              "F",
+              0,
+              0,
+              1,
+              0
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "nonpositive",
+            [
+              "F",
+              1,
+              0,
+              1,
+              0
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "interior",
+            0,
+            0,
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              0
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "bottom",
+            0,
+            [
+              0,
+              0,
+              0
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "top",
+            0,
+            1
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "interior",
+            1,
+            0,
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              1,
+              1,
+              0
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "bottom",
+            1,
+            [
+              0,
+              0,
+              0
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "top",
+            1,
+            1
+          ],
+          "multiplier": 1
+        }
+      ]
+    },
+    {
+      "mode": "two",
+      "time_parity": false,
+      "bottom_correction": true,
+      "terminal_flux": false,
+      "variables": 34,
+      "inequalities": 86,
+      "optimizer_status": 2,
+      "outcome": "certificate_language_refuted",
+      "farkas_multipliers": [
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "verification": {
+        "verified": true,
+        "nonzero_rows": 8,
+        "identity": "0 >= 2",
+        "contradiction": 2
+      },
+      "contributing_constraints": [
+        {
+          "label": [
+            "nonpositive",
+            [
+              "F",
+              0,
+              0,
+              1,
+              0
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "nonpositive",
+            [
+              "F",
+              1,
+              0,
+              1,
+              0
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "interior",
+            0,
+            0,
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              0
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "bottom",
+            0,
+            [
+              0,
+              0,
+              0
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "top",
+            0,
+            1
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "interior",
+            1,
+            0,
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              1,
+              1,
+              0
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "bottom",
+            1,
+            [
+              0,
+              0,
+              0
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "top",
+            1,
+            1
+          ],
+          "multiplier": 1
+        }
+      ]
+    },
+    {
+      "mode": "three",
+      "time_parity": false,
+      "bottom_correction": true,
+      "terminal_flux": false,
+      "variables": 34,
+      "inequalities": 78,
+      "optimizer_status": 2,
+      "outcome": "certificate_language_refuted",
+      "farkas_multipliers": [
+        0,
+        1,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0
+      ],
+      "verification": {
+        "verified": true,
+        "nonzero_rows": 10,
+        "identity": "0 >= 2",
+        "contradiction": 2
+      },
+      "contributing_constraints": [
+        {
+          "label": [
+            "nonpositive",
+            [
+              "F",
+              0,
+              0,
+              0,
+              1
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "nonpositive",
+            [
+              "F",
+              1,
+              0,
+              0,
+              0
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "interior",
+            0,
+            0,
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              1,
+              1,
+              0
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "interior",
+            0,
+            0,
+            [
+              1,
+              1,
+              0
+            ],
+            [
+              0,
+              0,
+              1
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "bottom",
+            0,
+            [
+              0,
+              0,
+              0
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "top",
+            0,
+            0
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "interior",
+            1,
+            0,
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              1,
+              0,
+              0
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "interior",
+            1,
+            0,
+            [
+              1,
+              0,
+              0
+            ],
+            [
+              1,
+              1,
+              1
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "bottom",
+            1,
+            [
+              0,
+              0,
+              0
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "top",
+            1,
+            0
+          ],
+          "multiplier": 1
+        }
+      ]
+    },
+    {
+      "mode": "newest",
+      "time_parity": true,
+      "bottom_correction": true,
+      "terminal_flux": false,
+      "variables": 58,
+      "inequalities": 174,
+      "optimizer_status": 2,
+      "outcome": "certificate_language_refuted",
+      "farkas_multipliers": [
+        0,
+        2,
+        0,
+        0,
+        2,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        3,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        2,
+        1,
+        1,
+        0,
+        0,
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        3,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        2,
+        0,
+        0
+      ],
+      "verification": {
+        "verified": true,
+        "nonzero_rows": 18,
+        "identity": "0 >= 6",
+        "contradiction": 6
+      },
+      "contributing_constraints": [
+        {
+          "label": [
+            "nonpositive",
+            [
+              "F",
+              0,
+              0,
+              0,
+              1
+            ]
+          ],
+          "multiplier": 2
+        },
+        {
+          "label": [
+            "nonpositive",
+            [
+              "F",
+              0,
+              1,
+              0,
+              0
+            ]
+          ],
+          "multiplier": 2
+        },
+        {
+          "label": [
+            "nonpositive",
+            [
+              "F",
+              1,
+              0,
+              0,
+              1
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "nonpositive",
+            [
+              "F",
+              1,
+              1,
+              1,
+              1
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "interior",
+            0,
+            0,
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "interior",
+            0,
+            0,
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              1,
+              0,
+              0
+            ]
+          ],
+          "multiplier": 2
+        },
+        {
+          "label": [
+            "interior",
+            0,
+            1,
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              0
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "interior",
+            0,
+            1,
+            [
+              1,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              1
+            ]
+          ],
+          "multiplier": 2
+        },
+        {
+          "label": [
+            "bottom",
+            0,
+            [
+              0,
+              0,
+              0
+            ]
+          ],
+          "multiplier": 3
+        },
+        {
+          "label": [
+            "top",
+            0,
+            0
+          ],
+          "multiplier": 2
+        },
+        {
+          "label": [
+            "top",
+            0,
+            1
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "interior",
+            1,
+            0,
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "interior",
+            1,
+            0,
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              1,
+              1,
+              0
+            ]
+          ],
+          "multiplier": 2
+        },
+        {
+          "label": [
+            "interior",
+            1,
+            0,
+            [
+              1,
+              0,
+              0
+            ],
+            [
+              1,
+              1,
+              1
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "interior",
+            1,
+            1,
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              1,
+              0,
+              0
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "bottom",
+            1,
+            [
+              0,
+              0,
+              0
+            ]
+          ],
+          "multiplier": 3
+        },
+        {
+          "label": [
+            "top",
+            1,
+            0
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "top",
+            1,
+            1
+          ],
+          "multiplier": 2
+        }
+      ]
+    },
+    {
+      "mode": "two",
+      "time_parity": true,
+      "bottom_correction": true,
+      "terminal_flux": false,
+      "variables": 58,
+      "inequalities": 142,
+      "optimizer_status": 2,
+      "outcome": "certificate_language_refuted",
+      "farkas_multipliers": [
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        1,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        0,
+        0
+      ],
+      "verification": {
+        "verified": true,
+        "nonzero_rows": 18,
+        "identity": "0 >= 4",
+        "contradiction": 4
+      },
+      "contributing_constraints": [
+        {
+          "label": [
+            "nonpositive",
+            [
+              "F",
+              0,
+              0,
+              1,
+              0
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "nonpositive",
+            [
+              "F",
+              0,
+              1,
+              1,
+              0
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "nonpositive",
+            [
+              "F",
+              1,
+              0,
+              1,
+              0
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "nonpositive",
+            [
+              "F",
+              1,
+              1,
+              1,
+              0
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "interior",
+            0,
+            0,
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "interior",
+            0,
+            0,
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              1,
+              1,
+              0
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "interior",
+            0,
+            1,
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              0
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "interior",
+            0,
+            1,
+            [
+              1,
+              1,
+              0
+            ],
+            [
+              0,
+              0,
+              1
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "bottom",
+            0,
+            [
+              0,
+              0,
+              0
+            ]
+          ],
+          "multiplier": 2
+        },
+        {
+          "label": [
+            "top",
+            0,
+            0
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "top",
+            0,
+            1
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "interior",
+            1,
+            0,
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "interior",
+            1,
+            0,
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              1,
+              1,
+              0
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "interior",
+            1,
+            0,
+            [
+              0,
+              1,
+              0
+            ],
+            [
+              1,
+              1,
+              1
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "interior",
+            1,
+            1,
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              0
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "bottom",
+            1,
+            [
+              0,
+              0,
+              0
+            ]
+          ],
+          "multiplier": 2
+        },
+        {
+          "label": [
+            "top",
+            1,
+            0
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "top",
+            1,
+            1
+          ],
+          "multiplier": 1
+        }
+      ]
+    },
+    {
+      "mode": "three",
+      "time_parity": true,
+      "bottom_correction": true,
+      "terminal_flux": false,
+      "variables": 58,
+      "inequalities": 126,
+      "optimizer_status": 2,
+      "outcome": "certificate_language_refuted",
+      "farkas_multipliers": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        2,
+        0,
+        0,
+        0,
+        3,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        2,
+        1,
+        1,
+        0,
+        2,
+        0,
+        0,
+        1,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        1,
+        0,
+        0,
+        0,
+        3,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        2,
+        1,
+        0,
+        0
+      ],
+      "verification": {
+        "verified": true,
+        "nonzero_rows": 25,
+        "identity": "0 >= 6",
+        "contradiction": 6
+      },
+      "contributing_constraints": [
+        {
+          "label": [
+            "nonpositive",
+            [
+              "F",
+              0,
+              0,
+              0,
+              1
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "nonpositive",
+            [
+              "F",
+              0,
+              1,
+              1,
+              0
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "nonpositive",
+            [
+              "F",
+              1,
+              0,
+              0,
+              0
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "nonpositive",
+            [
+              "F",
+              1,
+              0,
+              0,
+              1
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "nonpositive",
+            [
+              "F",
+              1,
+              1,
+              1,
+              0
+            ]
+          ],
+          "multiplier": 2
+        },
+        {
+          "label": [
+            "interior",
+            0,
+            0,
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "interior",
+            0,
+            0,
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              1,
+              1,
+              0
+            ]
+          ],
+          "multiplier": 2
+        },
+        {
+          "label": [
+            "interior",
+            0,
+            0,
+            [
+              1,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              1
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "interior",
+            0,
+            1,
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              1,
+              0,
+              0
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "interior",
+            0,
+            1,
+            [
+              0,
+              1,
+              1
+            ],
+            [
+              0,
+              1,
+              0
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "interior",
+            0,
+            1,
+            [
+              1,
+              1,
+              0
+            ],
+            [
+              0,
+              0,
+              1
+            ]
+          ],
+          "multiplier": 2
+        },
+        {
+          "label": [
+            "bottom",
+            0,
+            [
+              0,
+              0,
+              0
+            ]
+          ],
+          "multiplier": 3
+        },
+        {
+          "label": [
+            "top",
+            0,
+            0
+          ],
+          "multiplier": 2
+        },
+        {
+          "label": [
+            "top",
+            0,
+            1
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "interior",
+            1,
+            0,
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "interior",
+            1,
+            0,
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              1,
+              1,
+              0
+            ]
+          ],
+          "multiplier": 2
+        },
+        {
+          "label": [
+            "interior",
+            1,
+            0,
+            [
+              0,
+              0,
+              1
+            ],
+            [
+              1,
+              1,
+              1
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "interior",
+            1,
+            0,
+            [
+              0,
+              1,
+              0
+            ],
+            [
+              1,
+              0,
+              1
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "interior",
+            1,
+            0,
+            [
+              1,
+              0,
+              0
+            ],
+            [
+              1,
+              1,
+              1
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "interior",
+            1,
+            1,
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              1,
+              0,
+              0
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "interior",
+            1,
+            1,
+            [
+              1,
+              0,
+              1
+            ],
+            [
+              0,
+              1,
+              0
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "interior",
+            1,
+            1,
+            [
+              1,
+              1,
+              0
+            ],
+            [
+              0,
+              0,
+              1
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "bottom",
+            1,
+            [
+              0,
+              0,
+              0
+            ]
+          ],
+          "multiplier": 3
+        },
+        {
+          "label": [
+            "top",
+            1,
+            0
+          ],
+          "multiplier": 2
+        },
+        {
+          "label": [
+            "top",
+            1,
+            1
+          ],
+          "multiplier": 1
+        }
+      ]
+    },
+    {
+      "mode": "three",
+      "time_parity": false,
+      "bottom_correction": true,
+      "terminal_flux": true,
+      "variables": 42,
+      "inequalities": 98,
+      "optimizer_status": 2,
+      "outcome": "certificate_language_refuted",
+      "farkas_multipliers": [
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0
+      ],
+      "verification": {
+        "verified": true,
+        "nonzero_rows": 10,
+        "identity": "0 >= 2",
+        "contradiction": 2
+      },
+      "contributing_constraints": [
+        {
+          "label": [
+            "terminal_flow",
+            0,
+            0,
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "terminal_flow",
+            1,
+            0,
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "interior",
+            0,
+            0,
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              1,
+              1,
+              0
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "interior",
+            0,
+            0,
+            [
+              1,
+              1,
+              0
+            ],
+            [
+              0,
+              0,
+              1
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "bottom",
+            0,
+            [
+              0,
+              0,
+              0
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "top",
+            0,
+            0
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "interior",
+            1,
+            0,
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              1,
+              0,
+              0
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "interior",
+            1,
+            0,
+            [
+              1,
+              0,
+              0
+            ],
+            [
+              1,
+              1,
+              1
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "bottom",
+            1,
+            [
+              0,
+              0,
+              0
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "top",
+            1,
+            0
+          ],
+          "multiplier": 1
+        }
+      ]
+    },
+    {
+      "mode": "three",
+      "time_parity": true,
+      "bottom_correction": true,
+      "terminal_flux": true,
+      "variables": 74,
+      "inequalities": 158,
+      "optimizer_status": 2,
+      "outcome": "certificate_language_refuted",
+      "farkas_multipliers": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        2,
+        0,
+        0,
+        0,
+        3,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        2,
+        1,
+        1,
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        3,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        2,
+        0,
+        0
+      ],
+      "verification": {
+        "verified": true,
+        "nonzero_rows": 27,
+        "identity": "0 >= 6",
+        "contradiction": 6
+      },
+      "contributing_constraints": [
+        {
+          "label": [
+            "terminal_flow",
+            0,
+            0,
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              0
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "terminal_flow",
+            0,
+            1,
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "terminal_flow",
+            1,
+            0,
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "terminal_flow",
+            1,
+            0,
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              0
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "terminal_flow",
+            1,
+            1,
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "terminal_flow",
+            1,
+            1,
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "interior",
+            0,
+            0,
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "interior",
+            0,
+            0,
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              1,
+              1,
+              0
+            ]
+          ],
+          "multiplier": 2
+        },
+        {
+          "label": [
+            "interior",
+            0,
+            0,
+            [
+              1,
+              1,
+              0
+            ],
+            [
+              1,
+              0,
+              1
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "interior",
+            0,
+            1,
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              1,
+              1,
+              0
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "interior",
+            0,
+            1,
+            [
+              1,
+              0,
+              1
+            ],
+            [
+              0,
+              1,
+              0
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "interior",
+            0,
+            1,
+            [
+              1,
+              1,
+              0
+            ],
+            [
+              0,
+              0,
+              1
+            ]
+          ],
+          "multiplier": 2
+        },
+        {
+          "label": [
+            "bottom",
+            0,
+            [
+              0,
+              0,
+              0
+            ]
+          ],
+          "multiplier": 3
+        },
+        {
+          "label": [
+            "top",
+            0,
+            0
+          ],
+          "multiplier": 2
+        },
+        {
+          "label": [
+            "top",
+            0,
+            1
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "interior",
+            1,
+            0,
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "interior",
+            1,
+            0,
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              1,
+              0,
+              0
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "interior",
+            1,
+            0,
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              1,
+              1,
+              0
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "interior",
+            1,
+            0,
+            [
+              0,
+              1,
+              1
+            ],
+            [
+              1,
+              1,
+              0
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "interior",
+            1,
+            0,
+            [
+              1,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              1
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "interior",
+            1,
+            0,
+            [
+              1,
+              0,
+              0
+            ],
+            [
+              1,
+              1,
+              1
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "interior",
+            1,
+            1,
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              1,
+              0,
+              0
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "interior",
+            1,
+            1,
+            [
+              0,
+              1,
+              1
+            ],
+            [
+              1,
+              0,
+              0
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "interior",
+            1,
+            1,
+            [
+              1,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              1
+            ]
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "bottom",
+            1,
+            [
+              0,
+              0,
+              0
+            ]
+          ],
+          "multiplier": 3
+        },
+        {
+          "label": [
+            "top",
+            1,
+            0
+          ],
+          "multiplier": 1
+        },
+        {
+          "label": [
+            "top",
+            1,
+            1
+          ],
+          "multiplier": 2
+        }
+      ]
+    }
+  ]
+}

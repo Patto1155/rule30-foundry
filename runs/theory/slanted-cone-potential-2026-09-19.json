@@ -1,0 +1,4072 @@
+{
+  "experiment": "slanted-cone-potential-falsifier",
+  "macrosteps": 12,
+  "block_space": 8,
+  "block_macrotime": 4,
+  "genuine_witnesses": 12288,
+  "candidate_order": "deterministic feature-size baseline; no JEV ranking used",
+  "candidates": [
+    {
+      "features": {
+        "bottom": 0,
+        "top": 0,
+        "count": "none"
+      },
+      "rule": 30,
+      "block_space": 8,
+      "feature_domain": "finite",
+      "states": 1,
+      "transitions": 1,
+      "cycle": [
+        {
+          "start_depth": 8,
+          "end_depth": 16,
+          "initial_left": 129,
+          "charge": -8,
+          "rule": 30,
+          "source": 0,
+          "target": 0
+        }
+      ],
+      "verification": {
+        "verified": true,
+        "cycle_edges": 1,
+        "cycle_charge": -8,
+        "full_cut_seams": [
+          {
+            "edge": 0,
+            "target_diagonal_lengths": [
+              16,
+              17
+            ],
+            "next_source_diagonal_lengths": [
+              8,
+              9
+            ],
+            "full_cuts_equal": false,
+            "differing_overlap_indices": [
+              [
+                3,
+                4,
+                7
+              ],
+              [
+                0,
+                1,
+                2,
+                3,
+                4
+              ]
+            ],
+            "target_full_diagonals": [
+              55088,
+              43728
+            ],
+            "next_source_full_diagonals": [
+              168,
+              207
+            ]
+          }
+        ],
+        "conclusion": "No potential of the declared finite features satisfies all genuine sampled edges. This check alone does not decide whether quotient edges concatenate into an infinite cone."
+      }
+    },
+    {
+      "features": {
+        "bottom": 0,
+        "top": 0,
+        "count": "parity"
+      },
+      "rule": 30,
+      "block_space": 8,
+      "feature_domain": "finite",
+      "states": 4,
+      "transitions": 16,
+      "cycle": [
+        {
+          "start_depth": 16,
+          "end_depth": 24,
+          "initial_left": 3349,
+          "charge": -8,
+          "rule": 30,
+          "source": 2,
+          "target": 2
+        }
+      ],
+      "verification": {
+        "verified": true,
+        "cycle_edges": 1,
+        "cycle_charge": -8,
+        "full_cut_seams": [
+          {
+            "edge": 0,
+            "target_diagonal_lengths": [
+              24,
+              25
+            ],
+            "next_source_diagonal_lengths": [
+              16,
+              17
+            ],
+            "full_cuts_equal": false,
+            "differing_overlap_indices": [
+              [
+                2,
+                4,
+                6,
+                7,
+                12,
+                15
+              ],
+              [
+                2,
+                4,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12
+              ]
+            ],
+            "target_full_diagonals": [
+              11093312,
+              13547840
+            ],
+            "next_source_full_diagonals": [
+              54676,
+              42644
+            ]
+          }
+        ],
+        "conclusion": "No potential of the declared finite features satisfies all genuine sampled edges. This check alone does not decide whether quotient edges concatenate into an infinite cone."
+      }
+    },
+    {
+      "features": {
+        "bottom": 0,
+        "top": 1,
+        "count": "none"
+      },
+      "rule": 30,
+      "block_space": 8,
+      "feature_domain": "finite",
+      "states": 2,
+      "transitions": 2,
+      "cycle": [
+        {
+          "start_depth": 8,
+          "end_depth": 16,
+          "initial_left": 129,
+          "charge": -8,
+          "rule": 30,
+          "source": 1,
+          "target": 1
+        }
+      ],
+      "verification": {
+        "verified": true,
+        "cycle_edges": 1,
+        "cycle_charge": -8,
+        "full_cut_seams": [
+          {
+            "edge": 0,
+            "target_diagonal_lengths": [
+              16,
+              17
+            ],
+            "next_source_diagonal_lengths": [
+              8,
+              9
+            ],
+            "full_cuts_equal": false,
+            "differing_overlap_indices": [
+              [
+                3,
+                4,
+                7
+              ],
+              [
+                0,
+                1,
+                2,
+                3,
+                4
+              ]
+            ],
+            "target_full_diagonals": [
+              55088,
+              43728
+            ],
+            "next_source_full_diagonals": [
+              168,
+              207
+            ]
+          }
+        ],
+        "conclusion": "No potential of the declared finite features satisfies all genuine sampled edges. This check alone does not decide whether quotient edges concatenate into an infinite cone."
+      }
+    },
+    {
+      "features": {
+        "bottom": 1,
+        "top": 0,
+        "count": "none"
+      },
+      "rule": 30,
+      "block_space": 8,
+      "feature_domain": "finite",
+      "states": 5,
+      "transitions": 20,
+      "cycle": [
+        {
+          "start_depth": 16,
+          "end_depth": 24,
+          "initial_left": 14117,
+          "charge": -8,
+          "rule": 30,
+          "source": 2,
+          "target": 2
+        }
+      ],
+      "verification": {
+        "verified": true,
+        "cycle_edges": 1,
+        "cycle_charge": -8,
+        "full_cut_seams": [
+          {
+            "edge": 0,
+            "target_diagonal_lengths": [
+              24,
+              25
+            ],
+            "next_source_diagonal_lengths": [
+              16,
+              17
+            ],
+            "full_cuts_equal": false,
+            "differing_overlap_indices": [
+              [
+                1,
+                2,
+                5,
+                8,
+                9
+              ],
+              [
+                1,
+                3,
+                4,
+                8,
+                10
+              ]
+            ],
+            "target_full_diagonals": [
+              13806176,
+              10668960
+            ],
+            "next_source_full_diagonals": [
+              43334,
+              52922
+            ]
+          }
+        ],
+        "conclusion": "No potential of the declared finite features satisfies all genuine sampled edges. This check alone does not decide whether quotient edges concatenate into an infinite cone."
+      }
+    },
+    {
+      "features": {
+        "bottom": 0,
+        "top": 1,
+        "count": "parity"
+      },
+      "rule": 30,
+      "block_space": 8,
+      "feature_domain": "finite",
+      "states": 5,
+      "transitions": 20,
+      "cycle": [
+        {
+          "start_depth": 16,
+          "end_depth": 24,
+          "initial_left": 3349,
+          "charge": -8,
+          "rule": 30,
+          "source": 3,
+          "target": 3
+        }
+      ],
+      "verification": {
+        "verified": true,
+        "cycle_edges": 1,
+        "cycle_charge": -8,
+        "full_cut_seams": [
+          {
+            "edge": 0,
+            "target_diagonal_lengths": [
+              24,
+              25
+            ],
+            "next_source_diagonal_lengths": [
+              16,
+              17
+            ],
+            "full_cuts_equal": false,
+            "differing_overlap_indices": [
+              [
+                2,
+                4,
+                6,
+                7,
+                12,
+                15
+              ],
+              [
+                2,
+                4,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12
+              ]
+            ],
+            "target_full_diagonals": [
+              11093312,
+              13547840
+            ],
+            "next_source_full_diagonals": [
+              54676,
+              42644
+            ]
+          }
+        ],
+        "conclusion": "No potential of the declared finite features satisfies all genuine sampled edges. This check alone does not decide whether quotient edges concatenate into an infinite cone."
+      }
+    },
+    {
+      "features": {
+        "bottom": 0,
+        "top": 2,
+        "count": "none"
+      },
+      "rule": 30,
+      "block_space": 8,
+      "feature_domain": "finite",
+      "states": 3,
+      "transitions": 6,
+      "cycle": [
+        {
+          "start_depth": 16,
+          "end_depth": 24,
+          "initial_left": 37669,
+          "charge": -8,
+          "rule": 30,
+          "source": 1,
+          "target": 1
+        }
+      ],
+      "verification": {
+        "verified": true,
+        "cycle_edges": 1,
+        "cycle_charge": -8,
+        "full_cut_seams": [
+          {
+            "edge": 0,
+            "target_diagonal_lengths": [
+              24,
+              25
+            ],
+            "next_source_diagonal_lengths": [
+              16,
+              17
+            ],
+            "full_cuts_equal": false,
+            "differing_overlap_indices": [
+              [
+                1,
+                4,
+                7,
+                8,
+                9,
+                10,
+                15
+              ],
+              [
+                0,
+                1,
+                4,
+                5,
+                6,
+                11
+              ]
+            ],
+            "target_full_diagonals": [
+              13980976,
+              11184848
+            ],
+            "next_source_full_diagonals": [
+              53922,
+              41635
+            ]
+          }
+        ],
+        "conclusion": "No potential of the declared finite features satisfies all genuine sampled edges. This check alone does not decide whether quotient edges concatenate into an infinite cone."
+      }
+    },
+    {
+      "features": {
+        "bottom": 1,
+        "top": 0,
+        "count": "parity"
+      },
+      "rule": 30,
+      "block_space": 8,
+      "feature_domain": "finite",
+      "states": 17,
+      "transitions": 265,
+      "cycle": [
+        {
+          "start_depth": 16,
+          "end_depth": 24,
+          "initial_left": 3349,
+          "charge": -8,
+          "rule": 30,
+          "source": 4,
+          "target": 4
+        }
+      ],
+      "verification": {
+        "verified": true,
+        "cycle_edges": 1,
+        "cycle_charge": -8,
+        "full_cut_seams": [
+          {
+            "edge": 0,
+            "target_diagonal_lengths": [
+              24,
+              25
+            ],
+            "next_source_diagonal_lengths": [
+              16,
+              17
+            ],
+            "full_cuts_equal": false,
+            "differing_overlap_indices": [
+              [
+                2,
+                4,
+                6,
+                7,
+                12,
+                15
+              ],
+              [
+                2,
+                4,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12
+              ]
+            ],
+            "target_full_diagonals": [
+              11093312,
+              13547840
+            ],
+            "next_source_full_diagonals": [
+              54676,
+              42644
+            ]
+          }
+        ],
+        "conclusion": "No potential of the declared finite features satisfies all genuine sampled edges. This check alone does not decide whether quotient edges concatenate into an infinite cone."
+      }
+    },
+    {
+      "features": {
+        "bottom": 1,
+        "top": 1,
+        "count": "none"
+      },
+      "rule": 30,
+      "block_space": 8,
+      "feature_domain": "finite",
+      "states": 5,
+      "transitions": 20,
+      "cycle": [
+        {
+          "start_depth": 16,
+          "end_depth": 24,
+          "initial_left": 14117,
+          "charge": -8,
+          "rule": 30,
+          "source": 2,
+          "target": 2
+        }
+      ],
+      "verification": {
+        "verified": true,
+        "cycle_edges": 1,
+        "cycle_charge": -8,
+        "full_cut_seams": [
+          {
+            "edge": 0,
+            "target_diagonal_lengths": [
+              24,
+              25
+            ],
+            "next_source_diagonal_lengths": [
+              16,
+              17
+            ],
+            "full_cuts_equal": false,
+            "differing_overlap_indices": [
+              [
+                1,
+                2,
+                5,
+                8,
+                9
+              ],
+              [
+                1,
+                3,
+                4,
+                8,
+                10
+              ]
+            ],
+            "target_full_diagonals": [
+              13806176,
+              10668960
+            ],
+            "next_source_full_diagonals": [
+              43334,
+              52922
+            ]
+          }
+        ],
+        "conclusion": "No potential of the declared finite features satisfies all genuine sampled edges. This check alone does not decide whether quotient edges concatenate into an infinite cone."
+      }
+    },
+    {
+      "features": {
+        "bottom": 2,
+        "top": 0,
+        "count": "none"
+      },
+      "rule": 30,
+      "block_space": 8,
+      "feature_domain": "finite",
+      "states": 11,
+      "transitions": 107,
+      "cycle": [
+        {
+          "start_depth": 16,
+          "end_depth": 24,
+          "initial_left": 3349,
+          "charge": -8,
+          "rule": 30,
+          "source": 10,
+          "target": 10
+        }
+      ],
+      "verification": {
+        "verified": true,
+        "cycle_edges": 1,
+        "cycle_charge": -8,
+        "full_cut_seams": [
+          {
+            "edge": 0,
+            "target_diagonal_lengths": [
+              24,
+              25
+            ],
+            "next_source_diagonal_lengths": [
+              16,
+              17
+            ],
+            "full_cuts_equal": false,
+            "differing_overlap_indices": [
+              [
+                2,
+                4,
+                6,
+                7,
+                12,
+                15
+              ],
+              [
+                2,
+                4,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12
+              ]
+            ],
+            "target_full_diagonals": [
+              11093312,
+              13547840
+            ],
+            "next_source_full_diagonals": [
+              54676,
+              42644
+            ]
+          }
+        ],
+        "conclusion": "No potential of the declared finite features satisfies all genuine sampled edges. This check alone does not decide whether quotient edges concatenate into an infinite cone."
+      }
+    },
+    {
+      "features": {
+        "bottom": 0,
+        "top": 2,
+        "count": "parity"
+      },
+      "rule": 30,
+      "block_space": 8,
+      "feature_domain": "finite",
+      "states": 9,
+      "transitions": 71,
+      "cycle": [
+        {
+          "start_depth": 16,
+          "end_depth": 24,
+          "initial_left": 37669,
+          "charge": -8,
+          "rule": 30,
+          "source": 8,
+          "target": 8
+        }
+      ],
+      "verification": {
+        "verified": true,
+        "cycle_edges": 1,
+        "cycle_charge": -8,
+        "full_cut_seams": [
+          {
+            "edge": 0,
+            "target_diagonal_lengths": [
+              24,
+              25
+            ],
+            "next_source_diagonal_lengths": [
+              16,
+              17
+            ],
+            "full_cuts_equal": false,
+            "differing_overlap_indices": [
+              [
+                1,
+                4,
+                7,
+                8,
+                9,
+                10,
+                15
+              ],
+              [
+                0,
+                1,
+                4,
+                5,
+                6,
+                11
+              ]
+            ],
+            "target_full_diagonals": [
+              13980976,
+              11184848
+            ],
+            "next_source_full_diagonals": [
+              53922,
+              41635
+            ]
+          }
+        ],
+        "conclusion": "No potential of the declared finite features satisfies all genuine sampled edges. This check alone does not decide whether quotient edges concatenate into an infinite cone."
+      }
+    },
+    {
+      "features": {
+        "bottom": 0,
+        "top": 3,
+        "count": "none"
+      },
+      "rule": 30,
+      "block_space": 8,
+      "feature_domain": "finite",
+      "states": 3,
+      "transitions": 6,
+      "cycle": [
+        {
+          "start_depth": 16,
+          "end_depth": 24,
+          "initial_left": 37669,
+          "charge": -8,
+          "rule": 30,
+          "source": 1,
+          "target": 1
+        }
+      ],
+      "verification": {
+        "verified": true,
+        "cycle_edges": 1,
+        "cycle_charge": -8,
+        "full_cut_seams": [
+          {
+            "edge": 0,
+            "target_diagonal_lengths": [
+              24,
+              25
+            ],
+            "next_source_diagonal_lengths": [
+              16,
+              17
+            ],
+            "full_cuts_equal": false,
+            "differing_overlap_indices": [
+              [
+                1,
+                4,
+                7,
+                8,
+                9,
+                10,
+                15
+              ],
+              [
+                0,
+                1,
+                4,
+                5,
+                6,
+                11
+              ]
+            ],
+            "target_full_diagonals": [
+              13980976,
+              11184848
+            ],
+            "next_source_full_diagonals": [
+              53922,
+              41635
+            ]
+          }
+        ],
+        "conclusion": "No potential of the declared finite features satisfies all genuine sampled edges. This check alone does not decide whether quotient edges concatenate into an infinite cone."
+      }
+    },
+    {
+      "features": {
+        "bottom": 1,
+        "top": 1,
+        "count": "parity"
+      },
+      "rule": 30,
+      "block_space": 8,
+      "feature_domain": "finite",
+      "states": 17,
+      "transitions": 265,
+      "cycle": [
+        {
+          "start_depth": 16,
+          "end_depth": 24,
+          "initial_left": 3349,
+          "charge": -8,
+          "rule": 30,
+          "source": 4,
+          "target": 4
+        }
+      ],
+      "verification": {
+        "verified": true,
+        "cycle_edges": 1,
+        "cycle_charge": -8,
+        "full_cut_seams": [
+          {
+            "edge": 0,
+            "target_diagonal_lengths": [
+              24,
+              25
+            ],
+            "next_source_diagonal_lengths": [
+              16,
+              17
+            ],
+            "full_cuts_equal": false,
+            "differing_overlap_indices": [
+              [
+                2,
+                4,
+                6,
+                7,
+                12,
+                15
+              ],
+              [
+                2,
+                4,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12
+              ]
+            ],
+            "target_full_diagonals": [
+              11093312,
+              13547840
+            ],
+            "next_source_full_diagonals": [
+              54676,
+              42644
+            ]
+          }
+        ],
+        "conclusion": "No potential of the declared finite features satisfies all genuine sampled edges. This check alone does not decide whether quotient edges concatenate into an infinite cone."
+      }
+    },
+    {
+      "features": {
+        "bottom": 1,
+        "top": 2,
+        "count": "none"
+      },
+      "rule": 30,
+      "block_space": 8,
+      "feature_domain": "finite",
+      "states": 9,
+      "transitions": 70,
+      "cycle": [
+        {
+          "start_depth": 16,
+          "end_depth": 24,
+          "initial_left": 3349,
+          "charge": -8,
+          "rule": 30,
+          "source": 2,
+          "target": 3
+        },
+        {
+          "start_depth": 16,
+          "end_depth": 24,
+          "initial_left": 14117,
+          "charge": -8,
+          "rule": 30,
+          "source": 3,
+          "target": 2
+        }
+      ],
+      "verification": {
+        "verified": true,
+        "cycle_edges": 2,
+        "cycle_charge": -16,
+        "full_cut_seams": [
+          {
+            "edge": 0,
+            "target_diagonal_lengths": [
+              24,
+              25
+            ],
+            "next_source_diagonal_lengths": [
+              16,
+              17
+            ],
+            "full_cuts_equal": false,
+            "differing_overlap_indices": [
+              [
+                1,
+                2,
+                10,
+                11,
+                13,
+                14,
+                15
+              ],
+              [
+                1,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                12,
+                13,
+                14
+              ]
+            ],
+            "target_full_diagonals": [
+              11093312,
+              13547840
+            ],
+            "next_source_full_diagonals": [
+              43334,
+              52922
+            ]
+          },
+          {
+            "edge": 1,
+            "target_diagonal_lengths": [
+              24,
+              25
+            ],
+            "next_source_diagonal_lengths": [
+              16,
+              17
+            ],
+            "full_cuts_equal": false,
+            "differing_overlap_indices": [
+              [
+                2,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14
+              ],
+              [
+                2,
+                4,
+                5,
+                8,
+                10,
+                11,
+                13,
+                14
+              ]
+            ],
+            "target_full_diagonals": [
+              13806176,
+              10668960
+            ],
+            "next_source_full_diagonals": [
+              54676,
+              42644
+            ]
+          }
+        ],
+        "conclusion": "No potential of the declared finite features satisfies all genuine sampled edges. This check alone does not decide whether quotient edges concatenate into an infinite cone."
+      }
+    },
+    {
+      "features": {
+        "bottom": 2,
+        "top": 0,
+        "count": "parity"
+      },
+      "rule": 30,
+      "block_space": 8,
+      "feature_domain": "finite",
+      "states": 41,
+      "transitions": 857,
+      "cycle": [
+        {
+          "start_depth": 16,
+          "end_depth": 24,
+          "initial_left": 3349,
+          "charge": -8,
+          "rule": 30,
+          "source": 19,
+          "target": 19
+        }
+      ],
+      "verification": {
+        "verified": true,
+        "cycle_edges": 1,
+        "cycle_charge": -8,
+        "full_cut_seams": [
+          {
+            "edge": 0,
+            "target_diagonal_lengths": [
+              24,
+              25
+            ],
+            "next_source_diagonal_lengths": [
+              16,
+              17
+            ],
+            "full_cuts_equal": false,
+            "differing_overlap_indices": [
+              [
+                2,
+                4,
+                6,
+                7,
+                12,
+                15
+              ],
+              [
+                2,
+                4,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12
+              ]
+            ],
+            "target_full_diagonals": [
+              11093312,
+              13547840
+            ],
+            "next_source_full_diagonals": [
+              54676,
+              42644
+            ]
+          }
+        ],
+        "conclusion": "No potential of the declared finite features satisfies all genuine sampled edges. This check alone does not decide whether quotient edges concatenate into an infinite cone."
+      }
+    },
+    {
+      "features": {
+        "bottom": 2,
+        "top": 1,
+        "count": "none"
+      },
+      "rule": 30,
+      "block_space": 8,
+      "feature_domain": "finite",
+      "states": 11,
+      "transitions": 107,
+      "cycle": [
+        {
+          "start_depth": 16,
+          "end_depth": 24,
+          "initial_left": 3349,
+          "charge": -8,
+          "rule": 30,
+          "source": 10,
+          "target": 10
+        }
+      ],
+      "verification": {
+        "verified": true,
+        "cycle_edges": 1,
+        "cycle_charge": -8,
+        "full_cut_seams": [
+          {
+            "edge": 0,
+            "target_diagonal_lengths": [
+              24,
+              25
+            ],
+            "next_source_diagonal_lengths": [
+              16,
+              17
+            ],
+            "full_cuts_equal": false,
+            "differing_overlap_indices": [
+              [
+                2,
+                4,
+                6,
+                7,
+                12,
+                15
+              ],
+              [
+                2,
+                4,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12
+              ]
+            ],
+            "target_full_diagonals": [
+              11093312,
+              13547840
+            ],
+            "next_source_full_diagonals": [
+              54676,
+              42644
+            ]
+          }
+        ],
+        "conclusion": "No potential of the declared finite features satisfies all genuine sampled edges. This check alone does not decide whether quotient edges concatenate into an infinite cone."
+      }
+    },
+    {
+      "features": {
+        "bottom": 3,
+        "top": 0,
+        "count": "none"
+      },
+      "rule": 30,
+      "block_space": 8,
+      "feature_domain": "finite",
+      "states": 23,
+      "transitions": 408,
+      "cycle": null
+    },
+    {
+      "features": {
+        "bottom": 0,
+        "top": 3,
+        "count": "parity"
+      },
+      "rule": 30,
+      "block_space": 8,
+      "feature_domain": "finite",
+      "states": 9,
+      "transitions": 71,
+      "cycle": [
+        {
+          "start_depth": 16,
+          "end_depth": 24,
+          "initial_left": 37669,
+          "charge": -8,
+          "rule": 30,
+          "source": 8,
+          "target": 8
+        }
+      ],
+      "verification": {
+        "verified": true,
+        "cycle_edges": 1,
+        "cycle_charge": -8,
+        "full_cut_seams": [
+          {
+            "edge": 0,
+            "target_diagonal_lengths": [
+              24,
+              25
+            ],
+            "next_source_diagonal_lengths": [
+              16,
+              17
+            ],
+            "full_cuts_equal": false,
+            "differing_overlap_indices": [
+              [
+                1,
+                4,
+                7,
+                8,
+                9,
+                10,
+                15
+              ],
+              [
+                0,
+                1,
+                4,
+                5,
+                6,
+                11
+              ]
+            ],
+            "target_full_diagonals": [
+              13980976,
+              11184848
+            ],
+            "next_source_full_diagonals": [
+              53922,
+              41635
+            ]
+          }
+        ],
+        "conclusion": "No potential of the declared finite features satisfies all genuine sampled edges. This check alone does not decide whether quotient edges concatenate into an infinite cone."
+      }
+    },
+    {
+      "features": {
+        "bottom": 0,
+        "top": 4,
+        "count": "none"
+      },
+      "rule": 30,
+      "block_space": 8,
+      "feature_domain": "finite",
+      "states": 3,
+      "transitions": 6,
+      "cycle": [
+        {
+          "start_depth": 16,
+          "end_depth": 24,
+          "initial_left": 37669,
+          "charge": -8,
+          "rule": 30,
+          "source": 1,
+          "target": 1
+        }
+      ],
+      "verification": {
+        "verified": true,
+        "cycle_edges": 1,
+        "cycle_charge": -8,
+        "full_cut_seams": [
+          {
+            "edge": 0,
+            "target_diagonal_lengths": [
+              24,
+              25
+            ],
+            "next_source_diagonal_lengths": [
+              16,
+              17
+            ],
+            "full_cuts_equal": false,
+            "differing_overlap_indices": [
+              [
+                1,
+                4,
+                7,
+                8,
+                9,
+                10,
+                15
+              ],
+              [
+                0,
+                1,
+                4,
+                5,
+                6,
+                11
+              ]
+            ],
+            "target_full_diagonals": [
+              13980976,
+              11184848
+            ],
+            "next_source_full_diagonals": [
+              53922,
+              41635
+            ]
+          }
+        ],
+        "conclusion": "No potential of the declared finite features satisfies all genuine sampled edges. This check alone does not decide whether quotient edges concatenate into an infinite cone."
+      }
+    },
+    {
+      "features": {
+        "bottom": 1,
+        "top": 2,
+        "count": "parity"
+      },
+      "rule": 30,
+      "block_space": 8,
+      "feature_domain": "finite",
+      "states": 33,
+      "transitions": 802,
+      "cycle": [
+        {
+          "start_depth": 16,
+          "end_depth": 24,
+          "initial_left": 4196949,
+          "charge": 0,
+          "rule": 30,
+          "source": 30,
+          "target": 27
+        },
+        {
+          "start_depth": 16,
+          "end_depth": 24,
+          "initial_left": 4223509,
+          "charge": 0,
+          "rule": 30,
+          "source": 27,
+          "target": 14
+        },
+        {
+          "start_depth": 16,
+          "end_depth": 24,
+          "initial_left": 27249,
+          "charge": -8,
+          "rule": 30,
+          "source": 14,
+          "target": 29
+        },
+        {
+          "start_depth": 16,
+          "end_depth": 24,
+          "initial_left": 271985,
+          "charge": 0,
+          "rule": 30,
+          "source": 29,
+          "target": 4
+        },
+        {
+          "start_depth": 16,
+          "end_depth": 24,
+          "initial_left": 3349,
+          "charge": -8,
+          "rule": 30,
+          "source": 4,
+          "target": 26
+        },
+        {
+          "start_depth": 16,
+          "end_depth": 24,
+          "initial_left": 8392833,
+          "charge": 0,
+          "rule": 30,
+          "source": 26,
+          "target": 10
+        },
+        {
+          "start_depth": 16,
+          "end_depth": 24,
+          "initial_left": 46677,
+          "charge": -8,
+          "rule": 30,
+          "source": 10,
+          "target": 30
+        }
+      ],
+      "verification": {
+        "verified": true,
+        "cycle_edges": 7,
+        "cycle_charge": -24,
+        "full_cut_seams": [
+          {
+            "edge": 0,
+            "target_diagonal_lengths": [
+              24,
+              25
+            ],
+            "next_source_diagonal_lengths": [
+              16,
+              17
+            ],
+            "full_cuts_equal": false,
+            "differing_overlap_indices": [
+              [
+                1,
+                3,
+                5,
+                6,
+                9,
+                10,
+                14,
+                15
+              ],
+              [
+                2,
+                3,
+                4,
+                5,
+                6,
+                11,
+                12,
+                13,
+                14,
+                16
+              ]
+            ],
+            "target_full_diagonals": [
+              11168575,
+              14003498
+            ],
+            "next_source_full_diagonals": [
+              44373,
+              54614
+            ]
+          },
+          {
+            "edge": 1,
+            "target_diagonal_lengths": [
+              24,
+              25
+            ],
+            "next_source_diagonal_lengths": [
+              16,
+              17
+            ],
+            "full_cuts_equal": false,
+            "differing_overlap_indices": [
+              [
+                1,
+                3,
+                4,
+                5,
+                6,
+                10,
+                11,
+                12,
+                13,
+                14
+              ],
+              [
+                2,
+                3,
+                11,
+                13,
+                14
+              ]
+            ],
+            "target_full_diagonals": [
+              13807279,
+              10668714
+            ],
+            "next_source_full_diagonals": [
+              53973,
+              41638
+            ]
+          },
+          {
+            "edge": 2,
+            "target_diagonal_lengths": [
+              24,
+              25
+            ],
+            "next_source_diagonal_lengths": [
+              16,
+              17
+            ],
+            "full_cuts_equal": false,
+            "differing_overlap_indices": [
+              [
+                1,
+                8,
+                9,
+                10
+              ],
+              [
+                1,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                15,
+                16
+              ]
+            ],
+            "target_full_diagonals": [
+              11185488,
+              13978208
+            ],
+            "next_source_full_diagonals": [
+              43602,
+              54690
+            ]
+          },
+          {
+            "edge": 3,
+            "target_diagonal_lengths": [
+              24,
+              25
+            ],
+            "next_source_diagonal_lengths": [
+              16,
+              17
+            ],
+            "full_cuts_equal": false,
+            "differing_overlap_indices": [
+              [
+                5,
+                8,
+                15
+              ],
+              [
+                2,
+                3,
+                4,
+                5,
+                7,
+                8
+              ]
+            ],
+            "target_full_diagonals": [
+              13980852,
+              11183912
+            ],
+            "next_source_full_diagonals": [
+              54676,
+              42644
+            ]
+          },
+          {
+            "edge": 4,
+            "target_diagonal_lengths": [
+              24,
+              25
+            ],
+            "next_source_diagonal_lengths": [
+              16,
+              17
+            ],
+            "full_cuts_equal": false,
+            "differing_overlap_indices": [
+              [
+                1,
+                3,
+                5,
+                8,
+                9,
+                10,
+                11,
+                13,
+                14,
+                15
+              ],
+              [
+                2,
+                3,
+                5,
+                6,
+                7,
+                10,
+                11,
+                13,
+                14
+              ]
+            ],
+            "target_full_diagonals": [
+              11093312,
+              13547840
+            ],
+            "next_source_full_diagonals": [
+              43626,
+              54700
+            ]
+          },
+          {
+            "edge": 5,
+            "target_diagonal_lengths": [
+              24,
+              25
+            ],
+            "next_source_diagonal_lengths": [
+              16,
+              17
+            ],
+            "full_cuts_equal": false,
+            "differing_overlap_indices": [
+              [
+                1,
+                2,
+                11,
+                12,
+                13,
+                14,
+                15
+              ],
+              [
+                1,
+                3,
+                4,
+                7,
+                8,
+                12,
+                13,
+                14
+              ]
+            ],
+            "target_full_diagonals": [
+              13970080,
+              11195199
+            ],
+            "next_source_full_diagonals": [
+              53926,
+              41637
+            ]
+          },
+          {
+            "edge": 6,
+            "target_diagonal_lengths": [
+              24,
+              25
+            ],
+            "next_source_diagonal_lengths": [
+              16,
+              17
+            ],
+            "full_cuts_equal": false,
+            "differing_overlap_indices": [
+              [
+                2,
+                3,
+                4,
+                5,
+                6,
+                8
+              ],
+              [
+                2,
+                5,
+                6,
+                8,
+                11,
+                12
+              ]
+            ],
+            "target_full_diagonals": [
+              11184176,
+              13424592
+            ],
+            "next_source_full_diagonals": [
+              43340,
+              52916
+            ]
+          }
+        ],
+        "conclusion": "No potential of the declared finite features satisfies all genuine sampled edges. This check alone does not decide whether quotient edges concatenate into an infinite cone."
+      }
+    },
+    {
+      "features": {
+        "bottom": 1,
+        "top": 3,
+        "count": "none"
+      },
+      "rule": 30,
+      "block_space": 8,
+      "feature_domain": "finite",
+      "states": 9,
+      "transitions": 70,
+      "cycle": [
+        {
+          "start_depth": 16,
+          "end_depth": 24,
+          "initial_left": 3349,
+          "charge": -8,
+          "rule": 30,
+          "source": 2,
+          "target": 3
+        },
+        {
+          "start_depth": 16,
+          "end_depth": 24,
+          "initial_left": 14117,
+          "charge": -8,
+          "rule": 30,
+          "source": 3,
+          "target": 2
+        }
+      ],
+      "verification": {
+        "verified": true,
+        "cycle_edges": 2,
+        "cycle_charge": -16,
+        "full_cut_seams": [
+          {
+            "edge": 0,
+            "target_diagonal_lengths": [
+              24,
+              25
+            ],
+            "next_source_diagonal_lengths": [
+              16,
+              17
+            ],
+            "full_cuts_equal": false,
+            "differing_overlap_indices": [
+              [
+                1,
+                2,
+                10,
+                11,
+                13,
+                14,
+                15
+              ],
+              [
+                1,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                12,
+                13,
+                14
+              ]
+            ],
+            "target_full_diagonals": [
+              11093312,
+              13547840
+            ],
+            "next_source_full_diagonals": [
+              43334,
+              52922
+            ]
+          },
+          {
+            "edge": 1,
+            "target_diagonal_lengths": [
+              24,
+              25
+            ],
+            "next_source_diagonal_lengths": [
+              16,
+              17
+            ],
+            "full_cuts_equal": false,
+            "differing_overlap_indices": [
+              [
+                2,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14
+              ],
+              [
+                2,
+                4,
+                5,
+                8,
+                10,
+                11,
+                13,
+                14
+              ]
+            ],
+            "target_full_diagonals": [
+              13806176,
+              10668960
+            ],
+            "next_source_full_diagonals": [
+              54676,
+              42644
+            ]
+          }
+        ],
+        "conclusion": "No potential of the declared finite features satisfies all genuine sampled edges. This check alone does not decide whether quotient edges concatenate into an infinite cone."
+      }
+    },
+    {
+      "features": {
+        "bottom": 2,
+        "top": 1,
+        "count": "parity"
+      },
+      "rule": 30,
+      "block_space": 8,
+      "feature_domain": "finite",
+      "states": 41,
+      "transitions": 857,
+      "cycle": [
+        {
+          "start_depth": 16,
+          "end_depth": 24,
+          "initial_left": 3349,
+          "charge": -8,
+          "rule": 30,
+          "source": 19,
+          "target": 19
+        }
+      ],
+      "verification": {
+        "verified": true,
+        "cycle_edges": 1,
+        "cycle_charge": -8,
+        "full_cut_seams": [
+          {
+            "edge": 0,
+            "target_diagonal_lengths": [
+              24,
+              25
+            ],
+            "next_source_diagonal_lengths": [
+              16,
+              17
+            ],
+            "full_cuts_equal": false,
+            "differing_overlap_indices": [
+              [
+                2,
+                4,
+                6,
+                7,
+                12,
+                15
+              ],
+              [
+                2,
+                4,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12
+              ]
+            ],
+            "target_full_diagonals": [
+              11093312,
+              13547840
+            ],
+            "next_source_full_diagonals": [
+              54676,
+              42644
+            ]
+          }
+        ],
+        "conclusion": "No potential of the declared finite features satisfies all genuine sampled edges. This check alone does not decide whether quotient edges concatenate into an infinite cone."
+      }
+    },
+    {
+      "features": {
+        "bottom": 2,
+        "top": 2,
+        "count": "none"
+      },
+      "rule": 30,
+      "block_space": 8,
+      "feature_domain": "finite",
+      "states": 21,
+      "transitions": 347,
+      "cycle": [
+        {
+          "start_depth": 8,
+          "end_depth": 16,
+          "initial_left": 129,
+          "charge": -8,
+          "rule": 30,
+          "source": 5,
+          "target": 15
+        },
+        {
+          "start_depth": 16,
+          "end_depth": 24,
+          "initial_left": 3349,
+          "charge": -8,
+          "rule": 30,
+          "source": 15,
+          "target": 19
+        },
+        {
+          "start_depth": 16,
+          "end_depth": 24,
+          "initial_left": 8391253,
+          "charge": 0,
+          "rule": 30,
+          "source": 19,
+          "target": 9
+        },
+        {
+          "start_depth": 16,
+          "end_depth": 24,
+          "initial_left": 8421717,
+          "charge": 0,
+          "rule": 30,
+          "source": 9,
+          "target": 5
+        }
+      ],
+      "verification": {
+        "verified": true,
+        "cycle_edges": 4,
+        "cycle_charge": -16,
+        "full_cut_seams": [
+          {
+            "edge": 0,
+            "target_diagonal_lengths": [
+              16,
+              17
+            ],
+            "next_source_diagonal_lengths": [
+              16,
+              17
+            ],
+            "full_cuts_equal": false,
+            "differing_overlap_indices": [
+              [
+                2,
+                5,
+                7,
+                9
+              ],
+              [
+                2,
+                6,
+                10,
+                11
+              ]
+            ],
+            "target_full_diagonals": [
+              55088,
+              43728
+            ],
+            "next_source_full_diagonals": [
+              54676,
+              42644
+            ]
+          },
+          {
+            "edge": 1,
+            "target_diagonal_lengths": [
+              24,
+              25
+            ],
+            "next_source_diagonal_lengths": [
+              16,
+              17
+            ],
+            "full_cuts_equal": false,
+            "differing_overlap_indices": [
+              [
+                2,
+                3,
+                10,
+                11,
+                13,
+                14,
+                15
+              ],
+              [
+                2,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                12,
+                13,
+                14
+              ]
+            ],
+            "target_full_diagonals": [
+              11093312,
+              13547840
+            ],
+            "next_source_full_diagonals": [
+              43340,
+              52916
+            ]
+          },
+          {
+            "edge": 2,
+            "target_diagonal_lengths": [
+              24,
+              25
+            ],
+            "next_source_diagonal_lengths": [
+              16,
+              17
+            ],
+            "full_cuts_equal": false,
+            "differing_overlap_indices": [
+              [
+                3,
+                5,
+                6,
+                7,
+                8,
+                9,
+                14
+              ],
+              [
+                4,
+                5,
+                6,
+                9,
+                10,
+                11,
+                12,
+                13
+              ]
+            ],
+            "target_full_diagonals": [
+              13997248,
+              10917055
+            ],
+            "next_source_full_diagonals": [
+              55080,
+              43727
+            ]
+          },
+          {
+            "edge": 3,
+            "target_diagonal_lengths": [
+              24,
+              25
+            ],
+            "next_source_diagonal_lengths": [
+              8,
+              9
+            ],
+            "full_cuts_equal": false,
+            "differing_overlap_indices": [
+              [
+                3,
+                4,
+                7
+              ],
+              [
+                5,
+                6,
+                7,
+                8
+              ]
+            ],
+            "target_full_diagonals": [
+              11065136,
+              13587759
+            ],
+            "next_source_full_diagonals": [
+              168,
+              207
+            ]
+          }
+        ],
+        "conclusion": "No potential of the declared finite features satisfies all genuine sampled edges. This check alone does not decide whether quotient edges concatenate into an infinite cone."
+      }
+    },
+    {
+      "features": {
+        "bottom": 3,
+        "top": 0,
+        "count": "parity"
+      },
+      "rule": 30,
+      "block_space": 8,
+      "feature_domain": "finite",
+      "states": 89,
+      "transitions": 1356,
+      "cycle": null
+    },
+    {
+      "features": {
+        "bottom": 3,
+        "top": 1,
+        "count": "none"
+      },
+      "rule": 30,
+      "block_space": 8,
+      "feature_domain": "finite",
+      "states": 23,
+      "transitions": 408,
+      "cycle": null
+    },
+    {
+      "features": {
+        "bottom": 4,
+        "top": 0,
+        "count": "none"
+      },
+      "rule": 30,
+      "block_space": 8,
+      "feature_domain": "finite",
+      "states": 51,
+      "transitions": 870,
+      "cycle": null
+    },
+    {
+      "features": {
+        "bottom": 0,
+        "top": 0,
+        "count": "exact"
+      },
+      "rule": 30,
+      "block_space": 8,
+      "feature_domain": "unbounded exact counts",
+      "states": 69,
+      "transitions": 423,
+      "cycle": null
+    },
+    {
+      "features": {
+        "bottom": 0,
+        "top": 4,
+        "count": "parity"
+      },
+      "rule": 30,
+      "block_space": 8,
+      "feature_domain": "finite",
+      "states": 9,
+      "transitions": 71,
+      "cycle": [
+        {
+          "start_depth": 16,
+          "end_depth": 24,
+          "initial_left": 37669,
+          "charge": -8,
+          "rule": 30,
+          "source": 8,
+          "target": 8
+        }
+      ],
+      "verification": {
+        "verified": true,
+        "cycle_edges": 1,
+        "cycle_charge": -8,
+        "full_cut_seams": [
+          {
+            "edge": 0,
+            "target_diagonal_lengths": [
+              24,
+              25
+            ],
+            "next_source_diagonal_lengths": [
+              16,
+              17
+            ],
+            "full_cuts_equal": false,
+            "differing_overlap_indices": [
+              [
+                1,
+                4,
+                7,
+                8,
+                9,
+                10,
+                15
+              ],
+              [
+                0,
+                1,
+                4,
+                5,
+                6,
+                11
+              ]
+            ],
+            "target_full_diagonals": [
+              13980976,
+              11184848
+            ],
+            "next_source_full_diagonals": [
+              53922,
+              41635
+            ]
+          }
+        ],
+        "conclusion": "No potential of the declared finite features satisfies all genuine sampled edges. This check alone does not decide whether quotient edges concatenate into an infinite cone."
+      }
+    },
+    {
+      "features": {
+        "bottom": 1,
+        "top": 3,
+        "count": "parity"
+      },
+      "rule": 30,
+      "block_space": 8,
+      "feature_domain": "finite",
+      "states": 33,
+      "transitions": 802,
+      "cycle": [
+        {
+          "start_depth": 16,
+          "end_depth": 24,
+          "initial_left": 4196949,
+          "charge": 0,
+          "rule": 30,
+          "source": 30,
+          "target": 27
+        },
+        {
+          "start_depth": 16,
+          "end_depth": 24,
+          "initial_left": 4223509,
+          "charge": 0,
+          "rule": 30,
+          "source": 27,
+          "target": 14
+        },
+        {
+          "start_depth": 16,
+          "end_depth": 24,
+          "initial_left": 27249,
+          "charge": -8,
+          "rule": 30,
+          "source": 14,
+          "target": 29
+        },
+        {
+          "start_depth": 16,
+          "end_depth": 24,
+          "initial_left": 271985,
+          "charge": 0,
+          "rule": 30,
+          "source": 29,
+          "target": 4
+        },
+        {
+          "start_depth": 16,
+          "end_depth": 24,
+          "initial_left": 3349,
+          "charge": -8,
+          "rule": 30,
+          "source": 4,
+          "target": 26
+        },
+        {
+          "start_depth": 16,
+          "end_depth": 24,
+          "initial_left": 8392833,
+          "charge": 0,
+          "rule": 30,
+          "source": 26,
+          "target": 10
+        },
+        {
+          "start_depth": 16,
+          "end_depth": 24,
+          "initial_left": 46677,
+          "charge": -8,
+          "rule": 30,
+          "source": 10,
+          "target": 30
+        }
+      ],
+      "verification": {
+        "verified": true,
+        "cycle_edges": 7,
+        "cycle_charge": -24,
+        "full_cut_seams": [
+          {
+            "edge": 0,
+            "target_diagonal_lengths": [
+              24,
+              25
+            ],
+            "next_source_diagonal_lengths": [
+              16,
+              17
+            ],
+            "full_cuts_equal": false,
+            "differing_overlap_indices": [
+              [
+                1,
+                3,
+                5,
+                6,
+                9,
+                10,
+                14,
+                15
+              ],
+              [
+                2,
+                3,
+                4,
+                5,
+                6,
+                11,
+                12,
+                13,
+                14,
+                16
+              ]
+            ],
+            "target_full_diagonals": [
+              11168575,
+              14003498
+            ],
+            "next_source_full_diagonals": [
+              44373,
+              54614
+            ]
+          },
+          {
+            "edge": 1,
+            "target_diagonal_lengths": [
+              24,
+              25
+            ],
+            "next_source_diagonal_lengths": [
+              16,
+              17
+            ],
+            "full_cuts_equal": false,
+            "differing_overlap_indices": [
+              [
+                1,
+                3,
+                4,
+                5,
+                6,
+                10,
+                11,
+                12,
+                13,
+                14
+              ],
+              [
+                2,
+                3,
+                11,
+                13,
+                14
+              ]
+            ],
+            "target_full_diagonals": [
+              13807279,
+              10668714
+            ],
+            "next_source_full_diagonals": [
+              53973,
+              41638
+            ]
+          },
+          {
+            "edge": 2,
+            "target_diagonal_lengths": [
+              24,
+              25
+            ],
+            "next_source_diagonal_lengths": [
+              16,
+              17
+            ],
+            "full_cuts_equal": false,
+            "differing_overlap_indices": [
+              [
+                1,
+                8,
+                9,
+                10
+              ],
+              [
+                1,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                15,
+                16
+              ]
+            ],
+            "target_full_diagonals": [
+              11185488,
+              13978208
+            ],
+            "next_source_full_diagonals": [
+              43602,
+              54690
+            ]
+          },
+          {
+            "edge": 3,
+            "target_diagonal_lengths": [
+              24,
+              25
+            ],
+            "next_source_diagonal_lengths": [
+              16,
+              17
+            ],
+            "full_cuts_equal": false,
+            "differing_overlap_indices": [
+              [
+                5,
+                8,
+                15
+              ],
+              [
+                2,
+                3,
+                4,
+                5,
+                7,
+                8
+              ]
+            ],
+            "target_full_diagonals": [
+              13980852,
+              11183912
+            ],
+            "next_source_full_diagonals": [
+              54676,
+              42644
+            ]
+          },
+          {
+            "edge": 4,
+            "target_diagonal_lengths": [
+              24,
+              25
+            ],
+            "next_source_diagonal_lengths": [
+              16,
+              17
+            ],
+            "full_cuts_equal": false,
+            "differing_overlap_indices": [
+              [
+                1,
+                3,
+                5,
+                8,
+                9,
+                10,
+                11,
+                13,
+                14,
+                15
+              ],
+              [
+                2,
+                3,
+                5,
+                6,
+                7,
+                10,
+                11,
+                13,
+                14
+              ]
+            ],
+            "target_full_diagonals": [
+              11093312,
+              13547840
+            ],
+            "next_source_full_diagonals": [
+              43626,
+              54700
+            ]
+          },
+          {
+            "edge": 5,
+            "target_diagonal_lengths": [
+              24,
+              25
+            ],
+            "next_source_diagonal_lengths": [
+              16,
+              17
+            ],
+            "full_cuts_equal": false,
+            "differing_overlap_indices": [
+              [
+                1,
+                2,
+                11,
+                12,
+                13,
+                14,
+                15
+              ],
+              [
+                1,
+                3,
+                4,
+                7,
+                8,
+                12,
+                13,
+                14
+              ]
+            ],
+            "target_full_diagonals": [
+              13970080,
+              11195199
+            ],
+            "next_source_full_diagonals": [
+              53926,
+              41637
+            ]
+          },
+          {
+            "edge": 6,
+            "target_diagonal_lengths": [
+              24,
+              25
+            ],
+            "next_source_diagonal_lengths": [
+              16,
+              17
+            ],
+            "full_cuts_equal": false,
+            "differing_overlap_indices": [
+              [
+                2,
+                3,
+                4,
+                5,
+                6,
+                8
+              ],
+              [
+                2,
+                5,
+                6,
+                8,
+                11,
+                12
+              ]
+            ],
+            "target_full_diagonals": [
+              11184176,
+              13424592
+            ],
+            "next_source_full_diagonals": [
+              43340,
+              52916
+            ]
+          }
+        ],
+        "conclusion": "No potential of the declared finite features satisfies all genuine sampled edges. This check alone does not decide whether quotient edges concatenate into an infinite cone."
+      }
+    },
+    {
+      "features": {
+        "bottom": 1,
+        "top": 4,
+        "count": "none"
+      },
+      "rule": 30,
+      "block_space": 8,
+      "feature_domain": "finite",
+      "states": 9,
+      "transitions": 70,
+      "cycle": [
+        {
+          "start_depth": 16,
+          "end_depth": 24,
+          "initial_left": 3349,
+          "charge": -8,
+          "rule": 30,
+          "source": 2,
+          "target": 3
+        },
+        {
+          "start_depth": 16,
+          "end_depth": 24,
+          "initial_left": 14117,
+          "charge": -8,
+          "rule": 30,
+          "source": 3,
+          "target": 2
+        }
+      ],
+      "verification": {
+        "verified": true,
+        "cycle_edges": 2,
+        "cycle_charge": -16,
+        "full_cut_seams": [
+          {
+            "edge": 0,
+            "target_diagonal_lengths": [
+              24,
+              25
+            ],
+            "next_source_diagonal_lengths": [
+              16,
+              17
+            ],
+            "full_cuts_equal": false,
+            "differing_overlap_indices": [
+              [
+                1,
+                2,
+                10,
+                11,
+                13,
+                14,
+                15
+              ],
+              [
+                1,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                12,
+                13,
+                14
+              ]
+            ],
+            "target_full_diagonals": [
+              11093312,
+              13547840
+            ],
+            "next_source_full_diagonals": [
+              43334,
+              52922
+            ]
+          },
+          {
+            "edge": 1,
+            "target_diagonal_lengths": [
+              24,
+              25
+            ],
+            "next_source_diagonal_lengths": [
+              16,
+              17
+            ],
+            "full_cuts_equal": false,
+            "differing_overlap_indices": [
+              [
+                2,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14
+              ],
+              [
+                2,
+                4,
+                5,
+                8,
+                10,
+                11,
+                13,
+                14
+              ]
+            ],
+            "target_full_diagonals": [
+              13806176,
+              10668960
+            ],
+            "next_source_full_diagonals": [
+              54676,
+              42644
+            ]
+          }
+        ],
+        "conclusion": "No potential of the declared finite features satisfies all genuine sampled edges. This check alone does not decide whether quotient edges concatenate into an infinite cone."
+      }
+    },
+    {
+      "features": {
+        "bottom": 2,
+        "top": 2,
+        "count": "parity"
+      },
+      "rule": 30,
+      "block_space": 8,
+      "feature_domain": "finite",
+      "states": 81,
+      "transitions": 1279,
+      "cycle": null
+    },
+    {
+      "features": {
+        "bottom": 2,
+        "top": 3,
+        "count": "none"
+      },
+      "rule": 30,
+      "block_space": 8,
+      "feature_domain": "finite",
+      "states": 21,
+      "transitions": 347,
+      "cycle": [
+        {
+          "start_depth": 8,
+          "end_depth": 16,
+          "initial_left": 129,
+          "charge": -8,
+          "rule": 30,
+          "source": 5,
+          "target": 15
+        },
+        {
+          "start_depth": 16,
+          "end_depth": 24,
+          "initial_left": 3349,
+          "charge": -8,
+          "rule": 30,
+          "source": 15,
+          "target": 19
+        },
+        {
+          "start_depth": 16,
+          "end_depth": 24,
+          "initial_left": 8391253,
+          "charge": 0,
+          "rule": 30,
+          "source": 19,
+          "target": 9
+        },
+        {
+          "start_depth": 16,
+          "end_depth": 24,
+          "initial_left": 8421717,
+          "charge": 0,
+          "rule": 30,
+          "source": 9,
+          "target": 5
+        }
+      ],
+      "verification": {
+        "verified": true,
+        "cycle_edges": 4,
+        "cycle_charge": -16,
+        "full_cut_seams": [
+          {
+            "edge": 0,
+            "target_diagonal_lengths": [
+              16,
+              17
+            ],
+            "next_source_diagonal_lengths": [
+              16,
+              17
+            ],
+            "full_cuts_equal": false,
+            "differing_overlap_indices": [
+              [
+                2,
+                5,
+                7,
+                9
+              ],
+              [
+                2,
+                6,
+                10,
+                11
+              ]
+            ],
+            "target_full_diagonals": [
+              55088,
+              43728
+            ],
+            "next_source_full_diagonals": [
+              54676,
+              42644
+            ]
+          },
+          {
+            "edge": 1,
+            "target_diagonal_lengths": [
+              24,
+              25
+            ],
+            "next_source_diagonal_lengths": [
+              16,
+              17
+            ],
+            "full_cuts_equal": false,
+            "differing_overlap_indices": [
+              [
+                2,
+                3,
+                10,
+                11,
+                13,
+                14,
+                15
+              ],
+              [
+                2,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                12,
+                13,
+                14
+              ]
+            ],
+            "target_full_diagonals": [
+              11093312,
+              13547840
+            ],
+            "next_source_full_diagonals": [
+              43340,
+              52916
+            ]
+          },
+          {
+            "edge": 2,
+            "target_diagonal_lengths": [
+              24,
+              25
+            ],
+            "next_source_diagonal_lengths": [
+              16,
+              17
+            ],
+            "full_cuts_equal": false,
+            "differing_overlap_indices": [
+              [
+                3,
+                5,
+                6,
+                7,
+                8,
+                9,
+                14
+              ],
+              [
+                4,
+                5,
+                6,
+                9,
+                10,
+                11,
+                12,
+                13
+              ]
+            ],
+            "target_full_diagonals": [
+              13997248,
+              10917055
+            ],
+            "next_source_full_diagonals": [
+              55080,
+              43727
+            ]
+          },
+          {
+            "edge": 3,
+            "target_diagonal_lengths": [
+              24,
+              25
+            ],
+            "next_source_diagonal_lengths": [
+              8,
+              9
+            ],
+            "full_cuts_equal": false,
+            "differing_overlap_indices": [
+              [
+                3,
+                4,
+                7
+              ],
+              [
+                5,
+                6,
+                7,
+                8
+              ]
+            ],
+            "target_full_diagonals": [
+              11065136,
+              13587759
+            ],
+            "next_source_full_diagonals": [
+              168,
+              207
+            ]
+          }
+        ],
+        "conclusion": "No potential of the declared finite features satisfies all genuine sampled edges. This check alone does not decide whether quotient edges concatenate into an infinite cone."
+      }
+    },
+    {
+      "features": {
+        "bottom": 3,
+        "top": 1,
+        "count": "parity"
+      },
+      "rule": 30,
+      "block_space": 8,
+      "feature_domain": "finite",
+      "states": 89,
+      "transitions": 1356,
+      "cycle": null
+    },
+    {
+      "features": {
+        "bottom": 3,
+        "top": 2,
+        "count": "none"
+      },
+      "rule": 30,
+      "block_space": 8,
+      "feature_domain": "finite",
+      "states": 45,
+      "transitions": 904,
+      "cycle": null
+    },
+    {
+      "features": {
+        "bottom": 4,
+        "top": 0,
+        "count": "parity"
+      },
+      "rule": 30,
+      "block_space": 8,
+      "feature_domain": "finite",
+      "states": 198,
+      "transitions": 1553,
+      "cycle": null
+    },
+    {
+      "features": {
+        "bottom": 4,
+        "top": 1,
+        "count": "none"
+      },
+      "rule": 30,
+      "block_space": 8,
+      "feature_domain": "finite",
+      "states": 51,
+      "transitions": 870,
+      "cycle": null
+    },
+    {
+      "features": {
+        "bottom": 0,
+        "top": 1,
+        "count": "exact"
+      },
+      "rule": 30,
+      "block_space": 8,
+      "feature_domain": "unbounded exact counts",
+      "states": 69,
+      "transitions": 423,
+      "cycle": null
+    },
+    {
+      "features": {
+        "bottom": 1,
+        "top": 0,
+        "count": "exact"
+      },
+      "rule": 30,
+      "block_space": 8,
+      "feature_domain": "unbounded exact counts",
+      "states": 163,
+      "transitions": 1156,
+      "cycle": null
+    },
+    {
+      "features": {
+        "bottom": 1,
+        "top": 4,
+        "count": "parity"
+      },
+      "rule": 30,
+      "block_space": 8,
+      "feature_domain": "finite",
+      "states": 33,
+      "transitions": 802,
+      "cycle": [
+        {
+          "start_depth": 16,
+          "end_depth": 24,
+          "initial_left": 4196949,
+          "charge": 0,
+          "rule": 30,
+          "source": 30,
+          "target": 27
+        },
+        {
+          "start_depth": 16,
+          "end_depth": 24,
+          "initial_left": 4223509,
+          "charge": 0,
+          "rule": 30,
+          "source": 27,
+          "target": 14
+        },
+        {
+          "start_depth": 16,
+          "end_depth": 24,
+          "initial_left": 27249,
+          "charge": -8,
+          "rule": 30,
+          "source": 14,
+          "target": 29
+        },
+        {
+          "start_depth": 16,
+          "end_depth": 24,
+          "initial_left": 271985,
+          "charge": 0,
+          "rule": 30,
+          "source": 29,
+          "target": 4
+        },
+        {
+          "start_depth": 16,
+          "end_depth": 24,
+          "initial_left": 3349,
+          "charge": -8,
+          "rule": 30,
+          "source": 4,
+          "target": 26
+        },
+        {
+          "start_depth": 16,
+          "end_depth": 24,
+          "initial_left": 8392833,
+          "charge": 0,
+          "rule": 30,
+          "source": 26,
+          "target": 10
+        },
+        {
+          "start_depth": 16,
+          "end_depth": 24,
+          "initial_left": 46677,
+          "charge": -8,
+          "rule": 30,
+          "source": 10,
+          "target": 30
+        }
+      ],
+      "verification": {
+        "verified": true,
+        "cycle_edges": 7,
+        "cycle_charge": -24,
+        "full_cut_seams": [
+          {
+            "edge": 0,
+            "target_diagonal_lengths": [
+              24,
+              25
+            ],
+            "next_source_diagonal_lengths": [
+              16,
+              17
+            ],
+            "full_cuts_equal": false,
+            "differing_overlap_indices": [
+              [
+                1,
+                3,
+                5,
+                6,
+                9,
+                10,
+                14,
+                15
+              ],
+              [
+                2,
+                3,
+                4,
+                5,
+                6,
+                11,
+                12,
+                13,
+                14,
+                16
+              ]
+            ],
+            "target_full_diagonals": [
+              11168575,
+              14003498
+            ],
+            "next_source_full_diagonals": [
+              44373,
+              54614
+            ]
+          },
+          {
+            "edge": 1,
+            "target_diagonal_lengths": [
+              24,
+              25
+            ],
+            "next_source_diagonal_lengths": [
+              16,
+              17
+            ],
+            "full_cuts_equal": false,
+            "differing_overlap_indices": [
+              [
+                1,
+                3,
+                4,
+                5,
+                6,
+                10,
+                11,
+                12,
+                13,
+                14
+              ],
+              [
+                2,
+                3,
+                11,
+                13,
+                14
+              ]
+            ],
+            "target_full_diagonals": [
+              13807279,
+              10668714
+            ],
+            "next_source_full_diagonals": [
+              53973,
+              41638
+            ]
+          },
+          {
+            "edge": 2,
+            "target_diagonal_lengths": [
+              24,
+              25
+            ],
+            "next_source_diagonal_lengths": [
+              16,
+              17
+            ],
+            "full_cuts_equal": false,
+            "differing_overlap_indices": [
+              [
+                1,
+                8,
+                9,
+                10
+              ],
+              [
+                1,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                15,
+                16
+              ]
+            ],
+            "target_full_diagonals": [
+              11185488,
+              13978208
+            ],
+            "next_source_full_diagonals": [
+              43602,
+              54690
+            ]
+          },
+          {
+            "edge": 3,
+            "target_diagonal_lengths": [
+              24,
+              25
+            ],
+            "next_source_diagonal_lengths": [
+              16,
+              17
+            ],
+            "full_cuts_equal": false,
+            "differing_overlap_indices": [
+              [
+                5,
+                8,
+                15
+              ],
+              [
+                2,
+                3,
+                4,
+                5,
+                7,
+                8
+              ]
+            ],
+            "target_full_diagonals": [
+              13980852,
+              11183912
+            ],
+            "next_source_full_diagonals": [
+              54676,
+              42644
+            ]
+          },
+          {
+            "edge": 4,
+            "target_diagonal_lengths": [
+              24,
+              25
+            ],
+            "next_source_diagonal_lengths": [
+              16,
+              17
+            ],
+            "full_cuts_equal": false,
+            "differing_overlap_indices": [
+              [
+                1,
+                3,
+                5,
+                8,
+                9,
+                10,
+                11,
+                13,
+                14,
+                15
+              ],
+              [
+                2,
+                3,
+                5,
+                6,
+                7,
+                10,
+                11,
+                13,
+                14
+              ]
+            ],
+            "target_full_diagonals": [
+              11093312,
+              13547840
+            ],
+            "next_source_full_diagonals": [
+              43626,
+              54700
+            ]
+          },
+          {
+            "edge": 5,
+            "target_diagonal_lengths": [
+              24,
+              25
+            ],
+            "next_source_diagonal_lengths": [
+              16,
+              17
+            ],
+            "full_cuts_equal": false,
+            "differing_overlap_indices": [
+              [
+                1,
+                2,
+                11,
+                12,
+                13,
+                14,
+                15
+              ],
+              [
+                1,
+                3,
+                4,
+                7,
+                8,
+                12,
+                13,
+                14
+              ]
+            ],
+            "target_full_diagonals": [
+              13970080,
+              11195199
+            ],
+            "next_source_full_diagonals": [
+              53926,
+              41637
+            ]
+          },
+          {
+            "edge": 6,
+            "target_diagonal_lengths": [
+              24,
+              25
+            ],
+            "next_source_diagonal_lengths": [
+              16,
+              17
+            ],
+            "full_cuts_equal": false,
+            "differing_overlap_indices": [
+              [
+                2,
+                3,
+                4,
+                5,
+                6,
+                8
+              ],
+              [
+                2,
+                5,
+                6,
+                8,
+                11,
+                12
+              ]
+            ],
+            "target_full_diagonals": [
+              11184176,
+              13424592
+            ],
+            "next_source_full_diagonals": [
+              43340,
+              52916
+            ]
+          }
+        ],
+        "conclusion": "No potential of the declared finite features satisfies all genuine sampled edges. This check alone does not decide whether quotient edges concatenate into an infinite cone."
+      }
+    },
+    {
+      "features": {
+        "bottom": 2,
+        "top": 3,
+        "count": "parity"
+      },
+      "rule": 30,
+      "block_space": 8,
+      "feature_domain": "finite",
+      "states": 81,
+      "transitions": 1279,
+      "cycle": null
+    },
+    {
+      "features": {
+        "bottom": 2,
+        "top": 4,
+        "count": "none"
+      },
+      "rule": 30,
+      "block_space": 8,
+      "feature_domain": "finite",
+      "states": 21,
+      "transitions": 347,
+      "cycle": [
+        {
+          "start_depth": 8,
+          "end_depth": 16,
+          "initial_left": 129,
+          "charge": -8,
+          "rule": 30,
+          "source": 5,
+          "target": 15
+        },
+        {
+          "start_depth": 16,
+          "end_depth": 24,
+          "initial_left": 3349,
+          "charge": -8,
+          "rule": 30,
+          "source": 15,
+          "target": 19
+        },
+        {
+          "start_depth": 16,
+          "end_depth": 24,
+          "initial_left": 8391253,
+          "charge": 0,
+          "rule": 30,
+          "source": 19,
+          "target": 9
+        },
+        {
+          "start_depth": 16,
+          "end_depth": 24,
+          "initial_left": 8421717,
+          "charge": 0,
+          "rule": 30,
+          "source": 9,
+          "target": 5
+        }
+      ],
+      "verification": {
+        "verified": true,
+        "cycle_edges": 4,
+        "cycle_charge": -16,
+        "full_cut_seams": [
+          {
+            "edge": 0,
+            "target_diagonal_lengths": [
+              16,
+              17
+            ],
+            "next_source_diagonal_lengths": [
+              16,
+              17
+            ],
+            "full_cuts_equal": false,
+            "differing_overlap_indices": [
+              [
+                2,
+                5,
+                7,
+                9
+              ],
+              [
+                2,
+                6,
+                10,
+                11
+              ]
+            ],
+            "target_full_diagonals": [
+              55088,
+              43728
+            ],
+            "next_source_full_diagonals": [
+              54676,
+              42644
+            ]
+          },
+          {
+            "edge": 1,
+            "target_diagonal_lengths": [
+              24,
+              25
+            ],
+            "next_source_diagonal_lengths": [
+              16,
+              17
+            ],
+            "full_cuts_equal": false,
+            "differing_overlap_indices": [
+              [
+                2,
+                3,
+                10,
+                11,
+                13,
+                14,
+                15
+              ],
+              [
+                2,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                12,
+                13,
+                14
+              ]
+            ],
+            "target_full_diagonals": [
+              11093312,
+              13547840
+            ],
+            "next_source_full_diagonals": [
+              43340,
+              52916
+            ]
+          },
+          {
+            "edge": 2,
+            "target_diagonal_lengths": [
+              24,
+              25
+            ],
+            "next_source_diagonal_lengths": [
+              16,
+              17
+            ],
+            "full_cuts_equal": false,
+            "differing_overlap_indices": [
+              [
+                3,
+                5,
+                6,
+                7,
+                8,
+                9,
+                14
+              ],
+              [
+                4,
+                5,
+                6,
+                9,
+                10,
+                11,
+                12,
+                13
+              ]
+            ],
+            "target_full_diagonals": [
+              13997248,
+              10917055
+            ],
+            "next_source_full_diagonals": [
+              55080,
+              43727
+            ]
+          },
+          {
+            "edge": 3,
+            "target_diagonal_lengths": [
+              24,
+              25
+            ],
+            "next_source_diagonal_lengths": [
+              8,
+              9
+            ],
+            "full_cuts_equal": false,
+            "differing_overlap_indices": [
+              [
+                3,
+                4,
+                7
+              ],
+              [
+                5,
+                6,
+                7,
+                8
+              ]
+            ],
+            "target_full_diagonals": [
+              11065136,
+              13587759
+            ],
+            "next_source_full_diagonals": [
+              168,
+              207
+            ]
+          }
+        ],
+        "conclusion": "No potential of the declared finite features satisfies all genuine sampled edges. This check alone does not decide whether quotient edges concatenate into an infinite cone."
+      }
+    },
+    {
+      "features": {
+        "bottom": 3,
+        "top": 2,
+        "count": "parity"
+      },
+      "rule": 30,
+      "block_space": 8,
+      "feature_domain": "finite",
+      "states": 170,
+      "transitions": 1560,
+      "cycle": null
+    },
+    {
+      "features": {
+        "bottom": 3,
+        "top": 3,
+        "count": "none"
+      },
+      "rule": 30,
+      "block_space": 8,
+      "feature_domain": "finite",
+      "states": 45,
+      "transitions": 904,
+      "cycle": null
+    },
+    {
+      "features": {
+        "bottom": 4,
+        "top": 1,
+        "count": "parity"
+      },
+      "rule": 30,
+      "block_space": 8,
+      "feature_domain": "finite",
+      "states": 198,
+      "transitions": 1553,
+      "cycle": null
+    },
+    {
+      "features": {
+        "bottom": 4,
+        "top": 2,
+        "count": "none"
+      },
+      "rule": 30,
+      "block_space": 8,
+      "feature_domain": "finite",
+      "states": 101,
+      "transitions": 1308,
+      "cycle": null
+    },
+    {
+      "features": {
+        "bottom": 0,
+        "top": 2,
+        "count": "exact"
+      },
+      "rule": 30,
+      "block_space": 8,
+      "feature_domain": "unbounded exact counts",
+      "states": 101,
+      "transitions": 650,
+      "cycle": null
+    },
+    {
+      "features": {
+        "bottom": 1,
+        "top": 1,
+        "count": "exact"
+      },
+      "rule": 30,
+      "block_space": 8,
+      "feature_domain": "unbounded exact counts",
+      "states": 163,
+      "transitions": 1156,
+      "cycle": null
+    },
+    {
+      "features": {
+        "bottom": 2,
+        "top": 0,
+        "count": "exact"
+      },
+      "rule": 30,
+      "block_space": 8,
+      "feature_domain": "unbounded exact counts",
+      "states": 279,
+      "transitions": 1459,
+      "cycle": null
+    },
+    {
+      "features": {
+        "bottom": 2,
+        "top": 4,
+        "count": "parity"
+      },
+      "rule": 30,
+      "block_space": 8,
+      "feature_domain": "finite",
+      "states": 81,
+      "transitions": 1279,
+      "cycle": null
+    },
+    {
+      "features": {
+        "bottom": 3,
+        "top": 3,
+        "count": "parity"
+      },
+      "rule": 30,
+      "block_space": 8,
+      "feature_domain": "finite",
+      "states": 170,
+      "transitions": 1560,
+      "cycle": null
+    },
+    {
+      "features": {
+        "bottom": 3,
+        "top": 4,
+        "count": "none"
+      },
+      "rule": 30,
+      "block_space": 8,
+      "feature_domain": "finite",
+      "states": 45,
+      "transitions": 904,
+      "cycle": null
+    },
+    {
+      "features": {
+        "bottom": 4,
+        "top": 2,
+        "count": "parity"
+      },
+      "rule": 30,
+      "block_space": 8,
+      "feature_domain": "finite",
+      "states": 347,
+      "transitions": 1659,
+      "cycle": null
+    },
+    {
+      "features": {
+        "bottom": 4,
+        "top": 3,
+        "count": "none"
+      },
+      "rule": 30,
+      "block_space": 8,
+      "feature_domain": "finite",
+      "states": 101,
+      "transitions": 1308,
+      "cycle": null
+    },
+    {
+      "features": {
+        "bottom": 0,
+        "top": 3,
+        "count": "exact"
+      },
+      "rule": 30,
+      "block_space": 8,
+      "feature_domain": "unbounded exact counts",
+      "states": 101,
+      "transitions": 650,
+      "cycle": null
+    },
+    {
+      "features": {
+        "bottom": 1,
+        "top": 2,
+        "count": "exact"
+      },
+      "rule": 30,
+      "block_space": 8,
+      "feature_domain": "unbounded exact counts",
+      "states": 232,
+      "transitions": 1389,
+      "cycle": null
+    },
+    {
+      "features": {
+        "bottom": 2,
+        "top": 1,
+        "count": "exact"
+      },
+      "rule": 30,
+      "block_space": 8,
+      "feature_domain": "unbounded exact counts",
+      "states": 279,
+      "transitions": 1459,
+      "cycle": null
+    },
+    {
+      "features": {
+        "bottom": 3,
+        "top": 0,
+        "count": "exact"
+      },
+      "rule": 30,
+      "block_space": 8,
+      "feature_domain": "unbounded exact counts",
+      "states": 414,
+      "transitions": 1656,
+      "cycle": null
+    },
+    {
+      "features": {
+        "bottom": 3,
+        "top": 4,
+        "count": "parity"
+      },
+      "rule": 30,
+      "block_space": 8,
+      "feature_domain": "finite",
+      "states": 170,
+      "transitions": 1560,
+      "cycle": null
+    },
+    {
+      "features": {
+        "bottom": 4,
+        "top": 3,
+        "count": "parity"
+      },
+      "rule": 30,
+      "block_space": 8,
+      "feature_domain": "finite",
+      "states": 347,
+      "transitions": 1659,
+      "cycle": null
+    },
+    {
+      "features": {
+        "bottom": 4,
+        "top": 4,
+        "count": "none"
+      },
+      "rule": 30,
+      "block_space": 8,
+      "feature_domain": "finite",
+      "states": 101,
+      "transitions": 1308,
+      "cycle": null
+    },
+    {
+      "features": {
+        "bottom": 0,
+        "top": 4,
+        "count": "exact"
+      },
+      "rule": 30,
+      "block_space": 8,
+      "feature_domain": "unbounded exact counts",
+      "states": 101,
+      "transitions": 650,
+      "cycle": null
+    },
+    {
+      "features": {
+        "bottom": 1,
+        "top": 3,
+        "count": "exact"
+      },
+      "rule": 30,
+      "block_space": 8,
+      "feature_domain": "unbounded exact counts",
+      "states": 232,
+      "transitions": 1389,
+      "cycle": null
+    },
+    {
+      "features": {
+        "bottom": 2,
+        "top": 2,
+        "count": "exact"
+      },
+      "rule": 30,
+      "block_space": 8,
+      "feature_domain": "unbounded exact counts",
+      "states": 369,
+      "transitions": 1592,
+      "cycle": null
+    },
+    {
+      "features": {
+        "bottom": 3,
+        "top": 1,
+        "count": "exact"
+      },
+      "rule": 30,
+      "block_space": 8,
+      "feature_domain": "unbounded exact counts",
+      "states": 414,
+      "transitions": 1656,
+      "cycle": null
+    },
+    {
+      "features": {
+        "bottom": 4,
+        "top": 0,
+        "count": "exact"
+      },
+      "rule": 30,
+      "block_space": 8,
+      "feature_domain": "unbounded exact counts",
+      "states": 577,
+      "transitions": 1715,
+      "cycle": null
+    },
+    {
+      "features": {
+        "bottom": 4,
+        "top": 4,
+        "count": "parity"
+      },
+      "rule": 30,
+      "block_space": 8,
+      "feature_domain": "finite",
+      "states": 347,
+      "transitions": 1659,
+      "cycle": null
+    },
+    {
+      "features": {
+        "bottom": 1,
+        "top": 4,
+        "count": "exact"
+      },
+      "rule": 30,
+      "block_space": 8,
+      "feature_domain": "unbounded exact counts",
+      "states": 232,
+      "transitions": 1389,
+      "cycle": null
+    },
+    {
+      "features": {
+        "bottom": 2,
+        "top": 3,
+        "count": "exact"
+      },
+      "rule": 30,
+      "block_space": 8,
+      "feature_domain": "unbounded exact counts",
+      "states": 369,
+      "transitions": 1592,
+      "cycle": null
+    },
+    {
+      "features": {
+        "bottom": 3,
+        "top": 2,
+        "count": "exact"
+      },
+      "rule": 30,
+      "block_space": 8,
+      "feature_domain": "unbounded exact counts",
+      "states": 517,
+      "transitions": 1702,
+      "cycle": null
+    },
+    {
+      "features": {
+        "bottom": 4,
+        "top": 1,
+        "count": "exact"
+      },
+      "rule": 30,
+      "block_space": 8,
+      "feature_domain": "unbounded exact counts",
+      "states": 577,
+      "transitions": 1715,
+      "cycle": null
+    },
+    {
+      "features": {
+        "bottom": 2,
+        "top": 4,
+        "count": "exact"
+      },
+      "rule": 30,
+      "block_space": 8,
+      "feature_domain": "unbounded exact counts",
+      "states": 369,
+      "transitions": 1592,
+      "cycle": null
+    },
+    {
+      "features": {
+        "bottom": 3,
+        "top": 3,
+        "count": "exact"
+      },
+      "rule": 30,
+      "block_space": 8,
+      "feature_domain": "unbounded exact counts",
+      "states": 517,
+      "transitions": 1702,
+      "cycle": null
+    },
+    {
+      "features": {
+        "bottom": 4,
+        "top": 2,
+        "count": "exact"
+      },
+      "rule": 30,
+      "block_space": 8,
+      "feature_domain": "unbounded exact counts",
+      "states": 682,
+      "transitions": 1742,
+      "cycle": null
+    },
+    {
+      "features": {
+        "bottom": 3,
+        "top": 4,
+        "count": "exact"
+      },
+      "rule": 30,
+      "block_space": 8,
+      "feature_domain": "unbounded exact counts",
+      "states": 517,
+      "transitions": 1702,
+      "cycle": null
+    },
+    {
+      "features": {
+        "bottom": 4,
+        "top": 3,
+        "count": "exact"
+      },
+      "rule": 30,
+      "block_space": 8,
+      "feature_domain": "unbounded exact counts",
+      "states": 682,
+      "transitions": 1742,
+      "cycle": null
+    },
+    {
+      "features": {
+        "bottom": 4,
+        "top": 4,
+        "count": "exact"
+      },
+      "rule": 30,
+      "block_space": 8,
+      "feature_domain": "unbounded exact counts",
+      "states": 682,
+      "transitions": 1742,
+      "cycle": null
+    }
+  ],
+  "rule15_control": {
+    "verified": true,
+    "cycle_edges": 1,
+    "cycle_charge": -8,
+    "full_cut_seams": [
+      {
+        "edge": 0,
+        "target_diagonal_lengths": [
+          8,
+          9
+        ],
+        "next_source_diagonal_lengths": [
+          0,
+          1
+        ],
+        "full_cuts_equal": false,
+        "differing_overlap_indices": [
+          [],
+          []
+        ],
+        "target_full_diagonals": [
+          170,
+          170
+        ],
+        "next_source_full_diagonals": [
+          0,
+          0
+        ]
+      }
+    ],
+    "conclusion": "No potential of the declared finite features satisfies all genuine sampled edges. This check alone does not decide whether quotient edges concatenate into an infinite cone."
+  },
+  "nonpositive_population_obstruction": {
+    "initial_left": 129,
+    "start_depth": 8,
+    "end_depth": 16,
+    "charge": -8,
+    "source_populations": [
+      3,
+      6
+    ],
+    "target_populations": [
+      8,
+      7
+    ],
+    "conclusion": "For Phi=-alpha*wt(Dprev)-beta*wt(Dcurr), alpha,beta>=0, the local inequality is -8-5alpha-beta>=0, impossible. Equal-phase constants cancel."
+  },
+  "claim_limit": "Bounded genuine-edge samples can falsify a feature potential via a negative quotient cycle; no-cycle outcomes cannot certify any all-depth inequality."
+}

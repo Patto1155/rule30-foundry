@@ -1,0 +1,120 @@
+{
+  "claim_limit": "Exhaustive only for the named widths: seven bits/two updates, nine bits/three updates, and eleven bits/four updates. The search stops at the first failure of overlapping two-update coherence.",
+  "evidence": {
+    "first_obstruction_certificate": {
+      "compatible_nine_bit_originals_through_three_updates": [
+        "000000100",
+        "000000101",
+        "000000110",
+        "000000111"
+      ],
+      "first_two_updates_force_seven_bit_original": "0000001",
+      "forced_fourth_state_counts": {
+        "100": 10,
+        "110": 6
+      },
+      "four_bit_continuations_checked": 16,
+      "requested_fourth_state": "010",
+      "truth_table_contradiction": [
+        "The forced original 0000001 gives time-two prefix 00110de for some bits d,e.",
+        "At time three, positions 2,3,4 are 0, 1 XOR d, and d OR e.",
+        "Therefore fourth-state A is 0 XOR ((1 XOR d) OR d OR e) = 1, but state 010 requires A=0."
+      ],
+      "two_update_window_witnesses": [
+        [
+          "0000001"
+        ],
+        [
+          "0000100",
+          "0000101",
+          "0000110",
+          "0000111"
+        ],
+        [
+          "0011101",
+          "0011110",
+          "0011111"
+        ]
+      ]
+    },
+    "four_updates": {
+      "original_bit_width": 11,
+      "original_words_checked": 2048,
+      "realized_path_count": 208,
+      "spurious_path_count": 16,
+      "two_update_window_path_count": 224
+    },
+    "method": "direct Wolfram truth-table stepping of every bounded original word",
+    "three_updates": {
+      "original_bit_width": 9,
+      "original_words_checked": 512,
+      "realized_path_count": 100,
+      "spurious_path_count": 0,
+      "two_update_window_path_count": 100
+    },
+    "truth_table_controls": {
+      "rule15": {
+        "independently_composed_two_update_count": 8,
+        "one_update_relation_count": 8,
+        "rule": 15,
+        "shared_predecessor_two_update_count": 8,
+        "spurious_independent_walk_count": 0,
+        "spurious_independent_walks": []
+      },
+      "rule90": {
+        "independently_composed_two_update_count": 128,
+        "one_update_relation_count": 32,
+        "rule": 90,
+        "shared_predecessor_two_update_count": 128,
+        "spurious_independent_walk_count": 0,
+        "spurious_independent_walks": []
+      },
+      "scope": "Each control uses its own ECA truth table; no Rule 30 latch or boundary condition is imposed."
+    },
+    "two_updates": {
+      "independent_walk_count": 48,
+      "original_bit_width": 7,
+      "original_words_checked": 128,
+      "shared_predecessor_walk_count": 44
+    }
+  },
+  "experiment": "coherent-predecessor",
+  "gap": "Two-update predecessor coherence removes the four rowwise-spurious walks, but overlapping coherent windows can still resample older predecessors. This finite result does not establish a sufficient state for paths of unbounded duration or a cone-charge potential.",
+  "next_implication": "A sound temporal state must retain enough predecessor information to distinguish the 16 four-update obstructions; merely composing the 44 coherent two-update triples is insufficient.",
+  "result": {
+    "all_four_update_spurious_paths": [
+      "000->000->100->011->010",
+      "000->000->110->001->001",
+      "000->000->110->001->101",
+      "001->001->101->010->011",
+      "001->001->111->000->000",
+      "001->001->111->000->100",
+      "010->011->100->011->010",
+      "010->011->100->011->110",
+      "010->011->110->001->001",
+      "011->010->101->010->011",
+      "011->010->101->010->111",
+      "011->010->111->000->000",
+      "100->111->000->110->101",
+      "101->110->001->111->100",
+      "110->101->010->101->110",
+      "111->100->011->100->111"
+    ],
+    "lexicographically_first_four_update_spurious_path": "000->000->100->011->010",
+    "rule30_relations": {
+      "independently_composed_two_update_count": 48,
+      "one_update_relation_count": 20,
+      "rule": 30,
+      "shared_predecessor_two_update_count": 44,
+      "spurious_independent_walk_count": 4,
+      "spurious_independent_walks": [
+        "000->100->111",
+        "001->101->110",
+        "010->111->100",
+        "011->110->101"
+      ]
+    },
+    "shortest_tested_and_proved_failure_updates": 4,
+    "two_update_coherence_is_temporally_sufficient": false
+  }
+}

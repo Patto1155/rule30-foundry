@@ -1,0 +1,376 @@
+{
+  "target": "Prove a uniform finite upper bound on the first forced left one beyond any finite support radius; this excludes eventual period two.",
+  "train_max_support": 10,
+  "holdout_max_support": 16,
+  "constructed_depth": 64,
+  "rows": [
+    {
+      "support": 1,
+      "phase": 0,
+      "right_halves": 2,
+      "maximum_first_escape_depth": 7,
+      "extremizer_count": 1,
+      "saturated_count": 0
+    },
+    {
+      "support": 1,
+      "phase": 1,
+      "right_halves": 2,
+      "maximum_first_escape_depth": 3,
+      "extremizer_count": 1,
+      "saturated_count": 0
+    },
+    {
+      "support": 2,
+      "phase": 0,
+      "right_halves": 4,
+      "maximum_first_escape_depth": 7,
+      "extremizer_count": 1,
+      "saturated_count": 0
+    },
+    {
+      "support": 2,
+      "phase": 1,
+      "right_halves": 4,
+      "maximum_first_escape_depth": 6,
+      "extremizer_count": 1,
+      "saturated_count": 0
+    },
+    {
+      "support": 3,
+      "phase": 0,
+      "right_halves": 8,
+      "maximum_first_escape_depth": 7,
+      "extremizer_count": 1,
+      "saturated_count": 0
+    },
+    {
+      "support": 3,
+      "phase": 1,
+      "right_halves": 8,
+      "maximum_first_escape_depth": 6,
+      "extremizer_count": 2,
+      "saturated_count": 0
+    },
+    {
+      "support": 4,
+      "phase": 0,
+      "right_halves": 16,
+      "maximum_first_escape_depth": 7,
+      "extremizer_count": 2,
+      "saturated_count": 0
+    },
+    {
+      "support": 4,
+      "phase": 1,
+      "right_halves": 16,
+      "maximum_first_escape_depth": 6,
+      "extremizer_count": 4,
+      "saturated_count": 0
+    },
+    {
+      "support": 5,
+      "phase": 0,
+      "right_halves": 32,
+      "maximum_first_escape_depth": 9,
+      "extremizer_count": 7,
+      "saturated_count": 0
+    },
+    {
+      "support": 5,
+      "phase": 1,
+      "right_halves": 32,
+      "maximum_first_escape_depth": 7,
+      "extremizer_count": 10,
+      "saturated_count": 0
+    },
+    {
+      "support": 6,
+      "phase": 0,
+      "right_halves": 64,
+      "maximum_first_escape_depth": 10,
+      "extremizer_count": 11,
+      "saturated_count": 0
+    },
+    {
+      "support": 6,
+      "phase": 1,
+      "right_halves": 64,
+      "maximum_first_escape_depth": 8,
+      "extremizer_count": 17,
+      "saturated_count": 0
+    },
+    {
+      "support": 7,
+      "phase": 0,
+      "right_halves": 128,
+      "maximum_first_escape_depth": 10,
+      "extremizer_count": 67,
+      "saturated_count": 0
+    },
+    {
+      "support": 7,
+      "phase": 1,
+      "right_halves": 128,
+      "maximum_first_escape_depth": 9,
+      "extremizer_count": 49,
+      "saturated_count": 0
+    },
+    {
+      "support": 8,
+      "phase": 0,
+      "right_halves": 256,
+      "maximum_first_escape_depth": 15,
+      "extremizer_count": 3,
+      "saturated_count": 0
+    },
+    {
+      "support": 8,
+      "phase": 1,
+      "right_halves": 256,
+      "maximum_first_escape_depth": 10,
+      "extremizer_count": 9,
+      "saturated_count": 0
+    },
+    {
+      "support": 9,
+      "phase": 0,
+      "right_halves": 512,
+      "maximum_first_escape_depth": 17,
+      "extremizer_count": 1,
+      "saturated_count": 0
+    },
+    {
+      "support": 9,
+      "phase": 1,
+      "right_halves": 512,
+      "maximum_first_escape_depth": 16,
+      "extremizer_count": 21,
+      "saturated_count": 0
+    },
+    {
+      "support": 10,
+      "phase": 0,
+      "right_halves": 1024,
+      "maximum_first_escape_depth": 17,
+      "extremizer_count": 2,
+      "saturated_count": 0
+    },
+    {
+      "support": 10,
+      "phase": 1,
+      "right_halves": 1024,
+      "maximum_first_escape_depth": 16,
+      "extremizer_count": 43,
+      "saturated_count": 0
+    },
+    {
+      "support": 11,
+      "phase": 0,
+      "right_halves": 2048,
+      "maximum_first_escape_depth": 17,
+      "extremizer_count": 4,
+      "saturated_count": 0
+    },
+    {
+      "support": 11,
+      "phase": 1,
+      "right_halves": 2048,
+      "maximum_first_escape_depth": 16,
+      "extremizer_count": 85,
+      "saturated_count": 0
+    },
+    {
+      "support": 12,
+      "phase": 0,
+      "right_halves": 4096,
+      "maximum_first_escape_depth": 17,
+      "extremizer_count": 7,
+      "saturated_count": 0
+    },
+    {
+      "support": 12,
+      "phase": 1,
+      "right_halves": 4096,
+      "maximum_first_escape_depth": 16,
+      "extremizer_count": 169,
+      "saturated_count": 0
+    },
+    {
+      "support": 13,
+      "phase": 0,
+      "right_halves": 8192,
+      "maximum_first_escape_depth": 17,
+      "extremizer_count": 909,
+      "saturated_count": 0
+    },
+    {
+      "support": 13,
+      "phase": 1,
+      "right_halves": 8192,
+      "maximum_first_escape_depth": 16,
+      "extremizer_count": 872,
+      "saturated_count": 0
+    },
+    {
+      "support": 14,
+      "phase": 0,
+      "right_halves": 16384,
+      "maximum_first_escape_depth": 20,
+      "extremizer_count": 504,
+      "saturated_count": 0
+    },
+    {
+      "support": 14,
+      "phase": 1,
+      "right_halves": 16384,
+      "maximum_first_escape_depth": 19,
+      "extremizer_count": 112,
+      "saturated_count": 0
+    },
+    {
+      "support": 15,
+      "phase": 0,
+      "right_halves": 32768,
+      "maximum_first_escape_depth": 22,
+      "extremizer_count": 220,
+      "saturated_count": 0
+    },
+    {
+      "support": 15,
+      "phase": 1,
+      "right_halves": 32768,
+      "maximum_first_escape_depth": 21,
+      "extremizer_count": 1584,
+      "saturated_count": 0
+    },
+    {
+      "support": 16,
+      "phase": 0,
+      "right_halves": 65536,
+      "maximum_first_escape_depth": 26,
+      "extremizer_count": 101,
+      "saturated_count": 0
+    },
+    {
+      "support": 16,
+      "phase": 1,
+      "right_halves": 65536,
+      "maximum_first_escape_depth": 24,
+      "extremizer_count": 508,
+      "saturated_count": 0
+    }
+  ],
+  "combined_escape_depth_by_support": [
+    [
+      1,
+      7
+    ],
+    [
+      2,
+      7
+    ],
+    [
+      3,
+      7
+    ],
+    [
+      4,
+      7
+    ],
+    [
+      5,
+      9
+    ],
+    [
+      6,
+      10
+    ],
+    [
+      7,
+      10
+    ],
+    [
+      8,
+      15
+    ],
+    [
+      9,
+      17
+    ],
+    [
+      10,
+      17
+    ],
+    [
+      11,
+      17
+    ],
+    [
+      12,
+      17
+    ],
+    [
+      13,
+      17
+    ],
+    [
+      14,
+      20
+    ],
+    [
+      15,
+      22
+    ],
+    [
+      16,
+      26
+    ]
+  ],
+  "linear_bound_candidates": [
+    {
+      "slope": 1,
+      "intercept": 8,
+      "train_survives": true,
+      "holdout_survives": false,
+      "first_holdout_counterexample": {
+        "support": 16,
+        "phase": 0,
+        "right_halves": 65536,
+        "maximum_first_escape_depth": 26,
+        "extremizer_count": 101,
+        "saturated_count": 0
+      }
+    },
+    {
+      "slope": 2,
+      "intercept": 5,
+      "train_survives": true,
+      "holdout_survives": true,
+      "first_holdout_counterexample": null
+    },
+    {
+      "slope": 3,
+      "intercept": 4,
+      "train_survives": true,
+      "holdout_survives": true,
+      "first_holdout_counterexample": null
+    },
+    {
+      "slope": 4,
+      "intercept": 3,
+      "train_survives": true,
+      "holdout_survives": true,
+      "first_holdout_counterexample": null
+    }
+  ],
+  "affine_spatial_recurrence_candidates": [],
+  "quadratic_spatial_recurrence_search": {
+    "train_support": 8,
+    "holdout_support": 12,
+    "maximum_memory": 12,
+    "candidates": []
+  },
+  "verdict": "Finite exact data only. A linear law surviving holdout is a proof target, not a theorem. No common affine or quadratic recurrence means only that these deliberately small induction languages failed.",
+  "prize_ceiling": "A proved bound would exclude eventual period two for every finite Rule 30 configuration. Periods at least three would remain open."
+}

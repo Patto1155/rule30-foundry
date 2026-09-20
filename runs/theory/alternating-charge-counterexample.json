@@ -1,0 +1,140 @@
+{
+  "experiment": "alternating-charge-counterexample",
+  "map": "T_b(n)=(n>>1) XOR (n OR ((n<<1) OR b)); G=T_1(T_0(n))",
+  "witness": {
+    "n": 4329177217,
+    "hex": "0x1020a0081",
+    "support_zero_based": [
+      0,
+      7,
+      17,
+      19,
+      25,
+      32
+    ],
+    "weight": 6,
+    "first_failure_macrotime_q": 26,
+    "four_weight": 24,
+    "q_minus_four_weight": 2,
+    "truth_table_latch_replay": {
+      "24": true,
+      "25": true,
+      "26": true,
+      "27": false
+    },
+    "free_boundary_s_26": 53177130,
+    "free_boundary_s_26_lsb_first": "01010100110101101101010011",
+    "prefix_charges": {
+      "N_50": -2,
+      "N_52": -4
+    }
+  },
+  "highest_one_deletion": {
+    "deleted_bit": 32,
+    "parent": 34209921,
+    "parent_hex": "0x20a0081",
+    "parent_support_zero_based": [
+      0,
+      7,
+      17,
+      19,
+      25
+    ],
+    "parent_weight": 5,
+    "parent_q": 16,
+    "q_jump": 10,
+    "parent_unused_four_weight_credit": 4,
+    "child_four_weight_deficit": -2,
+    "arrival_macrotime": 16,
+    "child_arrival_state": 28875227468111412858,
+    "child_arrival_residue_mod_4": 2,
+    "parent_arrival_state": 226198391617954959,
+    "parent_arrival_residue_mod_4": 3
+  },
+  "fixed_weight_six_theorem": {
+    "rule": 30,
+    "weight_cap": 6,
+    "first_failure_bound": 26,
+    "initial_cone_bits": 54,
+    "surviving_prefix_counts": [
+      2,
+      4,
+      8,
+      16,
+      31,
+      52,
+      50,
+      51,
+      51,
+      52,
+      59,
+      53,
+      59,
+      51,
+      43,
+      30,
+      30,
+      27,
+      22,
+      9,
+      8,
+      3,
+      2,
+      1,
+      1,
+      1,
+      0
+    ],
+    "verified_bound": true,
+    "witness_surviving_bound_latches": 4329177217,
+    "sharp": true,
+    "scope": "Finite certificate at a fixed weight, unrestricted support width; no assertion that such a bound exists for every weight."
+  },
+  "negative_controls": {
+    "rule_15": {
+      "rule": 15,
+      "weight_cap": 0,
+      "first_failure_bound": 8,
+      "initial_cone_bits": 18,
+      "surviving_prefix_counts": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "verified_bound": false,
+      "witness_surviving_bound_latches": 0,
+      "sharp": false,
+      "scope": "Finite certificate at a fixed weight, unrestricted support width; no assertion that such a bound exists for every weight."
+    },
+    "rule_90": {
+      "rule": 90,
+      "weight_cap": 0,
+      "first_failure_bound": 8,
+      "initial_cone_bits": 18,
+      "surviving_prefix_counts": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "verified_bound": false,
+      "witness_surviving_bound_latches": 0,
+      "sharp": false,
+      "scope": "Finite certificate at a fixed weight, unrestricted support width; no assertion that such a bound exists for every weight."
+    },
+    "scope": "Rule 15 has a genuine zero-left alternating fibre.  For Rule 90, the zero word passes only the necessary left-cone constraints; no full alternating fibre is asserted."
+  },
+  "conclusion": "The witness has q=26>4*weight=24.  Its valid 50- and 52-bit prefixes have charges -2 and -4, refuting 8W_N-N>=-1.  Exact locality-complete enumeration also proves q<=26 for every ordinary integer of weight at most six, so this fixed-weight maximum is sharp.",
+  "claim_limit": "This refutes the zero-additive-constant charge bound.  It does not refute q(n)<=4*weight(n)+C for C>=2 or any eventual-alternation claim."
+}

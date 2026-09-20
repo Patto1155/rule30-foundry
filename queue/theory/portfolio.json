@@ -1,0 +1,143 @@
+{
+  "goal": "Spend the lead agent's next hour on the proof obligation with the best expected conditional theorem per hour, not on the cheapest available experiment. Every card must state the all-length bridge it closes or the bridge it is explicitly missing. Restatements of Prize 1 and routes closed in docs/theory/README.md section 4 are not admissible.",
+  "settled": [
+    "Prize 1 is exactly irrationality of sum c_n x^n over F_2(x); automaticity and the 2-kernel are strictly stronger and bear on Prize 3 only.",
+    "'Right-special factor at every length' is Prize 1 restated at equal strength, not a reduction.",
+    "Centre-column automaticity does NOT imply bounded diagonal period; that bridge is closed and unrepairable at that hypothesis strength.",
+    "Every left diagonal is eventually periodic and settle(d) ~ 1.3389 d, so the centre column is unsettled at every horizon and the settled wedge is disjoint from the prize object.",
+    "Left-diagonal periods are unbounded; the period-16 conjecture is refuted.",
+    "GF(2) linear complexity L(n)=n/2 is maximal; no LFSR shortcut. No annihilator of degree <=3 to w=64, nor degree <=4 to w=32.",
+    "Uniform Bernoulli is invariant, so Prize 2 is trivial for random ICs and its entire difficulty is the single seed.",
+    "s*(n) for base-2 MSD DFAOs is exact at 48,52,56,64 (12,12,13,15). Finite exclusions; s*(64)=15 says nothing about bit 65.",
+    "Algebraic complexity C*(N) over F_2(x) is maximal on the centre to N=1024, inside the 7-seed null band, against an 85x-separated Thue-Morse control.",
+    "No eventual period p <= 5,000,000 in the first 10M bits, decided exactly, 0 survivors.",
+    "Condrey 2026 (preprint, primary source read) Cor. 5: no column of a nonzero finite Rule 30 orbit is eventually constant. The eventually-one half is Jen 1986 Thm 7a and Condrey disclaims novelty for it.",
+    "Kopra 2023 TCS 946 Thm 3.5 gives the width-2 theorem (no two adjacent columns both eventually periodic) and records width 1 as open, Problem 4.8.",
+    "Monotone latch (cycle 1, this session): at every step where the centre is 0, column +1 is non-decreasing (r_{t+1} = r_t OR a(t,2)); column +1 can fall only at a 1-phase.",
+    "The 0-phase residue of column +1 is NOT a function of any centre window up to 25 bits (constructive collisions); local prediction cannot close the latch-descent lemma.",
+    "Condrey's published p=1 horizon table (w=1..7, both extremizer counts) independently reproduced in this repo.",
+    "H(2,w) growth does NOT close the horizon method: H(1,w) = w + 2 is linear too. The alternating horizon is finite at every radius to w=10 (7,7,7,7,9,10,10,15,17,17). Condrey section 5's stated reason for the method failing at p=2 does not separate the cases; his conclusion that a structural account is still open is unaffected.",
+    "A lemma 'P implies Q' bridged by a theorem forbidding P and Q together is EQUIVALENT to not-P once that theorem is admitted. latch-descent is such a card and is parked as a reformulation, not ranked as a reduction."
+  ],
+  "obligations": [
+    {
+      "id": "latch-descent",
+      "prize": "1",
+      "status": "parked",
+      "lemma": "If the centre column c of the single-seed Rule 30 orbit is eventually periodic with period p, then column -1 of that same orbit is eventually periodic.",
+      "implication": "Prize 1 for every period at once, via the width-2 theorem (Kopra 2023 Thm 3.5, attributed there to Jen 1990 Prop. 3). RE-GRADED: this is a reformulation at equal strength relative to that theorem, not a reduction -- see bridge. What it adds over the other known reformulations is a located work site and one new constraint, not an easier target.",
+      "bridge": "COMPLETE as an implication, but RE-GRADED after outside review (gpt-5.6-sol via tools/council.py, 2026-09-18): the bridge is valid and the card is NOT a reduction. Write P for 'the centre column is eventually periodic', Q for 'column -1 is', and T for the width-2 theorem, which forbids P and Q together. The lemma is P => Q. Then T + lemma gives not-P, which is Prize 1; but not-P also gives the lemma vacuously. So GIVEN T, the lemma is EQUIVALENT to Prize 1, exactly as 'a right-special factor at every length' is. Standalone the lemma is strictly weaker than Prize 1 (not-P implies it, it does not imply not-P), and it acquires equal strength the moment T is admitted -- which the bridge must do. Admissible as a reformulation, worthless as a reduction, and it must be graded at equal strength.",
+      "missing_lemma": "Control of the 0-phases, now sharpened by cycle 1. Where c_t = 1 the OR latches and l_t = 1 XOR c_{t+1} is free. Where c_t = 0, l_t = c_{t+1} XOR r_t. Cycle 1 proved the residue r is NOT a bounded-window function of c up to 25 bits, so the lemma cannot be closed by local prediction and must instead be closed by a global argument. The one structural handle found is the monotone latch: across 0-phases r only rises, and falls only at 1-phases. The open statement is now: assuming c eventually p-periodic, does the monotone-latch constraint force r on the 0-phases to be eventually periodic?",
+      "refutation": "Exhibit a nonzero finite-support Rule 30 configuration whose column 0 is eventually periodic with p >= 2 while column -1 is not. Cheaper first screen, already tooled: experiments/periodic_strip_graph.py and experiments/period_word_sieve.py decide the same implication on finite open strips, where the repo has already found it FAILS under free boundaries. That does not refute the lemma but fixes its cost: any proof must use finite support, not local dynamics alone.",
+      "falsifier_cost": "Claude: hours, and it is now symbolic rather than computational. Compute: SPENT. The window probe is exhausted at W=25 on a 60k prefix and the reachable width grows only as 2*log2(T), so more steps buy almost nothing. Verification: existing probe, exact, with two calibrated positive controls and a random null.",
+      "stop": "PARKED as of cycle 3 on the restatement finding. Do not spend lead hours on it as though it were a reduction. Re-open only if the 0-phase analysis generalises to a statement with independent content for other seeds or columns -- that would change the target, which is the only thing that turns this into a genuine reduction.",
+      "mechanism_check": {
+        "algebra-already-gives-it": "Left-permutivity and sideways determinism give the identity l_t = c_{t+1} XOR (c_t OR r_t) for free, and this card uses exactly that; what is NOT given for free is the 0-phase residue, which is where the whole open content sits.",
+        "ensemble-not-orbit": "The lemma is stated for the single seed orbit and the bridge theorem is applied to that one orbit. The trace subshift over all configurations is the full shift and is deliberately not used anywhere in the argument.",
+        "finite-exclusion-as-asymptotic": "The deliverable is an implication valid for all t, not a prefix measurement; the finite strip work is used only to price the proof and is recorded as a bounded finding about free boundaries, never as evidence about the seed.",
+        "prize-restatement": "This card FAILS this mechanism and is filed as failing it. The bridge theorem forbids the hypothesis and the conclusion together, so the lemma is equivalent to Prize 1 once that theorem is admitted, by the vacuous direction. It is kept in the portfolio as a reformulation with a located work site (the 0-phases) and a new structural constraint (the monotone latch), and it is parked rather than ranked, because a restatement must never be ranked as though it were easier than the prize."
+      },
+      "progress": "CYCLE 1 (2026-09-18, experiments/latch_descent_probe.py, 60k steps, CPU seconds). Three results. (a) The sideways identity holds exactly: 0 violations in 60,000 positions, so column -1 is pinned by column 0 alone at every 1-phase, which is 50.155% of positions. Half the lemma is free. (b) NEW SUB-LEMMA, theorem-shaped with a one-line proof from the rule at i=1: r_{t+1} = c_t XOR (r_t OR a(t,2)), so whenever c_t = 0 we get r_{t+1} = r_t OR a(t,2) >= r_t. Column +1 is non-decreasing across every 0-phase step and can fall only at a 1-phase of the centre. Verified: 0 drops in 29,907 zero-phase steps on the seed orbit, 0 drops over all 2,723 nonzero configurations of support radius <= 5. (c) THE CHEAPEST PROOF STRATEGY IS DEAD. 'Show the 0-phase residue r is a function of a bounded window of c' is refuted constructively at every window width from 1 to 25 bits (explicit collisions: two 0-phase times with identical centre windows and different r). This is an exact exclusion, not a search that came back empty. Above 25 bits the 60k prefix has no repeated window at all, so a clean answer is FORCED for any sequence and the probe refuses to report it as evidence. The reachable width grows only as 2*log2(T), so compute is spent here: W=41 would need ~1.5M steps at O(T^2) cost. Side observation, not a claim: centre collision counts run below the random null (9,946 vs 14,936 at W=5), which the monotone latch in (b) already explains."
+    },
+    {
+      "id": "nonconstant-periodic-trace",
+      "prize": "1",
+      "status": "open",
+      "lemma": "No nonzero finite-support Rule 30 configuration has an eventually periodic centre trace of nonconstant period, starting with period 2.",
+      "implication": "PARTIAL, and the residue must be stated. Excluding p = 2 alone leaves every p >= 3 open and is therefore not Prize 1; Prize 1 needs the exclusion for all periods. What makes the rung worth climbing is that p = 1 is already a theorem (Condrey Cor. 5) and Kari's suggestion, recorded in Condrey section 5, is exactly the full nonconstant family.",
+      "bridge": "INCOMPLETE. p=1 settled, p=2 open, p>=3 untouched. There is no known uniform argument over p, and the obvious one is now known not to exist (see progress). Reaching all periods from a bounded sweep is also blocked from the other side: RS(N) failing would mean an eventual period at most 2^N, so the length ladder costs exponentially more than it returns.",
+      "missing_lemma": "A classification of the ALTERNATING-trace fiber, the exact analogue of Condrey's Theorems 2 and 3 for the constant fibers: for a prescribed right half, which left halves give an eventually alternating centre trace, and does every nonzero member carry infinitely many ones? Cycle 3 removed the reason to think the machinery is unavailable; the classification itself is still absent.",
+      "refutation": "Find a nonzero finite configuration with an eventually period-2 centre trace. Cheap exact screen: exhaustive enumeration over small support radius, which is also the direct numerical test of whether the sharp-horizon law extends.",
+      "falsifier_cost": "Claude: days, symbolic, but now with a working method and measured data points to aim at. Compute: seconds to minutes; the enumerator exists and reproduces the published p=1 table, and extending it to larger radius is cheap. Verification: exhaustive enumeration with a published table as the positive control.",
+      "stop": "Stop if a finite row with an unbounded alternating trace is found at any radius -- that would close the method for real, unlike growth. Stop if the alternating fiber cannot be classified on paper after one session. Do NOT stop merely because the horizon grows; cycle 3 established that growth decides nothing.",
+      "mechanism_check": {
+        "finite-exclusion-as-asymptotic": "A bounded-radius enumeration is recorded as a bounded finding about small support, and the asymptotic content is carried only by a fiber classification valid at every radius, exactly as Condrey's p=1 argument is.",
+        "ensemble-not-orbit": "Finite-support configurations are a sharply restricted class containing the lone seed, not an average over initial conditions, and the lone seed is a member, so a theorem here applies to the prize object directly.",
+        "prize-restatement": "This card escapes the mechanism because it is a strictly PARTIAL exclusion, not an equivalent form: excluding eventual period 2 leaves every period at least 3 open, so proving it does not prove Prize 1 and is not implied by Prize 1 being false in any vacuous direction. The residue is stated in the implication rather than hidden, and the p=1 rung is already a published theorem rather than a reformulation."
+      },
+      "progress": "CYCLE 2 (2026-09-18, experiments/period_two_horizon.py, CPU seconds). The horizon sub-route is CLOSED, and the closure is checked rather than believed. (a) POSITIVE CONTROL PASSES: the implementation reproduces Condrey's published p=1 appendix table exactly for w=1..7, both maximum horizon indices and both extremizer counts (2^w - 1 for centre 0, 2^w for centre 1), and extends it to w=8 (H0=8 count 255, H1=9 count 256), consistent with Corollary 8. An implementation that could not reproduce a sharp published law would not have earned the right to report a new one. (b) H(2,w) GROWS: exhaustive over every nonzero row of support radius w, the longest alternating centre prefix is 7,7,7,7,9,10,10,15 for w=1..8, non-decreasing and rising. So no bounded law at p=2 exists and the p=1 fiber-plus-horizon argument does not generalise. This is not merely measured: Condrey section 5 gives the one-line reason, and it is the repo's own sideways determinism -- left permutivity supplies a unique left half for any prescribed trace of length N, hence a finite row of radius about N realising it through time N, so H(2,w) >= w for every w. The enumeration corroborates a theorem; it does not carry the no-go on its own. CONSEQUENCE: this card keeps its lemma but loses its method. Do not build on horizons. CYCLE 3 CORRECTION, from outside review (gpt-5.6-sol via tools/council.py) and re-measured to radius 10: THE HORIZON ROUTE IS NOT CLOSED AND CYCLE 2's VERDICT WAS WRONG. The reason Condrey section 5 gives for the method failing at p=2 -- left permutivity forces H(2,w) >= w, so 'no bounded law can exist' -- does not separate the cases, because the p=1 law the same paper proves, H(1,w) = w + 2, is itself linear in w and also at least w. A linear lower bound is compatible with precisely the finite sharp horizon the p=1 proof uses. Measured to radius 10 with no saturation, the alternating horizon is FINITE at every radius: prefix lengths 7,7,7,7,9,10,10,15,17,17 for w=1..10, against w+2 = 3..12, a ratio between 1.11 and 1.55. Same shape, different slope. What would actually close the method is a finite row with an infinite alternating trace, and none exists up to radius 10. So this card is UPGRADED: the method is live and nobody has computed its law."
+    },
+    {
+      "id": "or-latch-obstruction",
+      "prize": "none",
+      "status": "open",
+      "lemma": "The OR latch in a(t,i) XOR (a(t,i) OR a(t,i+1)) is the exact and only point at which the Rule 90 closed-form analysis fails for Rule 30: the quadratic term is not removable by any change of variables over F_2 that preserves the trace.",
+      "implication": "NONE directly, and it is filed honestly as prize 'none'. Its value is that it is an input to latch-descent and nonconstant-periodic-trace rather than a competitor: both need a separating ingredient, and permutivity provably cannot be it, since Rule 90 is left permutive too and its centre column from the identical single-cell seed IS eventually periodic.",
+      "bridge": "EXPLICITLY MISSING. Locating a barrier is not proving a lower bound. A located obstruction buys a transfer attempt or a barrier argument; it buys no prize.",
+      "missing_lemma": "A statement of what the latch does that an additive rule cannot, strong enough to be used as a hypothesis by another card.",
+      "refutation": "Carry the Rule 90 derivation through symbolically and find the obstruction elsewhere, or find a change of variables over F_2 that removes the quadratic term while preserving the centre trace.",
+      "falsifier_cost": "Claude: hours, symbolic. Compute: none. Verification: a derivation another agent can check line by line, plus small exhaustive checks of any claimed change of variables.",
+      "stop": "Stop if the obstruction turns out to be removable, or if after one session the statement is still too weak for either consuming card to use as a hypothesis.",
+      "mechanism_check": {
+        "algebra-already-gives-it": "The theory gate derives permutivity, sideways determinism and Bernoulli invariance from the same normal form but nowhere locates the Rule 90 obstruction, so this is new symbolic work rather than a re-measurement of a theorem.",
+        "finite-exclusion-as-asymptotic": "The deliverable is a symbolic derivation valid at every t, and any computation used is a check on a candidate change of variables rather than evidence for the claim itself."
+      }
+    },
+    {
+      "id": "christol-transcendence",
+      "prize": "3",
+      "status": "open",
+      "lemma": "The generating function f(x) = sum c_n x^n of the single-seed centre column is transcendental over F_2(x).",
+      "implication": "Prize 3 only. Over a finite field, eventual periodicity is rationality, so Prize 1 is the D=1 case and algebraicity is strictly stronger than Prize 1 needs. Transcendence removes automatic-sequence shortcuts from Prize 3 in base 2 and nothing more.",
+      "bridge": "EXPLICITLY MISSING at the asymptotic step. No finite N proves transcendence. The only asymptotic content the instrument can carry is the SHAPE of the C*(N) curve against a null and a working positive control, and a shape is not a proof.",
+      "missing_lemma": "Any argument that turns growth of C*(N) over a finite range into a statement about all N. None is known, and this is the card's real cost.",
+      "refutation": "experiments/algebraic_relation.py finds a bounded-degree relation that extrapolates onto held-out coefficients. The instrument is calibrated: it independently recovers the textbook Thue-Morse relation (D=2, E=3, C*=12) and that budget plateaus from N=256 to N=8192.",
+      "falsifier_cost": "Claude: low. Compute: the next rung past N=1024 needs a packed-word or GPU rank because elimination is O(N^3/64); hours of engineering, not minutes. Verification: self-test plus the independent numpy rank cross-check.",
+      "stop": "Stop if the centre curve leaves the null band in either direction, or if one more rung of N costs more than a day of engineering for no change in curve shape.",
+      "mechanism_check": {
+        "forced-outcome": "A fit is forced whenever C=(D+1)(E+1) exceeds N, so the instrument never reports a bare negative: it reports the minimal budget C*(N) as a curve against a random null and a Thue-Morse positive control, and additionally requires extrapolation onto coefficients that took no part in the fit, which no parameter count forces.",
+        "finite-exclusion-as-asymptotic": "Every single point is recorded as a bounded finding and the card states outright that no finite N proves transcendence, so the asymptotic claim is marked missing rather than smuggled in through the curve."
+      },
+      "quantitative": {
+        "class": "algebraic-relation",
+        "degree": 16,
+        "ext_degree": 16,
+        "n": 8192,
+        "evidence": "curve-shape",
+        "sizes": [
+          1024,
+          2048,
+          4096,
+          8192
+        ],
+        "controls": [
+          "random",
+          "thue-morse"
+        ]
+      },
+      "progress": "2026-09-18: C*(N) measured, centre MAXIMAL and inside the 7-seed null band at 4 of 4 lengths to N=1024, Thue-Morse separated by 85x, cross-checked by independent numpy rank. Lemma unrefuted; next rung blocked on a packed-word or GPU rank."
+    },
+    {
+      "id": "unsettled-core-lower-bound",
+      "prize": "3",
+      "status": "open",
+      "lemma": "Any description of the unsettled core of the light cone supporting O(polylog t) random access to the centre column requires Omega(t) bits.",
+      "implication": "Prize 3 restricted to the only region that matters: the settled wedge is proved O(t)-describable and disjoint from the centre column, so a lower bound on the core is the whole of Prize 3 for cone-based methods.",
+      "bridge": "COMPLETE as a reduction, because settle(T) ~ 1.34T > T puts the centre in the core at every horizon. The bridge is not the problem with this card.",
+      "missing_lemma": "Everything. This is an unconditional description-size lower bound, and the repo has no technique for one; entropy and zlib measurements against a matched control are consistent with the lemma but cannot prove it, since an instrument that fails to find structure has not shown there is none.",
+      "refutation": "Exhibit a sub-linear description of the core that reproduces centre bits, or show core block entropy falls below the matched random control at any scale. Measured: pre-settle block-entropy rate >= 0.9975 against 0.99961 for control.",
+      "falsifier_cost": "Claude: high, with no known technique to spend it on. Compute: measurement is cheap but proves nothing. Verification: none available for the lemma itself.",
+      "stop": "Park now. Re-open only if some other card supplies a technique for description-size lower bounds; do not spend thinking time on it in the meantime.",
+      "mechanism_check": {
+        "disjoint-from-prize-object": "The core is by construction the region the centre column lives in, since settle(T) about 1.34T exceeds T at every horizon, so the centre never enters the settled wedge and the object does intersect the prize object.",
+        "ensemble-not-orbit": "The quantity is measured on the single seed light cone and is never averaged or perturbed over initial conditions, so it is a property of the prize orbit."
+      }
+    },
+    {
+      "id": "centre-density-positive",
+      "prize": "2",
+      "status": "open",
+      "lemma": "Both symbols occur with positive lower density in the single-seed centre column.",
+      "implication": "PARTIAL for Prize 2, and the residue is most of the problem. Prize 2 asks for density exactly 1/2; positive lower density is the rung above 'not eventually constant', which Condrey Cor. 5 already gives as a theorem. It would be the first Prize 2 statement about the single seed that is not an ensemble fact.",
+      "bridge": "EXPLICITLY MISSING. Positive lower density does not imply density 1/2 and there is no known route from one to the other for this object. Bernoulli invariance is an ensemble theorem and is barred from the bridge by the prize object rule.",
+      "missing_lemma": "Any combinatorial control on run lengths in the centre column that does not already assume the conclusion.",
+      "refutation": "Measure the longest run and the running density against a matched random null. Existing evidence: bias < 0.05% over 10M bits, which is where the lemma predicts and therefore has no discriminating power.",
+      "falsifier_cost": "Claude: high. Compute: cheap and uninformative. Verification: none for the lemma; the finite measurement verifies only itself.",
+      "stop": "Park. The finite evidence already sits where the lemma predicts, so no measurement moves it; re-open only with a technique, not with more bits.",
+      "mechanism_check": {
+        "ensemble-not-orbit": "Uniform Bernoulli invariance makes Prize 2 trivial for random ICs, so the card states the lemma about the one seed orbit and explicitly bars the ensemble theorem from the bridge rather than quoting it as progress.",
+        "finite-exclusion-as-asymptotic": "A density measured on 10M bits is a bounded finding about 10M bits; the card records that the finite evidence has no discriminating power against the lemma and therefore cannot be read as the asymptotic claim."
+      }
+    }
+  ]
+}

@@ -1,0 +1,2322 @@
+{
+  "experiment": "periodic-fiber-survivor-bdd",
+  "target": "01",
+  "max_support": 16,
+  "depth": 64,
+  "profiles": [
+    {
+      "rule": 30,
+      "support": 1,
+      "phase": 0,
+      "right_halves": 2,
+      "verification_mismatches": 0,
+      "escape_depth": 7,
+      "right_censored": false,
+      "last_nonempty_constraints": 5,
+      "last_nonempty_survivors": 1,
+      "survivor_counts": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        0
+      ],
+      "natural_order_robdd": {
+        "order": [
+          0
+        ],
+        "root_is_terminal": false,
+        "root_terminal_value": null,
+        "nonterminal_nodes": 1,
+        "max_layer_width": 1,
+        "layer_widths": [
+          1
+        ]
+      },
+      "reverse_order_robdd": {
+        "order": [
+          0
+        ],
+        "root_is_terminal": false,
+        "root_terminal_value": null,
+        "nonterminal_nodes": 1,
+        "max_layer_width": 1,
+        "layer_widths": [
+          1
+        ]
+      }
+    },
+    {
+      "rule": 30,
+      "support": 1,
+      "phase": 1,
+      "right_halves": 2,
+      "verification_mismatches": 0,
+      "escape_depth": 3,
+      "right_censored": false,
+      "last_nonempty_constraints": 1,
+      "last_nonempty_survivors": 1,
+      "survivor_counts": [
+        1,
+        0
+      ],
+      "natural_order_robdd": {
+        "order": [
+          0
+        ],
+        "root_is_terminal": false,
+        "root_terminal_value": null,
+        "nonterminal_nodes": 1,
+        "max_layer_width": 1,
+        "layer_widths": [
+          1
+        ]
+      },
+      "reverse_order_robdd": {
+        "order": [
+          0
+        ],
+        "root_is_terminal": false,
+        "root_terminal_value": null,
+        "nonterminal_nodes": 1,
+        "max_layer_width": 1,
+        "layer_widths": [
+          1
+        ]
+      }
+    },
+    {
+      "rule": 30,
+      "support": 2,
+      "phase": 0,
+      "right_halves": 4,
+      "verification_mismatches": 0,
+      "escape_depth": 7,
+      "right_censored": false,
+      "last_nonempty_constraints": 4,
+      "last_nonempty_survivors": 1,
+      "survivor_counts": [
+        1,
+        1,
+        1,
+        1,
+        0
+      ],
+      "natural_order_robdd": {
+        "order": [
+          0,
+          1
+        ],
+        "root_is_terminal": false,
+        "root_terminal_value": null,
+        "nonterminal_nodes": 2,
+        "max_layer_width": 1,
+        "layer_widths": [
+          1,
+          1
+        ]
+      },
+      "reverse_order_robdd": {
+        "order": [
+          1,
+          0
+        ],
+        "root_is_terminal": false,
+        "root_terminal_value": null,
+        "nonterminal_nodes": 2,
+        "max_layer_width": 1,
+        "layer_widths": [
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "rule": 30,
+      "support": 2,
+      "phase": 1,
+      "right_halves": 4,
+      "verification_mismatches": 0,
+      "escape_depth": 6,
+      "right_censored": false,
+      "last_nonempty_constraints": 3,
+      "last_nonempty_survivors": 1,
+      "survivor_counts": [
+        1,
+        1,
+        1,
+        0
+      ],
+      "natural_order_robdd": {
+        "order": [
+          0,
+          1
+        ],
+        "root_is_terminal": false,
+        "root_terminal_value": null,
+        "nonterminal_nodes": 2,
+        "max_layer_width": 1,
+        "layer_widths": [
+          1,
+          1
+        ]
+      },
+      "reverse_order_robdd": {
+        "order": [
+          1,
+          0
+        ],
+        "root_is_terminal": false,
+        "root_terminal_value": null,
+        "nonterminal_nodes": 2,
+        "max_layer_width": 1,
+        "layer_widths": [
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "rule": 30,
+      "support": 3,
+      "phase": 0,
+      "right_halves": 8,
+      "verification_mismatches": 0,
+      "escape_depth": 7,
+      "right_censored": false,
+      "last_nonempty_constraints": 3,
+      "last_nonempty_survivors": 1,
+      "survivor_counts": [
+        8,
+        3,
+        1,
+        0
+      ],
+      "natural_order_robdd": {
+        "order": [
+          0,
+          1,
+          2
+        ],
+        "root_is_terminal": false,
+        "root_terminal_value": null,
+        "nonterminal_nodes": 3,
+        "max_layer_width": 1,
+        "layer_widths": [
+          1,
+          1,
+          1
+        ]
+      },
+      "reverse_order_robdd": {
+        "order": [
+          2,
+          1,
+          0
+        ],
+        "root_is_terminal": false,
+        "root_terminal_value": null,
+        "nonterminal_nodes": 3,
+        "max_layer_width": 1,
+        "layer_widths": [
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "rule": 30,
+      "support": 3,
+      "phase": 1,
+      "right_halves": 8,
+      "verification_mismatches": 0,
+      "escape_depth": 6,
+      "right_censored": false,
+      "last_nonempty_constraints": 2,
+      "last_nonempty_survivors": 2,
+      "survivor_counts": [
+        7,
+        2,
+        0
+      ],
+      "natural_order_robdd": {
+        "order": [
+          0,
+          1,
+          2
+        ],
+        "root_is_terminal": false,
+        "root_terminal_value": null,
+        "nonterminal_nodes": 2,
+        "max_layer_width": 1,
+        "layer_widths": [
+          1,
+          1,
+          0
+        ]
+      },
+      "reverse_order_robdd": {
+        "order": [
+          2,
+          1,
+          0
+        ],
+        "root_is_terminal": false,
+        "root_terminal_value": null,
+        "nonterminal_nodes": 2,
+        "max_layer_width": 1,
+        "layer_widths": [
+          0,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "rule": 30,
+      "support": 4,
+      "phase": 0,
+      "right_halves": 16,
+      "verification_mismatches": 0,
+      "escape_depth": 7,
+      "right_censored": false,
+      "last_nonempty_constraints": 2,
+      "last_nonempty_survivors": 2,
+      "survivor_counts": [
+        6,
+        2,
+        0
+      ],
+      "natural_order_robdd": {
+        "order": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "root_is_terminal": false,
+        "root_terminal_value": null,
+        "nonterminal_nodes": 3,
+        "max_layer_width": 1,
+        "layer_widths": [
+          1,
+          1,
+          1,
+          0
+        ]
+      },
+      "reverse_order_robdd": {
+        "order": [
+          3,
+          2,
+          1,
+          0
+        ],
+        "root_is_terminal": false,
+        "root_terminal_value": null,
+        "nonterminal_nodes": 3,
+        "max_layer_width": 1,
+        "layer_widths": [
+          0,
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "rule": 30,
+      "support": 4,
+      "phase": 1,
+      "right_halves": 16,
+      "verification_mismatches": 0,
+      "escape_depth": 6,
+      "right_censored": false,
+      "last_nonempty_constraints": 1,
+      "last_nonempty_survivors": 4,
+      "survivor_counts": [
+        4,
+        0
+      ],
+      "natural_order_robdd": {
+        "order": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "root_is_terminal": false,
+        "root_terminal_value": null,
+        "nonterminal_nodes": 2,
+        "max_layer_width": 1,
+        "layer_widths": [
+          1,
+          1,
+          0,
+          0
+        ]
+      },
+      "reverse_order_robdd": {
+        "order": [
+          3,
+          2,
+          1,
+          0
+        ],
+        "root_is_terminal": false,
+        "root_terminal_value": null,
+        "nonterminal_nodes": 2,
+        "max_layer_width": 1,
+        "layer_widths": [
+          0,
+          0,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "rule": 30,
+      "support": 5,
+      "phase": 0,
+      "right_halves": 32,
+      "verification_mismatches": 0,
+      "escape_depth": 9,
+      "right_censored": false,
+      "last_nonempty_constraints": 3,
+      "last_nonempty_survivors": 7,
+      "survivor_counts": [
+        24,
+        7,
+        7,
+        0
+      ],
+      "natural_order_robdd": {
+        "order": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "root_is_terminal": false,
+        "root_terminal_value": null,
+        "nonterminal_nodes": 7,
+        "max_layer_width": 2,
+        "layer_widths": [
+          1,
+          2,
+          2,
+          1,
+          1
+        ]
+      },
+      "reverse_order_robdd": {
+        "order": [
+          4,
+          3,
+          2,
+          1,
+          0
+        ],
+        "root_is_terminal": false,
+        "root_terminal_value": null,
+        "nonterminal_nodes": 8,
+        "max_layer_width": 2,
+        "layer_widths": [
+          1,
+          1,
+          2,
+          2,
+          2
+        ]
+      }
+    },
+    {
+      "rule": 30,
+      "support": 5,
+      "phase": 1,
+      "right_halves": 32,
+      "verification_mismatches": 0,
+      "escape_depth": 7,
+      "right_censored": false,
+      "last_nonempty_constraints": 1,
+      "last_nonempty_survivors": 10,
+      "survivor_counts": [
+        10,
+        0
+      ],
+      "natural_order_robdd": {
+        "order": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "root_is_terminal": false,
+        "root_terminal_value": null,
+        "nonterminal_nodes": 9,
+        "max_layer_width": 3,
+        "layer_widths": [
+          1,
+          1,
+          3,
+          3,
+          1
+        ]
+      },
+      "reverse_order_robdd": {
+        "order": [
+          4,
+          3,
+          2,
+          1,
+          0
+        ],
+        "root_is_terminal": false,
+        "root_terminal_value": null,
+        "nonterminal_nodes": 10,
+        "max_layer_width": 3,
+        "layer_widths": [
+          1,
+          2,
+          2,
+          3,
+          2
+        ]
+      }
+    },
+    {
+      "rule": 30,
+      "support": 6,
+      "phase": 0,
+      "right_halves": 64,
+      "verification_mismatches": 0,
+      "escape_depth": 10,
+      "right_censored": false,
+      "last_nonempty_constraints": 3,
+      "last_nonempty_survivors": 11,
+      "survivor_counts": [
+        31,
+        30,
+        11,
+        0
+      ],
+      "natural_order_robdd": {
+        "order": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "root_is_terminal": false,
+        "root_terminal_value": null,
+        "nonterminal_nodes": 12,
+        "max_layer_width": 3,
+        "layer_widths": [
+          1,
+          2,
+          2,
+          3,
+          3,
+          1
+        ]
+      },
+      "reverse_order_robdd": {
+        "order": [
+          5,
+          4,
+          3,
+          2,
+          1,
+          0
+        ],
+        "root_is_terminal": false,
+        "root_terminal_value": null,
+        "nonterminal_nodes": 14,
+        "max_layer_width": 3,
+        "layer_widths": [
+          1,
+          2,
+          3,
+          3,
+          3,
+          2
+        ]
+      }
+    },
+    {
+      "rule": 30,
+      "support": 6,
+      "phase": 1,
+      "right_halves": 64,
+      "verification_mismatches": 0,
+      "escape_depth": 8,
+      "right_censored": false,
+      "last_nonempty_constraints": 1,
+      "last_nonempty_survivors": 17,
+      "survivor_counts": [
+        17,
+        0
+      ],
+      "natural_order_robdd": {
+        "order": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "root_is_terminal": false,
+        "root_terminal_value": null,
+        "nonterminal_nodes": 9,
+        "max_layer_width": 2,
+        "layer_widths": [
+          1,
+          2,
+          2,
+          2,
+          1,
+          1
+        ]
+      },
+      "reverse_order_robdd": {
+        "order": [
+          5,
+          4,
+          3,
+          2,
+          1,
+          0
+        ],
+        "root_is_terminal": false,
+        "root_terminal_value": null,
+        "nonterminal_nodes": 11,
+        "max_layer_width": 3,
+        "layer_widths": [
+          1,
+          1,
+          2,
+          2,
+          3,
+          2
+        ]
+      }
+    },
+    {
+      "rule": 30,
+      "support": 7,
+      "phase": 0,
+      "right_halves": 128,
+      "verification_mismatches": 0,
+      "escape_depth": 10,
+      "right_censored": false,
+      "last_nonempty_constraints": 2,
+      "last_nonempty_survivors": 67,
+      "survivor_counts": [
+        125,
+        67,
+        0
+      ],
+      "natural_order_robdd": {
+        "order": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "root_is_terminal": false,
+        "root_terminal_value": null,
+        "nonterminal_nodes": 17,
+        "max_layer_width": 4,
+        "layer_widths": [
+          1,
+          2,
+          4,
+          4,
+          3,
+          2,
+          1
+        ]
+      },
+      "reverse_order_robdd": {
+        "order": [
+          6,
+          5,
+          4,
+          3,
+          2,
+          1,
+          0
+        ],
+        "root_is_terminal": false,
+        "root_terminal_value": null,
+        "nonterminal_nodes": 20,
+        "max_layer_width": 4,
+        "layer_widths": [
+          1,
+          2,
+          3,
+          4,
+          4,
+          4,
+          2
+        ]
+      }
+    },
+    {
+      "rule": 30,
+      "support": 7,
+      "phase": 1,
+      "right_halves": 128,
+      "verification_mismatches": 0,
+      "escape_depth": 9,
+      "right_censored": false,
+      "last_nonempty_constraints": 1,
+      "last_nonempty_survivors": 49,
+      "survivor_counts": [
+        49,
+        0
+      ],
+      "natural_order_robdd": {
+        "order": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "root_is_terminal": false,
+        "root_terminal_value": null,
+        "nonterminal_nodes": 19,
+        "max_layer_width": 5,
+        "layer_widths": [
+          1,
+          2,
+          4,
+          5,
+          3,
+          3,
+          1
+        ]
+      },
+      "reverse_order_robdd": {
+        "order": [
+          6,
+          5,
+          4,
+          3,
+          2,
+          1,
+          0
+        ],
+        "root_is_terminal": false,
+        "root_terminal_value": null,
+        "nonterminal_nodes": 20,
+        "max_layer_width": 5,
+        "layer_widths": [
+          1,
+          2,
+          2,
+          3,
+          5,
+          5,
+          2
+        ]
+      }
+    },
+    {
+      "rule": 30,
+      "support": 8,
+      "phase": 0,
+      "right_halves": 256,
+      "verification_mismatches": 0,
+      "escape_depth": 15,
+      "right_censored": false,
+      "last_nonempty_constraints": 6,
+      "last_nonempty_survivors": 3,
+      "survivor_counts": [
+        141,
+        6,
+        3,
+        3,
+        3,
+        3,
+        0
+      ],
+      "natural_order_robdd": {
+        "order": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "root_is_terminal": false,
+        "root_terminal_value": null,
+        "nonterminal_nodes": 8,
+        "max_layer_width": 1,
+        "layer_widths": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      "reverse_order_robdd": {
+        "order": [
+          7,
+          6,
+          5,
+          4,
+          3,
+          2,
+          1,
+          0
+        ],
+        "root_is_terminal": false,
+        "root_terminal_value": null,
+        "nonterminal_nodes": 8,
+        "max_layer_width": 1,
+        "layer_widths": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "rule": 30,
+      "support": 8,
+      "phase": 1,
+      "right_halves": 256,
+      "verification_mismatches": 0,
+      "escape_depth": 10,
+      "right_censored": false,
+      "last_nonempty_constraints": 1,
+      "last_nonempty_survivors": 9,
+      "survivor_counts": [
+        9,
+        0
+      ],
+      "natural_order_robdd": {
+        "order": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "root_is_terminal": false,
+        "root_terminal_value": null,
+        "nonterminal_nodes": 9,
+        "max_layer_width": 2,
+        "layer_widths": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          2,
+          1,
+          1
+        ]
+      },
+      "reverse_order_robdd": {
+        "order": [
+          7,
+          6,
+          5,
+          4,
+          3,
+          2,
+          1,
+          0
+        ],
+        "root_is_terminal": false,
+        "root_terminal_value": null,
+        "nonterminal_nodes": 10,
+        "max_layer_width": 2,
+        "layer_widths": [
+          1,
+          1,
+          2,
+          2,
+          1,
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "rule": 30,
+      "support": 9,
+      "phase": 0,
+      "right_halves": 512,
+      "verification_mismatches": 0,
+      "escape_depth": 17,
+      "right_censored": false,
+      "last_nonempty_constraints": 7,
+      "last_nonempty_survivors": 1,
+      "survivor_counts": [
+        212,
+        150,
+        150,
+        122,
+        122,
+        51,
+        1,
+        0
+      ],
+      "natural_order_robdd": {
+        "order": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ],
+        "root_is_terminal": false,
+        "root_terminal_value": null,
+        "nonterminal_nodes": 9,
+        "max_layer_width": 1,
+        "layer_widths": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      "reverse_order_robdd": {
+        "order": [
+          8,
+          7,
+          6,
+          5,
+          4,
+          3,
+          2,
+          1,
+          0
+        ],
+        "root_is_terminal": false,
+        "root_terminal_value": null,
+        "nonterminal_nodes": 9,
+        "max_layer_width": 1,
+        "layer_widths": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "rule": 30,
+      "support": 9,
+      "phase": 1,
+      "right_halves": 512,
+      "verification_mismatches": 0,
+      "escape_depth": 16,
+      "right_censored": false,
+      "last_nonempty_constraints": 6,
+      "last_nonempty_survivors": 21,
+      "survivor_counts": [
+        256,
+        32,
+        32,
+        32,
+        21,
+        21,
+        0
+      ],
+      "natural_order_robdd": {
+        "order": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ],
+        "root_is_terminal": false,
+        "root_terminal_value": null,
+        "nonterminal_nodes": 27,
+        "max_layer_width": 5,
+        "layer_widths": [
+          1,
+          2,
+          3,
+          3,
+          4,
+          4,
+          5,
+          3,
+          2
+        ]
+      },
+      "reverse_order_robdd": {
+        "order": [
+          8,
+          7,
+          6,
+          5,
+          4,
+          3,
+          2,
+          1,
+          0
+        ],
+        "root_is_terminal": false,
+        "root_terminal_value": null,
+        "nonterminal_nodes": 29,
+        "max_layer_width": 6,
+        "layer_widths": [
+          1,
+          2,
+          4,
+          4,
+          6,
+          4,
+          3,
+          3,
+          2
+        ]
+      }
+    },
+    {
+      "rule": 30,
+      "support": 10,
+      "phase": 0,
+      "right_halves": 1024,
+      "verification_mismatches": 0,
+      "escape_depth": 17,
+      "right_censored": false,
+      "last_nonempty_constraints": 6,
+      "last_nonempty_survivors": 2,
+      "survivor_counts": [
+        391,
+        359,
+        277,
+        277,
+        104,
+        2,
+        0
+      ],
+      "natural_order_robdd": {
+        "order": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9
+        ],
+        "root_is_terminal": false,
+        "root_terminal_value": null,
+        "nonterminal_nodes": 9,
+        "max_layer_width": 1,
+        "layer_widths": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0
+        ]
+      },
+      "reverse_order_robdd": {
+        "order": [
+          9,
+          8,
+          7,
+          6,
+          5,
+          4,
+          3,
+          2,
+          1,
+          0
+        ],
+        "root_is_terminal": false,
+        "root_terminal_value": null,
+        "nonterminal_nodes": 9,
+        "max_layer_width": 1,
+        "layer_widths": [
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "rule": 30,
+      "support": 10,
+      "phase": 1,
+      "right_halves": 1024,
+      "verification_mismatches": 0,
+      "escape_depth": 16,
+      "right_censored": false,
+      "last_nonempty_constraints": 5,
+      "last_nonempty_survivors": 43,
+      "survivor_counts": [
+        540,
+        485,
+        485,
+        251,
+        43,
+        0
+      ],
+      "natural_order_robdd": {
+        "order": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9
+        ],
+        "root_is_terminal": false,
+        "root_terminal_value": null,
+        "nonterminal_nodes": 29,
+        "max_layer_width": 5,
+        "layer_widths": [
+          1,
+          2,
+          3,
+          3,
+          4,
+          4,
+          5,
+          3,
+          2,
+          2
+        ]
+      },
+      "reverse_order_robdd": {
+        "order": [
+          9,
+          8,
+          7,
+          6,
+          5,
+          4,
+          3,
+          2,
+          1,
+          0
+        ],
+        "root_is_terminal": false,
+        "root_terminal_value": null,
+        "nonterminal_nodes": 30,
+        "max_layer_width": 6,
+        "layer_widths": [
+          1,
+          1,
+          2,
+          4,
+          4,
+          6,
+          4,
+          3,
+          3,
+          2
+        ]
+      }
+    },
+    {
+      "rule": 30,
+      "support": 11,
+      "phase": 0,
+      "right_halves": 2048,
+      "verification_mismatches": 0,
+      "escape_depth": 17,
+      "right_censored": false,
+      "last_nonempty_constraints": 5,
+      "last_nonempty_survivors": 4,
+      "survivor_counts": [
+        1819,
+        1190,
+        555,
+        209,
+        4,
+        0
+      ],
+      "natural_order_robdd": {
+        "order": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10
+        ],
+        "root_is_terminal": false,
+        "root_terminal_value": null,
+        "nonterminal_nodes": 9,
+        "max_layer_width": 1,
+        "layer_widths": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0
+        ]
+      },
+      "reverse_order_robdd": {
+        "order": [
+          10,
+          9,
+          8,
+          7,
+          6,
+          5,
+          4,
+          3,
+          2,
+          1,
+          0
+        ],
+        "root_is_terminal": false,
+        "root_terminal_value": null,
+        "nonterminal_nodes": 9,
+        "max_layer_width": 1,
+        "layer_widths": [
+          0,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "rule": 30,
+      "support": 11,
+      "phase": 1,
+      "right_halves": 2048,
+      "verification_mismatches": 0,
+      "escape_depth": 16,
+      "right_censored": false,
+      "last_nonempty_constraints": 4,
+      "last_nonempty_survivors": 85,
+      "survivor_counts": [
+        1308,
+        1172,
+        502,
+        85,
+        0
+      ],
+      "natural_order_robdd": {
+        "order": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10
+        ],
+        "root_is_terminal": false,
+        "root_terminal_value": null,
+        "nonterminal_nodes": 33,
+        "max_layer_width": 5,
+        "layer_widths": [
+          1,
+          2,
+          3,
+          3,
+          4,
+          4,
+          5,
+          4,
+          3,
+          3,
+          1
+        ]
+      },
+      "reverse_order_robdd": {
+        "order": [
+          10,
+          9,
+          8,
+          7,
+          6,
+          5,
+          4,
+          3,
+          2,
+          1,
+          0
+        ],
+        "root_is_terminal": false,
+        "root_terminal_value": null,
+        "nonterminal_nodes": 35,
+        "max_layer_width": 6,
+        "layer_widths": [
+          1,
+          2,
+          2,
+          3,
+          5,
+          4,
+          6,
+          4,
+          3,
+          3,
+          2
+        ]
+      }
+    },
+    {
+      "rule": 30,
+      "support": 12,
+      "phase": 0,
+      "right_halves": 4096,
+      "verification_mismatches": 0,
+      "escape_depth": 17,
+      "right_censored": false,
+      "last_nonempty_constraints": 4,
+      "last_nonempty_survivors": 7,
+      "survivor_counts": [
+        2380,
+        1110,
+        414,
+        7,
+        0
+      ],
+      "natural_order_robdd": {
+        "order": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ],
+        "root_is_terminal": false,
+        "root_terminal_value": null,
+        "nonterminal_nodes": 12,
+        "max_layer_width": 1,
+        "layer_widths": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      "reverse_order_robdd": {
+        "order": [
+          11,
+          10,
+          9,
+          8,
+          7,
+          6,
+          5,
+          4,
+          3,
+          2,
+          1,
+          0
+        ],
+        "root_is_terminal": false,
+        "root_terminal_value": null,
+        "nonterminal_nodes": 12,
+        "max_layer_width": 1,
+        "layer_widths": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "rule": 30,
+      "support": 12,
+      "phase": 1,
+      "right_halves": 4096,
+      "verification_mismatches": 0,
+      "escape_depth": 16,
+      "right_censored": false,
+      "last_nonempty_constraints": 3,
+      "last_nonempty_survivors": 169,
+      "survivor_counts": [
+        2564,
+        1225,
+        169,
+        0
+      ],
+      "natural_order_robdd": {
+        "order": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ],
+        "root_is_terminal": false,
+        "root_terminal_value": null,
+        "nonterminal_nodes": 34,
+        "max_layer_width": 5,
+        "layer_widths": [
+          1,
+          2,
+          3,
+          3,
+          4,
+          4,
+          5,
+          4,
+          3,
+          3,
+          1,
+          1
+        ]
+      },
+      "reverse_order_robdd": {
+        "order": [
+          11,
+          10,
+          9,
+          8,
+          7,
+          6,
+          5,
+          4,
+          3,
+          2,
+          1,
+          0
+        ],
+        "root_is_terminal": false,
+        "root_terminal_value": null,
+        "nonterminal_nodes": 36,
+        "max_layer_width": 6,
+        "layer_widths": [
+          1,
+          1,
+          2,
+          2,
+          3,
+          5,
+          4,
+          6,
+          4,
+          3,
+          3,
+          2
+        ]
+      }
+    },
+    {
+      "rule": 30,
+      "support": 13,
+      "phase": 0,
+      "right_halves": 8192,
+      "verification_mismatches": 0,
+      "escape_depth": 17,
+      "right_censored": false,
+      "last_nonempty_constraints": 3,
+      "last_nonempty_survivors": 909,
+      "survivor_counts": [
+        3324,
+        1928,
+        909,
+        0
+      ],
+      "natural_order_robdd": {
+        "order": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "root_is_terminal": false,
+        "root_terminal_value": null,
+        "nonterminal_nodes": 33,
+        "max_layer_width": 5,
+        "layer_widths": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          4,
+          4,
+          3,
+          3,
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      "reverse_order_robdd": {
+        "order": [
+          12,
+          11,
+          10,
+          9,
+          8,
+          7,
+          6,
+          5,
+          4,
+          3,
+          2,
+          1,
+          0
+        ],
+        "root_is_terminal": false,
+        "root_terminal_value": null,
+        "nonterminal_nodes": 34,
+        "max_layer_width": 5,
+        "layer_widths": [
+          1,
+          1,
+          1,
+          1,
+          2,
+          2,
+          3,
+          4,
+          5,
+          5,
+          4,
+          3,
+          2
+        ]
+      }
+    },
+    {
+      "rule": 30,
+      "support": 13,
+      "phase": 1,
+      "right_halves": 8192,
+      "verification_mismatches": 0,
+      "escape_depth": 16,
+      "right_censored": false,
+      "last_nonempty_constraints": 2,
+      "last_nonempty_survivors": 872,
+      "survivor_counts": [
+        2985,
+        872,
+        0
+      ],
+      "natural_order_robdd": {
+        "order": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "root_is_terminal": false,
+        "root_terminal_value": null,
+        "nonterminal_nodes": 75,
+        "max_layer_width": 14,
+        "layer_widths": [
+          1,
+          2,
+          4,
+          6,
+          9,
+          12,
+          14,
+          12,
+          7,
+          4,
+          2,
+          2,
+          0
+        ]
+      },
+      "reverse_order_robdd": {
+        "order": [
+          12,
+          11,
+          10,
+          9,
+          8,
+          7,
+          6,
+          5,
+          4,
+          3,
+          2,
+          1,
+          0
+        ],
+        "root_is_terminal": false,
+        "root_terminal_value": null,
+        "nonterminal_nodes": 70,
+        "max_layer_width": 15,
+        "layer_widths": [
+          0,
+          1,
+          1,
+          2,
+          3,
+          4,
+          6,
+          9,
+          13,
+          15,
+          10,
+          4,
+          2
+        ]
+      }
+    },
+    {
+      "rule": 30,
+      "support": 14,
+      "phase": 0,
+      "right_halves": 16384,
+      "verification_mismatches": 0,
+      "escape_depth": 20,
+      "right_censored": false,
+      "last_nonempty_constraints": 5,
+      "last_nonempty_survivors": 504,
+      "survivor_counts": [
+        10289,
+        6322,
+        2304,
+        504,
+        504,
+        0
+      ],
+      "natural_order_robdd": {
+        "order": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13
+        ],
+        "root_is_terminal": false,
+        "root_terminal_value": null,
+        "nonterminal_nodes": 81,
+        "max_layer_width": 13,
+        "layer_widths": [
+          1,
+          2,
+          3,
+          3,
+          3,
+          5,
+          5,
+          8,
+          11,
+          13,
+          12,
+          8,
+          5,
+          2
+        ]
+      },
+      "reverse_order_robdd": {
+        "order": [
+          13,
+          12,
+          11,
+          10,
+          9,
+          8,
+          7,
+          6,
+          5,
+          4,
+          3,
+          2,
+          1,
+          0
+        ],
+        "root_is_terminal": false,
+        "root_terminal_value": null,
+        "nonterminal_nodes": 95,
+        "max_layer_width": 17,
+        "layer_widths": [
+          1,
+          2,
+          4,
+          5,
+          8,
+          11,
+          14,
+          17,
+          12,
+          7,
+          4,
+          4,
+          4,
+          2
+        ]
+      }
+    },
+    {
+      "rule": 30,
+      "support": 14,
+      "phase": 1,
+      "right_halves": 16384,
+      "verification_mismatches": 0,
+      "escape_depth": 19,
+      "right_censored": false,
+      "last_nonempty_constraints": 4,
+      "last_nonempty_survivors": 112,
+      "survivor_counts": [
+        5645,
+        1104,
+        112,
+        112,
+        0
+      ],
+      "natural_order_robdd": {
+        "order": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13
+        ],
+        "root_is_terminal": false,
+        "root_terminal_value": null,
+        "nonterminal_nodes": 13,
+        "max_layer_width": 2,
+        "layer_widths": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          2,
+          2,
+          2,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "reverse_order_robdd": {
+        "order": [
+          13,
+          12,
+          11,
+          10,
+          9,
+          8,
+          7,
+          6,
+          5,
+          4,
+          3,
+          2,
+          1,
+          0
+        ],
+        "root_is_terminal": false,
+        "root_terminal_value": null,
+        "nonterminal_nodes": 14,
+        "max_layer_width": 2,
+        "layer_widths": [
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          2,
+          2,
+          2,
+          2,
+          1,
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "rule": 30,
+      "support": 15,
+      "phase": 0,
+      "right_halves": 32768,
+      "verification_mismatches": 0,
+      "escape_depth": 22,
+      "right_censored": false,
+      "last_nonempty_constraints": 6,
+      "last_nonempty_survivors": 220,
+      "survivor_counts": [
+        18096,
+        7609,
+        1273,
+        1225,
+        220,
+        220,
+        0
+      ],
+      "natural_order_robdd": {
+        "order": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14
+        ],
+        "root_is_terminal": false,
+        "root_terminal_value": null,
+        "nonterminal_nodes": 37,
+        "max_layer_width": 6,
+        "layer_widths": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          2,
+          3,
+          4,
+          5,
+          4,
+          6,
+          4,
+          2
+        ]
+      },
+      "reverse_order_robdd": {
+        "order": [
+          14,
+          13,
+          12,
+          11,
+          10,
+          9,
+          8,
+          7,
+          6,
+          5,
+          4,
+          3,
+          2,
+          1,
+          0
+        ],
+        "root_is_terminal": false,
+        "root_terminal_value": null,
+        "nonterminal_nodes": 40,
+        "max_layer_width": 7,
+        "layer_widths": [
+          1,
+          2,
+          3,
+          5,
+          6,
+          7,
+          5,
+          3,
+          2,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "rule": 30,
+      "support": 15,
+      "phase": 1,
+      "right_halves": 32768,
+      "verification_mismatches": 0,
+      "escape_depth": 21,
+      "right_censored": false,
+      "last_nonempty_constraints": 5,
+      "last_nonempty_survivors": 1584,
+      "survivor_counts": [
+        10059,
+        3083,
+        3083,
+        1584,
+        1584,
+        0
+      ],
+      "natural_order_robdd": {
+        "order": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14
+        ],
+        "root_is_terminal": false,
+        "root_terminal_value": null,
+        "nonterminal_nodes": 79,
+        "max_layer_width": 12,
+        "layer_widths": [
+          1,
+          2,
+          4,
+          5,
+          6,
+          7,
+          9,
+          12,
+          11,
+          9,
+          5,
+          4,
+          2,
+          2,
+          0
+        ]
+      },
+      "reverse_order_robdd": {
+        "order": [
+          14,
+          13,
+          12,
+          11,
+          10,
+          9,
+          8,
+          7,
+          6,
+          5,
+          4,
+          3,
+          2,
+          1,
+          0
+        ],
+        "root_is_terminal": false,
+        "root_terminal_value": null,
+        "nonterminal_nodes": 89,
+        "max_layer_width": 13,
+        "layer_widths": [
+          0,
+          1,
+          1,
+          2,
+          4,
+          5,
+          7,
+          9,
+          12,
+          13,
+          12,
+          9,
+          7,
+          5,
+          2
+        ]
+      }
+    },
+    {
+      "rule": 30,
+      "support": 16,
+      "phase": 0,
+      "right_halves": 65536,
+      "verification_mismatches": 0,
+      "escape_depth": 26,
+      "right_censored": false,
+      "last_nonempty_constraints": 9,
+      "last_nonempty_survivors": 101,
+      "survivor_counts": [
+        35026,
+        14736,
+        11528,
+        4558,
+        2863,
+        2423,
+        612,
+        101,
+        101,
+        0
+      ],
+      "natural_order_robdd": {
+        "order": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ],
+        "root_is_terminal": false,
+        "root_terminal_value": null,
+        "nonterminal_nodes": 55,
+        "max_layer_width": 9,
+        "layer_widths": [
+          1,
+          1,
+          1,
+          1,
+          2,
+          3,
+          3,
+          3,
+          3,
+          3,
+          5,
+          8,
+          9,
+          6,
+          4,
+          2
+        ]
+      },
+      "reverse_order_robdd": {
+        "order": [
+          15,
+          14,
+          13,
+          12,
+          11,
+          10,
+          9,
+          8,
+          7,
+          6,
+          5,
+          4,
+          3,
+          2,
+          1,
+          0
+        ],
+        "root_is_terminal": false,
+        "root_terminal_value": null,
+        "nonterminal_nodes": 62,
+        "max_layer_width": 9,
+        "layer_widths": [
+          1,
+          2,
+          4,
+          5,
+          8,
+          9,
+          9,
+          6,
+          4,
+          3,
+          3,
+          3,
+          2,
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "rule": 30,
+      "support": 16,
+      "phase": 1,
+      "right_halves": 65536,
+      "verification_mismatches": 0,
+      "escape_depth": 24,
+      "right_censored": false,
+      "last_nonempty_constraints": 7,
+      "last_nonempty_survivors": 508,
+      "survivor_counts": [
+        21716,
+        12174,
+        7399,
+        7399,
+        3120,
+        508,
+        508,
+        0
+      ],
+      "natural_order_robdd": {
+        "order": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ],
+        "root_is_terminal": false,
+        "root_terminal_value": null,
+        "nonterminal_nodes": 78,
+        "max_layer_width": 10,
+        "layer_widths": [
+          1,
+          2,
+          3,
+          3,
+          4,
+          6,
+          8,
+          8,
+          10,
+          10,
+          10,
+          7,
+          4,
+          2,
+          0,
+          0
+        ]
+      },
+      "reverse_order_robdd": {
+        "order": [
+          15,
+          14,
+          13,
+          12,
+          11,
+          10,
+          9,
+          8,
+          7,
+          6,
+          5,
+          4,
+          3,
+          2,
+          1,
+          0
+        ],
+        "root_is_terminal": false,
+        "root_terminal_value": null,
+        "nonterminal_nodes": 74,
+        "max_layer_width": 10,
+        "layer_widths": [
+          0,
+          0,
+          1,
+          2,
+          3,
+          5,
+          7,
+          10,
+          10,
+          9,
+          9,
+          6,
+          4,
+          3,
+          3,
+          2
+        ]
+      }
+    }
+  ],
+  "rule15_finite_alternating_control": {
+    "trace_mismatches": 0,
+    "survivors_at_depth": 2,
+    "right_halves": 2,
+    "robdd": {
+      "order": [
+        0
+      ],
+      "root_is_terminal": true,
+      "root_terminal_value": 1,
+      "nonterminal_nodes": 0,
+      "max_layer_width": 0,
+      "layer_widths": [
+        0
+      ]
+    }
+  },
+  "claim_limit": "Exact bounded survivor sets and exact ROBDD sizes only. Small or stable diagrams do not prove a width-independent quotient, and without a proved ranking or absence of accepting cycles they do not prove that the survivor chain empties for every support."
+}

@@ -10,6 +10,9 @@ The job of this file is to stop three recurring failure modes:
 2. Measuring an *ensemble* property and reporting it as progress on a prize.
 3. Re-deriving something the rule's algebra already gives for free.
 
+For the active Prize 1 reductions, proof obligations, controls, and stop rules,
+see **[prize1-attack-map.md](prize1-attack-map.md)**.
+
 ---
 
 ## 0. The prize objects (and a numbering correction)

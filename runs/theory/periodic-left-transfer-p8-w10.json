@@ -1,0 +1,505 @@
+{
+  "experiment": "alternating-left-transfer",
+  "map": "T_b(n)=(n>>1) XOR (n OR ((n<<1) OR b)); G=T_1(T_0(n))",
+  "survivor_condition": "G^k(n) mod 4 in {1,2}",
+  "self_test": {
+    "half_step_identity_mismatches": 0,
+    "low_bit_condition_mismatches": 0,
+    "alternating_generalization_mismatches": 0
+  },
+  "profiles": [
+    {
+      "left_support_width": 1,
+      "initial_halves": 2,
+      "search_limit": 3,
+      "maximum_first_failure_macrotime": 3,
+      "extremizer_count": 1,
+      "right_censored_count": 0,
+      "survivor_counts": [
+        1,
+        1,
+        1,
+        0
+      ],
+      "candidate_q_le_w_plus_2_survives": true
+    },
+    {
+      "left_support_width": 2,
+      "initial_halves": 4,
+      "search_limit": 4,
+      "maximum_first_failure_macrotime": 3,
+      "extremizer_count": 1,
+      "right_censored_count": 0,
+      "survivor_counts": [
+        2,
+        1,
+        1,
+        0
+      ],
+      "candidate_q_le_w_plus_2_survives": true
+    },
+    {
+      "left_support_width": 3,
+      "initial_halves": 8,
+      "search_limit": 5,
+      "maximum_first_failure_macrotime": 3,
+      "extremizer_count": 1,
+      "right_censored_count": 0,
+      "survivor_counts": [
+        4,
+        3,
+        1,
+        0
+      ],
+      "candidate_q_le_w_plus_2_survives": true
+    },
+    {
+      "left_support_width": 4,
+      "initial_halves": 16,
+      "search_limit": 6,
+      "maximum_first_failure_macrotime": 3,
+      "extremizer_count": 1,
+      "right_censored_count": 0,
+      "survivor_counts": [
+        8,
+        4,
+        1,
+        0
+      ],
+      "candidate_q_le_w_plus_2_survives": true
+    },
+    {
+      "left_support_width": 5,
+      "initial_halves": 32,
+      "search_limit": 7,
+      "maximum_first_failure_macrotime": 4,
+      "extremizer_count": 2,
+      "right_censored_count": 0,
+      "survivor_counts": [
+        16,
+        8,
+        3,
+        2,
+        0
+      ],
+      "candidate_q_le_w_plus_2_survives": true
+    },
+    {
+      "left_support_width": 6,
+      "initial_halves": 64,
+      "search_limit": 8,
+      "maximum_first_failure_macrotime": 4,
+      "extremizer_count": 5,
+      "right_censored_count": 0,
+      "survivor_counts": [
+        32,
+        16,
+        8,
+        5,
+        0
+      ],
+      "candidate_q_le_w_plus_2_survives": true
+    },
+    {
+      "left_support_width": 7,
+      "initial_halves": 128,
+      "search_limit": 9,
+      "maximum_first_failure_macrotime": 4,
+      "extremizer_count": 11,
+      "right_censored_count": 0,
+      "survivor_counts": [
+        64,
+        32,
+        16,
+        11,
+        0
+      ],
+      "candidate_q_le_w_plus_2_survives": true
+    },
+    {
+      "left_support_width": 8,
+      "initial_halves": 256,
+      "search_limit": 10,
+      "maximum_first_failure_macrotime": 8,
+      "extremizer_count": 1,
+      "right_censored_count": 0,
+      "survivor_counts": [
+        128,
+        64,
+        32,
+        16,
+        3,
+        1,
+        1,
+        1,
+        0
+      ],
+      "candidate_q_le_w_plus_2_survives": true
+    },
+    {
+      "left_support_width": 9,
+      "initial_halves": 512,
+      "search_limit": 11,
+      "maximum_first_failure_macrotime": 8,
+      "extremizer_count": 1,
+      "right_censored_count": 0,
+      "survivor_counts": [
+        256,
+        128,
+        64,
+        32,
+        13,
+        11,
+        9,
+        1,
+        0
+      ],
+      "candidate_q_le_w_plus_2_survives": true
+    },
+    {
+      "left_support_width": 10,
+      "initial_halves": 1024,
+      "search_limit": 12,
+      "maximum_first_failure_macrotime": 8,
+      "extremizer_count": 3,
+      "right_censored_count": 0,
+      "survivor_counts": [
+        512,
+        256,
+        128,
+        64,
+        32,
+        19,
+        17,
+        3,
+        0
+      ],
+      "candidate_q_le_w_plus_2_survives": true
+    },
+    {
+      "left_support_width": 11,
+      "initial_halves": 2048,
+      "search_limit": 13,
+      "maximum_first_failure_macrotime": 8,
+      "extremizer_count": 3,
+      "right_censored_count": 0,
+      "survivor_counts": [
+        1024,
+        512,
+        256,
+        128,
+        64,
+        39,
+        19,
+        3,
+        0
+      ],
+      "candidate_q_le_w_plus_2_survives": true
+    },
+    {
+      "left_support_width": 12,
+      "initial_halves": 4096,
+      "search_limit": 14,
+      "maximum_first_failure_macrotime": 14,
+      "extremizer_count": 3,
+      "right_censored_count": 0,
+      "survivor_counts": [
+        2048,
+        1024,
+        512,
+        256,
+        128,
+        64,
+        29,
+        11,
+        6,
+        6,
+        6,
+        3,
+        3,
+        3,
+        0
+      ],
+      "candidate_q_le_w_plus_2_survives": true
+    },
+    {
+      "left_support_width": 13,
+      "initial_halves": 8192,
+      "search_limit": 15,
+      "maximum_first_failure_macrotime": 14,
+      "extremizer_count": 3,
+      "right_censored_count": 0,
+      "survivor_counts": [
+        4096,
+        2048,
+        1024,
+        512,
+        256,
+        128,
+        51,
+        24,
+        9,
+        9,
+        7,
+        3,
+        3,
+        3,
+        0
+      ],
+      "candidate_q_le_w_plus_2_survives": true
+    },
+    {
+      "left_support_width": 14,
+      "initial_halves": 16384,
+      "search_limit": 16,
+      "maximum_first_failure_macrotime": 14,
+      "extremizer_count": 3,
+      "right_censored_count": 0,
+      "survivor_counts": [
+        8192,
+        4096,
+        2048,
+        1024,
+        512,
+        256,
+        128,
+        69,
+        33,
+        23,
+        11,
+        5,
+        5,
+        3,
+        0
+      ],
+      "candidate_q_le_w_plus_2_survives": true
+    },
+    {
+      "left_support_width": 15,
+      "initial_halves": 32768,
+      "search_limit": 17,
+      "maximum_first_failure_macrotime": 15,
+      "extremizer_count": 6,
+      "right_censored_count": 0,
+      "survivor_counts": [
+        16384,
+        8192,
+        4096,
+        2048,
+        1024,
+        512,
+        256,
+        139,
+        63,
+        45,
+        24,
+        14,
+        11,
+        9,
+        6,
+        0
+      ],
+      "candidate_q_le_w_plus_2_survives": true
+    },
+    {
+      "left_support_width": 16,
+      "initial_halves": 65536,
+      "search_limit": 18,
+      "maximum_first_failure_macrotime": 15,
+      "extremizer_count": 6,
+      "right_censored_count": 0,
+      "survivor_counts": [
+        32768,
+        16384,
+        8192,
+        4096,
+        2048,
+        1024,
+        512,
+        256,
+        128,
+        67,
+        38,
+        24,
+        11,
+        9,
+        6,
+        0
+      ],
+      "candidate_q_le_w_plus_2_survives": true
+    },
+    {
+      "left_support_width": 17,
+      "initial_halves": 131072,
+      "search_limit": 19,
+      "maximum_first_failure_macrotime": 15,
+      "extremizer_count": 15,
+      "right_censored_count": 0,
+      "survivor_counts": [
+        65536,
+        32768,
+        16384,
+        8192,
+        4096,
+        2048,
+        1024,
+        512,
+        275,
+        161,
+        90,
+        51,
+        32,
+        24,
+        15,
+        0
+      ],
+      "candidate_q_le_w_plus_2_survives": true
+    },
+    {
+      "left_support_width": 18,
+      "initial_halves": 262144,
+      "search_limit": 20,
+      "maximum_first_failure_macrotime": 16,
+      "extremizer_count": 2,
+      "right_censored_count": 0,
+      "survivor_counts": [
+        131072,
+        65536,
+        32768,
+        16384,
+        8192,
+        4096,
+        2048,
+        1024,
+        512,
+        305,
+        173,
+        75,
+        44,
+        34,
+        17,
+        2,
+        0
+      ],
+      "candidate_q_le_w_plus_2_survives": true
+    },
+    {
+      "left_support_width": 19,
+      "initial_halves": 524288,
+      "search_limit": 21,
+      "maximum_first_failure_macrotime": 16,
+      "extremizer_count": 2,
+      "right_censored_count": 0,
+      "survivor_counts": [
+        262144,
+        131072,
+        65536,
+        32768,
+        16384,
+        8192,
+        4096,
+        2048,
+        1024,
+        569,
+        259,
+        124,
+        82,
+        48,
+        17,
+        2,
+        0
+      ],
+      "candidate_q_le_w_plus_2_survives": true
+    },
+    {
+      "left_support_width": 20,
+      "initial_halves": 1048576,
+      "search_limit": 22,
+      "maximum_first_failure_macrotime": 18,
+      "extremizer_count": 15,
+      "right_censored_count": 0,
+      "survivor_counts": [
+        524288,
+        262144,
+        131072,
+        65536,
+        32768,
+        16384,
+        8192,
+        4096,
+        2048,
+        1024,
+        512,
+        268,
+        187,
+        115,
+        67,
+        31,
+        15,
+        15,
+        0
+      ],
+      "candidate_q_le_w_plus_2_survives": true
+    }
+  ],
+  "claim_limit": "The half-line reduction is exact. Exhaustive finite widths do not prove that every ordinary integer orbit exits the survivor set; a width-independent ranking, induction, or certificate is still required.",
+  "general_period_word_scan": [
+    {
+      "period": 2,
+      "primitive_words_including_rotations": 2,
+      "initial_left_halves_per_word": 1024,
+      "maximum_first_failure_macroperiod": 9,
+      "one_extremal_word": "10",
+      "right_censored_count": 0
+    },
+    {
+      "period": 3,
+      "primitive_words_including_rotations": 6,
+      "initial_left_halves_per_word": 1024,
+      "maximum_first_failure_macroperiod": 9,
+      "one_extremal_word": "001",
+      "right_censored_count": 0
+    },
+    {
+      "period": 4,
+      "primitive_words_including_rotations": 12,
+      "initial_left_halves_per_word": 1024,
+      "maximum_first_failure_macroperiod": 8,
+      "one_extremal_word": "0010",
+      "right_censored_count": 0
+    },
+    {
+      "period": 5,
+      "primitive_words_including_rotations": 30,
+      "initial_left_halves_per_word": 1024,
+      "maximum_first_failure_macroperiod": 8,
+      "one_extremal_word": "00001",
+      "right_censored_count": 0
+    },
+    {
+      "period": 6,
+      "primitive_words_including_rotations": 54,
+      "initial_left_halves_per_word": 1024,
+      "maximum_first_failure_macroperiod": 9,
+      "one_extremal_word": "000010",
+      "right_censored_count": 0
+    },
+    {
+      "period": 7,
+      "primitive_words_including_rotations": 126,
+      "initial_left_halves_per_word": 1024,
+      "maximum_first_failure_macroperiod": 8,
+      "one_extremal_word": "0000010",
+      "right_censored_count": 0
+    },
+    {
+      "period": 8,
+      "primitive_words_including_rotations": 240,
+      "initial_left_halves_per_word": 1024,
+      "maximum_first_failure_macroperiod": 11,
+      "one_extremal_word": "00010000",
+      "right_censored_count": 0
+    }
+  ],
+  "general_period_claim_limit": "Necessary left-latch constraints only, at the stated finite word length, support width, and iteration cap. Zero capped survivors does not prove any all-period theorem."
+}
