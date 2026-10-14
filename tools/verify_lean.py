@@ -52,10 +52,12 @@ def main():
         print(p.stderr, end='', file=sys.stderr)
         if p.returncode:
             return p.returncode
-        if 'sorryAx' in p.stdout or 'sorry' in p.stderr:
+        # Lean reports "declaration uses 'sorry'" on stdout, not stderr.
+        if 'sorryAx' in p.stdout or 'sorry' in p.stdout + p.stderr:
             print('Rejected: admitted proof dependency or warning', file=sys.stderr)
             return 1
-    claimed = set(re.findall(r'^theorem\s+(\w+)',
+    # Modifiers must not hide a theorem from the audit; an unprinted one fails closed.
+    claimed = set(re.findall(r'^(?:(?:private|protected|noncomputable)\s+)*(?:theorem|lemma)\s+(\w+)',
         (ROOT / 'formal/Rule30/Basic.lean').read_text(), re.MULTILINE))
     errors = audit_axioms(p.stdout, claimed)
     if errors:

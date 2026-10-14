@@ -143,3 +143,36 @@ starting with plateau witnesses and slow rows, withD>7bitlength(r). One
 negative exactly reconstructed prefix kills P7, but not the original
 existential-density target. A surviving numerical bound still needs an
 OR-specific proof retaining physical lineage and spatial terminal credit.
+
+## Addendum: cross-lineage audit (2026-10-14)
+
+A session on a different model family audited this PR. No research claim
+failed. It checked:
+
+- **Lean:** independent `#print axioms` for all 19 declarations; Rule 30
+  orientation; satisfiability of the `LeftOne` and `AlternatingTail`
+  hypotheses.
+- **Reimplementation:** a diagonal-recursion simulator that agrees with
+  `completion()` on 300/300 random cases, with all 273 stored
+  support-growth rows, and with the depth-100000 finalists.
+- **Witnesses:** re-simulation of all 1,335 SAT witnesses, plus the 75 edge
+  and 2 constructive witnesses. Record consistency and the L65 monotonicity
+  argument also hold.
+
+It could not replay any DRAT proof, because the 48 LFS objects were not on
+the server.
+
+Changes made in review:
+
+- `tools/verify_lean.py` now catches `sorry` warnings, which Lean prints on
+  stdout, and audits `private`/`protected` theorems. A planted
+  `private theorem hidden_gap : False := sorry` now fails the gate.
+- The Lean project imports Lean core only, so the unused Mathlib dependency
+  is removed. The CI `drat` job now installs elan and runs the `lean` stage
+  instead of skipping it.
+- The ledger's P7 row is marked low-power: the `7·bitlength(r)` credit makes
+  it testable only at tiny r. The ledger's Lean row now describes the
+  phase-slip lemma as algebra only.
+- New top obligation `period2-uniform-deficit`, `7W_N(r) >= N-8` for every
+  r. It rests on the audit's search, where the largest deficit `N-7W_N` was
+  8 and it never exceeded 4 for r<2^24.

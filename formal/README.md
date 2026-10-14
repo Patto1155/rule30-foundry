@@ -1,9 +1,9 @@
 # Checked Rule 30 foundations
 
-Pinned Lean 4.19.0 and Mathlib v4.19.0; the lockfile pins Mathlib and its
-transitive dependencies by commit. These proofs import Lean core only;
-Mathlib is available for subsequent extensions, so no Mathlib cache download
-is required for this build.
+Pinned Lean 4.19.0. These proofs import Lean core only, so the project has no
+Mathlib dependency and builds in seconds once the toolchain is installed. Add
+Mathlib back to `lakefile.toml` (and run `lake update`) only when a proof
+imports it.
 
 ```sh
 cd formal
@@ -47,10 +47,10 @@ On this sandbox Lean asks for `/proc/<pid>/exe`, which is absent even though
 compiles `tools/lean_proc_path.c`, and retries with a readlink compatibility
 shim. This changes executable-path discovery only, not Lean's kernel or
 proof evaluation. Normal machines use the unmodified path. Local acceptance
-used this shim. CI names `lean` as a permitted skip because neither CI job
-installs Lean; that skip checks nothing.
+used this shim. The CI `drat` job installs elan and runs this stage, so the
+machine-checked grades are re-checked on every PR; only the CPU job skips it.
 
 Not run: full Condrey formalization, global exclusion/support-growth proof,
-Mathlib cache download (no imported Mathlib modules), external lineage audit,
+external lineage audit,
 GPU jobs. Full repository verification is owned by the lead after integration;
 this agent runs only focused tests while repository suites are serialized.
