@@ -404,6 +404,8 @@ def extract_certificates(result,path,directory):
         for chunk in result['certificates_chunks']:
             assert re.fullmatch(r'certificates\.tar\.xz\.part[0-9]+',chunk['path'])
             content=(path.parent/chunk['path']).read_bytes()
+            if content.startswith(b'version https://git-lfs'):
+                raise SystemExit(f"{chunk['path']} is a Git LFS pointer; run `git lfs pull` first")
             assert len(content)==chunk['bytes'] and hashlib.sha256(content).hexdigest()==chunk['sha256']
             pieces.append(content)
         content=b''.join(pieces)

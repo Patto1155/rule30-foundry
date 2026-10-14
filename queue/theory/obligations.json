@@ -21,7 +21,7 @@
         "finite-exclusion-as-asymptotic": "The finite SAT curve proves only bounded minima. The proposed inequality quantifies over every N and remains entirely unproved, not an extrapolated grade."
       },
       "status": "open",
-      "progress": "2026-10-14: Condrey period-one argument independently audited; its monotone latch becomes s_next=(1-s)(1-u)(1-v) under alternation. Right seeds1 and7 have the same leading one but force different left bits at depth9. Existing transfer/renewal work credited; density bound entirely unproved. docs/theory/period2_attempt.md."
+      "progress": "2026-10-14: Condrey period-one argument audited in-session (Proof candidate); its monotone latch becomes s_next=(1-s)(1-u)(1-v) under alternation. Right seeds1 and7 have the same leading one but force different left bits at depth9. Existing transfer/renewal work credited; density bound entirely unproved. docs/theory/period2_attempt.md."
     },
     {
       "id": "christol-transcendence",

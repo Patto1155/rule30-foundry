@@ -156,3 +156,16 @@ Next: derive a physical ordered-support lemma for one fixed right trajectory,
 with an explicit falsifiable inequality. Do not extrapolate the SAT curve,
 replace physical boundaries with free choices, or promote the elementary
 forcing identity into hardness. B3 LSD n=56 remains optional bounded work.
+
+## Addendum — grade revision on review (2026-10-14)
+
+The period-one row above records the session's proposed grade. On lead review
+it was **held at Proof candidate (external; audited here)**, not Theorem. The
+audit was careful, but it was performed by one session and its subagents, which
+share a model lineage; under `CLAUDE.md` their agreement is not corroboration.
+Promotion requires refereed publication or a machine-checked proof of
+Condrey's Theorems 2–3 and Corollaries 4–5. Until then no Certificate or
+Theorem row may depend on it. Nothing else in this log changes.
+
+The 539 UNSAT certificate chunks were moved to Git LFS in the same review so
+that the proofs stay retained without adding ~133 MB to every clone's history.

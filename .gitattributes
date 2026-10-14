@@ -8,3 +8,4 @@
 data/** -text
 # Preserve the recovered artifact's original SHA256 across checkout platforms.
 runs/b1-recovered-2026-09-08/pattern_map_walk32.original.json -text
+runs/period-horizon-2026-10-14/certificates.tar.xz.part* filter=lfs diff=lfs merge=lfs -text

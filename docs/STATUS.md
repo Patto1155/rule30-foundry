@@ -12,7 +12,7 @@ Updated: 2026-10-14 · Newest log: `docs/experiment-logs/2026-10-14-period-ladde
 
 | # | Problem | Best current result | Grade |
 |---|---|---|---|
-| 1 | Does the center column repeat? | Period one is excluded by the independently audited Condrey analytic argument (unrefereed preprint); period two remains open. No period `p <= 5,000,000` in the first 10M bits — **decided exactly**, all 9,999,936 candidates, 0 survivors. Cannot resolve the problem: eventual periodicity is asymptotic. | Theorem (external audited) + Certificate |
+| 1 | Does the center column repeat? | Period one is excluded by Condrey's analytic argument (unrefereed preprint), audited here and held at Proof candidate until refereed or machine-checked; period two remains open. No period `p <= 5,000,000` in the first 10M bits — **decided exactly**, all 9,999,936 candidates, 0 survivors. Cannot resolve the problem: eventual periodicity is asymptotic. | Proof candidate (external, audited) + Certificate |
 | 2 | Are 0s and 1s equidistributed? | Bias < 0.05% over 10M bits. Uniform Bernoulli(1/2) is invariant (proved, left-permutivity) — which is *not* the same as the single seed's limiting frequency, the actual question. | Theorem + Observation |
 | 3 | Is there a shortcut for the nth bit? | None found. Base-2 minimal-DFAO size is now certified through MSD `s*(64)=15` (LSD remains certified through n=48). No GF(2) annihilator of degree `<= 3` over windows to 64 bits, nor degree `<= 4` to 32 bits. ML routes (I/K/L) are scoped down. A published shortcut claim is under audit, separating warm query from cold `n -> c_n` cost. | Certificate (s*(n)) |
 
@@ -81,7 +81,8 @@ happened anyway. See [`BRANCHING.md`](BRANCHING.md).
 
 ## Recently closed
 
-- **2026-10-14 research review:** period-one proof independently audited;
+- **2026-10-14 research review:** period-one proof audited in-session (grade held
+  at Proof candidate: one model lineage, unrefereed, not machine-checked);
   period-two attempt locates the OR-reset failure and leaves physical support
   growth open. The SAT instrument certifies all171 minimum radii at T=0,
   L=8..64 (alternating L64 requires R54), with all539 UNSAT proofs retained.
