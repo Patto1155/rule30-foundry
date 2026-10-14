@@ -1,0 +1,13 @@
+{
+  "scope": "Fresh abstract-map trajectory replay, not actual-seed branch selection",
+  "all_seed_gates_pass": true,
+  "matches_historical_events": true,
+  "matches_historical_branches": true,
+  "matches_historical_leaves": true,
+  "matches_historical_step_count": true,
+  "map_steps": 36617159481,
+  "doubling_leaves": 2,
+  "undoubled_leaves": 8,
+  "exclusive_horizon": 12000000000,
+  "actual_seed_branch_resolved": false
+}

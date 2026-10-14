@@ -1,0 +1,23 @@
+simulating T=298,654 for D=200,000 (tail 512 rows)...
+  simulation 10.4s   period histogram {1: 16, 2: 10, 4: 56, 8: 668, 16: 87119, 32: 112131}   unsettled 0
+  first period-32 diagonal: 87867
+  seed d0=88,867  u=0x761f998d  v=0x0c9b5379
+  gate lemma-A          : 50,000 tested, 0 violations
+  gate map==simulation  : 50,000 diagonals, 0 mismatches
+  gate seed is period-32: True
+
+walking to d=12,000,000,000 ...
+  36,617,159,481 map steps in 1785.71s (20.5 M/s)
+  branch points: 9
+  DOUBLING  branch=root1  d=2,107,985,255  pred=0xed91e45c minperiod=32 -> period 64
+  DOUBLING  branch=root00100  d=9,958,700,505  pred=0x744e00bf minperiod=32 -> period 64
+  no doubling on branch=root0111 by d=12,000,000,000
+  no doubling on branch=root0110 by d=12,000,000,000
+  no doubling on branch=root010 by d=12,000,000,000
+  no doubling on branch=root0011 by d=12,000,000,000
+  no doubling on branch=root001011 by d=12,000,000,000
+  no doubling on branch=root001010 by d=12,000,000,000
+  no doubling on branch=root0001 by d=12,000,000,000
+  no doubling on branch=root0000 by d=12,000,000,000
+
+wrote data/wedge/pattern_map_walk32.json

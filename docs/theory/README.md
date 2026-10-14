@@ -252,7 +252,7 @@ polynomially, so widening a search is gated far more loosely than deepening it:
 
 ---
 
-## 5. Standing rules for new proposals
+## 6. Standing rules for new proposals
 
 Before proposing an experiment, answer in one line each:
 

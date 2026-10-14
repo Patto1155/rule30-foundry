@@ -6,29 +6,30 @@ lives here. Overwrite this file in place; git history keeps the old versions.
 No other file may carry a "current state as of" section —
 `tools/lint_ledger.py` enforces it.
 
-Updated: 2026-09-17 · Newest log: `docs/experiment-logs/2026-09-17-jev-selector-pilot.md`
+Updated: 2026-10-14 · Newest log: `docs/experiment-logs/2026-10-14-period-ladder.md`
 
 ## Where the three prize problems stand
 
 | # | Problem | Best current result | Grade |
 |---|---|---|---|
-| 1 | Does the center column repeat? | No period `p <= 5,000,000` in the first 10M bits — **decided exactly**, all 9,999,936 candidates, 0 survivors. Cannot resolve the problem: eventual periodicity is asymptotic. | Certificate |
+| 1 | Does the center column repeat? | Period one is excluded by the independently audited Condrey analytic argument (unrefereed preprint); period two remains open. No period `p <= 5,000,000` in the first 10M bits — **decided exactly**, all 9,999,936 candidates, 0 survivors. Cannot resolve the problem: eventual periodicity is asymptotic. | Theorem (external audited) + Certificate |
 | 2 | Are 0s and 1s equidistributed? | Bias < 0.05% over 10M bits. Uniform Bernoulli(1/2) is invariant (proved, left-permutivity) — which is *not* the same as the single seed's limiting frequency, the actual question. | Theorem + Observation |
 | 3 | Is there a shortcut for the nth bit? | None found. Base-2 minimal-DFAO size is now certified through MSD `s*(64)=15` (LSD remains certified through n=48). No GF(2) annihilator of degree `<= 3` over windows to 64 bits, nor degree `<= 4` to 32 bits. ML routes (I/K/L) are scoped down. A published shortcut claim is under audit, separating warm query from cold `n -> c_n` cost. | Certificate (s*(n)) |
 
 ## Open work, ranked
 
-Sequence approved 2026-09-02: **A1 → A2 → C2**, with B3 as filler. Reasoning
-and the full option analysis: [`handover/CURRENT.md`](handover/CURRENT.md).
-A1, A2, C2 and C2b are done (see *Recently closed*); **B3 is next**.
+The approved 2026-10-14 session puts the **eventual-period-two mechanism and
+its finite-horizon instrument first**, alongside the exact nonlinear forcing
+identity. B3 (LSD n=56) is optional bounded work. The older A1 → A2 → C2
+sequence is complete; the two former next items were B3 and T1 (see their rows).
 
 | # | Work | Kind | Cost | Blocks |
 |---|---|---|---|---|
-| A3 | **Make bitstreams reachable** — no local, release, Actions, or LFS copy found on 2026-09-09; manifest hashes remain anchored | Infra | ~½ day | B2 |
+| A3 | **46M remains absent.** Canonical10M is restored from the tracked MSB golden file by `python tools/convert_golden_bitstream.py`, with the exact manifest hash and all-bit verification. The 46M retrieval/generation blocker remains. | Infra | Hardware/data dependent | B2 |
 | C2c | **Annihilators over non-consecutive bit selections** — every window searched so far is a run of adjacent bits, so long-lag structure (the I/K/L blind spot) is untested | Research | Days | — |
 | C2d | **Multi-word window codes**, lifting `w` past the `uint64` cap of 64 | Research | ~½ day | — |
-| B3 | Extend `s*(n)` — **MSD n=64 is now exact at `s*(64)=15`** (2026-09-18), with `s*(52)=12` and the certified `s*(56)=13` independently reproduced. The deciding 14-state refutation cost 353 s to solve and 598 s to check on a 2.26 GB proof, ~10x its n=64 s=13 predecessor, so n=72+ needs a better encoding rather than more wall clock (`docs/experiment-logs/2026-09-18-jev-openrouter-live-and-campaign-scaling.md`). Next: **LSD n=56, now scoped to `s* in {12,13,14}`** by a verified 11-state refutation and 14-state witness (`queue/jev/lsd56.json` is ready to run; LSD costs ~4-5x MSD per card), then bases 3/4 | Research | Hours | — |
-| T1 | **Theory-first loop** (`docs/THEORY_FIRST.md`): obligations gated on mechanism and on recomputed `log2|M|` vs `n`, ranked by Jev, compute used only as a falsifier. First instrument `experiments/algebraic_relation.py` reports `C*(N)`, the minimal algebraic budget over `F_2(x)`, which is always defined. Center is **maximal**, inside the 7-seed null band at 4 of 4 lengths to N=1024, against an 85x-separated Thue-Morse control; cross-checked by an independent numpy rank (`docs/experiment-logs/2026-09-18-theory-first-loop-and-algebraic-relations.md`). Next: work the Christol transcendence and unsettled-core obligations in `queue/theory/obligations.json` | Research | Hours | — |
+| B3 | Extend `s*(n)` — **MSD n=64 is now exact at `s*(64)=15`** (2026-09-18), with `s*(52)=12` and the certified `s*(56)=13` independently reproduced. The deciding 14-state refutation cost 353 s to solve and 598 s to check on a 2.26 GB proof, ~10x its n=64 s=13 predecessor, so n=72+ needs a better encoding rather than more wall clock (`docs/experiment-logs/2026-09-18-jev-openrouter-live-and-campaign-scaling.md`). Next: **LSD n=56, now scoped to `s* in {12,13,14}`** by a verified 11-state refutation and 14-state witness (`queue/jev/frontier.json` is the focused default plan; `queue/jev/lsd56.json` is the wider sweep; LSD costs ~4-5x MSD per card), then bases 3/4 | Research | Hours | — |
+| T1 | **Theory-first loop** (`docs/THEORY_FIRST.md`): obligations gated on mechanism and on recomputed `log2|M|` vs `n`, ranked by Jev, compute used only as a falsifier. First instrument `experiments/algebraic_relation.py` reports `C*(N)`, the minimal algebraic budget over `F_2(x)`, which is always defined. Center is **maximal**, inside the 7-seed null band at 4 of 4 lengths to N=1024, against an 85x-separated Thue-Morse control; cross-checked by an independent numpy rank (`docs/experiment-logs/2026-09-18-theory-first-loop-and-algebraic-relations.md`). Prior next items: Christol transcendence and unsettled-core obligations in `queue/theory/obligations.json`; this session prioritises period two and the nonlinear forcing obligation | Research | Hours | — |
 | E1 | Write up the eight Theorem rows; `s*(n)` is citable | Writing | Days | — |
 | B2 | Exact period search on 46M — no code change, extends to `p <= 2.3e7` | Research | Minutes | A3 |
 | B1 | All seven computationally reachable early zero words were tested. Phase plus one tail-boundary bit selects every successor (4 train, 3 held out), but computing that bit still depends on a transient cutoff growing to 117,323 (~1.335d). Settled-only rules fail; stop before the first period-32 branch at `d=1,420,878,969`. | Research | Proof target needed | — |
@@ -51,8 +52,10 @@ grades left-edge structure as disjoint from the prize object.
 PRs #32–#38 are merged; all passed CPU and DRAT CI. They cover trace/B1
 recovery, annihilator preflight, output loops, the period-word sieve, official
 numbering, twelve imported test suites, and the seven-step follow-up with its
-transient selector. No long
-experiment or monitor is running. The older checkout's unrelated edits remain
+transient selector. The 2026-10-14 D1 trajectory replay completed: 36.6 billion map steps reproduce
+two abstract doubling leaves and eight undoubled leaves below d=12 billion.
+The actual seed branch remains unresolved; no growth-law promotion is made.
+No experiment or monitor is running. The older checkout's unrelated edits remain
 untouched.
 
 The #18 → #19 stack landed on 2026-09-02; #20 and #21 had already been merged
@@ -78,6 +81,16 @@ happened anyway. See [`BRANCHING.md`](BRANCHING.md).
 
 ## Recently closed
 
+- **2026-10-14 research review:** period-one proof independently audited;
+  period-two attempt locates the OR-reset failure and leaves physical support
+  growth open. The SAT instrument certifies all171 minimum radii at T=0,
+  L=8..64 (alternating L64 requires R54), with all539 UNSAT proofs retained.
+  The exact nonlinear forcing identity is proved, without a hardness bound.
+  Both proof filters and lead replays pass. Final integrity gate: 10 PASS,
+  1 SKIP (absent 46M stream), 0 FAIL; canonical 10M and DRAT now pass.
+  `docs/experiment-logs/2026-10-14-period-ladder.md`.
+
+
 - **Right-special-factor route audited and reclassified** (2026-09-18, no compute).
   "For every `n` the centre column has a right-special factor of length `n`" is
   **exactly Prize 1**, via `p(n+1) - p(n) = #RS_n` and Morse-Hedlund — a third
@@ -102,8 +115,16 @@ happened anyway. See [`BRANCHING.md`](BRANCHING.md).
   using fixed, random or Jev policies, verifies witnesses/DRAT, and prunes only
   checked implications. CPU fixed/random replays passed; n=64 reproduced the
   known 15-state upper bound, with tighter cases still UNKNOWN at 10 seconds.
-  No live Jev call or evidence of model benefit yet (API key absent).
-  `docs/JEV_SEARCH.md`; `docs/experiment-logs/2026-09-17-jev-selector-pilot.md`.
+  A live OpenRouter check and a matched six-run comparison followed on
+  2026-09-18. Two Jev runs established five centre results in 122/132 seconds;
+  fixed established three in 180 seconds. The saved log reports about 2.4x
+  verified centre throughput on that single plan/budget: goal-aware versus
+  goal-blind policies, not mathematical insight or generalisation. Null work
+  was deferred. Those historical live calls were not repeated this session
+  (no outside provider configured). `docs/JEV_SEARCH.md`;
+  `docs/experiment-logs/2026-09-17-jev-selector-pilot.md`;
+  `docs/experiment-logs/2026-09-18-jev-openrouter-live-and-campaign-scaling.md`
+  §§1, 3b.
 - **G1**: #33 wired the existing annihilator helper into preflight for positive,
   negative, and undeclared search claims. Strict distinct-window parameters and
   both boundaries are checked. A heuristic safety-margin shortfall is explicitly
@@ -145,7 +166,12 @@ happened anyway. See [`BRANCHING.md`](BRANCHING.md).
 
   Still unexercised: `workhorse.py --agent codex` has never implemented an
   experiment, and `queue/b1-pattern-map-walk.json` — the one queued real task —
-  **has never been run**. The pilot that would settle the rest is B1 and B2 on
+  **completed through the script harness on 2026-10-14**; the Sept8 recovery log already
+  preserves a historical full walk and a partial fresh audit:
+  `docs/experiment-logs/2026-09-08-b1-recovery.md`. Its two abstract doubling
+  leaves do not identify the actual seed branch. The fresh script-harness replay completed on 2026-10-14 and agrees with
+  the historical tree: `runs/d1-pattern-map-replay-2026-10-14/comparison.json`.
+  The queue entry remains a reproducible recipe, not an unrun task. The old hardware pilot was B1 and B2 on
   hardware already owned, with traps planted, checking the validation layer
   catches every invalid result. No hardware bought and
   none justified: [`COMPUTE_PLAN.md`](COMPUTE_PLAN.md) §1 is titled *"The

@@ -10,7 +10,8 @@ are graded, and the grade is enforced by tooling.
 python tools/verify_all.py
 ```
 
-~2 s on a fresh clone. Prints PASS / FAIL / SKIP per stage. **`SKIP` is not
+Allow about 1–2 minutes on a CPU-only checkout; the unittest stage dominates.
+Available inputs and hardware change the runtime. Prints PASS / FAIL / SKIP per stage. **`SKIP` is not
 `PASS`** — the canonical bitstreams are gitignored, so on a machine that has
 not regenerated them those stages check nothing.
 
@@ -73,7 +74,7 @@ You are the lead researcher. You decide what is worth doing, judge whether a
 result is real, and own every grade in `docs/CLAIM_LEDGER.md`. That does not
 mean you type everything.
 
-**Grunt work goes to an outside model, not to a Claude subagent.** Coding,
+**When an outside provider is available, grunt work goes to that model.** Coding,
 debugging, writing tests, refactoring, tracing something through the tree,
 implementing an experiment that does not exist yet — delegate it and review
 what comes back. Each task runs on an isolated branch in its own `git
@@ -120,12 +121,21 @@ wrote.
 Sending a deterministic command through an LLM buys nothing and adds a failure
 point. If the script exists, run the script.
 
+### Delegation fallback
+
+When no outside provider is configured or reachable, Claude subagents may
+implement and research in isolated worktrees. The lead still reviews artifacts,
+re-runs acceptance commands, and owns every grade. The independence rule is
+unchanged: agreement among subagents is throughput, never corroboration.
+Deterministic jobs still run through the script harness.
+
 ### The three gate subagents
 
 Spawning subagents is **authorised** — you do not need to ask first. Three are
 defined in `.claude/agents/`, and each enforces a gate this repo mandates in
 prose but would otherwise never enforce mechanically. They are gates, not
-workers; delegate work to Codex and use these to check it.
+workers; delegate work to Codex (or use the fallback above) and use these to
+check it.
 
 | Agent | Gate it enforces | Run it before |
 |---|---|---|

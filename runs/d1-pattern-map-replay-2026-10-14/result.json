@@ -1,0 +1,51 @@
+{
+  "manifest": {
+    "name": "b1-pattern-map-walk-32",
+    "kind": "measurement",
+    "purpose": "exploratory",
+    "seed": "single-black-cell",
+    "theory_gate": "OPEN",
+    "theory_gate_citation": "docs/CLAIM_LEDGER.md names this as the stated promotion route for the period(d) ~ 2*log2(d) row: confirm the 32->64 doubling near d ~ 8.6e9 via the generalized pattern map. docs/STATUS.md B1.",
+    "script": "experiments/pattern_map_walk.py",
+    "argv": [
+      "--max-d",
+      "12000000000",
+      "--out",
+      "data/wedge/pattern_map_walk32.json",
+      "--pretty"
+    ],
+    "claims": [],
+    "reads_packed_bitstream": false,
+    "outputs": [
+      "data/wedge/pattern_map_walk32.json"
+    ],
+    "budget": {
+      "minutes": 30,
+      "device": "cpu"
+    },
+    "notes": "STATUS.md B1: ~26 min CPU, palate cleanser, explicitly NOT prize progress. Ledger grades left-edge structure as disjoint from the prize object. Run it to close Item 14, not to advance a prize. Its primary result lands outside runs/, so it is declared in `outputs` and copied into the run directory; otherwise the PR would omit the result and the untracked file would block the next run."
+  },
+  "agent": "script",
+  "argv": [
+    "/workspace/scratch/6d20f3f6da49/rule30-d1/experiments/pattern_map_walk.py",
+    "--max-d",
+    "12000000000",
+    "--out",
+    "data/wedge/pattern_map_walk32.json",
+    "--pretty"
+  ],
+  "exit_code": 0,
+  "timed_out": false,
+  "duration_s": 1797.25,
+  "stdout_json": null,
+  "conclusions": [],
+  "metrics": {},
+  "provenance": {
+    "head": "b450406deace9f8adabc7b5b95d45b85e2c32432",
+    "started": "2026-10-14T01:31:12Z",
+    "finished": "2026-10-14T02:01:10Z",
+    "python": "3.12.14",
+    "agent": "script",
+    "budget_s": 2400
+  }
+}

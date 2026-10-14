@@ -1,0 +1,9 @@
+{
+  "source": "data/golden/center_col_golden_10M.bin",
+  "destination": "data/center_col_10M.bin",
+  "bytes": 1250000,
+  "sha256": "6f8670b4a89826c8228d6a165047792e91551dedfb2853b8f12572d466b7547e",
+  "fresh_cpu_prefix_bits": 100000,
+  "naive_prefix_bits": 4096,
+  "prefix_first_divergence": null
+}

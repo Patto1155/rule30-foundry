@@ -17,7 +17,7 @@ closed.
 
 1. `docs/theory/README.md` — the theory gate itself. Pay particular attention
    to §1 "What the algebra gives for free (do not re-measure these)" and §4
-   "Routes currently closed". §5 carries the standing rules for new proposals.
+   "Routes currently closed". §6 carries the standing rules for new proposals.
 2. `docs/idea-bank/theoretical-reframe-2026-03-28.md` — why the A–L line hit a
    ceiling, and why further "looks random" tests are low value.
 3. `docs/CLAIM_LEDGER.md` — what the repo already knows, and at what grade.
@@ -33,7 +33,7 @@ closed.
   a Theorem never is.
 - **ROUTE CLOSED** — §4 rules this out. Cite it and state the reason the route
   was closed, not just that it was.
-- **OPEN** — not covered. Say so explicitly. Then apply §5's standing rules and
+- **OPEN** — not covered. Say so explicitly. Then apply §6's standing rules and
   flag anything that trips them, especially: is this the single deterministic
   single-black-cell seed, or has an ensemble or random initial condition crept
   in? An ensemble quantity is not prize progress however well it is measured.
