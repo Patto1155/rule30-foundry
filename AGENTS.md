@@ -8,7 +8,9 @@ Use this workspace as a disciplined scratchpad, not as an ad hoc notebook dump.
 python tools/verify_all.py
 ```
 
-One command, ~2 s on a fresh clone. It runs the golden self-test, the hash
+One command; allow about 1–2 minutes on a CPU-only checkout, dominated by
+unittest. Available inputs and hardware change the runtime. It runs the golden
+self-test, the hash
 manifest, the manifest-is-current check, each canonical bitstream against the
 independent reference, both lints, and the test suite, and prints PASS / FAIL /
 SKIP per stage. Run it before an experiment and again before you commit.

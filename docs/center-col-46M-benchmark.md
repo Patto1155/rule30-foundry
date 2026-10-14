@@ -51,7 +51,7 @@ Throughput was consistent from start to finish with no degradation — no therma
 **Reproducibility:**
 ```bash
 # Regenerate center column
-python py/rule30_gpu.py --steps 46000000 --width 93000000 --out data/center_col_46M.bin
+python gpu/rule30_sim.py --steps 46000000 --width 93000000 --out data/center_col_46M.bin
 
 # Verify bit sequence
 python -c "
@@ -158,7 +158,7 @@ The current run used only 66 MB VRAM and showed no thermal degradation. The natu
 ```bash
 # Instrument future runs
 nvidia-smi dmon -s pucvmet -d 5 -f gpu_log.csv &
-python py/rule30_gpu.py --steps 500000000 ...
+python gpu/rule30_sim.py --steps 500000000 ...
 ```
 
 ### Goal 2 — Stronger Structure Detection via Causal Sensitivity and Compression

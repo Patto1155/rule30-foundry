@@ -1,0 +1,52 @@
+{
+  "artifact_type": "rule30.gates.preflight",
+  "name": "b1-pattern-map-walk-32",
+  "verdict": "PASS",
+  "gates": [
+    {
+      "gate": "schema",
+      "status": "PASS",
+      "reason": "all required fields present; purpose 'exploratory'"
+    },
+    {
+      "gate": "seed",
+      "status": "PASS",
+      "reason": "single-black-cell (purpose 'exploratory')"
+    },
+    {
+      "gate": "theory-gate",
+      "status": "PASS",
+      "reason": "OPEN"
+    },
+    {
+      "gate": "counting-bound",
+      "status": "SKIP",
+      "reason": "not a search"
+    },
+    {
+      "gate": "light-cone",
+      "status": "SKIP",
+      "reason": "not a simulation"
+    },
+    {
+      "gate": "script",
+      "status": "PASS",
+      "reason": "experiments/pattern_map_walk.py"
+    },
+    {
+      "gate": "bitorder-lint",
+      "status": "SKIP",
+      "reason": "does not read a packed bitstream"
+    },
+    {
+      "gate": "golden-self-test",
+      "status": "SKIP",
+      "reason": "does not read a packed bitstream"
+    },
+    {
+      "gate": "verify-all",
+      "status": "SKIP",
+      "reason": "external checks disabled"
+    }
+  ]
+}

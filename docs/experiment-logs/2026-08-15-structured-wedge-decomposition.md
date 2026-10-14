@@ -367,4 +367,4 @@ the whole structure is disjoint from the prize object.
    the wedge to a Certificate.
 5. **Do not** extend this to "more randomness tests on the core." The core's
    incompressibility under three separate estimators is already recorded here;
-   another aggregate test has no promotion path (`docs/theory/README.md` §5).
+   another aggregate test has no promotion path (`docs/theory/README.md` §6).

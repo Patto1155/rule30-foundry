@@ -1,0 +1,1 @@
+Lead replay: PASS self-test; PASS verify 1249 regenerated CNFs, 710 independently simulated SAT witnesses, 539 UNSAT DRAT proofs, 171 exact minima and controls; PASS seven tamper rejections. Script inspected for cone boundaries, support nesting and record/proof identity. Cosmetic plot legend then corrected to omit empty censored series.

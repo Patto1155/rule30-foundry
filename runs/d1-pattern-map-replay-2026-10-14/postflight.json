@@ -1,0 +1,32 @@
+{
+  "artifact_type": "rule30.gates.postflight",
+  "name": "b1-pattern-map-walk-32",
+  "verdict": "PASS",
+  "gates": [
+    {
+      "gate": "seed-echo",
+      "status": "PASS",
+      "reason": "single-black-cell (purpose 'exploratory')"
+    },
+    {
+      "gate": "censoring",
+      "status": "PASS",
+      "reason": "every conclusion is horizon-qualified"
+    },
+    {
+      "gate": "noise-floor",
+      "status": "PASS",
+      "reason": "0 metric(s), each with a baseline"
+    },
+    {
+      "gate": "divergence-invariant",
+      "status": "PASS",
+      "reason": "no impossible divergence"
+    },
+    {
+      "gate": "fifty-percent",
+      "status": "SKIP",
+      "reason": "no stream comparison reported"
+    }
+  ]
+}

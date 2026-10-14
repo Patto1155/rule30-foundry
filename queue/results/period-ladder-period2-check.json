@@ -1,0 +1,90 @@
+{
+  "result": "PASS",
+  "constant_fibers_checked": 64,
+  "fiber_depth": 32,
+  "horizon_checks": [
+    {
+      "radius": 1,
+      "horizon_indices": [
+        2,
+        1
+      ],
+      "extremizer_counts": [
+        1,
+        2
+      ]
+    },
+    {
+      "radius": 2,
+      "horizon_indices": [
+        2,
+        3
+      ],
+      "extremizer_counts": [
+        3,
+        4
+      ]
+    },
+    {
+      "radius": 3,
+      "horizon_indices": [
+        4,
+        3
+      ],
+      "extremizer_counts": [
+        7,
+        8
+      ]
+    },
+    {
+      "radius": 4,
+      "horizon_indices": [
+        4,
+        5
+      ],
+      "extremizer_counts": [
+        15,
+        16
+      ]
+    },
+    {
+      "radius": 5,
+      "horizon_indices": [
+        6,
+        5
+      ],
+      "extremizer_counts": [
+        31,
+        32
+      ]
+    },
+    {
+      "radius": 6,
+      "horizon_indices": [
+        6,
+        7
+      ],
+      "extremizer_counts": [
+        63,
+        64
+      ]
+    }
+  ],
+  "local_checks": {
+    "right_cones": 32,
+    "left_prefixes": 64
+  },
+  "period2_first_one_counterexample": {
+    "right_integers": [
+      1,
+      7
+    ],
+    "first_divergent_left_depth": 9,
+    "left_prefixes_16": [
+      "0110101001101101",
+      "0110101010000011"
+    ]
+  },
+  "rule90_and_zero_controls": "PASS",
+  "claim_scope": "identity checks and external p1 audit, not p2 exclusion"
+}

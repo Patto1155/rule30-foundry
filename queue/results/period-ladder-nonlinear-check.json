@@ -1,0 +1,28 @@
+{
+  "result": "PASS",
+  "initial_rows": 32,
+  "seed_width": 5,
+  "times": [
+    0,
+    64
+  ],
+  "seed_time_pairs": 2080,
+  "local_truth_table_cases": 40,
+  "rules": [
+    30,
+    90,
+    150
+  ],
+  "boundary": "infinite zero exterior; no wraparound",
+  "checks": [
+    "ANF",
+    "additivity defect",
+    "Lucas kernel",
+    "Frobenius kernels",
+    "additive closed forms",
+    "Rule30 Duhamel",
+    "zero",
+    "single-seed first correction"
+  ],
+  "limitation": "Finite checks support the separate all-time algebraic proof; no complexity bound."
+}

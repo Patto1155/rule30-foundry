@@ -143,6 +143,26 @@ def verdict(states: int, n_bits: int, base: int) -> dict:
     }
 
 
+def finite_configuration_verdict(radius: int, n_bits: int) -> dict:
+    """Counting gate for nonzero binary initial rows supported in [-R,R].
+
+    Initial configurations need not have distinct traces; this is an upper
+    bound on the number of trace words, and does not guarantee any exclusion.
+    """
+    if radius < 0 or n_bits < 1:
+        raise ValueError("radius >= 0 and n_bits >= 1 required")
+    count = (1 << (2 * radius + 1)) - 1
+    log_class = math.log2(count)
+    return {"radius": radius, "n_bits": n_bits,
+            "initial_configuration_count": str(count),
+            "log2_class_size_upper": log_class,
+            "log2_expected_random_fits_upper": log_class - n_bits,
+            "discriminating": log_class >= n_bits,
+            "purpose": "exact-exclusion",
+            "negative_guaranteed": False,
+            "exclusion_would_still_be_true": True}
+
+
 def log2_annihilator_space(window: int, degree: int) -> float:
     """log2 of the number of GF(2) polynomials of degree <= d in w variables.
 

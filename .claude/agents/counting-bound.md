@@ -13,9 +13,11 @@ You enforce the first of the three rules in `CLAUDE.md` — the one that cost
 this repo a retracted certificate in 2026-08.
 
 A negative result ("nothing in class `M` fits the first `n` bits") carries
-information only when `log2|M| >= n`. Below that threshold *every* sequence
-produces the same negative, so the experiment has measured `|M|`, not Rule 30.
-Running it is worthless, and reporting it is worse than worthless.
+information only when `log2|M| >= n`. Below that threshold almost every uniform random word produces a negative,
+so it does not discriminate complexity. Counting does not force every word
+to fail: a one-state DFAO fits the all-zero word. A declared exhaustive
+`purpose: exact-exclusion` may still record a true bounded exclusion, as
+CLAUDE.md and tools/gates.py require.
 
 ## What to do
 
@@ -41,8 +43,8 @@ Running it is worthless, and reporting it is worse than worthless.
 
 ## What to return
 
-- **VACUOUS** — `log2|M| < n`. State both numbers and the margin. Say the
-  negative is guaranteed by counting alone, and give the smallest `n` (or the
+- **VACUOUS** — `log2|M| < n`. State both numbers and the margin. Say a uniform random word fits with probability at most `2^(log2|M|-n)`;
+  do not say the negative is guaranteed, and give the smallest `n` (or the
   largest class) that *would* make the experiment informative.
 - **INFORMATIVE** — `log2|M| >= n`. State both numbers and the margin. Note
   that clearing this bound makes the experiment worth running; it does not

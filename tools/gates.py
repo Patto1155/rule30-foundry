@@ -358,18 +358,18 @@ def _non_discriminating(m: dict, s: dict, detail: str) -> Gate:
 
 def gate_counting_bound(m: dict) -> Gate:
     """CLAUDE.md rule 1. A negative from class M over n bits is information
-    only when log2|M| >= n; below that every sequence gives the same negative
-    and the run measures |M|, not Rule 30. Equality is informative -- the
+    under the complexity admission policy when log2|M| >= n; otherwise a
+    uniform random word fits with probability at most 2^(log2|M|-n).
+    Counting does not guarantee every word fails. Equality clears the gate -- the
     tool's own threshold is `margin >= 0`, and Experiment S sits there.
 
     Scoped away from instrument checks for the same reason as the theory
     gate: a detection-power control deliberately runs a class too small to
     fit, to confirm the search reports a negative when it should. Its
     negative is a measurement of the detector, not a claim about Rule 30, and
-    the counting bound has nothing to say about it. This does NOT relax the
-    rule for `exact-exclusion`, which still fails here -- recording a bounded
-    exclusion as a finding needs the vacuity verdict split from the
-    truth of the exclusion, which has not been done yet."""
+    the counting bound has nothing to say about it. Exact exclusions still
+    pass through this gate: _non_discriminating admits a declared exhaustive
+    finite exclusion while refusing complexity claims from a sparse class."""
     purpose = m.get("purpose")
     if purpose in INSTRUMENT_PURPOSES:
         return Gate("counting-bound", SKIP,

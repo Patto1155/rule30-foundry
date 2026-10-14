@@ -1,0 +1,65 @@
+PASS  clone-integrity                  0.2s
+PASS  golden-self-test                 0.2s
+PASS  manifest+golden                  0.2s
+PASS  manifest-current                 0.1s
+PASS  bitstream:center_col_10M.bin     0.2s
+SKIP  bitstream:center_col_46M.bin  not present (gitignored; regenerate with gpu/rule30_sim.py)
+PASS  drat-toolchain                   0.2s
+PASS  gates-trap                       0.0s
+PASS  lint-bitorder                    0.3s
+PASS  lint-ledger                      0.1s
+FAIL  unittest                        71.0s
+--------------------------------------------------
+
+--- unittest output ---
+..................................................................note: center_col_golden_10M.bin verified over its first 512 bits; 3,584 beyond that are unchecked
+.note: center_col_golden_10M.bin verified over its first 512 bits; 3,584 beyond that are unchecked
+................................................ss....sss.................................................................................................................................................s......................................................................................................................................................stopped at step 250 of 3,000; re-run the same command to continue
+resuming from /tmp/tmpc6k9_spm/cut250.npz at step 250 of 3,000
+stopped at step 1,100 of 3,000; re-run the same command to continue
+resuming from /tmp/tmpc6k9_spm/cut1100.npz at step 1,100 of 3,000
+stopped at step 2,999 of 3,000; re-run the same command to continue
+resuming from /tmp/tmpc6k9_spm/cut2999.npz at step 2,999 of 3,000
+..stopped at step 300 of 3,000; re-run the same command to continue
+resuming from /tmp/tmpbc3ofopt/chain.npz at step 300 of 3,000
+stopped at step 600 of 3,000; re-run the same command to continue
+resuming from /tmp/tmpbc3ofopt/chain.npz at step 600 of 3,000
+stopped at step 900 of 3,000; re-run the same command to continue
+resuming from /tmp/tmpbc3ofopt/chain.npz at step 900 of 3,000
+stopped at step 1,200 of 3,000; re-run the same command to continue
+resuming from /tmp/tmpbc3ofopt/chain.npz at step 1,200 of 3,000
+stopped at step 1,500 of 3,000; re-run the same command to continue
+resuming from /tmp/tmpbc3ofopt/chain.npz at step 1,500 of 3,000
+stopped at step 1,800 of 3,000; re-run the same command to continue
+resuming from /tmp/tmpbc3ofopt/chain.npz at step 1,800 of 3,000
+stopped at step 2,100 of 3,000; re-run the same command to continue
+resuming from /tmp/tmpbc3ofopt/chain.npz at step 2,100 of 3,000
+stopped at step 2,400 of 3,000; re-run the same command to continue
+resuming from /tmp/tmpbc3ofopt/chain.npz at step 2,400 of 3,000
+stopped at step 2,700 of 3,000; re-run the same command to continue
+resuming from /tmp/tmpbc3ofopt/chain.npz at step 2,700 of 3,000
+resuming from /tmp/tmpbc3ofopt/chain.npz at step 3,000 of 3,000
+resuming from /tmp/tmpbc3ofopt/chain.npz at step 3,000 of 3,000
+....resuming from /tmp/tmpev4ccz4_/r.ckpt.npz at step 2,500 of 2,500
+...............................................control-tm64-s2: SAT verified=True
+control-center16-s4: UNSAT verified=True
+control-tm64-s2: UNKNOWN verified=False
+.............................................................................................................................................................................................................E....................................................................
+======================================================================
+ERROR: test_shipped_queue_validates_and_every_open_item_clears_both_gates (test_theory_workflow.MechanismGateTest.test_shipped_queue_validates_and_every_open_item_clears_both_gates)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/6d20f3f6da49/rule30-foundry/tests/test_theory_workflow.py", line 110, in test_shipped_queue_validates_and_every_open_item_clears_both_gates
+    data = load_queue(ROOT / "queue/theory/obligations.json")
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/6d20f3f6da49/rule30-foundry/tools/theory_triage.py", line 114, in load_queue
+    raise ValueError(f"{o['id']}: prize must be '1', '2', '3' or 'none'")
+ValueError: period2-physical-support-growth: prize must be '1', '2', '3' or 'none'
+
+----------------------------------------------------------------------
+Ran 747 tests in 69.959s
+
+FAILED (errors=1, skipped=6)
+--- rerun: /opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python -m unittest discover -s tests
+
+verify_all: 9 passed, 1 skipped (0 unexpected), 1 failed  FAIL

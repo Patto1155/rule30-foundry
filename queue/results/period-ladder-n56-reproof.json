@@ -1,0 +1,19 @@
+{
+  "static_checks_verified": true,
+  "certificate_reproved": true,
+  "s_star_56_msd": 13,
+  "reason": "certified n=48 lower bound + n=56 s=12 DRAT + s=13 witness",
+  "fresh_reproof": {
+    "states": 12,
+    "variables": 984,
+    "clauses": 14164,
+    "cnf_sha256": "592ecdbd5a6d15852ad6612a1c6fb0eb88cb5d9345216cce86c3191c80d506d1",
+    "solve_s": 36.589,
+    "status": "UNSAT",
+    "proof_bytes": 197932048,
+    "proof_sha256": "e23f79254d50a644ff7a12c8888543e26ee8cf352b79363adc70f2c5bba4e00c",
+    "check_s": 41.342,
+    "drat": "VERIFIED",
+    "verified": true
+  }
+}
