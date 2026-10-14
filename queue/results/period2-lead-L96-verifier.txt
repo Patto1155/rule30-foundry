@@ -1,0 +1,2 @@
+PASS verify 63 regenerated CNFs, SAT witnesses, all UNSAT DRAT proofs, minimum evidence, controls
+PASS tamper rejection: design range, design targets, target, length, minimum, query identity, witness, censored bounds, proof digest

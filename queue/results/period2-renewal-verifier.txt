@@ -1,0 +1,212 @@
+
+=== clone-integrity ===
+clone-integrity: OK (173 tracked files, no LF->CRLF checkout corruption)
+PASS  clone-integrity                  0.1s
+
+=== golden-self-test ===
+self-test OK: naive == packed over 4096 bits, OEIS prefix matches
+PASS  golden-self-test                 0.2s
+
+=== manifest+golden ===
+MISS  data/center_col_10M.bin
+MISS  data/center_col_46M.bin
+manifest: 172 verified, 2 absent, OK
+golden: data/golden/center_col_golden_1M.bin OK (1,000,000 bits)
+golden: data/golden/center_col_golden_10M.bin OK (10,000,000 bits)
+golden: independent check reaches 10,000,000 bits
+PASS  manifest+golden                  0.2s
+
+=== manifest-current ===
+manifest: up to date
+PASS  manifest-current                 0.1s
+
+=== bitstream:center_col_10M.bin ===
+SKIP  bitstream:center_col_10M.bin  not present (gitignored; regenerate with gpu/rule30_sim.py)
+
+=== bitstream:center_col_46M.bin ===
+SKIP  bitstream:center_col_46M.bin  not present (gitignored; regenerate with gpu/rule30_sim.py)
+
+=== drat-toolchain ===
+SKIP  drat-toolchain                SAT toolchain absent (build it: bash tools/build_sat_toolchain.sh)
+
+=== gates-trap ===
+{
+  "artifact_type": "rule30.gates.preflight",
+  "name": "TRAP-vacuous-dfao-24",
+  "verdict": "FAIL",
+  "gates": [
+    {
+      "gate": "schema",
+      "status": "PASS",
+      "reason": "all required fields present; purpose 'prize-claim'"
+    },
+    {
+      "gate": "seed",
+      "status": "PASS",
+      "reason": "single-black-cell (purpose 'prize-claim')"
+    },
+    {
+      "gate": "theory-gate",
+      "status": "PASS",
+      "reason": "OPEN"
+    },
+    {
+      "gate": "counting-bound",
+      "status": "FAIL",
+      "reason": "NOT DISCRIMINATING: log2|M| = 244.1 < n = 10000 for 24-state base-2 DFAO (expected fits 2^-9755.9). A uniform random string would almost certainly give the same negative, so this measures |M|, not Rule 30. If the search is exhaustive, the exclusion is still true: declare purpose 'exact-exclusion' with `\"exhaustive\": true` and record it as a bounded finding rather than as evidence."
+    },
+    {
+      "gate": "light-cone",
+      "status": "SKIP",
+      "reason": "not a simulation"
+    },
+    {
+      "gate": "script",
+      "status": "PASS",
+      "reason": "experiments/counting_bound.py"
+    },
+    {
+      "gate": "bitorder-lint",
+      "status": "SKIP",
+      "reason": "does not read a packed bitstream"
+    },
+    {
+      "gate": "golden-self-test",
+      "status": "SKIP",
+      "reason": "does not read a packed bitstream"
+    },
+    {
+      "gate": "verify-all",
+      "status": "SKIP",
+      "reason": "external checks disabled"
+    }
+  ]
+}
+PASS  gates-trap                       0.0s
+
+=== lint-bitorder ===
+lint_bitorder: 99 files scanned, no bare packbits/unpackbits
+PASS  lint-bitorder                    0.4s
+
+=== lint-ledger ===
+lint_ledger: 48 ledger rows, 58 experiment logs, all cited paths present
+PASS  lint-ledger                      0.1s
+
+=== unittest ===
+..................................................................note: center_col_golden_10M.bin verified over its first 512 bits; 3,584 beyond that are unchecked
+.note: center_col_golden_10M.bin verified over its first 512 bits; 3,584 beyond that are unchecked
+................................................ss...sssssss.................................................................................................................................................s......................................................................................................................................................stopped at step 250 of 3,000; re-run the same command to continue
+resuming from /tmp/tmpsg8otfx6/cut250.npz at step 250 of 3,000
+stopped at step 1,100 of 3,000; re-run the same command to continue
+resuming from /tmp/tmpsg8otfx6/cut1100.npz at step 1,100 of 3,000
+stopped at step 2,999 of 3,000; re-run the same command to continue
+resuming from /tmp/tmpsg8otfx6/cut2999.npz at step 2,999 of 3,000
+..stopped at step 300 of 3,000; re-run the same command to continue
+resuming from /tmp/tmp2y0rcr0p/chain.npz at step 300 of 3,000
+stopped at step 600 of 3,000; re-run the same command to continue
+resuming from /tmp/tmp2y0rcr0p/chain.npz at step 600 of 3,000
+stopped at step 900 of 3,000; re-run the same command to continue
+resuming from /tmp/tmp2y0rcr0p/chain.npz at step 900 of 3,000
+stopped at step 1,200 of 3,000; re-run the same command to continue
+resuming from /tmp/tmp2y0rcr0p/chain.npz at step 1,200 of 3,000
+stopped at step 1,500 of 3,000; re-run the same command to continue
+resuming from /tmp/tmp2y0rcr0p/chain.npz at step 1,500 of 3,000
+stopped at step 1,800 of 3,000; re-run the same command to continue
+resuming from /tmp/tmp2y0rcr0p/chain.npz at step 1,800 of 3,000
+stopped at step 2,100 of 3,000; re-run the same command to continue
+resuming from /tmp/tmp2y0rcr0p/chain.npz at step 2,100 of 3,000
+stopped at step 2,400 of 3,000; re-run the same command to continue
+resuming from /tmp/tmp2y0rcr0p/chain.npz at step 2,400 of 3,000
+stopped at step 2,700 of 3,000; re-run the same command to continue
+resuming from /tmp/tmp2y0rcr0p/chain.npz at step 2,700 of 3,000
+resuming from /tmp/tmp2y0rcr0p/chain.npz at step 3,000 of 3,000
+resuming from /tmp/tmp2y0rcr0p/chain.npz at step 3,000 of 3,000
+....resuming from /tmp/tmp_i5bberw/r.ckpt.npz at step 2,500 of 2,500
+...............................................control-tm64-s2: SAT verified=True
+control-center16-s4: UNSAT verified=True
+control-tm64-s2: UNKNOWN verified=False
+..................................................................................................................................................................................................................................................................................
+----------------------------------------------------------------------
+Ran 747 tests in 100.421s
+
+OK (skipped=10)
+PASS  unittest                       101.8s
+--------------------------------------------------
+
+verify_all: 8 passed, 3 skipped (0 unexpected), 0 failed  OK
+  Note: skipped stages checked nothing. The canonical bitstreams are
+  the artifacts the prize-facing claims rest on; run this on a machine
+  that has them before treating the repo as verified.
+
+POST-RUN REMEDIATION: canonical10M copied from lead; SAT binaries borrowed by local symlinks. Reran the two initially skipped runnable stages:
+bitstream: center_col_10M.bin (bit-packed, LSB-first) agrees with center_col_golden_10M.bin over 10,000,000 bits  OK
+solver  /workspace/scratch/87c4d255e2b3/rule30-foundry/third_party/cadical  (3.0.1)
+checker /workspace/scratch/87c4d255e2b3/rule30-foundry/third_party/drat-trim
+  [PASS] thue-morse n=64 s=2 msd is SAT  (SAT)
+  [PASS] center n=16 s=4 msd is UNSAT  (UNSAT)
+  [PASS] its DRAT proof verifies  (VERIFIED)
+  [PASS] drat-trim rejects a truncated proof  (rejected)
+  [PASS] drat-trim rejects refuting a satisfiable formula  (rejected)
+self-test OK
+
+Resolved totals:10PASS,1SKIP (46M absent),0FAIL. Initial unittest summary reported10SKIPs. After restoring canonical10M, reran bitorder, DRAT, damage-velocity and autocorrelation modules verbosely: remaining6 named skips are46M(3) and GPU/cupy(3). No worker-pool skip.
+test_every_exact_row_is_fully_covered (tests.test_dfao_drat_proofs.CurveCoverageTest.test_every_exact_row_is_fully_covered) ... ok
+test_it_covers_the_implied_verdicts_too (tests.test_dfao_drat_proofs.CurveCoverageTest.test_it_covers_the_implied_verdicts_too)
+The point of the re-run: UNSAT_IMPLIED must not be taken on faith. ... ok
+test_covers_every_state_below_s_star (tests.test_dfao_drat_proofs.InstanceEnumerationTest.test_covers_every_state_below_s_star) ... ok
+test_does_not_try_to_refute_s_star_itself (tests.test_dfao_drat_proofs.InstanceEnumerationTest.test_does_not_try_to_refute_s_star_itself)
+s* is the SAT verdict. Asking for its refutation would be a bug. ... ok
+test_no_filter_takes_every_sequence (tests.test_dfao_drat_proofs.InstanceEnumerationTest.test_no_filter_takes_every_sequence) ... ok
+test_sequence_filter (tests.test_dfao_drat_proofs.InstanceEnumerationTest.test_sequence_filter) ... ok
+test_skips_rows_without_an_exact_s_star (tests.test_dfao_drat_proofs.InstanceEnumerationTest.test_skips_rows_without_an_exact_s_star)
+A row that timed out has no lower bound to certify. ... ok
+test_agrees_with_prize_lab_on_every_recorded_witness (tests.test_dfao_drat_proofs.StandaloneEvaluatorTest.test_agrees_with_prize_lab_on_every_recorded_witness) ... ok
+test_direction_changes_the_output (tests.test_dfao_drat_proofs.StandaloneEvaluatorTest.test_direction_changes_the_output)
+msd and lsd are genuinely different readings, not a no-op flag. ... ok
+test_index_zero_is_a_single_zero_digit (tests.test_dfao_drat_proofs.StandaloneEvaluatorTest.test_index_zero_is_a_single_zero_digit)
+The empty digit string would leave the DFAO in its initial state. ... ok
+test_thue_morse_two_state_dfao (tests.test_dfao_drat_proofs.StandaloneEvaluatorTest.test_thue_morse_two_state_dfao)
+Thue-Morse: output = parity of the popcount of the index. ... ok
+test_first_sample_bits_agree (tests.test_bitorder.BitstreamAgreesWithGoldenTest.test_first_sample_bits_agree) ... ok
+test_lsb_decode_matches_oeis (tests.test_bitorder.CanonicalBitstreamTest.test_lsb_decode_matches_oeis) ... 
+  test_lsb_decode_matches_oeis (tests.test_bitorder.CanonicalBitstreamTest.test_lsb_decode_matches_oeis) (path='center_col_46M.bin') ... skipped 'data/center_col_46M.bin absent (not tracked in git; regenerate with gpu/rule30_sim.py)'
+test_msb_decode_is_exactly_the_per_byte_reversal (tests.test_bitorder.CanonicalBitstreamTest.test_msb_decode_is_exactly_the_per_byte_reversal) ... 
+  test_msb_decode_is_exactly_the_per_byte_reversal (tests.test_bitorder.CanonicalBitstreamTest.test_msb_decode_is_exactly_the_per_byte_reversal) (path='center_col_46M.bin') ... skipped 'data/center_col_46M.bin absent (not tracked in git; regenerate with gpu/rule30_sim.py)'
+test_the_two_decodes_disagree_on_about_half_the_positions (tests.test_bitorder.CanonicalBitstreamTest.test_the_two_decodes_disagree_on_about_half_the_positions) ... 
+  test_the_two_decodes_disagree_on_about_half_the_positions (tests.test_bitorder.CanonicalBitstreamTest.test_the_two_decodes_disagree_on_about_half_the_positions) (path='center_col_46M.bin') ... skipped 'data/center_col_46M.bin absent (not tracked in git; regenerate with gpu/rule30_sim.py)'
+test_lsb_decode_does_not_match_oeis (tests.test_bitorder.GoldenReferenceConventionTest.test_lsb_decode_does_not_match_oeis) ... ok
+test_msb_decode_matches_oeis (tests.test_bitorder.GoldenReferenceConventionTest.test_msb_decode_matches_oeis) ... ok
+test_big_round_trips (tests.test_bitorder.RoundTripTest.test_big_round_trips) ... ok
+test_little_round_trips (tests.test_bitorder.RoundTripTest.test_little_round_trips) ... ok
+test_mixing_conventions_reverses_each_byte (tests.test_bitorder.RoundTripTest.test_mixing_conventions_reverses_each_byte)
+The exact defect: decode LSB-packed bytes as MSB-first. ... ok
+test_the_reversal_preserves_the_bit_mean (tests.test_bitorder.RoundTripTest.test_the_reversal_preserves_the_bit_mean)
+Why no aggregate check caught it: the mean is invariant. ... ok
+test_same_seed_is_deterministic (tests.test_damage_velocity.MeasureDeterminismTest.test_same_seed_is_deterministic) ... ok
+test_gpu_path_agrees_with_cpu (tests.test_damage_velocity.MeasureGpuPathTest.test_gpu_path_agrees_with_cpu) ... skipped 'no GPU (cupy) available; CPU path already covered'
+test_light_cone_holds_across_seeds (tests.test_damage_velocity.MeasureLightConeAcrossSeedsTest.test_light_cone_holds_across_seeds) ... ok
+test_causality_holds_per_distance (tests.test_damage_velocity.MeasureSmallestSizeTest.test_causality_holds_per_distance)
+first_div(d) >= d for every reported distance: the cone bound in ... ok
+test_measure_smallest_size_lies_in_the_light_cone (tests.test_damage_velocity.MeasureSmallestSizeTest.test_measure_smallest_size_lies_in_the_light_cone) ... ok
+test_measure_smallest_size_value (tests.test_damage_velocity.MeasureSmallestSizeTest.test_measure_smallest_size_value) ... ok
+test_constant_signal_matches_linear_autocorrelation_closed_form (tests.test_autocorrelation.AutocorrelationExactnessTest.test_constant_signal_matches_linear_autocorrelation_closed_form) ... ok
+test_period2_signal_matches_triangular_cosine_closed_form (tests.test_autocorrelation.AutocorrelationExactnessTest.test_period2_signal_matches_triangular_cosine_closed_form) ... ok
+test_lag_zero_dominates_every_other_lag_on_rule30 (tests.test_autocorrelation.AutocorrelationLagZeroTest.test_lag_zero_dominates_every_other_lag_on_rule30) ... ok
+test_lag_zero_is_exactly_one (tests.test_autocorrelation.AutocorrelationLagZeroTest.test_lag_zero_is_exactly_one) ... ok
+test_period_2_exact_derived_values (tests.test_autocorrelation.AutocorrelationPeriodTest.test_period_2_exact_derived_values) ... ok
+test_period_4_peaks_at_multiples_of_four (tests.test_autocorrelation.AutocorrelationPeriodTest.test_period_4_peaks_at_multiples_of_four) ... ok
+test_period_two_power_peaks_at_even_lags (tests.test_autocorrelation.AutocorrelationPeriodTest.test_period_two_power_peaks_at_even_lags) ... ok
+test_rule30_has_no_period_and_is_dominated_by_lag_zero (tests.test_autocorrelation.AutocorrelationPeriodTest.test_rule30_has_no_period_and_is_dominated_by_lag_zero) ... ok
+test_max_lag_beyond_pad_is_trimmed_to_pad_size (tests.test_autocorrelation.AutocorrelationShapeTest.test_max_lag_beyond_pad_is_trimmed_to_pad_size) ... ok
+test_returned_length_is_max_lag_plus_one (tests.test_autocorrelation.AutocorrelationShapeTest.test_returned_length_is_max_lag_plus_one) ... ok
+test_gpu_path_skips_when_cupy_absent (tests.test_autocorrelation.GPUDispatchTest.test_gpu_path_skips_when_cupy_absent) ... skipped 'no cupy installed'
+test_gpu_result_agrees_with_cpu (tests.test_autocorrelation.GPUDispatchTest.test_gpu_result_agrees_with_cpu) ... skipped 'requires cupy/cuFFT for the GPU FFT path'
+test_module_import_does_not_call_tqdm (tests.test_autocorrelation.ImportTqdmGuardTest.test_module_import_does_not_call_tqdm) ... ok
+test_rule30_corrected_is_no_stronger_than_bernoulli_baseline (tests.test_autocorrelation.NoiseFloorBaselineTest.test_rule30_corrected_is_no_stronger_than_bernoulli_baseline) ... ok
+test_rule30_corrected_stays_below_noise_floor_with_baseline (tests.test_autocorrelation.NoiseFloorBaselineTest.test_rule30_corrected_stays_below_noise_floor_with_baseline) ... ok
+
+----------------------------------------------------------------------
+Ran 42 tests in 0.700s
+
+OK (skipped=6)
+

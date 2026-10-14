@@ -1,0 +1,6 @@
+name = "rule30"
+version = "0.1.0"
+defaultTargets = ["Rule30"]
+
+[[lean_lib]]
+name = "Rule30"

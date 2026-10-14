@@ -115,21 +115,31 @@ class TestPool(unittest.TestCase):
                               f"A\ttools/_pi_{i}.py"], row)
 
     def test_tasks_actually_overlap_rather_than_running_one_at_a_time(self):
-        """Concurrency the pool claims but nothing else here proves. Four
-        tasks that each take 1.5s finish in well under 6s only if they ran at
-        the same time; serialised, the assertion fails."""
+        """Compare the same workload against a measured serial baseline.
+
+        Process startup varies between containers, so an absolute wall-clock
+        deadline confuses slow startup with a pool that does not overlap work.
+        """
         import time
+        serial_specs = [self.spec(f"serial_s{i}", f"S.\nFAKE-SLEEP 1.5\n"
+                                  f"FAKE-WRITE tools/_serial_pz_{i}.py :: F = {i}\n")
+                        for i in range(4)]
+        started = time.monotonic()
+        serial = self.run_pool(*serial_specs, concurrency=1, verify="none")
+        serial_elapsed = time.monotonic() - started
+        for row in serial["results"]:
+            self.assertEqual(row["verdict"], "READY-FOR-REVIEW", row)
         specs = [self.spec(f"s{i}", f"S.\nFAKE-SLEEP 1.5\n"
                                     f"FAKE-WRITE tools/_pz_{i}.py :: F = {i}\n")
                  for i in range(4)]
-        started = time.time()
+        started = time.monotonic()
         s = self.run_pool(*specs, concurrency=4, verify="none")
-        elapsed = time.time() - started
+        elapsed = time.monotonic() - started
         for row in s["results"]:
             self.assertEqual(row["verdict"], "READY-FOR-REVIEW", row)
-        self.assertLess(elapsed, 4.5,
-                        f"4 x 1.5s tasks took {elapsed:.1f}s -- they were "
-                        "serialised, not pooled")
+        self.assertLess(elapsed, 0.8 * serial_elapsed,
+                        f"parallel {elapsed:.1f}s vs serial {serial_elapsed:.1f}s "
+                        "-- the pool did not provide measurable overlap")
 
     def test_concurrency_one_serialises(self):
         """The negative control for the test above: with a pool of one the

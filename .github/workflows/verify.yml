@@ -47,11 +47,14 @@ jobs:
       # The canonical bitstreams are gitignored and the SAT toolchain is not
       # built in this job, so those three stages cannot run here. Every other
       # stage must PASS.
+      # Lean is not installed in this job; the drat job below runs the lean
+      # stage, so the machine-checked grades are still re-checked on every PR.
       - name: verify_all
         run: |
           python tools/verify_all.py --verbose \
             --allow-skip 'bitstream:*' \
-            --allow-skip drat-toolchain
+            --allow-skip drat-toolchain \
+            --allow-skip lean
 
   drat:
     name: verify_all + DRAT toolchain
@@ -83,9 +86,18 @@ jobs:
       - name: Build SAT toolchain
         run: bash tools/build_sat_toolchain.sh
 
-      # Only the gitignored bitstreams may skip here. If `drat-toolchain`
-      # skips in this job the build fails, which is correct: it would mean the
-      # toolchain build silently produced nothing.
+      # The Lean project imports core only, so the pinned toolchain is the
+      # whole install. Without this step the `lean` stage would skip and the
+      # ledger's machine-checked grades would never be re-checked.
+      - name: Install Lean toolchain
+        run: |
+          curl -sSfL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh \
+            | sh -s -- -y --default-toolchain none
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+
+      # Only the gitignored bitstreams may skip here. If `drat-toolchain` or
+      # `lean` skips in this job the build fails, which is correct: it would
+      # mean the install silently produced nothing.
       - name: verify_all
         run: |
           python tools/verify_all.py --verbose \

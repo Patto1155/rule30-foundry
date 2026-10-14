@@ -22,6 +22,8 @@ import importlib.util
 import pathlib
 import re
 import unittest
+import tempfile
+from unittest.mock import patch
 
 REPO_ROOT = pathlib.Path(__file__).resolve().parents[1]
 _SPEC = importlib.util.spec_from_file_location(
@@ -71,6 +73,23 @@ class TestSkipPermitted(unittest.TestCase):
         self.assertFalse(skip_permitted("golden-self-test", ("bitstream:*",)))
 
 
+class TestLeanInputs(unittest.TestCase):
+    def test_installed_lean_does_not_trigger_network_fetch_for_missing_mathlib(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = pathlib.Path(directory)
+            with patch.object(verify_all, 'REPO_ROOT', root), patch.object(
+                    verify_all.shutil, 'which', return_value='/bin/true'):
+                stage = next(s for s in verify_all.build_stages() if s.name == 'lean')
+                self.assertIn('Mathlib sources absent', stage.skip_reason)
+                self.assertFalse(skip_permitted('lean', ('bitstream:*',)))
+                self.assertTrue(skip_permitted('lean', ('lean',)))
+                mathlib = root / 'formal/.lake/packages/mathlib/lakefile.lean'
+                mathlib.parent.mkdir(parents=True)
+                mathlib.write_text('-- available source input\n')
+                stage = next(s for s in verify_all.build_stages() if s.name == 'lean')
+                self.assertIsNone(stage.skip_reason)
+
+
 class TestWorkflowAllowlist(unittest.TestCase):
     """The globs CI actually passes must license exactly the skippable stages.
 
@@ -97,6 +116,7 @@ class TestWorkflowAllowlist(unittest.TestCase):
         names = {f"bitstream:{pathlib.Path(rel).name}"
                  for rel in verify_all.BITSTREAMS}
         names.add("drat-toolchain")
+        names.add("lean")
         return names
 
     def workflow_globs(self) -> list:

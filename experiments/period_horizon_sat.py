@@ -31,6 +31,14 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from experiments.counting_bound import finite_configuration_verdict
 
 
+TARGETS=('alternating','alternating-one','zero','one')
+
+def target_word(target,length):
+    if target not in TARGETS: raise ValueError('unknown target '+target)
+    if target.startswith('alternating'):
+        return [(i+int(target=='alternating-one'))%2 for i in range(length)]
+    return [int(target=='one')]*length
+
 def cell(left, center, right, rule):
     return (rule >> (4 * left + 2 * center + right)) & 1
 
@@ -206,14 +214,26 @@ class Runner:
         lower=-1  # radius domain is >=0
         upper=self.args.max_radius
         qs=[]
+        probe=getattr(self.args,'probe_upper',None)
+        if probe is not None:
+            q=self.query(probe,word,rule)
+            if q['id'] not in qs:qs.append(q['id'])
+            if q['status']=='SAT':upper=probe
+            elif q['status']=='UNSAT':lower=probe
         high=self.query(upper,word,rule)
-        qs.append(high['id'])
+        if high['id'] not in qs:qs.append(high['id'])
         if high['status']!='SAT':
             return {'status':'censored','minimum_radius':None,'lower_excluded':upper if high['status']=='UNSAT' else lower,'sat_upper':None,'query_ids':qs}
+        probe=getattr(self.args,'probe_lower',None)
+        if probe is not None and lower<probe<upper:
+            q=self.query(probe,word,rule)
+            if q['id'] not in qs:qs.append(q['id'])
+            if q['status']=='SAT':upper=probe
+            elif q['status']=='UNSAT':lower=probe
         while upper-lower>1:
             mid=(upper+lower)//2
             q=self.query(mid,word,rule)
-            qs.append(q['id'])
+            if q['id'] not in qs:qs.append(q['id'])
             if q['status']=='SAT':
                 upper=mid
             elif q['status']=='UNSAT':
@@ -225,7 +245,7 @@ class Runner:
 
 def run(args):
     runner=Runner(args)
-    gate={'T':0,'length_range':[8,64], 'max_radius':args.max_radius,'purpose':'exact-exclusion',
+    gate={'T':0,'length_range':[args.min_length,args.max_length], 'targets':args.targets.split(','), 'lengths':args.lengths or list(range(args.min_length,args.max_length+1)), 'max_radius':args.max_radius,'purpose':'exact-exclusion',
           'arithmetic':'log2(2^(2R+1)-1), upper bound on distinct trace words',
           'not_complexity_evidence':True,'negative_guaranteed':False}
     (args.output/'counting-design.json').write_text(json.dumps(gate,indent=2)+'\n')
@@ -243,9 +263,9 @@ def run(args):
     rule90=runner.query(0,[1]+[0]*63,90)
     assert rule90['status']=='SAT'
     records=[]
-    for length in range(8,65):
-        for target in ('alternating','zero','one'):
-            word=[i%2 for i in range(length)] if target=='alternating' else [int(target=='one')]*length
+    for length in gate["lengths"]:
+        for target in args.targets.split(','):
+            word=target_word(target,length)
             records.append({'length':length,'target':target,'rule':30,**runner.minimum(word)})
         save(args.output,gate,runner,controls,records,[zero['id'],rule90['id']])
     rng=random.Random(20261014)
@@ -255,6 +275,35 @@ def run(args):
         nulls.append({'length':length,'word':word,**runner.minimum(word)})
     save(args.output,gate,runner,controls,records,[zero['id'],rule90['id']],nulls)
     plot(args.output/'results.json')
+
+
+def append_witness(path,witness_path):
+    """Add constructive SAT certificates, independently replayed, before compact."""
+    result=json.loads(path.read_text());validate_metadata(result)
+    if 'certificates_archive' in result:raise ValueError('append witnesses before compacting')
+    for witness in json.loads(witness_path.read_text()):
+        target,length,radius=witness['target'],witness['length'],witness['radius']
+        assert type(radius) is int and 0<=radius<=result['design']['max_radius']
+        record=next(r for r in result['records'] if r['target']==target and r['length']==length)
+        word=target_word(target,length)
+        original={str(int(i)):v for i,v in witness['initial'].items()}
+        assert all(type(v) is int and v in (0,1) for v in original.values())
+        assert all(-radius<=int(i)<=radius for i,v in original.items() if v)
+        initial={str(i):original.get(str(i),0) for i in range(-radius,radius+1)}
+        assert any(initial.values()) and simulate(initial,length)==word
+        text,_=encode(radius,word)
+        qid=len(result['queries']);base=f'certificates/q{qid:04d}'
+        (path.parent/'certificates').mkdir(exist_ok=True)
+        (path.parent/(base+'.cnf')).write_text(text)
+        q={'id':qid,'radius':radius,'word':word,'rule':30,'nonzero':True,'cnf':base+'.cnf',
+           'cnf_sha256':hashlib.sha256(text.encode()).hexdigest(),'counting':counting(radius,length,True),
+           'status':'SAT','initial':initial,'source':witness.get('source','constructive witness'),'elapsed_seconds':0}
+        result['queries'].append(q);record['query_ids'].append(qid)
+        hi=record['sat_upper']
+        if hi is None or radius<hi:record['sat_upper']=radius
+        if record['sat_upper']==record['lower_excluded']+1:record.update(status='exact',minimum_radius=record['sat_upper'])
+    validate_metadata(result);path.write_text(json.dumps(result,indent=2)+'\n')
+    plot(path)
 
 
 def save(out,gate,runner,controls,records,sanity,nulls=None):
@@ -275,7 +324,11 @@ def counting(radius, length, nonzero):
 
 def validate_metadata(result):
     design=result['design']
-    assert design['T']==0 and design['length_range']==[8,64]
+    assert design['T']==0
+    start,end=design['length_range']
+    assert type(start) is int and type(end) is int and 1<=start<=end
+    targets=design.get('targets',['alternating','zero','one'])
+    assert targets and len(set(targets))==len(targets) and set(targets)<=set(TARGETS)
     assert design['purpose']=='exact-exclusion' and design['not_complexity_evidence']
     assert not design['negative_guaranteed']
     queries=result['queries']
@@ -289,13 +342,15 @@ def validate_metadata(result):
             assert not q['nonzero'] or any(q['initial'].values())
             assert simulate(q['initial'],len(q['word']),q['rule'])==q['word']
     records=result['records']
-    assert len(records)==171
-    assert {(r['target'],r['length']) for r in records}=={(target,length) for target in ('alternating','zero','one') for length in range(8,65)}
+    lengths=design.get('lengths',list(range(start,end+1)))
+    assert lengths and lengths==sorted(set(lengths)) and all(type(n) is int and start<=n<=end for n in lengths)
+    assert len(records)==len(targets)*len(lengths)
+    assert {(r['target'],r['length']) for r in records}=={(target,length) for target in targets for length in lengths}
     for r in records+result['random_controls']:
         word=r.get('word')
         if 'target' in r:
             assert r['rule']==30
-            word=[i%2 for i in range(r['length'])] if r['target']=='alternating' else [int(r['target']=='one')]*r['length']
+            word=target_word(r['target'],r['length'])
         assert len(word)==r['length']
         assert len(set(r['query_ids']))==len(r['query_ids']) and r['query_ids']
         qs=[queries[i] for i in r['query_ids']]
@@ -441,7 +496,9 @@ def verify(path,drat):
 
 def tamper_test(path,drat):
     result=json.loads(path.read_text()); validate_metadata(result)
-    mutations=[('target',lambda r:r['records'][0].update(target='zero')),
+    mutations=[('design length range',lambda r:r['design'].update(length_range=[1,1])),
+               ('design targets',lambda r:r['design'].update(targets=['alternating-one'])),
+               ('target',lambda r:r['records'][0].update(target='zero')),
                ('length',lambda r:r['records'][0].update(length=9)),
                ('minimum',lambda r:r['records'][0].update(minimum_radius=999)),
                ('query identity',lambda r:r['queries'][0].update(id=999)),
@@ -460,7 +517,7 @@ def tamper_test(path,drat):
         try:check_query(q,base,drat)
         except AssertionError:pass
         else:raise AssertionError('tamper accepted: proof digest')
-    print('PASS tamper rejection: target, length, minimum, query identity, witness, censored bounds, proof digest')
+    print('PASS tamper rejection: design range, design targets, target, length, minimum, query identity, witness, censored bounds, proof digest')
 
 
 def plot(path):
@@ -469,7 +526,7 @@ def plot(path):
     import matplotlib.pyplot as plt
     data=json.loads(path.read_text())
     fig,ax=plt.subplots(figsize=(8,5))
-    for target in ('alternating','zero','one'):
+    for target in data['design'].get('targets', ['alternating','zero','one']):
         rows=[r for r in data['records'] if r['target']==target and r['status']=='exact']
         ax.plot([r['length'] for r in rows],[r['minimum_radius'] for r in rows],label=target)
         censored=[r for r in data['records'] if r['target']==target and r['status']!='exact' and r['sat_upper'] is not None]
@@ -487,7 +544,19 @@ def main():
     ap.add_argument('--drat-trim',type=Path,default=Path('third_party/drat-trim'))
     ap.add_argument('--budget',type=int,default=900); ap.add_argument('--timeout',type=int,default=10)
     ap.add_argument('--max-radius',type=int,default=64)
+    ap.add_argument('--append-witness',type=Path)
+    ap.add_argument('--witness-result',type=Path)
+    ap.add_argument('--min-length',type=int,default=8)
+    ap.add_argument('--max-length',type=int,default=64)
+    ap.add_argument('--targets',default='alternating,zero,one')
+    ap.add_argument('--probe-upper',type=int)
+    ap.add_argument('--probe-lower',type=int)
+    ap.add_argument('--lengths',type=lambda s:[int(x) for x in s.split(',')])
     args=ap.parse_args()
+    if not 1<=args.min_length<=args.max_length: ap.error('invalid length range')
+    if args.lengths and (args.lengths!=sorted(set(args.lengths)) or any(not args.min_length<=n<=args.max_length for n in args.lengths)):ap.error('invalid selected lengths')
+    if not args.targets or any(t not in TARGETS for t in args.targets.split(',')) or len(set(args.targets.split(',')))!=len(args.targets.split(',')): ap.error('invalid targets')
+    if any(v is not None and not 0<=v<=args.max_radius for v in (args.probe_upper,args.probe_lower)):ap.error('probe radius outside search domain')
     args.cadical=args.cadical.resolve(); args.drat_trim=args.drat_trim.resolve()
     if args.self_test:self_test()
     if args.compact:compact(args.compact)
@@ -498,6 +567,9 @@ def main():
     if args.verify:verify(args.verify,args.drat_trim)
     if args.tamper_test:tamper_test(args.tamper_test,args.drat_trim)
     if args.run:run(args)
-    if not (args.self_test or args.verify or args.run or args.compact or args.tamper_test or args.split_certificates):ap.error('choose --self-test, --run or --verify')
+    if args.append_witness:
+        if not args.witness_result:ap.error('--append-witness requires --witness-result')
+        append_witness(args.witness_result,args.append_witness)
+    if not (args.self_test or args.verify or args.run or args.compact or args.tamper_test or args.split_certificates or args.append_witness):ap.error('choose --self-test, --run or --verify')
 
 if __name__=='__main__':main()

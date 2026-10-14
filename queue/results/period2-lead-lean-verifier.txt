@@ -1,0 +1,43 @@
+Lean: using /proc/self/exe compatibility shim (tools/lean_proc_path.c)
+ℹ [2/4] Built Rule30.Basic
+info: ././././Rule30/Basic.lean:168:0: 'Rule30.temporal_phase_slip' depends on axioms: [propext]
+info: ././././Rule30/Basic.lean:170:0: 'Rule30.ring7_boundary' depends on axioms: [propext]
+info: ././././Rule30/Basic.lean:171:0: 'Rule30.ring7_step0' depends on axioms: [propext]
+info: ././././Rule30/Basic.lean:172:0: 'Rule30.ring7_step1' depends on axioms: [propext]
+info: ././././Rule30/Basic.lean:173:0: 'Rule30.ring7_step2' depends on axioms: [propext]
+info: ././././Rule30/Basic.lean:174:0: 'Rule30.ring7_step3' depends on axioms: [propext]
+info: ././././Rule30/Basic.lean:176:0: 'Rule30.leftOne_step' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ././././Rule30/Basic.lean:177:0: 'Rule30.leftOne_evolve' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ././././Rule30/Basic.lean:178:0: 'Rule30.leftOne_constant_trace' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ././././Rule30/Basic.lean:179:0: 'Rule30.leftOne_not_finite' depends on axioms: [propext, Quot.sound]
+info: ././././Rule30/Basic.lean:181:0: 'Rule30.zero_latch' does not depend on any axioms
+info: ././././Rule30/Basic.lean:182:0: 'Rule30.alternating_return' does not depend on any axioms
+info: ././././Rule30/Basic.lean:183:0: 'Rule30.step_finite' depends on axioms: [propext, Quot.sound]
+info: ././././Rule30/Basic.lean:184:0: 'Rule30.evolve_finite' depends on axioms: [propext, Quot.sound]
+info: ././././Rule30/Basic.lean:185:0: 'Rule30.evolve_add' depends on axioms: [propext]
+info: ././././Rule30/Basic.lean:186:0: 'Rule30.trace_shift' depends on axioms: [propext]
+info: ././././Rule30/Basic.lean:187:0: 'Rule30.onset_reduction' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ././././Rule30/Basic.lean:188:0: 'Rule30.oneLeft_adjacent' depends on axioms: [propext, Quot.sound]
+info: ././././Rule30/Basic.lean:189:0: 'Rule30.oneLeft_invariant' depends on axioms: [propext, Classical.choice, Quot.sound]
+✔ [3/4] Built Rule30
+Build completed successfully.
+'Rule30.temporal_phase_slip' depends on axioms: [propext]
+'Rule30.ring7_boundary' depends on axioms: [propext]
+'Rule30.ring7_step0' depends on axioms: [propext]
+'Rule30.ring7_step1' depends on axioms: [propext]
+'Rule30.ring7_step2' depends on axioms: [propext]
+'Rule30.ring7_step3' depends on axioms: [propext]
+'Rule30.leftOne_step' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Rule30.leftOne_evolve' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Rule30.leftOne_constant_trace' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Rule30.leftOne_not_finite' depends on axioms: [propext, Quot.sound]
+'Rule30.zero_latch' does not depend on any axioms
+'Rule30.alternating_return' does not depend on any axioms
+'Rule30.step_finite' depends on axioms: [propext, Quot.sound]
+'Rule30.evolve_finite' depends on axioms: [propext, Quot.sound]
+'Rule30.evolve_add' depends on axioms: [propext]
+'Rule30.trace_shift' depends on axioms: [propext]
+'Rule30.onset_reduction' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Rule30.oneLeft_adjacent' depends on axioms: [propext, Quot.sound]
+'Rule30.oneLeft_invariant' depends on axioms: [propext, Classical.choice, Quot.sound]
+Lean: 19 theorem declarations built and axiom-audited
