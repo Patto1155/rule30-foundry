@@ -1,0 +1,412 @@
+
+=== clone-integrity ===
+clone-integrity: OK (173 tracked files, no LF->CRLF checkout corruption)
+PASS  clone-integrity                  0.1s
+
+=== golden-self-test ===
+self-test OK: naive == packed over 4096 bits, OEIS prefix matches
+PASS  golden-self-test                 0.2s
+
+=== manifest+golden ===
+MISS  data/center_col_46M.bin
+manifest: 173 verified, 1 absent, OK
+golden: data/golden/center_col_golden_1M.bin OK (1,000,000 bits)
+golden: data/golden/center_col_golden_10M.bin OK (10,000,000 bits)
+golden: independent check reaches 10,000,000 bits
+PASS  manifest+golden                  0.1s
+
+=== manifest-current ===
+manifest: up to date
+PASS  manifest-current                 0.1s
+
+=== bitstream:center_col_10M.bin ===
+bitstream: center_col_10M.bin (bit-packed, LSB-first) agrees with center_col_golden_10M.bin over 10,000,000 bits  OK
+PASS  bitstream:center_col_10M.bin     0.1s
+
+=== bitstream:center_col_46M.bin ===
+SKIP  bitstream:center_col_46M.bin  not present (gitignored; regenerate with gpu/rule30_sim.py)
+
+=== drat-toolchain ===
+solver  /workspace/scratch/87c4d255e2b3/rule30-foundry/third_party/cadical  (3.0.1)
+checker /workspace/scratch/87c4d255e2b3/rule30-foundry/third_party/drat-trim
+  [PASS] thue-morse n=64 s=2 msd is SAT  (SAT)
+  [PASS] center n=16 s=4 msd is UNSAT  (UNSAT)
+  [PASS] its DRAT proof verifies  (VERIFIED)
+  [PASS] drat-trim rejects a truncated proof  (rejected)
+  [PASS] drat-trim rejects refuting a satisfiable formula  (rejected)
+self-test OK
+PASS  drat-toolchain                   0.2s
+
+=== gates-trap ===
+{
+  "artifact_type": "rule30.gates.preflight",
+  "name": "TRAP-vacuous-dfao-24",
+  "verdict": "FAIL",
+  "gates": [
+    {
+      "gate": "schema",
+      "status": "PASS",
+      "reason": "all required fields present; purpose 'prize-claim'"
+    },
+    {
+      "gate": "seed",
+      "status": "PASS",
+      "reason": "single-black-cell (purpose 'prize-claim')"
+    },
+    {
+      "gate": "theory-gate",
+      "status": "PASS",
+      "reason": "OPEN"
+    },
+    {
+      "gate": "counting-bound",
+      "status": "FAIL",
+      "reason": "NOT DISCRIMINATING: log2|M| = 244.1 < n = 10000 for 24-state base-2 DFAO (expected fits 2^-9755.9). A uniform random string would almost certainly give the same negative, so this measures |M|, not Rule 30. If the search is exhaustive, the exclusion is still true: declare purpose 'exact-exclusion' with `\"exhaustive\": true` and record it as a bounded finding rather than as evidence."
+    },
+    {
+      "gate": "light-cone",
+      "status": "SKIP",
+      "reason": "not a simulation"
+    },
+    {
+      "gate": "script",
+      "status": "PASS",
+      "reason": "experiments/counting_bound.py"
+    },
+    {
+      "gate": "bitorder-lint",
+      "status": "SKIP",
+      "reason": "does not read a packed bitstream"
+    },
+    {
+      "gate": "golden-self-test",
+      "status": "SKIP",
+      "reason": "does not read a packed bitstream"
+    },
+    {
+      "gate": "verify-all",
+      "status": "SKIP",
+      "reason": "external checks disabled"
+    }
+  ]
+}
+PASS  gates-trap                       0.0s
+
+=== lean ===
+Lean: using /proc/self/exe compatibility shim (tools/lean_proc_path.c)
+ℹ [2/4] Replayed Rule30.Basic
+info: ././././Rule30/Basic.lean:168:0: 'Rule30.temporal_phase_slip' depends on axioms: [propext]
+info: ././././Rule30/Basic.lean:170:0: 'Rule30.ring7_boundary' depends on axioms: [propext]
+info: ././././Rule30/Basic.lean:171:0: 'Rule30.ring7_step0' depends on axioms: [propext]
+info: ././././Rule30/Basic.lean:172:0: 'Rule30.ring7_step1' depends on axioms: [propext]
+info: ././././Rule30/Basic.lean:173:0: 'Rule30.ring7_step2' depends on axioms: [propext]
+info: ././././Rule30/Basic.lean:174:0: 'Rule30.ring7_step3' depends on axioms: [propext]
+info: ././././Rule30/Basic.lean:176:0: 'Rule30.leftOne_step' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ././././Rule30/Basic.lean:177:0: 'Rule30.leftOne_evolve' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ././././Rule30/Basic.lean:178:0: 'Rule30.leftOne_constant_trace' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ././././Rule30/Basic.lean:179:0: 'Rule30.leftOne_not_finite' depends on axioms: [propext, Quot.sound]
+info: ././././Rule30/Basic.lean:181:0: 'Rule30.zero_latch' does not depend on any axioms
+info: ././././Rule30/Basic.lean:182:0: 'Rule30.alternating_return' does not depend on any axioms
+info: ././././Rule30/Basic.lean:183:0: 'Rule30.step_finite' depends on axioms: [propext, Quot.sound]
+info: ././././Rule30/Basic.lean:184:0: 'Rule30.evolve_finite' depends on axioms: [propext, Quot.sound]
+info: ././././Rule30/Basic.lean:185:0: 'Rule30.evolve_add' depends on axioms: [propext]
+info: ././././Rule30/Basic.lean:186:0: 'Rule30.trace_shift' depends on axioms: [propext]
+info: ././././Rule30/Basic.lean:187:0: 'Rule30.onset_reduction' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ././././Rule30/Basic.lean:188:0: 'Rule30.oneLeft_adjacent' depends on axioms: [propext, Quot.sound]
+info: ././././Rule30/Basic.lean:189:0: 'Rule30.oneLeft_invariant' depends on axioms: [propext, Classical.choice, Quot.sound]
+Build completed successfully.
+'Rule30.temporal_phase_slip' depends on axioms: [propext]
+'Rule30.ring7_boundary' depends on axioms: [propext]
+'Rule30.ring7_step0' depends on axioms: [propext]
+'Rule30.ring7_step1' depends on axioms: [propext]
+'Rule30.ring7_step2' depends on axioms: [propext]
+'Rule30.ring7_step3' depends on axioms: [propext]
+'Rule30.leftOne_step' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Rule30.leftOne_evolve' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Rule30.leftOne_constant_trace' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Rule30.leftOne_not_finite' depends on axioms: [propext, Quot.sound]
+'Rule30.zero_latch' does not depend on any axioms
+'Rule30.alternating_return' does not depend on any axioms
+'Rule30.step_finite' depends on axioms: [propext, Quot.sound]
+'Rule30.evolve_finite' depends on axioms: [propext, Quot.sound]
+'Rule30.evolve_add' depends on axioms: [propext]
+'Rule30.trace_shift' depends on axioms: [propext]
+'Rule30.onset_reduction' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Rule30.oneLeft_adjacent' depends on axioms: [propext, Quot.sound]
+'Rule30.oneLeft_invariant' depends on axioms: [propext, Classical.choice, Quot.sound]
+Lean: 19 theorem declarations built and axiom-audited
+PASS  lean                             2.1s
+
+=== lint-bitorder ===
+lint_bitorder: 105 files scanned, no bare packbits/unpackbits
+PASS  lint-bitorder                    0.4s
+
+=== lint-ledger ===
+lint_ledger: 52 ledger rows, 59 experiment logs, all cited paths present
+PASS  lint-ledger                      0.1s
+
+=== unittest ===
+..................................................................note: center_col_golden_10M.bin verified over its first 512 bits; 3,584 beyond that are unchecked
+.note: center_col_golden_10M.bin verified over its first 512 bits; 3,584 beyond that are unchecked
+................................................ss....sss....................................................................................................F............................................s......................................................................................................................................................stopped at step 250 of 3,000; re-run the same command to continue
+resuming from /tmp/tmpl2rampyj/cut250.npz at step 250 of 3,000
+stopped at step 1,100 of 3,000; re-run the same command to continue
+resuming from /tmp/tmpl2rampyj/cut1100.npz at step 1,100 of 3,000
+stopped at step 2,999 of 3,000; re-run the same command to continue
+resuming from /tmp/tmpl2rampyj/cut2999.npz at step 2,999 of 3,000
+..stopped at step 300 of 3,000; re-run the same command to continue
+resuming from /tmp/tmp9q_3d93n/chain.npz at step 300 of 3,000
+stopped at step 600 of 3,000; re-run the same command to continue
+resuming from /tmp/tmp9q_3d93n/chain.npz at step 600 of 3,000
+stopped at step 900 of 3,000; re-run the same command to continue
+resuming from /tmp/tmp9q_3d93n/chain.npz at step 900 of 3,000
+stopped at step 1,200 of 3,000; re-run the same command to continue
+resuming from /tmp/tmp9q_3d93n/chain.npz at step 1,200 of 3,000
+stopped at step 1,500 of 3,000; re-run the same command to continue
+resuming from /tmp/tmp9q_3d93n/chain.npz at step 1,500 of 3,000
+stopped at step 1,800 of 3,000; re-run the same command to continue
+resuming from /tmp/tmp9q_3d93n/chain.npz at step 1,800 of 3,000
+stopped at step 2,100 of 3,000; re-run the same command to continue
+resuming from /tmp/tmp9q_3d93n/chain.npz at step 2,100 of 3,000
+stopped at step 2,400 of 3,000; re-run the same command to continue
+resuming from /tmp/tmp9q_3d93n/chain.npz at step 2,400 of 3,000
+stopped at step 2,700 of 3,000; re-run the same command to continue
+resuming from /tmp/tmp9q_3d93n/chain.npz at step 2,700 of 3,000
+resuming from /tmp/tmp9q_3d93n/chain.npz at step 3,000 of 3,000
+resuming from /tmp/tmp9q_3d93n/chain.npz at step 3,000 of 3,000
+....resuming from /tmp/tmpyp578sp7/r.ckpt.npz at step 2,500 of 2,500
+...............................................control-tm64-s2: SAT verified=True
+control-center16-s4: UNSAT verified=True
+control-tm64-s2: UNKNOWN verified=False
+....................................................................................................................................................................................................................FFFFFFF.........................................................................
+======================================================================
+FAIL: test_full_verification_runs_verify_all_in_the_worktree (test_codex_worker_e2e.TestEndToEnd.test_full_verification_runs_verify_all_in_the_worktree)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/87c4d255e2b3/rule30-foundry/tests/test_codex_worker_e2e.py", line 294, in test_full_verification_runs_verify_all_in_the_worktree
+    self.assertTrue(result["verification"]["ok"],
+AssertionError: False is not true : $ /opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python tools/verify_all.py --allow-skip=bitstream:* --allow-skip=drat-toolchain --allow-skip=lean
+PASS  clone-integrity                  0.1s
+PASS  golden-self-test                 0.2s
+PASS  manifest+golden                  0.2s
+PASS  manifest-current                 0.0s
+SKIP  bitstream:center_col_10M.bin  not present (gitignored; regenerate with gpu/rule30_sim.py)
+SKIP  bitstream:center_col_46M.bin  not present (gitignored; regenerate with gpu/rule30_sim.py)
+SKIP  drat-toolchain                SAT toolchain absent (build it: bash tools/build_sat_toolchain.sh)
+PASS  gates-trap                       0.0s
+SKIP  lean                          Mathlib sources absent (cd formal && lake update); this stage checked nothing
+PASS  lint-bitorder                    0.3s
+PASS  lint-ledger                      0.1s
+FAIL  unittest                        22.7s
+--------------------------------------------------
+
+--- unittest output ---
+..................................................................note: center_col_golden_10M.bin verified over its first 512 bits; 3,584 beyond that are unchecked
+.note: center_col_golden_10M.bin verified over its first 512 bits; 3,584 beyond that are unchecked
+................................................ss...sssssss..............................................................................................sssssssssssssss....................................s......................................................................................................................................................stopped at step 250 of 3,000; re-run the same command to continue
+resuming from /tmp/tmpgt0pc534/cut250.npz at step 250 of 3,000
+stopped at step 1,100 of 3,000; re-run the same command to continue
+resuming from /tmp/tmpgt0pc534/cut1100.npz at step 1,100 of 3,000
+stopped at step 2,999 of 3,000; re-run the same command to continue
+resuming from /tmp/tmpgt0pc534/cut2999.npz at step 2,999 of 3,000
+..stopped at step 300 of 3,000; re-run the same command to continue
+resuming from /tmp/tmpk2ap6p6z/chain.npz at step 300 of 3,000
+stopped at step 600 of 3,000; re-run the same command to continue
+resuming from /tmp/tmpk2ap6p6z/chain.npz at step 600 of 3,000
+stopped at step 900 of 3,000; re-run the same command to continue
+resuming from /tmp/tmpk2ap6p6z/chain.npz at step 900 of 3,000
+stopped at step 1,200 of 3,000; re-run the same command to continue
+resuming from /tmp/tmpk2ap6p6z/chain.npz at step 1,200 of 3,000
+stopped at step 1,500 of 3,000; re-run the same command to continue
+resuming from /tmp/tmpk2ap6p6z/chain.npz at step 1,500 of 3,000
+stopped at step 1,800 of 3,000; re-run the same command to continue
+resuming from /tmp/tmpk2ap6p6z/chain.npz at step 1,800 of 3,000
+stopped at step 2,100 of 3,000; re-run the same command to continue
+resuming from /tmp/tmpk2ap6p6z/chain.npz at step 2,100 of 3,000
+stopped at step 2,400 of 3,000; re-run the same command to continue
+resuming from /tmp/tmpk2ap6p6z/chain.npz at step 2,400 of 3,000
+stopped at step 2,700 of 3,000; re-run the same command to continue
+resuming from /tmp/tmpk2ap6p6z/chain.npz at step 2,700 of 3,000
+resuming from /tmp/tmpk2ap6p6z/chain.npz at step 3,000 of 3,000
+resuming from /tmp/tmpk2ap6p6z/chain.npz at step 3,000 of 3,000
+....resuming from /tmp/tmpei2cyujs/r.ckpt.npz at step 2,500 of 2,500
+...............................................control-tm64-s2: SAT verified=True
+control-center16-s4: UNSAT verified=True
+control-tm64-s2: UNKNOWN verified=False
+....................................................................................................................................................................................................................FFFFFFF..................................ssssssssssssssssss.....................
+======================================================================
+FAIL: test_shipped_queue_validates_and_every_open_item_clears_both_gates (test_theory_workflow.MechanismGateTest.test_shipped_queue_validates_and_every_open_item_clears_both_gates) (obligation='p2-r2-right-alt-32')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/codex-wt-m_jjrf77/tests/test_theory_workflow.py", line 115, in test_shipped_queue_validates_and_every_open_item_clears_both_gates
+    self.assertEqual(mechanism_gate(o)["verdict"], "PASS")
+AssertionError: 'FAIL' != 'PASS'
+- FAIL
++ PASS
+
+
+======================================================================
+FAIL: test_shipped_queue_validates_and_every_open_item_clears_both_gates (test_theory_workflow.MechanismGateTest.test_shipped_queue_validates_and_every_open_item_clears_both_gates) (obligation='p2-r2-base32')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/codex-wt-m_jjrf77/tests/test_theory_workflow.py", line 115, in test_shipped_queue_validates_and_every_open_item_clears_both_gates
+    self.assertEqual(mechanism_gate(o)["verdict"], "PASS")
+AssertionError: 'FAIL' != 'PASS'
+- FAIL
++ PASS
+
+
+======================================================================
+FAIL: test_shipped_queue_validates_and_every_open_item_clears_both_gates (test_theory_workflow.MechanismGateTest.test_shipped_queue_validates_and_every_open_item_clears_both_gates) (obligation='p2-r2-exact7-32')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/codex-wt-m_jjrf77/tests/test_theory_workflow.py", line 115, in test_shipped_queue_validates_and_every_open_item_clears_both_gates
+    self.assertEqual(mechanism_gate(o)["verdict"], "PASS")
+AssertionError: 'FAIL' != 'PASS'
+- FAIL
++ PASS
+
+
+======================================================================
+FAIL: test_shipped_queue_validates_and_every_open_item_clears_both_gates (test_theory_workflow.MechanismGateTest.test_shipped_queue_validates_and_every_open_item_clears_both_gates) (obligation='p2-r2-right-alt-96')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/codex-wt-m_jjrf77/tests/test_theory_workflow.py", line 115, in test_shipped_queue_validates_and_every_open_item_clears_both_gates
+    self.assertEqual(mechanism_gate(o)["verdict"], "PASS")
+AssertionError: 'FAIL' != 'PASS'
+- FAIL
++ PASS
+
+
+======================================================================
+FAIL: test_shipped_queue_validates_and_every_open_item_clears_both_gates (test_theory_workflow.MechanismGateTest.test_shipped_queue_validates_and_every_open_item_clears_both_gates) (obligation='p2-r2-right-alt-160')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/codex-wt-m_jjrf77/tests/test_theory_workflow.py", line 115, in test_shipped_queue_validates_and_every_open_item_clears_both_gates
+    self.assertEqual(mechanism_gate(o)["verdict"], "PASS")
+AssertionError: 'FAIL' != 'PASS'
+- FAIL
++ PASS
+
+
+======================================================================
+FAIL: test_shipped_queue_validates_and_every_open_item_clears_both_gates (test_theory_workflow.MechanismGateTest.test_shipped_queue_validates_and_every_open_item_clears_both_gates) (obligation='p2-r2-exact7-96')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/codex-wt-m_jjrf77/tests/test_theory_workflow.py", line 115, in test_shipped_queue_validates_and_every_open_item_clears_both_gates
+    self.assertEqual(mechanism_gate(o)["verdict"], "PASS")
+AssertionError: 'FAIL' != 'PASS'
+- FAIL
++ PASS
+
+
+======================================================================
+FAIL: test_shipped_queue_validates_and_every_open_item_clears_both_gates (test_theory_workflow.MechanismGateTest.test_shipped_queue_validates_and_every_open_item_clears_both_gates) (obligation='p2-r2-exact7-160')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/codex-wt-m_jjrf77/tests/test_theory_workflow.py", line 115, in test_shipped_queue_validates_and_every_open_item_clears_both_gates
+    self.assertEqual(mechanism_gate(o)["verdict"], "PASS")
+AssertionError: 'FAIL' != 'PASS'
+- FAIL
++ PASS
+
+
+----------------------------------------------------------------------
+Ran 759 tests in 21.615s
+
+FAILED (failures=7, skipped=43)
+--- rerun: /opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python -m unittest discover -s tests
+
+verify_all: 7 passed, 4 skipped (0 unexpected), 1 failed  FAIL
+
+
+
+======================================================================
+FAIL: test_shipped_queue_validates_and_every_open_item_clears_both_gates (test_theory_workflow.MechanismGateTest.test_shipped_queue_validates_and_every_open_item_clears_both_gates) (obligation='p2-r2-right-alt-32')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/87c4d255e2b3/rule30-foundry/tests/test_theory_workflow.py", line 115, in test_shipped_queue_validates_and_every_open_item_clears_both_gates
+    self.assertEqual(mechanism_gate(o)["verdict"], "PASS")
+AssertionError: 'FAIL' != 'PASS'
+- FAIL
++ PASS
+
+
+======================================================================
+FAIL: test_shipped_queue_validates_and_every_open_item_clears_both_gates (test_theory_workflow.MechanismGateTest.test_shipped_queue_validates_and_every_open_item_clears_both_gates) (obligation='p2-r2-base32')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/87c4d255e2b3/rule30-foundry/tests/test_theory_workflow.py", line 115, in test_shipped_queue_validates_and_every_open_item_clears_both_gates
+    self.assertEqual(mechanism_gate(o)["verdict"], "PASS")
+AssertionError: 'FAIL' != 'PASS'
+- FAIL
++ PASS
+
+
+======================================================================
+FAIL: test_shipped_queue_validates_and_every_open_item_clears_both_gates (test_theory_workflow.MechanismGateTest.test_shipped_queue_validates_and_every_open_item_clears_both_gates) (obligation='p2-r2-exact7-32')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/87c4d255e2b3/rule30-foundry/tests/test_theory_workflow.py", line 115, in test_shipped_queue_validates_and_every_open_item_clears_both_gates
+    self.assertEqual(mechanism_gate(o)["verdict"], "PASS")
+AssertionError: 'FAIL' != 'PASS'
+- FAIL
++ PASS
+
+
+======================================================================
+FAIL: test_shipped_queue_validates_and_every_open_item_clears_both_gates (test_theory_workflow.MechanismGateTest.test_shipped_queue_validates_and_every_open_item_clears_both_gates) (obligation='p2-r2-right-alt-96')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/87c4d255e2b3/rule30-foundry/tests/test_theory_workflow.py", line 115, in test_shipped_queue_validates_and_every_open_item_clears_both_gates
+    self.assertEqual(mechanism_gate(o)["verdict"], "PASS")
+AssertionError: 'FAIL' != 'PASS'
+- FAIL
++ PASS
+
+
+======================================================================
+FAIL: test_shipped_queue_validates_and_every_open_item_clears_both_gates (test_theory_workflow.MechanismGateTest.test_shipped_queue_validates_and_every_open_item_clears_both_gates) (obligation='p2-r2-right-alt-160')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/87c4d255e2b3/rule30-foundry/tests/test_theory_workflow.py", line 115, in test_shipped_queue_validates_and_every_open_item_clears_both_gates
+    self.assertEqual(mechanism_gate(o)["verdict"], "PASS")
+AssertionError: 'FAIL' != 'PASS'
+- FAIL
++ PASS
+
+
+======================================================================
+FAIL: test_shipped_queue_validates_and_every_open_item_clears_both_gates (test_theory_workflow.MechanismGateTest.test_shipped_queue_validates_and_every_open_item_clears_both_gates) (obligation='p2-r2-exact7-96')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/87c4d255e2b3/rule30-foundry/tests/test_theory_workflow.py", line 115, in test_shipped_queue_validates_and_every_open_item_clears_both_gates
+    self.assertEqual(mechanism_gate(o)["verdict"], "PASS")
+AssertionError: 'FAIL' != 'PASS'
+- FAIL
++ PASS
+
+
+======================================================================
+FAIL: test_shipped_queue_validates_and_every_open_item_clears_both_gates (test_theory_workflow.MechanismGateTest.test_shipped_queue_validates_and_every_open_item_clears_both_gates) (obligation='p2-r2-exact7-160')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/87c4d255e2b3/rule30-foundry/tests/test_theory_workflow.py", line 115, in test_shipped_queue_validates_and_every_open_item_clears_both_gates
+    self.assertEqual(mechanism_gate(o)["verdict"], "PASS")
+AssertionError: 'FAIL' != 'PASS'
+- FAIL
++ PASS
+
+
+----------------------------------------------------------------------
+Ran 759 tests in 142.647s
+
+FAILED (failures=8, skipped=6)
+FAIL  unittest                       143.7s
+--------------------------------------------------
+
+--- unittest output ---
+(no output)
+--- rerun: /opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python -m unittest discover -s tests
+
+verify_all: 10 passed, 1 skipped (0 unexpected), 1 failed  FAIL

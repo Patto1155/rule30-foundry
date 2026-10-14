@@ -39,6 +39,7 @@ from __future__ import annotations
 
 import argparse
 import fnmatch
+import shutil
 import subprocess
 import sys
 import time
@@ -96,6 +97,19 @@ def build_stages() -> list[Stage]:
          "--no-external", "--expect-fail"],
         skip_reason=None if trap.exists() else
         "queue/trap-vacuous-dfao.json absent"))
+    lake = shutil.which("lake") or (Path.home() / ".elan/bin/lake")
+    mathlib = REPO_ROOT / "formal/.lake/packages/mathlib/lakefile.lean"
+    lean_skip = None
+    if not Path(lake).is_file():
+        lean_skip = "Lean toolchain absent (install elan; cd formal && lake update && lake exe cache get)"
+    elif not mathlib.is_file():
+        # .lake is gitignored: a worker worktree lacks these inputs even when
+        # its parent has Lean installed. Verification must not silently turn
+        # into an unbounded network installation for every nested worker.
+        lean_skip = "Mathlib sources absent (cd formal && lake update); this stage checked nothing"
+    stages.append(Stage(
+        "lean", [py, "tools/verify_lean.py"],
+        skip_reason=lean_skip))
     stages += [
         Stage("lint-bitorder", [py, "tools/lint_bitorder.py"]),
         Stage("lint-ledger", [py, "tools/lint_ledger.py"]),

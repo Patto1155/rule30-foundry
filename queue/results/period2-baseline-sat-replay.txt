@@ -1,0 +1,1 @@
+PASS verify 1249 regenerated CNFs, SAT witnesses, all UNSAT DRAT proofs, minimum evidence, controls

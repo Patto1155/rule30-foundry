@@ -1,0 +1,2528 @@
+{
+  "scope": "bounded integer sequences with explicitly sourced prefix-monotonic plateau interpolation; no infinite k-regularity inference",
+  "targets": {
+    "alternating": {
+      "exact_rows": [
+        {
+          "length": 8,
+          "radius": 5,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 30,
+          "right_half": "12"
+        },
+        {
+          "length": 9,
+          "radius": 5,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 45,
+          "right_half": "15"
+        },
+        {
+          "length": 10,
+          "radius": 6,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 63,
+          "right_half": "2"
+        },
+        {
+          "length": 11,
+          "radius": 8,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 77,
+          "right_half": "32"
+        },
+        {
+          "length": 12,
+          "radius": 8,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 92,
+          "right_half": "32"
+        },
+        {
+          "length": 13,
+          "radius": 8,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 107,
+          "right_half": "32"
+        },
+        {
+          "length": 14,
+          "radius": 8,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 122,
+          "right_half": "160"
+        },
+        {
+          "length": 15,
+          "radius": 8,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 137,
+          "right_half": "160"
+        },
+        {
+          "length": 16,
+          "radius": 9,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 153,
+          "right_half": "128"
+        },
+        {
+          "length": 17,
+          "radius": 9,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 167,
+          "right_half": "288"
+        },
+        {
+          "length": 18,
+          "radius": 14,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 181,
+          "right_half": "15394"
+        },
+        {
+          "length": 19,
+          "radius": 14,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 197,
+          "right_half": "9362"
+        },
+        {
+          "length": 20,
+          "radius": 14,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 213,
+          "right_half": "7138"
+        },
+        {
+          "length": 21,
+          "radius": 15,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 229,
+          "right_half": "32352"
+        },
+        {
+          "length": 22,
+          "radius": 15,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 243,
+          "right_half": "28832"
+        },
+        {
+          "length": 23,
+          "radius": 16,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 259,
+          "right_half": "7632"
+        },
+        {
+          "length": 24,
+          "radius": 16,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 275,
+          "right_half": "54075"
+        },
+        {
+          "length": 25,
+          "radius": 16,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 291,
+          "right_half": "16900"
+        },
+        {
+          "length": 26,
+          "radius": 16,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 307,
+          "right_half": "62412"
+        },
+        {
+          "length": 27,
+          "radius": 20,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 321,
+          "right_half": "600241"
+        },
+        {
+          "length": 28,
+          "radius": 20,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 337,
+          "right_half": "310274"
+        },
+        {
+          "length": 29,
+          "radius": 20,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 353,
+          "right_half": "583162"
+        },
+        {
+          "length": 30,
+          "radius": 20,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 369,
+          "right_half": "580134"
+        },
+        {
+          "length": 31,
+          "radius": 20,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 385,
+          "right_half": "227402"
+        },
+        {
+          "length": 32,
+          "radius": 20,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 401,
+          "right_half": "340170"
+        },
+        {
+          "length": 33,
+          "radius": 20,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 417,
+          "right_half": "809137"
+        },
+        {
+          "length": 34,
+          "radius": 20,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 433,
+          "right_half": "821066"
+        },
+        {
+          "length": 35,
+          "radius": 20,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 449,
+          "right_half": "1045250"
+        },
+        {
+          "length": 36,
+          "radius": 29,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 464,
+          "right_half": "6333344"
+        },
+        {
+          "length": 37,
+          "radius": 29,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 480,
+          "right_half": "157813443"
+        },
+        {
+          "length": 38,
+          "radius": 29,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 495,
+          "right_half": "197099707"
+        },
+        {
+          "length": 39,
+          "radius": 30,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 512,
+          "right_half": "874054235"
+        },
+        {
+          "length": 40,
+          "radius": 33,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 527,
+          "right_half": "4939558317"
+        },
+        {
+          "length": 41,
+          "radius": 34,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 543,
+          "right_half": "9671369351"
+        },
+        {
+          "length": 42,
+          "radius": 34,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 559,
+          "right_half": "9130937981"
+        },
+        {
+          "length": 43,
+          "radius": 35,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 570,
+          "right_half": "22480450531"
+        },
+        {
+          "length": 44,
+          "radius": 36,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 588,
+          "right_half": "37125484064"
+        },
+        {
+          "length": 45,
+          "radius": 38,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 601,
+          "right_half": "246263572105"
+        },
+        {
+          "length": 46,
+          "radius": 38,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 616,
+          "right_half": "246264573832"
+        },
+        {
+          "length": 47,
+          "radius": 38,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 632,
+          "right_half": "8947848"
+        },
+        {
+          "length": 48,
+          "radius": 38,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 648,
+          "right_half": "246264924296"
+        },
+        {
+          "length": 49,
+          "radius": 39,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 665,
+          "right_half": "2152063048"
+        },
+        {
+          "length": 50,
+          "radius": 42,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 680,
+          "right_half": "2371977502899"
+        },
+        {
+          "length": 51,
+          "radius": 42,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 695,
+          "right_half": "3493715422"
+        },
+        {
+          "length": 52,
+          "radius": 42,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 710,
+          "right_half": "3614486372787"
+        },
+        {
+          "length": 53,
+          "radius": 44,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 724,
+          "right_half": "3867508811"
+        },
+        {
+          "length": 54,
+          "radius": 44,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 740,
+          "right_half": "9691230967335"
+        },
+        {
+          "length": 55,
+          "radius": 45,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 757,
+          "right_half": "8421002598025"
+        },
+        {
+          "length": 56,
+          "radius": 46,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 772,
+          "right_half": "37766208029243"
+        },
+        {
+          "length": 57,
+          "radius": 47,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 781,
+          "right_half": "120067023211366"
+        },
+        {
+          "length": 58,
+          "radius": 47,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 796,
+          "right_half": "102616688570598"
+        },
+        {
+          "length": 59,
+          "radius": 47,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 812,
+          "right_half": "36697490417510"
+        },
+        {
+          "length": 60,
+          "radius": 49,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 834,
+          "right_half": "281473238969744"
+        },
+        {
+          "length": 61,
+          "radius": 51,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 848,
+          "right_half": "1065499801470331"
+        },
+        {
+          "length": 62,
+          "radius": 51,
+          "source": "runs/period-horizon-2026-10-14/results.json",
+          "query_id": 1161,
+          "right_half": "339557302029017"
+        },
+        {
+          "length": 63,
+          "radius": 54,
+          "source": "runs/period-horizon-2026-10-14/results.json",
+          "query_id": 1184,
+          "right_half": "1174041817280"
+        },
+        {
+          "length": 64,
+          "radius": 54,
+          "source": "runs/period-horizon-2026-10-14/results.json",
+          "query_id": 1205,
+          "right_half": "14864696775609275"
+        },
+        {
+          "length": 65,
+          "radius": 54,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 901,
+          "right_half": "16861973640163010",
+          "inference": "prefix monotonicity between equal certified endpoint minima",
+          "inference_sources": [
+            {
+              "length": 64,
+              "radius": 54,
+              "source": "runs/period-horizon-2026-10-14/results.json",
+              "query_id": 1205
+            },
+            {
+              "length": 66,
+              "radius": 54,
+              "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+              "query_id": 901
+            }
+          ]
+        },
+        {
+          "length": 66,
+          "radius": 54,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 901,
+          "right_half": "16861973640163010"
+        }
+      ],
+      "contiguous_start": 8,
+      "minima": [
+        5,
+        5,
+        6,
+        8,
+        8,
+        8,
+        8,
+        8,
+        9,
+        9,
+        14,
+        14,
+        14,
+        15,
+        15,
+        16,
+        16,
+        16,
+        16,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        29,
+        29,
+        29,
+        30,
+        33,
+        34,
+        34,
+        35,
+        36,
+        38,
+        38,
+        38,
+        38,
+        39,
+        42,
+        42,
+        42,
+        44,
+        44,
+        45,
+        46,
+        47,
+        47,
+        47,
+        49,
+        51,
+        51,
+        54,
+        54,
+        54,
+        54
+      ],
+      "first_differences": [
+        0,
+        1,
+        2,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        5,
+        0,
+        0,
+        1,
+        0,
+        1,
+        0,
+        0,
+        0,
+        4,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        9,
+        0,
+        0,
+        1,
+        3,
+        1,
+        0,
+        1,
+        1,
+        2,
+        0,
+        0,
+        0,
+        1,
+        3,
+        0,
+        0,
+        2,
+        0,
+        1,
+        1,
+        1,
+        0,
+        0,
+        2,
+        2,
+        0,
+        3,
+        0,
+        0,
+        0
+      ],
+      "plateaus": [
+        {
+          "radius": 5,
+          "start": 8,
+          "end": 9
+        },
+        {
+          "radius": 6,
+          "start": 10,
+          "end": 10
+        },
+        {
+          "radius": 8,
+          "start": 11,
+          "end": 15
+        },
+        {
+          "radius": 9,
+          "start": 16,
+          "end": 17
+        },
+        {
+          "radius": 14,
+          "start": 18,
+          "end": 20
+        },
+        {
+          "radius": 15,
+          "start": 21,
+          "end": 22
+        },
+        {
+          "radius": 16,
+          "start": 23,
+          "end": 26
+        },
+        {
+          "radius": 20,
+          "start": 27,
+          "end": 35
+        },
+        {
+          "radius": 29,
+          "start": 36,
+          "end": 38
+        },
+        {
+          "radius": 30,
+          "start": 39,
+          "end": 39
+        },
+        {
+          "radius": 33,
+          "start": 40,
+          "end": 40
+        },
+        {
+          "radius": 34,
+          "start": 41,
+          "end": 42
+        },
+        {
+          "radius": 35,
+          "start": 43,
+          "end": 43
+        },
+        {
+          "radius": 36,
+          "start": 44,
+          "end": 44
+        },
+        {
+          "radius": 38,
+          "start": 45,
+          "end": 48
+        },
+        {
+          "radius": 39,
+          "start": 49,
+          "end": 49
+        },
+        {
+          "radius": 42,
+          "start": 50,
+          "end": 52
+        },
+        {
+          "radius": 44,
+          "start": 53,
+          "end": 54
+        },
+        {
+          "radius": 45,
+          "start": 55,
+          "end": 55
+        },
+        {
+          "radius": 46,
+          "start": 56,
+          "end": 56
+        },
+        {
+          "radius": 47,
+          "start": 57,
+          "end": 59
+        },
+        {
+          "radius": 49,
+          "start": 60,
+          "end": 60
+        },
+        {
+          "radius": 51,
+          "start": 61,
+          "end": 62
+        },
+        {
+          "radius": 54,
+          "start": 63,
+          "end": 66
+        }
+      ],
+      "plateau_starts": [
+        8,
+        10,
+        11,
+        16,
+        18,
+        21,
+        23,
+        27,
+        36,
+        39,
+        40,
+        41,
+        43,
+        44,
+        45,
+        49,
+        50,
+        53,
+        55,
+        56,
+        57,
+        60,
+        61,
+        63
+      ],
+      "plateau_ends": [
+        9,
+        10,
+        15,
+        17,
+        20,
+        22,
+        26,
+        35,
+        38,
+        39,
+        40,
+        42,
+        43,
+        44,
+        48,
+        49,
+        52,
+        54,
+        55,
+        56,
+        59,
+        60,
+        62,
+        66
+      ],
+      "recurrences": [
+        {
+          "full_data_relations": [],
+          "basiswise_heldout_is_not_family_exclusion": true,
+          "order": 1,
+          "degree": 0,
+          "training_terms": 39,
+          "dimension": 2,
+          "nullity": 0,
+          "survived": [],
+          "killed": [],
+          "counting": {
+            "purpose": "exact-exclusion",
+            "coefficient_box": [
+              -8,
+              8
+            ],
+            "log2_class_upper": 8.174925682500678,
+            "not_complexity_evidence": true,
+            "rational_coefficient_class": "infinite; handled by exact finite-design rank, not counting"
+          }
+        },
+        {
+          "full_data_relations": [],
+          "basiswise_heldout_is_not_family_exclusion": true,
+          "order": 1,
+          "degree": 1,
+          "training_terms": 39,
+          "dimension": 4,
+          "nullity": 0,
+          "survived": [],
+          "killed": [],
+          "counting": {
+            "purpose": "exact-exclusion",
+            "coefficient_box": [
+              -8,
+              8
+            ],
+            "log2_class_upper": 16.349851365001356,
+            "not_complexity_evidence": true,
+            "rational_coefficient_class": "infinite; handled by exact finite-design rank, not counting"
+          }
+        },
+        {
+          "full_data_relations": [],
+          "basiswise_heldout_is_not_family_exclusion": true,
+          "order": 1,
+          "degree": 2,
+          "training_terms": 39,
+          "dimension": 6,
+          "nullity": 0,
+          "survived": [],
+          "killed": [],
+          "counting": {
+            "purpose": "exact-exclusion",
+            "coefficient_box": [
+              -8,
+              8
+            ],
+            "log2_class_upper": 24.524777047502035,
+            "not_complexity_evidence": true,
+            "rational_coefficient_class": "infinite; handled by exact finite-design rank, not counting"
+          }
+        },
+        {
+          "full_data_relations": [],
+          "basiswise_heldout_is_not_family_exclusion": true,
+          "order": 1,
+          "degree": 3,
+          "training_terms": 39,
+          "dimension": 8,
+          "nullity": 0,
+          "survived": [],
+          "killed": [],
+          "counting": {
+            "purpose": "exact-exclusion",
+            "coefficient_box": [
+              -8,
+              8
+            ],
+            "log2_class_upper": 32.69970273000271,
+            "not_complexity_evidence": true,
+            "rational_coefficient_class": "infinite; handled by exact finite-design rank, not counting"
+          }
+        },
+        {
+          "full_data_relations": [],
+          "basiswise_heldout_is_not_family_exclusion": true,
+          "order": 2,
+          "degree": 0,
+          "training_terms": 39,
+          "dimension": 3,
+          "nullity": 0,
+          "survived": [],
+          "killed": [],
+          "counting": {
+            "purpose": "exact-exclusion",
+            "coefficient_box": [
+              -8,
+              8
+            ],
+            "log2_class_upper": 12.262388523751017,
+            "not_complexity_evidence": true,
+            "rational_coefficient_class": "infinite; handled by exact finite-design rank, not counting"
+          }
+        },
+        {
+          "full_data_relations": [],
+          "basiswise_heldout_is_not_family_exclusion": true,
+          "order": 2,
+          "degree": 1,
+          "training_terms": 39,
+          "dimension": 6,
+          "nullity": 0,
+          "survived": [],
+          "killed": [],
+          "counting": {
+            "purpose": "exact-exclusion",
+            "coefficient_box": [
+              -8,
+              8
+            ],
+            "log2_class_upper": 24.524777047502035,
+            "not_complexity_evidence": true,
+            "rational_coefficient_class": "infinite; handled by exact finite-design rank, not counting"
+          }
+        },
+        {
+          "full_data_relations": [],
+          "basiswise_heldout_is_not_family_exclusion": true,
+          "order": 2,
+          "degree": 2,
+          "training_terms": 39,
+          "dimension": 9,
+          "nullity": 0,
+          "survived": [],
+          "killed": [],
+          "counting": {
+            "purpose": "exact-exclusion",
+            "coefficient_box": [
+              -8,
+              8
+            ],
+            "log2_class_upper": 36.787165571253055,
+            "not_complexity_evidence": true,
+            "rational_coefficient_class": "infinite; handled by exact finite-design rank, not counting"
+          }
+        },
+        {
+          "full_data_relations": [],
+          "basiswise_heldout_is_not_family_exclusion": true,
+          "order": 2,
+          "degree": 3,
+          "training_terms": 39,
+          "dimension": 12,
+          "nullity": 0,
+          "survived": [],
+          "killed": [],
+          "counting": {
+            "purpose": "exact-exclusion",
+            "coefficient_box": [
+              -8,
+              8
+            ],
+            "log2_class_upper": 49.04955409500407,
+            "not_complexity_evidence": true,
+            "rational_coefficient_class": "infinite; handled by exact finite-design rank, not counting"
+          }
+        },
+        {
+          "full_data_relations": [],
+          "basiswise_heldout_is_not_family_exclusion": true,
+          "order": 3,
+          "degree": 0,
+          "training_terms": 39,
+          "dimension": 4,
+          "nullity": 0,
+          "survived": [],
+          "killed": [],
+          "counting": {
+            "purpose": "exact-exclusion",
+            "coefficient_box": [
+              -8,
+              8
+            ],
+            "log2_class_upper": 16.349851365001356,
+            "not_complexity_evidence": true,
+            "rational_coefficient_class": "infinite; handled by exact finite-design rank, not counting"
+          }
+        },
+        {
+          "full_data_relations": [],
+          "basiswise_heldout_is_not_family_exclusion": true,
+          "order": 3,
+          "degree": 1,
+          "training_terms": 39,
+          "dimension": 8,
+          "nullity": 0,
+          "survived": [],
+          "killed": [],
+          "counting": {
+            "purpose": "exact-exclusion",
+            "coefficient_box": [
+              -8,
+              8
+            ],
+            "log2_class_upper": 32.69970273000271,
+            "not_complexity_evidence": true,
+            "rational_coefficient_class": "infinite; handled by exact finite-design rank, not counting"
+          }
+        },
+        {
+          "full_data_relations": [],
+          "basiswise_heldout_is_not_family_exclusion": true,
+          "order": 3,
+          "degree": 2,
+          "training_terms": 39,
+          "dimension": 12,
+          "nullity": 0,
+          "survived": [],
+          "killed": [],
+          "counting": {
+            "purpose": "exact-exclusion",
+            "coefficient_box": [
+              -8,
+              8
+            ],
+            "log2_class_upper": 49.04955409500407,
+            "not_complexity_evidence": true,
+            "rational_coefficient_class": "infinite; handled by exact finite-design rank, not counting"
+          }
+        },
+        {
+          "full_data_relations": [],
+          "basiswise_heldout_is_not_family_exclusion": true,
+          "order": 3,
+          "degree": 3,
+          "training_terms": 39,
+          "dimension": 16,
+          "nullity": 0,
+          "survived": [],
+          "killed": [],
+          "counting": {
+            "purpose": "exact-exclusion",
+            "coefficient_box": [
+              -8,
+              8
+            ],
+            "log2_class_upper": 65.39940546000543,
+            "not_complexity_evidence": true,
+            "rational_coefficient_class": "infinite; handled by exact finite-design rank, not counting"
+          }
+        },
+        {
+          "full_data_relations": [],
+          "basiswise_heldout_is_not_family_exclusion": true,
+          "order": 4,
+          "degree": 0,
+          "training_terms": 39,
+          "dimension": 5,
+          "nullity": 0,
+          "survived": [],
+          "killed": [],
+          "counting": {
+            "purpose": "exact-exclusion",
+            "coefficient_box": [
+              -8,
+              8
+            ],
+            "log2_class_upper": 20.437314206251695,
+            "not_complexity_evidence": true,
+            "rational_coefficient_class": "infinite; handled by exact finite-design rank, not counting"
+          }
+        },
+        {
+          "full_data_relations": [],
+          "basiswise_heldout_is_not_family_exclusion": true,
+          "order": 4,
+          "degree": 1,
+          "training_terms": 39,
+          "dimension": 10,
+          "nullity": 0,
+          "survived": [],
+          "killed": [],
+          "counting": {
+            "purpose": "exact-exclusion",
+            "coefficient_box": [
+              -8,
+              8
+            ],
+            "log2_class_upper": 40.87462841250339,
+            "not_complexity_evidence": true,
+            "rational_coefficient_class": "infinite; handled by exact finite-design rank, not counting"
+          }
+        },
+        {
+          "full_data_relations": [],
+          "basiswise_heldout_is_not_family_exclusion": true,
+          "order": 4,
+          "degree": 2,
+          "training_terms": 39,
+          "dimension": 15,
+          "nullity": 0,
+          "survived": [],
+          "killed": [],
+          "counting": {
+            "purpose": "exact-exclusion",
+            "coefficient_box": [
+              -8,
+              8
+            ],
+            "log2_class_upper": 61.31194261875508,
+            "not_complexity_evidence": true,
+            "rational_coefficient_class": "infinite; handled by exact finite-design rank, not counting"
+          }
+        },
+        {
+          "full_data_relations": [],
+          "basiswise_heldout_is_not_family_exclusion": true,
+          "order": 4,
+          "degree": 3,
+          "training_terms": 39,
+          "dimension": 20,
+          "nullity": 0,
+          "survived": [],
+          "killed": [],
+          "counting": {
+            "purpose": "exact-exclusion",
+            "coefficient_box": [
+              -8,
+              8
+            ],
+            "log2_class_upper": 81.74925682500678,
+            "not_complexity_evidence": true,
+            "rational_coefficient_class": "infinite; handled by exact finite-design rank, not counting"
+          }
+        },
+        {
+          "full_data_relations": [],
+          "basiswise_heldout_is_not_family_exclusion": true,
+          "order": 5,
+          "degree": 0,
+          "training_terms": 39,
+          "dimension": 6,
+          "nullity": 0,
+          "survived": [],
+          "killed": [],
+          "counting": {
+            "purpose": "exact-exclusion",
+            "coefficient_box": [
+              -8,
+              8
+            ],
+            "log2_class_upper": 24.524777047502035,
+            "not_complexity_evidence": true,
+            "rational_coefficient_class": "infinite; handled by exact finite-design rank, not counting"
+          }
+        },
+        {
+          "full_data_relations": [],
+          "basiswise_heldout_is_not_family_exclusion": true,
+          "order": 5,
+          "degree": 1,
+          "training_terms": 39,
+          "dimension": 12,
+          "nullity": 0,
+          "survived": [],
+          "killed": [],
+          "counting": {
+            "purpose": "exact-exclusion",
+            "coefficient_box": [
+              -8,
+              8
+            ],
+            "log2_class_upper": 49.04955409500407,
+            "not_complexity_evidence": true,
+            "rational_coefficient_class": "infinite; handled by exact finite-design rank, not counting"
+          }
+        },
+        {
+          "full_data_relations": [],
+          "basiswise_heldout_is_not_family_exclusion": true,
+          "order": 5,
+          "degree": 2,
+          "training_terms": 39,
+          "dimension": 18,
+          "nullity": 0,
+          "survived": [],
+          "killed": [],
+          "counting": {
+            "purpose": "exact-exclusion",
+            "coefficient_box": [
+              -8,
+              8
+            ],
+            "log2_class_upper": 73.57433114250611,
+            "not_complexity_evidence": true,
+            "rational_coefficient_class": "infinite; handled by exact finite-design rank, not counting"
+          }
+        },
+        {
+          "full_data_relations": [],
+          "basiswise_heldout_is_not_family_exclusion": true,
+          "order": 5,
+          "degree": 3,
+          "training_terms": 39,
+          "dimension": 24,
+          "nullity": 0,
+          "survived": [],
+          "killed": [],
+          "counting": {
+            "purpose": "exact-exclusion",
+            "coefficient_box": [
+              -8,
+              8
+            ],
+            "log2_class_upper": 98.09910819000814,
+            "not_complexity_evidence": true,
+            "rational_coefficient_class": "infinite; handled by exact finite-design rank, not counting"
+          }
+        }
+      ],
+      "digital_affine": [
+        {
+          "k": 2,
+          "digit": 0,
+          "family": "a(kn+j)=c*a(n)+d*n+e",
+          "status": "no_training_fit",
+          "training_pairs": 17,
+          "heldout_pairs": 9,
+          "coefficients": null,
+          "first_heldout_violation": null,
+          "counting": {
+            "purpose": "exact-exclusion",
+            "coefficient_box": [
+              -8,
+              8
+            ],
+            "log2_class_upper": 12.262388523751017,
+            "not_complexity_evidence": true,
+            "rational_coefficient_class": "infinite; handled by exact finite-design rank, not counting"
+          }
+        },
+        {
+          "k": 2,
+          "digit": 1,
+          "family": "a(kn+j)=c*a(n)+d*n+e",
+          "status": "no_training_fit",
+          "training_pairs": 16,
+          "heldout_pairs": 9,
+          "coefficients": null,
+          "first_heldout_violation": null,
+          "counting": {
+            "purpose": "exact-exclusion",
+            "coefficient_box": [
+              -8,
+              8
+            ],
+            "log2_class_upper": 12.262388523751017,
+            "not_complexity_evidence": true,
+            "rational_coefficient_class": "infinite; handled by exact finite-design rank, not counting"
+          }
+        },
+        {
+          "k": 3,
+          "digit": 0,
+          "family": "a(kn+j)=c*a(n)+d*n+e",
+          "status": "no_training_fit",
+          "training_pairs": 10,
+          "heldout_pairs": 5,
+          "coefficients": null,
+          "first_heldout_violation": null,
+          "counting": {
+            "purpose": "exact-exclusion",
+            "coefficient_box": [
+              -8,
+              8
+            ],
+            "log2_class_upper": 12.262388523751017,
+            "not_complexity_evidence": true,
+            "rational_coefficient_class": "infinite; handled by exact finite-design rank, not counting"
+          }
+        },
+        {
+          "k": 3,
+          "digit": 1,
+          "family": "a(kn+j)=c*a(n)+d*n+e",
+          "status": "no_training_fit",
+          "training_pairs": 9,
+          "heldout_pairs": 5,
+          "coefficients": null,
+          "first_heldout_violation": null,
+          "counting": {
+            "purpose": "exact-exclusion",
+            "coefficient_box": [
+              -8,
+              8
+            ],
+            "log2_class_upper": 12.262388523751017,
+            "not_complexity_evidence": true,
+            "rational_coefficient_class": "infinite; handled by exact finite-design rank, not counting"
+          }
+        },
+        {
+          "k": 3,
+          "digit": 2,
+          "family": "a(kn+j)=c*a(n)+d*n+e",
+          "status": "no_training_fit",
+          "training_pairs": 9,
+          "heldout_pairs": 5,
+          "coefficients": null,
+          "first_heldout_violation": null,
+          "counting": {
+            "purpose": "exact-exclusion",
+            "coefficient_box": [
+              -8,
+              8
+            ],
+            "log2_class_upper": 12.262388523751017,
+            "not_complexity_evidence": true,
+            "rational_coefficient_class": "infinite; handled by exact finite-design rank, not counting"
+          }
+        }
+      ],
+      "finite_kernel_ranks": [
+        {
+          "k": 2,
+          "depth": 1,
+          "common_terms": 29,
+          "subsequences": 3,
+          "rank": 3,
+          "scope": "rank of finite sampled kernel only; cannot exclude infinite k-regularity"
+        },
+        {
+          "k": 2,
+          "depth": 2,
+          "common_terms": 14,
+          "subsequences": 7,
+          "rank": 7,
+          "scope": "rank of finite sampled kernel only; cannot exclude infinite k-regularity"
+        },
+        {
+          "k": 3,
+          "depth": 1,
+          "common_terms": 19,
+          "subsequences": 4,
+          "rank": 4,
+          "scope": "rank of finite sampled kernel only; cannot exclude infinite k-regularity"
+        },
+        {
+          "k": 3,
+          "depth": 2,
+          "common_terms": 6,
+          "subsequences": 13,
+          "rank": 6,
+          "scope": "rank of finite sampled kernel only; cannot exclude infinite k-regularity"
+        }
+      ]
+    },
+    "alternating-one": {
+      "exact_rows": [
+        {
+          "length": 8,
+          "radius": 6,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 40,
+          "right_half": "58"
+        },
+        {
+          "length": 9,
+          "radius": 7,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 56,
+          "right_half": "56"
+        },
+        {
+          "length": 10,
+          "radius": 8,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 69,
+          "right_half": "95"
+        },
+        {
+          "length": 11,
+          "radius": 9,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 86,
+          "right_half": "278"
+        },
+        {
+          "length": 12,
+          "radius": 9,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 101,
+          "right_half": "502"
+        },
+        {
+          "length": 13,
+          "radius": 9,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 116,
+          "right_half": "22"
+        },
+        {
+          "length": 14,
+          "radius": 9,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 131,
+          "right_half": "342"
+        },
+        {
+          "length": 15,
+          "radius": 9,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 146,
+          "right_half": "470"
+        },
+        {
+          "length": 16,
+          "radius": 9,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 160,
+          "right_half": "54"
+        },
+        {
+          "length": 17,
+          "radius": 14,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 173,
+          "right_half": "3005"
+        },
+        {
+          "length": 18,
+          "radius": 14,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 189,
+          "right_half": "12591"
+        },
+        {
+          "length": 19,
+          "radius": 14,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 205,
+          "right_half": "8863"
+        },
+        {
+          "length": 20,
+          "radius": 15,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 222,
+          "right_half": "32743"
+        },
+        {
+          "length": 21,
+          "radius": 15,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 236,
+          "right_half": "32743"
+        },
+        {
+          "length": 22,
+          "radius": 16,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 251,
+          "right_half": "65096"
+        },
+        {
+          "length": 23,
+          "radius": 16,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 267,
+          "right_half": "38985"
+        },
+        {
+          "length": 24,
+          "radius": 16,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 283,
+          "right_half": "20040"
+        },
+        {
+          "length": 25,
+          "radius": 17,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 296,
+          "right_half": "95339"
+        },
+        {
+          "length": 26,
+          "radius": 19,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 315,
+          "right_half": "467872"
+        },
+        {
+          "length": 27,
+          "radius": 19,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 331,
+          "right_half": "436704"
+        },
+        {
+          "length": 28,
+          "radius": 19,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 347,
+          "right_half": "139872"
+        },
+        {
+          "length": 29,
+          "radius": 19,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 363,
+          "right_half": "19296"
+        },
+        {
+          "length": 30,
+          "radius": 19,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 379,
+          "right_half": "498982"
+        },
+        {
+          "length": 31,
+          "radius": 19,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 395,
+          "right_half": "143089"
+        },
+        {
+          "length": 32,
+          "radius": 19,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 411,
+          "right_half": "84954"
+        },
+        {
+          "length": 33,
+          "radius": 19,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 427,
+          "right_half": "221274"
+        },
+        {
+          "length": 34,
+          "radius": 19,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 443,
+          "right_half": "381024"
+        },
+        {
+          "length": 35,
+          "radius": 19,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 459,
+          "right_half": "376026"
+        },
+        {
+          "length": 36,
+          "radius": 19,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 475,
+          "right_half": "6234"
+        },
+        {
+          "length": 37,
+          "radius": 30,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 490,
+          "right_half": "411091337"
+        },
+        {
+          "length": 38,
+          "radius": 30,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 505,
+          "right_half": "459462511"
+        },
+        {
+          "length": 39,
+          "radius": 31,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 520,
+          "right_half": "553075222"
+        },
+        {
+          "length": 40,
+          "radius": 31,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 535,
+          "right_half": "1304301921"
+        },
+        {
+          "length": 41,
+          "radius": 32,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 549,
+          "right_half": "2237095944"
+        },
+        {
+          "length": 42,
+          "radius": 33,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 566,
+          "right_half": "3546517511"
+        },
+        {
+          "length": 43,
+          "radius": 36,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 581,
+          "right_half": "29709080210"
+        },
+        {
+          "length": 44,
+          "radius": 36,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 595,
+          "right_half": "22991649608"
+        },
+        {
+          "length": 45,
+          "radius": 36,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 610,
+          "right_half": "32996256680"
+        },
+        {
+          "length": 46,
+          "radius": 37,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 626,
+          "right_half": "127766861264"
+        },
+        {
+          "length": 47,
+          "radius": 38,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 640,
+          "right_half": "249401090414"
+        },
+        {
+          "length": 48,
+          "radius": 40,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 658,
+          "right_half": "1014091930492"
+        },
+        {
+          "length": 49,
+          "radius": 41,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 670,
+          "right_half": "1187239754331"
+        },
+        {
+          "length": 50,
+          "radius": 41,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 685,
+          "right_half": "1879184"
+        },
+        {
+          "length": 51,
+          "radius": 41,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 700,
+          "right_half": "1055880213819"
+        },
+        {
+          "length": 52,
+          "radius": 44,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 716,
+          "right_half": "3492323883405"
+        },
+        {
+          "length": 53,
+          "radius": 44,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 732,
+          "right_half": "13759949103325"
+        },
+        {
+          "length": 54,
+          "radius": 44,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 748,
+          "right_half": "1075836765"
+        },
+        {
+          "length": 55,
+          "radius": 45,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 764,
+          "right_half": "16894083423519"
+        },
+        {
+          "length": 56,
+          "radius": 45,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 779,
+          "right_half": "5305294424063"
+        },
+        {
+          "length": 57,
+          "radius": 45,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 794,
+          "right_half": "21222319672781"
+        },
+        {
+          "length": 58,
+          "radius": 47,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 804,
+          "right_half": "108411982313161"
+        },
+        {
+          "length": 59,
+          "radius": 47,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 820,
+          "right_half": "48935197406921"
+        },
+        {
+          "length": 60,
+          "radius": 48,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 841,
+          "right_half": "120972623377308"
+        },
+        {
+          "length": 61,
+          "radius": 51,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 855,
+          "right_half": "2170822936088517"
+        },
+        {
+          "length": 62,
+          "radius": 51,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 868,
+          "right_half": "1000800005651467"
+        },
+        {
+          "length": 63,
+          "radius": 51,
+          "source": "runs/period2-horizon-extended-2026-10-14/results.json",
+          "query_id": 877,
+          "right_half": "113318679078139"
+        }
+      ],
+      "contiguous_start": 8,
+      "minima": [
+        6,
+        7,
+        8,
+        9,
+        9,
+        9,
+        9,
+        9,
+        9,
+        14,
+        14,
+        14,
+        15,
+        15,
+        16,
+        16,
+        16,
+        17,
+        19,
+        19,
+        19,
+        19,
+        19,
+        19,
+        19,
+        19,
+        19,
+        19,
+        19,
+        30,
+        30,
+        31,
+        31,
+        32,
+        33,
+        36,
+        36,
+        36,
+        37,
+        38,
+        40,
+        41,
+        41,
+        41,
+        44,
+        44,
+        44,
+        45,
+        45,
+        45,
+        47,
+        47,
+        48,
+        51,
+        51,
+        51
+      ],
+      "first_differences": [
+        1,
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        5,
+        0,
+        0,
+        1,
+        0,
+        1,
+        0,
+        0,
+        1,
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        11,
+        0,
+        1,
+        0,
+        1,
+        1,
+        3,
+        0,
+        0,
+        1,
+        1,
+        2,
+        1,
+        0,
+        0,
+        3,
+        0,
+        0,
+        1,
+        0,
+        0,
+        2,
+        0,
+        1,
+        3,
+        0,
+        0
+      ],
+      "plateaus": [
+        {
+          "radius": 6,
+          "start": 8,
+          "end": 8
+        },
+        {
+          "radius": 7,
+          "start": 9,
+          "end": 9
+        },
+        {
+          "radius": 8,
+          "start": 10,
+          "end": 10
+        },
+        {
+          "radius": 9,
+          "start": 11,
+          "end": 16
+        },
+        {
+          "radius": 14,
+          "start": 17,
+          "end": 19
+        },
+        {
+          "radius": 15,
+          "start": 20,
+          "end": 21
+        },
+        {
+          "radius": 16,
+          "start": 22,
+          "end": 24
+        },
+        {
+          "radius": 17,
+          "start": 25,
+          "end": 25
+        },
+        {
+          "radius": 19,
+          "start": 26,
+          "end": 36
+        },
+        {
+          "radius": 30,
+          "start": 37,
+          "end": 38
+        },
+        {
+          "radius": 31,
+          "start": 39,
+          "end": 40
+        },
+        {
+          "radius": 32,
+          "start": 41,
+          "end": 41
+        },
+        {
+          "radius": 33,
+          "start": 42,
+          "end": 42
+        },
+        {
+          "radius": 36,
+          "start": 43,
+          "end": 45
+        },
+        {
+          "radius": 37,
+          "start": 46,
+          "end": 46
+        },
+        {
+          "radius": 38,
+          "start": 47,
+          "end": 47
+        },
+        {
+          "radius": 40,
+          "start": 48,
+          "end": 48
+        },
+        {
+          "radius": 41,
+          "start": 49,
+          "end": 51
+        },
+        {
+          "radius": 44,
+          "start": 52,
+          "end": 54
+        },
+        {
+          "radius": 45,
+          "start": 55,
+          "end": 57
+        },
+        {
+          "radius": 47,
+          "start": 58,
+          "end": 59
+        },
+        {
+          "radius": 48,
+          "start": 60,
+          "end": 60
+        },
+        {
+          "radius": 51,
+          "start": 61,
+          "end": 63
+        }
+      ],
+      "plateau_starts": [
+        8,
+        9,
+        10,
+        11,
+        17,
+        20,
+        22,
+        25,
+        26,
+        37,
+        39,
+        41,
+        42,
+        43,
+        46,
+        47,
+        48,
+        49,
+        52,
+        55,
+        58,
+        60,
+        61
+      ],
+      "plateau_ends": [
+        8,
+        9,
+        10,
+        16,
+        19,
+        21,
+        24,
+        25,
+        36,
+        38,
+        40,
+        41,
+        42,
+        45,
+        46,
+        47,
+        48,
+        51,
+        54,
+        57,
+        59,
+        60,
+        63
+      ],
+      "recurrences": [
+        {
+          "full_data_relations": [],
+          "basiswise_heldout_is_not_family_exclusion": true,
+          "order": 1,
+          "degree": 0,
+          "training_terms": 37,
+          "dimension": 2,
+          "nullity": 0,
+          "survived": [],
+          "killed": [],
+          "counting": {
+            "purpose": "exact-exclusion",
+            "coefficient_box": [
+              -8,
+              8
+            ],
+            "log2_class_upper": 8.174925682500678,
+            "not_complexity_evidence": true,
+            "rational_coefficient_class": "infinite; handled by exact finite-design rank, not counting"
+          }
+        },
+        {
+          "full_data_relations": [],
+          "basiswise_heldout_is_not_family_exclusion": true,
+          "order": 1,
+          "degree": 1,
+          "training_terms": 37,
+          "dimension": 4,
+          "nullity": 0,
+          "survived": [],
+          "killed": [],
+          "counting": {
+            "purpose": "exact-exclusion",
+            "coefficient_box": [
+              -8,
+              8
+            ],
+            "log2_class_upper": 16.349851365001356,
+            "not_complexity_evidence": true,
+            "rational_coefficient_class": "infinite; handled by exact finite-design rank, not counting"
+          }
+        },
+        {
+          "full_data_relations": [],
+          "basiswise_heldout_is_not_family_exclusion": true,
+          "order": 1,
+          "degree": 2,
+          "training_terms": 37,
+          "dimension": 6,
+          "nullity": 0,
+          "survived": [],
+          "killed": [],
+          "counting": {
+            "purpose": "exact-exclusion",
+            "coefficient_box": [
+              -8,
+              8
+            ],
+            "log2_class_upper": 24.524777047502035,
+            "not_complexity_evidence": true,
+            "rational_coefficient_class": "infinite; handled by exact finite-design rank, not counting"
+          }
+        },
+        {
+          "full_data_relations": [],
+          "basiswise_heldout_is_not_family_exclusion": true,
+          "order": 1,
+          "degree": 3,
+          "training_terms": 37,
+          "dimension": 8,
+          "nullity": 0,
+          "survived": [],
+          "killed": [],
+          "counting": {
+            "purpose": "exact-exclusion",
+            "coefficient_box": [
+              -8,
+              8
+            ],
+            "log2_class_upper": 32.69970273000271,
+            "not_complexity_evidence": true,
+            "rational_coefficient_class": "infinite; handled by exact finite-design rank, not counting"
+          }
+        },
+        {
+          "full_data_relations": [],
+          "basiswise_heldout_is_not_family_exclusion": true,
+          "order": 2,
+          "degree": 0,
+          "training_terms": 37,
+          "dimension": 3,
+          "nullity": 0,
+          "survived": [],
+          "killed": [],
+          "counting": {
+            "purpose": "exact-exclusion",
+            "coefficient_box": [
+              -8,
+              8
+            ],
+            "log2_class_upper": 12.262388523751017,
+            "not_complexity_evidence": true,
+            "rational_coefficient_class": "infinite; handled by exact finite-design rank, not counting"
+          }
+        },
+        {
+          "full_data_relations": [],
+          "basiswise_heldout_is_not_family_exclusion": true,
+          "order": 2,
+          "degree": 1,
+          "training_terms": 37,
+          "dimension": 6,
+          "nullity": 0,
+          "survived": [],
+          "killed": [],
+          "counting": {
+            "purpose": "exact-exclusion",
+            "coefficient_box": [
+              -8,
+              8
+            ],
+            "log2_class_upper": 24.524777047502035,
+            "not_complexity_evidence": true,
+            "rational_coefficient_class": "infinite; handled by exact finite-design rank, not counting"
+          }
+        },
+        {
+          "full_data_relations": [],
+          "basiswise_heldout_is_not_family_exclusion": true,
+          "order": 2,
+          "degree": 2,
+          "training_terms": 37,
+          "dimension": 9,
+          "nullity": 0,
+          "survived": [],
+          "killed": [],
+          "counting": {
+            "purpose": "exact-exclusion",
+            "coefficient_box": [
+              -8,
+              8
+            ],
+            "log2_class_upper": 36.787165571253055,
+            "not_complexity_evidence": true,
+            "rational_coefficient_class": "infinite; handled by exact finite-design rank, not counting"
+          }
+        },
+        {
+          "full_data_relations": [],
+          "basiswise_heldout_is_not_family_exclusion": true,
+          "order": 2,
+          "degree": 3,
+          "training_terms": 37,
+          "dimension": 12,
+          "nullity": 0,
+          "survived": [],
+          "killed": [],
+          "counting": {
+            "purpose": "exact-exclusion",
+            "coefficient_box": [
+              -8,
+              8
+            ],
+            "log2_class_upper": 49.04955409500407,
+            "not_complexity_evidence": true,
+            "rational_coefficient_class": "infinite; handled by exact finite-design rank, not counting"
+          }
+        },
+        {
+          "full_data_relations": [],
+          "basiswise_heldout_is_not_family_exclusion": true,
+          "order": 3,
+          "degree": 0,
+          "training_terms": 37,
+          "dimension": 4,
+          "nullity": 0,
+          "survived": [],
+          "killed": [],
+          "counting": {
+            "purpose": "exact-exclusion",
+            "coefficient_box": [
+              -8,
+              8
+            ],
+            "log2_class_upper": 16.349851365001356,
+            "not_complexity_evidence": true,
+            "rational_coefficient_class": "infinite; handled by exact finite-design rank, not counting"
+          }
+        },
+        {
+          "full_data_relations": [],
+          "basiswise_heldout_is_not_family_exclusion": true,
+          "order": 3,
+          "degree": 1,
+          "training_terms": 37,
+          "dimension": 8,
+          "nullity": 0,
+          "survived": [],
+          "killed": [],
+          "counting": {
+            "purpose": "exact-exclusion",
+            "coefficient_box": [
+              -8,
+              8
+            ],
+            "log2_class_upper": 32.69970273000271,
+            "not_complexity_evidence": true,
+            "rational_coefficient_class": "infinite; handled by exact finite-design rank, not counting"
+          }
+        },
+        {
+          "full_data_relations": [],
+          "basiswise_heldout_is_not_family_exclusion": true,
+          "order": 3,
+          "degree": 2,
+          "training_terms": 37,
+          "dimension": 12,
+          "nullity": 0,
+          "survived": [],
+          "killed": [],
+          "counting": {
+            "purpose": "exact-exclusion",
+            "coefficient_box": [
+              -8,
+              8
+            ],
+            "log2_class_upper": 49.04955409500407,
+            "not_complexity_evidence": true,
+            "rational_coefficient_class": "infinite; handled by exact finite-design rank, not counting"
+          }
+        },
+        {
+          "full_data_relations": [],
+          "basiswise_heldout_is_not_family_exclusion": true,
+          "order": 3,
+          "degree": 3,
+          "training_terms": 37,
+          "dimension": 16,
+          "nullity": 0,
+          "survived": [],
+          "killed": [],
+          "counting": {
+            "purpose": "exact-exclusion",
+            "coefficient_box": [
+              -8,
+              8
+            ],
+            "log2_class_upper": 65.39940546000543,
+            "not_complexity_evidence": true,
+            "rational_coefficient_class": "infinite; handled by exact finite-design rank, not counting"
+          }
+        },
+        {
+          "full_data_relations": [],
+          "basiswise_heldout_is_not_family_exclusion": true,
+          "order": 4,
+          "degree": 0,
+          "training_terms": 37,
+          "dimension": 5,
+          "nullity": 0,
+          "survived": [],
+          "killed": [],
+          "counting": {
+            "purpose": "exact-exclusion",
+            "coefficient_box": [
+              -8,
+              8
+            ],
+            "log2_class_upper": 20.437314206251695,
+            "not_complexity_evidence": true,
+            "rational_coefficient_class": "infinite; handled by exact finite-design rank, not counting"
+          }
+        },
+        {
+          "full_data_relations": [],
+          "basiswise_heldout_is_not_family_exclusion": true,
+          "order": 4,
+          "degree": 1,
+          "training_terms": 37,
+          "dimension": 10,
+          "nullity": 0,
+          "survived": [],
+          "killed": [],
+          "counting": {
+            "purpose": "exact-exclusion",
+            "coefficient_box": [
+              -8,
+              8
+            ],
+            "log2_class_upper": 40.87462841250339,
+            "not_complexity_evidence": true,
+            "rational_coefficient_class": "infinite; handled by exact finite-design rank, not counting"
+          }
+        },
+        {
+          "full_data_relations": [],
+          "basiswise_heldout_is_not_family_exclusion": true,
+          "order": 4,
+          "degree": 2,
+          "training_terms": 37,
+          "dimension": 15,
+          "nullity": 0,
+          "survived": [],
+          "killed": [],
+          "counting": {
+            "purpose": "exact-exclusion",
+            "coefficient_box": [
+              -8,
+              8
+            ],
+            "log2_class_upper": 61.31194261875508,
+            "not_complexity_evidence": true,
+            "rational_coefficient_class": "infinite; handled by exact finite-design rank, not counting"
+          }
+        },
+        {
+          "full_data_relations": [],
+          "basiswise_heldout_is_not_family_exclusion": true,
+          "order": 4,
+          "degree": 3,
+          "training_terms": 37,
+          "dimension": 20,
+          "nullity": 0,
+          "survived": [],
+          "killed": [],
+          "counting": {
+            "purpose": "exact-exclusion",
+            "coefficient_box": [
+              -8,
+              8
+            ],
+            "log2_class_upper": 81.74925682500678,
+            "not_complexity_evidence": true,
+            "rational_coefficient_class": "infinite; handled by exact finite-design rank, not counting"
+          }
+        },
+        {
+          "full_data_relations": [],
+          "basiswise_heldout_is_not_family_exclusion": true,
+          "order": 5,
+          "degree": 0,
+          "training_terms": 37,
+          "dimension": 6,
+          "nullity": 0,
+          "survived": [],
+          "killed": [],
+          "counting": {
+            "purpose": "exact-exclusion",
+            "coefficient_box": [
+              -8,
+              8
+            ],
+            "log2_class_upper": 24.524777047502035,
+            "not_complexity_evidence": true,
+            "rational_coefficient_class": "infinite; handled by exact finite-design rank, not counting"
+          }
+        },
+        {
+          "full_data_relations": [],
+          "basiswise_heldout_is_not_family_exclusion": true,
+          "order": 5,
+          "degree": 1,
+          "training_terms": 37,
+          "dimension": 12,
+          "nullity": 0,
+          "survived": [],
+          "killed": [],
+          "counting": {
+            "purpose": "exact-exclusion",
+            "coefficient_box": [
+              -8,
+              8
+            ],
+            "log2_class_upper": 49.04955409500407,
+            "not_complexity_evidence": true,
+            "rational_coefficient_class": "infinite; handled by exact finite-design rank, not counting"
+          }
+        },
+        {
+          "full_data_relations": [],
+          "basiswise_heldout_is_not_family_exclusion": true,
+          "order": 5,
+          "degree": 2,
+          "training_terms": 37,
+          "dimension": 18,
+          "nullity": 0,
+          "survived": [],
+          "killed": [],
+          "counting": {
+            "purpose": "exact-exclusion",
+            "coefficient_box": [
+              -8,
+              8
+            ],
+            "log2_class_upper": 73.57433114250611,
+            "not_complexity_evidence": true,
+            "rational_coefficient_class": "infinite; handled by exact finite-design rank, not counting"
+          }
+        },
+        {
+          "full_data_relations": [],
+          "basiswise_heldout_is_not_family_exclusion": true,
+          "order": 5,
+          "degree": 3,
+          "training_terms": 37,
+          "dimension": 24,
+          "nullity": 0,
+          "survived": [],
+          "killed": [],
+          "counting": {
+            "purpose": "exact-exclusion",
+            "coefficient_box": [
+              -8,
+              8
+            ],
+            "log2_class_upper": 98.09910819000814,
+            "not_complexity_evidence": true,
+            "rational_coefficient_class": "infinite; handled by exact finite-design rank, not counting"
+          }
+        }
+      ],
+      "digital_affine": [
+        {
+          "k": 2,
+          "digit": 0,
+          "family": "a(kn+j)=c*a(n)+d*n+e",
+          "status": "no_training_fit",
+          "training_pairs": 16,
+          "heldout_pairs": 8,
+          "coefficients": null,
+          "first_heldout_violation": null,
+          "counting": {
+            "purpose": "exact-exclusion",
+            "coefficient_box": [
+              -8,
+              8
+            ],
+            "log2_class_upper": 12.262388523751017,
+            "not_complexity_evidence": true,
+            "rational_coefficient_class": "infinite; handled by exact finite-design rank, not counting"
+          }
+        },
+        {
+          "k": 2,
+          "digit": 1,
+          "family": "a(kn+j)=c*a(n)+d*n+e",
+          "status": "no_training_fit",
+          "training_pairs": 16,
+          "heldout_pairs": 8,
+          "coefficients": null,
+          "first_heldout_violation": null,
+          "counting": {
+            "purpose": "exact-exclusion",
+            "coefficient_box": [
+              -8,
+              8
+            ],
+            "log2_class_upper": 12.262388523751017,
+            "not_complexity_evidence": true,
+            "rational_coefficient_class": "infinite; handled by exact finite-design rank, not counting"
+          }
+        },
+        {
+          "k": 3,
+          "digit": 0,
+          "family": "a(kn+j)=c*a(n)+d*n+e",
+          "status": "no_training_fit",
+          "training_pairs": 9,
+          "heldout_pairs": 5,
+          "coefficients": null,
+          "first_heldout_violation": null,
+          "counting": {
+            "purpose": "exact-exclusion",
+            "coefficient_box": [
+              -8,
+              8
+            ],
+            "log2_class_upper": 12.262388523751017,
+            "not_complexity_evidence": true,
+            "rational_coefficient_class": "infinite; handled by exact finite-design rank, not counting"
+          }
+        },
+        {
+          "k": 3,
+          "digit": 1,
+          "family": "a(kn+j)=c*a(n)+d*n+e",
+          "status": "no_training_fit",
+          "training_pairs": 8,
+          "heldout_pairs": 5,
+          "coefficients": null,
+          "first_heldout_violation": null,
+          "counting": {
+            "purpose": "exact-exclusion",
+            "coefficient_box": [
+              -8,
+              8
+            ],
+            "log2_class_upper": 12.262388523751017,
+            "not_complexity_evidence": true,
+            "rational_coefficient_class": "infinite; handled by exact finite-design rank, not counting"
+          }
+        },
+        {
+          "k": 3,
+          "digit": 2,
+          "family": "a(kn+j)=c*a(n)+d*n+e",
+          "status": "no_training_fit",
+          "training_pairs": 8,
+          "heldout_pairs": 5,
+          "coefficients": null,
+          "first_heldout_violation": null,
+          "counting": {
+            "purpose": "exact-exclusion",
+            "coefficient_box": [
+              -8,
+              8
+            ],
+            "log2_class_upper": 12.262388523751017,
+            "not_complexity_evidence": true,
+            "rational_coefficient_class": "infinite; handled by exact finite-design rank, not counting"
+          }
+        }
+      ],
+      "finite_kernel_ranks": [
+        {
+          "k": 2,
+          "depth": 1,
+          "common_terms": 28,
+          "subsequences": 3,
+          "rank": 3,
+          "scope": "rank of finite sampled kernel only; cannot exclude infinite k-regularity"
+        },
+        {
+          "k": 2,
+          "depth": 2,
+          "common_terms": 14,
+          "subsequences": 7,
+          "rank": 7,
+          "scope": "rank of finite sampled kernel only; cannot exclude infinite k-regularity"
+        },
+        {
+          "k": 3,
+          "depth": 1,
+          "common_terms": 18,
+          "subsequences": 4,
+          "rank": 4,
+          "scope": "rank of finite sampled kernel only; cannot exclude infinite k-regularity"
+        },
+        {
+          "k": 3,
+          "depth": 2,
+          "common_terms": 6,
+          "subsequences": 13,
+          "rank": 6,
+          "scope": "rank of finite sampled kernel only; cannot exclude infinite k-regularity"
+        }
+      ]
+    }
+  }
+}

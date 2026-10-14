@@ -1,0 +1,2 @@
+PASS exact regeneration: sourced plateau interpolation, sequence diagnostics, witnesses
+{'alternating': 59, 'alternating-one': 56}

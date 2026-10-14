@@ -1,0 +1,50 @@
+{
+  "result": "PASS",
+  "recovered_phase_slip_replay": {
+    "verified": true,
+    "identities": {
+      "golden_mean_eight_bit_words": 55,
+      "depth_formulas": "verified",
+      "identity": "Delta_k=d_(k+2)-d_(k+1)+d_(k+1)*d_(k+2)",
+      "spatial_transport_proved": false
+    },
+    "physical_reset_failure": {
+      "left": 857638,
+      "right": 17,
+      "initial_left_low_first": "0110010001101000101100000000",
+      "zero_block_indices": [
+        21,
+        27
+      ],
+      "centre_trace": "01010101010101010101010101010",
+      "right_even_times_0_through_26": "10100001001001",
+      "scope": "A finite physical prefix; not eventual alternation."
+    }
+  },
+  "prefix7_scope": {
+    "enumerated_seeds": 65536,
+    "all_prefixes_through": 256,
+    "sampled_96bit_seeds": 128,
+    "sample_all_prefixes_through": 4096,
+    "random_seed": 307,
+    "minimum_enumerated_slack": 1
+  },
+  "rule90_control": {
+    "right": 0,
+    "N": 256,
+    "weight": 85,
+    "base32_weight": 86,
+    "prefix7_separates": false,
+    "base32_comparison_separates": true
+  },
+  "zero_control": "Rule30 zero target/right zero has completion zero",
+  "meaning": "Exact bounded kill tests only; no infinite density or support theorem.",
+  "not_run": [
+    "infinite physical right-alt32 proof",
+    "full verifier",
+    "Lean",
+    "SAT/DRAT",
+    "all65536 seeds beyond256",
+    "external-lineage audit"
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "T": 0,
+  "length_range": [
+    8,
+    96
+  ],
+  "targets": [
+    "alternating",
+    "alternating-one"
+  ],
+  "max_radius": 96,
+  "purpose": "exact-exclusion",
+  "arithmetic": "log2(2^(2R+1)-1), upper bound on distinct trace words",
+  "not_complexity_evidence": true,
+  "negative_guaranteed": false
+}

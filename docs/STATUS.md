@@ -6,7 +6,7 @@ lives here. Overwrite this file in place; git history keeps the old versions.
 No other file may carry a "current state as of" section —
 `tools/lint_ledger.py` enforces it.
 
-Updated: 2026-10-14 · Newest log: `docs/experiment-logs/2026-10-14-period-ladder.md`
+Updated: 2026-10-14 · Newest log: `docs/experiment-logs/2026-10-14-period2-stepping-stones.md`
 
 ## Where the three prize problems stand
 
@@ -18,9 +18,24 @@ Updated: 2026-10-14 · Newest log: `docs/experiment-logs/2026-10-14-period-ladde
 
 ## Open work, ranked
 
-The approved 2026-10-14 session puts the **eventual-period-two mechanism and
-its finite-horizon instrument first**, alongside the exact nonlinear forcing
-identity. B3 (LSD n=56) is optional bounded work. The older A1 → A2 → C2
+The period-two stepping-stone session has built 19 Lean-checked foundations,
+an exact support-completion instrument, 32 tested candidates, and a replay of
+the recovered renewal certificates. Period two remains open; full Condrey
+uniqueness and exclusion remain unfinished. Recombination is recorded in
+`docs/theory/period2_recombination.md`; final verification gives11PASS,
+1SKIP (absent46M),0FAIL, with759 tests and6 named GPU/46M skips. The smallest long measured density is 1/7;
+its sparse completion is in the exceptional Q component on checked prefixes,
+so a K-only renewal argument does not cover the observed hard cases.
+Combined phase-zero radii are exact through L66 (L65 by interpolation),
+phase one through L63; L96 brackets are [54,82] and [54,83]. Next:
+attack the precise all-r/all-N bound `7W_N(r)>=N-7bitlength(r)` with
+prefix-slack adversarial search, then an ordered OR-specific proof. The
+19 checked foundations do not prove this bound or complete period one.
+The draft branch `research/period2-stepping-stones` awaits cross-lineage
+audit and authenticated upload of48 new LFS objects. Those actual bytes are
+preserved in the portable proof bundle; fresh GitHub clones cannot yet
+replay new proofs from the pointers alone.
+B3 (LSD n=56) is optional bounded work. The older A1 → A2 → C2
 sequence is complete; the two former next items were B3 and T1 (see their rows).
 
 | # | Work | Kind | Cost | Blocks |

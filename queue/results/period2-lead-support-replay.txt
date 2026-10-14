@@ -1,0 +1,1 @@
+{"result": "PASS", "rows_replayed": 273, "self_test": {"cases": 192, "depth": 24, "independent_forward": "PASS", "reference_inversion": "PASS", "prefix_consistency": "PASS", "zero_control": "PASS", "rule90_finite_constant_zero_completion": "r=1, left=1 at depth1 only"}}

@@ -153,7 +153,10 @@ NESTED_ENV = "CODEX_WORKER_NESTED"
 # bitstreams are gitignored, so a worktree never has them. Naming them keeps
 # verify_all in strict mode, where any OTHER skip fails -- "SKIP is not PASS"
 # has to survive being run by a robot, or it only ever applied to humans.
-WORKTREE_ALLOW_SKIP = ("bitstream:*", "drat-toolchain")
+# Mathlib sources under formal/.lake are also gitignored. A parent build
+# does not supply them to an isolated worktree; the named Lean SKIP reports
+# that no formal verification occurred there, rather than fetching them.
+WORKTREE_ALLOW_SKIP = ("bitstream:*", "drat-toolchain", "lean")
 
 
 # --------------------------------------------------------------------------

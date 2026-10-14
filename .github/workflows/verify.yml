@@ -47,11 +47,14 @@ jobs:
       # The canonical bitstreams are gitignored and the SAT toolchain is not
       # built in this job, so those three stages cannot run here. Every other
       # stage must PASS.
+      # Lean is not installed in this job. The named skip checks nothing;
+      # formal/README.md records local build and axiom-audit acceptance.
       - name: verify_all
         run: |
           python tools/verify_all.py --verbose \
             --allow-skip 'bitstream:*' \
-            --allow-skip drat-toolchain
+            --allow-skip drat-toolchain \
+            --allow-skip lean
 
   drat:
     name: verify_all + DRAT toolchain
@@ -86,7 +89,10 @@ jobs:
       # Only the gitignored bitstreams may skip here. If `drat-toolchain`
       # skips in this job the build fails, which is correct: it would mean the
       # toolchain build silently produced nothing.
+      # Lean is not installed in this job. The named skip checks nothing;
+      # formal/README.md records local build and axiom-audit acceptance.
       - name: verify_all
         run: |
           python tools/verify_all.py --verbose \
-            --allow-skip 'bitstream:*'
+            --allow-skip 'bitstream:*' \
+            --allow-skip lean

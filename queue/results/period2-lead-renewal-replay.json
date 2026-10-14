@@ -1,0 +1,440 @@
+{
+  "source_ref": "44d11eebaab4e8486c195dee1e5c61a36860851f",
+  "purpose": "exact-exclusion and exact-certificate-replay; not statistical complexity",
+  "counting_before_sparse_replay": [
+    {
+      "weight_cap": 0,
+      "cone_bits": 2,
+      "class_size": 1,
+      "log2_class_size": 0.0,
+      "target_bits_after_time0": 2,
+      "purpose": "exact-exclusion",
+      "statistical_interpretation": "not complexity evidence; necessary left-only constraints allow free right bits"
+    },
+    {
+      "weight_cap": 1,
+      "cone_bits": 8,
+      "class_size": 9,
+      "log2_class_size": 3.169925001442312,
+      "target_bits_after_time0": 8,
+      "purpose": "exact-exclusion",
+      "statistical_interpretation": "not complexity evidence; necessary left-only constraints allow free right bits"
+    },
+    {
+      "weight_cap": 2,
+      "cone_bits": 18,
+      "class_size": 172,
+      "log2_class_size": 7.426264754702098,
+      "target_bits_after_time0": 18,
+      "purpose": "exact-exclusion",
+      "statistical_interpretation": "not complexity evidence; necessary left-only constraints allow free right bits"
+    },
+    {
+      "weight_cap": 3,
+      "cone_bits": 24,
+      "class_size": 2325,
+      "log2_class_size": 11.183015000882756,
+      "target_bits_after_time0": 24,
+      "purpose": "exact-exclusion",
+      "statistical_interpretation": "not complexity evidence; necessary left-only constraints allow free right bits"
+    },
+    {
+      "weight_cap": 4,
+      "cone_bits": 34,
+      "class_size": 52956,
+      "log2_class_size": 15.692506532697143,
+      "target_bits_after_time0": 34,
+      "purpose": "exact-exclusion",
+      "statistical_interpretation": "not complexity evidence; necessary left-only constraints allow free right bits"
+    },
+    {
+      "weight_cap": 5,
+      "cone_bits": 40,
+      "class_size": 760099,
+      "log2_class_size": 19.535827810765824,
+      "target_bits_after_time0": 40,
+      "purpose": "exact-exclusion",
+      "statistical_interpretation": "not complexity evidence; necessary left-only constraints allow free right bits"
+    }
+  ],
+  "fixed_weight_bounds": [
+    {
+      "rule": 30,
+      "weight_cap": 0,
+      "first_failure_bound": 0,
+      "initial_cone_bits": 2,
+      "surviving_prefix_counts": [
+        0
+      ],
+      "verified_bound": true,
+      "witness_surviving_bound_latches": null,
+      "sharp": true,
+      "scope": "Finite certificate at a fixed weight, unrestricted support width; no assertion that such a bound exists for every weight."
+    },
+    {
+      "rule": 30,
+      "weight_cap": 1,
+      "first_failure_bound": 3,
+      "initial_cone_bits": 8,
+      "surviving_prefix_counts": [
+        2,
+        1,
+        1,
+        0
+      ],
+      "verified_bound": true,
+      "witness_surviving_bound_latches": 1,
+      "sharp": true,
+      "scope": "Finite certificate at a fixed weight, unrestricted support width; no assertion that such a bound exists for every weight."
+    },
+    {
+      "rule": 30,
+      "weight_cap": 2,
+      "first_failure_bound": 8,
+      "initial_cone_bits": 18,
+      "surviving_prefix_counts": [
+        2,
+        4,
+        1,
+        2,
+        1,
+        1,
+        1,
+        1,
+        0
+      ],
+      "verified_bound": true,
+      "witness_surviving_bound_latches": 129,
+      "sharp": true,
+      "scope": "Finite certificate at a fixed weight, unrestricted support width; no assertion that such a bound exists for every weight."
+    },
+    {
+      "rule": 30,
+      "weight_cap": 3,
+      "first_failure_bound": 11,
+      "initial_cone_bits": 24,
+      "surviving_prefix_counts": [
+        2,
+        4,
+        7,
+        6,
+        3,
+        2,
+        3,
+        3,
+        3,
+        2,
+        1,
+        0
+      ],
+      "verified_bound": true,
+      "witness_surviving_bound_latches": 4225,
+      "sharp": true,
+      "scope": "Finite certificate at a fixed weight, unrestricted support width; no assertion that such a bound exists for every weight."
+    },
+    {
+      "rule": 30,
+      "weight_cap": 4,
+      "first_failure_bound": 16,
+      "initial_cone_bits": 34,
+      "surviving_prefix_counts": [
+        2,
+        4,
+        8,
+        13,
+        10,
+        11,
+        9,
+        6,
+        8,
+        9,
+        9,
+        6,
+        3,
+        3,
+        3,
+        2,
+        0
+      ],
+      "verified_bound": true,
+      "witness_surviving_bound_latches": 1065089,
+      "sharp": true,
+      "scope": "Finite certificate at a fixed weight, unrestricted support width; no assertion that such a bound exists for every weight."
+    },
+    {
+      "rule": 30,
+      "weight_cap": 5,
+      "first_failure_bound": 19,
+      "initial_cone_bits": 40,
+      "surviving_prefix_counts": [
+        2,
+        4,
+        8,
+        16,
+        26,
+        24,
+        20,
+        19,
+        16,
+        18,
+        21,
+        24,
+        14,
+        13,
+        10,
+        11,
+        9,
+        3,
+        1,
+        0
+      ],
+      "verified_bound": true,
+      "witness_surviving_bound_latches": 1075855489,
+      "sharp": true,
+      "scope": "Finite certificate at a fixed weight, unrestricted support width; no assertion that such a bound exists for every weight."
+    }
+  ],
+  "controls": {
+    "rule90_zero_left_survives_12": true,
+    "rule15_zero_left_survives_12": true,
+    "rule30_zero_left_fails_first_latch": true
+  },
+  "spatial_deletion_counterexamples": {
+    "weight2_lifetime": 8,
+    "weight5_lifetime": 19,
+    "weight3_deletion_lifetimes": [
+      2,
+      10
+    ]
+  },
+  "unrestricted_charge_counterexamples": [
+    {
+      "left": 4329177217,
+      "weight": 6,
+      "lifetime": 26,
+      "charge_at_2q": -4
+    },
+    {
+      "left": 1158551008470237313,
+      "weight": 9,
+      "lifetime": 40,
+      "charge_at_2q": -8
+    }
+  ],
+  "right_boundary_constraints": {
+    "experiment": "alternating-right-coherence",
+    "right_map": "R_b(n)=((n<<1)|b) XOR (n|(n>>1)); H=R_1(R_0(n))",
+    "local_truth_table": {
+      "five_bit_rows": 32,
+      "truth_table_map_mismatches": 0,
+      "nor_mismatches": 0,
+      "forced_chain_mismatches": 0,
+      "factor_graph_mismatches": false,
+      "zero_rank_mismatches": 0
+    },
+    "language": {
+      "allowed_counts": {
+        "2": 3,
+        "5": 12,
+        "6": 17
+      },
+      "forbidden": [
+        "11",
+        "00000",
+        "101001"
+      ],
+      "scope": "11 and 00000 have analytic local proofs.  The missing word 101001 shows that avoiding those two words is not an exact description of the right-boundary language."
+    },
+    "charge_counterexample": {
+      "boundary": "01010100110101101101010011",
+      "adjacent_one_positions_zero_based": [
+        8,
+        13,
+        16,
+        24
+      ],
+      "full_orbit_compatible": false
+    },
+    "rule30_centre_constraints": {
+      "even_0_to_odd_1": "left = 1 - right",
+      "odd_1_to_even_0": "left = 1"
+    },
+    "controls": {
+      "rule15": "Its alternating-centre condition is left=centre; the Rule-30 right recurrence does not apply.",
+      "rule90": "Its centre condition is left XOR right=next_centre; the Rule-30 right recurrence does not apply."
+    },
+    "claim_limit": "Finite exact truth tables and an incompatibility check only.  They do not prove a uniform cone-charge inequality."
+  },
+  "right_invariant": {
+    "width": 16,
+    "independent_truth_table_rows": 262144,
+    "kernel_size": 13526,
+    "strict_kernel_deletion_rounds": 59,
+    "trigger_low8_integers": [
+      167,
+      168,
+      170
+    ],
+    "trigger_nearest_cell_first": [
+      "11100101",
+      "00010101",
+      "01010101"
+    ],
+    "trigger_initial_states": 768,
+    "trigger_forward_closure_size": 1452,
+    "strict_forward_expansion_rounds": 19,
+    "universal_closure_edges": 5808,
+    "future_one_spacings_macrosteps": [
+      3,
+      5
+    ],
+    "finite_right_example_first_kernel_entries": {
+      "0": 147,
+      "1": 146,
+      "2": 0,
+      "3": 146,
+      "4": 145,
+      "17": 3,
+      "12345": 12
+    },
+    "scope": "Every actual right trajectory entering K stays in K and has future one spacings 3 or 5. The three low8 triggers suffice for entry regardless of the entire remaining right half. No claim that every finite right half enters K; no left-growth bound."
+  },
+  "right_entry": {
+    "width": 16,
+    "kernel_size": 13526,
+    "universal_entry_basin_size": 21457,
+    "maximum_entry_rank_macrosteps": 12,
+    "cyclic_nonentry_components": [
+      {
+        "states": 9,
+        "output_quotient_classes": 4,
+        "largest_quotient_outdegree": 1,
+        "deterministic_output_period_up_to_phase": "0001"
+      },
+      {
+        "states": 29,
+        "output_quotient_classes": 16,
+        "largest_quotient_outdegree": 1,
+        "deterministic_output_period_up_to_phase": "0000100001010001"
+      },
+      {
+        "states": 2445,
+        "output_quotient_classes": 2092,
+        "largest_quotient_outdegree": 3,
+        "deterministic_output_period_up_to_phase": null
+      }
+    ],
+    "singleton_selfloops": 0,
+    "shared_predecessor_exclusion_certificates": [
+      {
+        "base_component_size": 9,
+        "width": 22,
+        "vertices": 576,
+        "independent_truth_table_cones": 2304,
+        "retained_edges_including_multiplicity": 1536,
+        "longest_internal_path_edges": 9,
+        "maximum_consecutive_observations_in_component": 10
+      },
+      {
+        "base_component_size": 29,
+        "width": 18,
+        "vertices": 116,
+        "independent_truth_table_cones": 464,
+        "retained_edges_including_multiplicity": 368,
+        "longest_internal_path_edges": 15,
+        "maximum_consecutive_observations_in_component": 16
+      }
+    ],
+    "outside_core_dwell_budget": {
+      "condensation_vertices_outside_K_and_core": 49529,
+      "maximum_weighted_path_observations": 100,
+      "meaning": "An actual trajectory never entering K resides in the core forever from some macrotime at most 100. This does not bound K-entry time."
+    },
+    "exceptional_core_graph_loop_obstruction": {
+      "base": 4128,
+      "short_loop": [
+        4128,
+        19609,
+        4128
+      ],
+      "long_loop": [
+        4128,
+        52377,
+        36896,
+        3225,
+        45088,
+        60569,
+        30752,
+        38553,
+        7712,
+        29977,
+        62624,
+        12441,
+        20000,
+        7449,
+        64672,
+        2201,
+        58400,
+        17305,
+        16160,
+        25113,
+        53728,
+        19289,
+        3952,
+        64429,
+        7612,
+        32714,
+        32904,
+        25159,
+        36910,
+        3252,
+        12530,
+        20384,
+        6553,
+        25120,
+        53529,
+        18592,
+        1177,
+        4128
+      ],
+      "short_output": "01",
+      "long_output": "0101010101010101010101010001000010101",
+      "equal_length_distinct_output_blocks": 74,
+      "scope": "Projected graph only; shared exterior predecessors not supplied."
+    },
+    "scope": "Every actual finite or infinite right trajectory enters K or eventually stays in the 2445-state core. No all-finite-right entry theorem, no claim that the core is physically recurrent or admits aperiodic actual right traces, and no finite-left growth theorem."
+  },
+  "weighted_local_credit_obstruction": {
+    "exact_rows": 45,
+    "total_edge_multiplicity": 6110652545858014158278360985185689401228,
+    "demand": 42774567821006099107948526896299825808596,
+    "minimum_density_drift": 0,
+    "spatial_charge_proved": false,
+    "nonzero_density_drifts_count": 41
+  },
+  "seed32_bounded_membership": {
+    "macrosteps": 64,
+    "all_in_Q": true,
+    "all_outside_K": true,
+    "output": "0101010101010101010101010101010101010101010101010101010101010101",
+    "first14_low16_states": [
+      32,
+      153,
+      544,
+      2329,
+      8352,
+      39577,
+      10784,
+      10521,
+      8352,
+      39577,
+      10784,
+      43289,
+      41120,
+      39577
+    ],
+    "scope": "bounded physical forced-right prefix; no asymptotic assertion"
+  },
+  "reported_740_core": "not reproduced; source absent from fetched refs",
+  "scope": "Exact finite certificates and analytic implications. No support-growth theorem."
+}

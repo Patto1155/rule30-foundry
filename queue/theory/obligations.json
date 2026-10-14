@@ -107,6 +107,125 @@
         "base": 2,
         "n": 128
       }
+    },
+    {
+      "id": "p2-r2-right-alt-32",
+      "prize": "1",
+      "lemma": "For every k>=0, bit0(H^k(32))=k mod2.",
+      "implication": "This explicit physical boundary lemma could couple the period7 left ring to the alternating centre and prove its exact infinite completion.",
+      "refutation": "Run the exact predicate right-alt:32 on a physical forced completion/right orbit. One counterexample kills these universal quantifiers; finite passing checks do not prove them.",
+      "mechanism_check": {
+        "ensemble-not-orbit": "Same finite r supplies every H iterate; no free right boundary or statistical ensemble is substituted.",
+        "finite-exclusion-as-asymptotic": "Passed only 321 finite seeds to depth4096. Still an open obligation."
+      },
+      "status": "open",
+      "priority_rank_within_period2_candidates": 1,
+      "progress": "Generated after B slow seeds and C plateau witness rows; exact bounded kill tests survived. No universal proof or grade change. queue/theory/candidates.json.",
+      "proof_filters": {
+        "rule90_and_zero": "Paired Rule90 violates this statement at r=32; Rule30 mechanism must use the nonlinear OR inversion/NOR return. Alternating centre0 excludes the all-zero trace."
+      }
+    },
+    {
+      "id": "p2-r2-base32",
+      "prize": "1",
+      "lemma": "For every finite r,N>=1, W_N(r)>=W_N(32)-h.",
+      "implication": "A minimum-seed comparison would reduce universal growth to the slow periodic completion plus finite credit.",
+      "refutation": "Run the exact predicate base32 on a physical forced completion/right orbit. One counterexample kills these universal quantifiers; finite passing checks do not prove them.",
+      "mechanism_check": {
+        "ensemble-not-orbit": "Same finite r supplies every H iterate; no free right boundary or statistical ensemble is substituted.",
+        "finite-exclusion-as-asymptotic": "Passed only 321 finite seeds to depth4096. Still an open obligation."
+      },
+      "status": "open",
+      "priority_rank_within_period2_candidates": 2,
+      "progress": "Generated after B slow seeds and C plateau witness rows; exact bounded kill tests survived. No universal proof or grade change. queue/theory/candidates.json.",
+      "proof_filters": {
+        "rule90_and_zero": "Paired Rule90 violates this statement at r=0; Rule30 mechanism must use the nonlinear OR inversion/NOR return. Alternating centre0 excludes the all-zero trace."
+      }
+    },
+    {
+      "id": "p2-r2-exact7-32",
+      "prize": "1",
+      "lemma": "For every N>=1, e_j(32)=1 iff j=1 mod7 for1<=j<=N.",
+      "implication": "An exact seed-conditioned lemma, not a universal exclusion; needs a finite right grammar proof.",
+      "refutation": "Run the exact predicate exact7:32 on a physical forced completion/right orbit. One counterexample kills these universal quantifiers; finite passing checks do not prove them.",
+      "mechanism_check": {
+        "ensemble-not-orbit": "Same finite r supplies every H iterate; no free right boundary or statistical ensemble is substituted.",
+        "finite-exclusion-as-asymptotic": "Passed only 321 finite seeds to depth4096. Still an open obligation."
+      },
+      "status": "open",
+      "priority_rank_within_period2_candidates": 3,
+      "progress": "Generated after B slow seeds and C plateau witness rows; exact bounded kill tests survived. No universal proof or grade change. queue/theory/candidates.json.",
+      "proof_filters": {
+        "rule90_and_zero": "Paired Rule90 violates this statement at r=32; Rule30 mechanism must use the nonlinear OR inversion/NOR return. Alternating centre0 excludes the all-zero trace."
+      }
+    },
+    {
+      "id": "p2-r2-right-alt-96",
+      "prize": "1",
+      "lemma": "For every k>=0, bit0(H^k(96))=k mod2.",
+      "implication": "This explicit physical boundary lemma could couple the period7 left ring to the alternating centre and prove its exact infinite completion.",
+      "refutation": "Run the exact predicate right-alt:96 on a physical forced completion/right orbit. One counterexample kills these universal quantifiers; finite passing checks do not prove them.",
+      "mechanism_check": {
+        "ensemble-not-orbit": "Same finite r supplies every H iterate; no free right boundary or statistical ensemble is substituted.",
+        "finite-exclusion-as-asymptotic": "Passed only 321 finite seeds to depth4096. Still an open obligation."
+      },
+      "status": "open",
+      "priority_rank_within_period2_candidates": 4,
+      "progress": "Generated after B slow seeds and C plateau witness rows; exact bounded kill tests survived. No universal proof or grade change. queue/theory/candidates.json.",
+      "proof_filters": {
+        "rule90_and_zero": "Paired Rule90 violates this statement at r=96; Rule30 mechanism must use the nonlinear OR inversion/NOR return. Alternating centre0 excludes the all-zero trace."
+      }
+    },
+    {
+      "id": "p2-r2-right-alt-160",
+      "prize": "1",
+      "lemma": "For every k>=0, bit0(H^k(160))=k mod2.",
+      "implication": "This explicit physical boundary lemma could couple the period7 left ring to the alternating centre and prove its exact infinite completion.",
+      "refutation": "Run the exact predicate right-alt:160 on a physical forced completion/right orbit. One counterexample kills these universal quantifiers; finite passing checks do not prove them.",
+      "mechanism_check": {
+        "ensemble-not-orbit": "Same finite r supplies every H iterate; no free right boundary or statistical ensemble is substituted.",
+        "finite-exclusion-as-asymptotic": "Passed only 321 finite seeds to depth4096. Still an open obligation."
+      },
+      "status": "open",
+      "priority_rank_within_period2_candidates": 5,
+      "progress": "Generated after B slow seeds and C plateau witness rows; exact bounded kill tests survived. No universal proof or grade change. queue/theory/candidates.json.",
+      "proof_filters": {
+        "rule90_and_zero": "Paired Rule90 violates this statement at r=160; Rule30 mechanism must use the nonlinear OR inversion/NOR return. Alternating centre0 excludes the all-zero trace."
+      }
+    },
+    {
+      "id": "p2-r2-exact7-96",
+      "prize": "1",
+      "lemma": "For every N>=1, e_j(96)=1 iff j=1 mod7 for1<=j<=N.",
+      "implication": "An exact seed-conditioned lemma, not a universal exclusion; needs a finite right grammar proof.",
+      "refutation": "Run the exact predicate exact7:96 on a physical forced completion/right orbit. One counterexample kills these universal quantifiers; finite passing checks do not prove them.",
+      "mechanism_check": {
+        "ensemble-not-orbit": "Same finite r supplies every H iterate; no free right boundary or statistical ensemble is substituted.",
+        "finite-exclusion-as-asymptotic": "Passed only 321 finite seeds to depth4096. Still an open obligation."
+      },
+      "status": "open",
+      "priority_rank_within_period2_candidates": 6,
+      "progress": "Generated after B slow seeds and C plateau witness rows; exact bounded kill tests survived. No universal proof or grade change. queue/theory/candidates.json.",
+      "proof_filters": {
+        "rule90_and_zero": "Paired Rule90 violates this statement at r=96; Rule30 mechanism must use the nonlinear OR inversion/NOR return. Alternating centre0 excludes the all-zero trace."
+      }
+    },
+    {
+      "id": "p2-r2-exact7-160",
+      "prize": "1",
+      "lemma": "For every N>=1, e_j(160)=1 iff j=1 mod7 for1<=j<=N.",
+      "implication": "An exact seed-conditioned lemma, not a universal exclusion; needs a finite right grammar proof.",
+      "refutation": "Run the exact predicate exact7:160 on a physical forced completion/right orbit. One counterexample kills these universal quantifiers; finite passing checks do not prove them.",
+      "mechanism_check": {
+        "ensemble-not-orbit": "Same finite r supplies every H iterate; no free right boundary or statistical ensemble is substituted.",
+        "finite-exclusion-as-asymptotic": "Passed only 321 finite seeds to depth4096. Still an open obligation."
+      },
+      "status": "open",
+      "priority_rank_within_period2_candidates": 7,
+      "progress": "Generated after B slow seeds and C plateau witness rows; exact bounded kill tests survived. No universal proof or grade change. queue/theory/candidates.json.",
+      "proof_filters": {
+        "rule90_and_zero": "Paired Rule90 violates this statement at r=160; Rule30 mechanism must use the nonlinear OR inversion/NOR return. Alternating centre0 excludes the all-zero trace."
+      }
     }
   ]
 }

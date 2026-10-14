@@ -1,0 +1,1198 @@
+{
+  "schema": 1,
+  "label": "lemma discovery over finite rows; not a single-seed measurement",
+  "threshold_policy": "All constants are explicit prospective conjectures, not empirical fits. A killed pair does not refute existential alpha(r),C(r).",
+  "rounds": {
+    "1": {
+      "seeds": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10",
+        "11",
+        "12",
+        "13",
+        "14",
+        "15",
+        "16",
+        "17",
+        "18",
+        "19",
+        "20",
+        "21",
+        "22",
+        "23",
+        "24",
+        "25",
+        "26",
+        "27",
+        "28",
+        "29",
+        "30",
+        "31",
+        "32",
+        "33",
+        "34",
+        "35",
+        "36",
+        "37",
+        "38",
+        "39",
+        "40",
+        "41",
+        "42",
+        "43",
+        "44",
+        "45",
+        "46",
+        "47",
+        "48",
+        "49",
+        "50",
+        "51",
+        "52",
+        "53",
+        "54",
+        "55",
+        "56",
+        "57",
+        "58",
+        "59",
+        "60",
+        "61",
+        "62",
+        "63"
+      ],
+      "depth": 256
+    },
+    "2": {
+      "seeds": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10",
+        "11",
+        "12",
+        "13",
+        "14",
+        "15",
+        "16",
+        "17",
+        "18",
+        "19",
+        "20",
+        "21",
+        "22",
+        "23",
+        "24",
+        "25",
+        "26",
+        "27",
+        "28",
+        "29",
+        "30",
+        "31",
+        "32",
+        "33",
+        "34",
+        "35",
+        "36",
+        "37",
+        "38",
+        "39",
+        "40",
+        "41",
+        "42",
+        "43",
+        "44",
+        "45",
+        "46",
+        "47",
+        "48",
+        "49",
+        "50",
+        "51",
+        "52",
+        "53",
+        "54",
+        "55",
+        "56",
+        "57",
+        "58",
+        "59",
+        "60",
+        "61",
+        "62",
+        "63",
+        "64",
+        "74",
+        "77",
+        "82",
+        "96",
+        "117",
+        "128",
+        "160",
+        "176",
+        "192",
+        "224",
+        "288",
+        "416",
+        "463",
+        "530",
+        "544",
+        "594",
+        "672",
+        "731",
+        "850",
+        "946",
+        "1195",
+        "1548",
+        "1568",
+        "1696",
+        "1824",
+        "2377",
+        "4681",
+        "6276",
+        "7138",
+        "7632",
+        "9362",
+        "11466",
+        "15394",
+        "16900",
+        "23520",
+        "23586",
+        "25746",
+        "27536",
+        "28832",
+        "30432",
+        "30723",
+        "32268",
+        "32352",
+        "32690",
+        "32824",
+        "54075",
+        "62412",
+        "62461",
+        "63793",
+        "66557",
+        "81684",
+        "95199",
+        "104724",
+        "124219",
+        "126206",
+        "147281",
+        "202408",
+        "216232",
+        "227402",
+        "282161",
+        "293201",
+        "310274",
+        "326932",
+        "340170",
+        "401172",
+        "464130",
+        "483866",
+        "485652",
+        "489393",
+        "532746",
+        "580134",
+        "583162",
+        "600241",
+        "652465",
+        "699953",
+        "809137",
+        "821066",
+        "1024593",
+        "1045250",
+        "1247569",
+        "1276325",
+        "1725194",
+        "1931569",
+        "2050794",
+        "2082802",
+        "3306634",
+        "3547177",
+        "3607912",
+        "3772497",
+        "4809554",
+        "5059793",
+        "5995778",
+        "6333344",
+        "6403633",
+        "6460081",
+        "7382221",
+        "7539594",
+        "8228959",
+        "8947848",
+        "10558633",
+        "13327762",
+        "157813443",
+        "197099707",
+        "268471142",
+        "612371652",
+        "634925974",
+        "691425568",
+        "767648450",
+        "767648478",
+        "874054235",
+        "1047331267",
+        "1794557718",
+        "1887404222",
+        "1896965938",
+        "1929394481",
+        "1958801480",
+        "1972491231",
+        "2120332854",
+        "2124348764",
+        "2134341241",
+        "2134879902",
+        "2142702952",
+        "2143512112",
+        "2146477261",
+        "2147071461",
+        "2147153476",
+        "2147385620",
+        "2147422793",
+        "2147433506",
+        "2147478416",
+        "2147481603",
+        "2147483148",
+        "2147483570",
+        "2147483586",
+        "2152063048",
+        "3493715422",
+        "3867508811",
+        "4102241074",
+        "4939558317",
+        "5368828675",
+        "5858719752",
+        "7739617309",
+        "9130937981",
+        "9671369351",
+        "12080170131",
+        "17246979155",
+        "22480450531",
+        "31781331789",
+        "37086701741",
+        "37125484064",
+        "37260426309",
+        "43662177022",
+        "57104238973",
+        "153498215239",
+        "156783146073",
+        "211635663590",
+        "212511061257",
+        "246263572105",
+        "246264573832",
+        "246264924296",
+        "250761368875",
+        "261020462261",
+        "296693613832",
+        "425042379635",
+        "500782605126",
+        "525367543944",
+        "1174041817280",
+        "2084736639904",
+        "2371977502899",
+        "3614486372787",
+        "7406195236562",
+        "7942845739187",
+        "8421002598025",
+        "9494193960585",
+        "9691230967335",
+        "27352235659588",
+        "36697490417510",
+        "37766208029243",
+        "43490909744409",
+        "89361259444176",
+        "97654341855078",
+        "98946775021989",
+        "102616688570598",
+        "103822864673752",
+        "108115111176038",
+        "117999910022389",
+        "120067023211366",
+        "122923585467705",
+        "126507655221895",
+        "128203315796162",
+        "128642809315966",
+        "137988871207110",
+        "139624126608101",
+        "139954101793907",
+        "140050873111851",
+        "140688515146566",
+        "281473238969744",
+        "339557302029017",
+        "1065499801470331",
+        "1083188442064272",
+        "14864696775609275",
+        "15216024272388357",
+        "16368204459449172",
+        "22829614789992661",
+        "27075217509126644",
+        "15216363014992695845",
+        "17045226687634188549",
+        "17595526687052153095",
+        "17893112936196120791",
+        "18372728855366086521",
+        "18395146068769282906",
+        "18424476816074355933",
+        "18438541220942263187",
+        "18442173624028156269",
+        "18442447479563340285",
+        "18444495917817022213",
+        "18446195750981938900",
+        "18446403381714780940",
+        "18446533839470180773",
+        "18446613244689280243",
+        "18446661711975954386",
+        "18446726259806663993",
+        "18446729843876418183",
+        "18446731539536992450",
+        "18446731979030512254",
+        "18446741325092403398",
+        "18446742960347804389",
+        "18446743290322990195",
+        "18446743387094308139",
+        "18446743904365302828",
+        "18446744004055700777",
+        "18446744022170784697",
+        "18446744024736342854",
+        "18446744068319204245",
+        "18446744069417813970",
+        "18446744070943282211",
+        "18446744072648993984",
+        "18446744073356625686",
+        "18446744073491462449",
+        "18446744073520869448",
+        "18446744073682400822",
+        "18446744073686416732",
+        "18446744073696409209",
+        "18446744073696947870",
+        "18446744073704770920",
+        "18446744073705580080",
+        "18446744073708545229",
+        "18446744073709139429",
+        "18446744073709221444",
+        "18446744073709453588",
+        "18446744073709490761",
+        "18446744073709501474",
+        "18446744073709546384",
+        "18446744073709549571",
+        "18446744073709551116",
+        "18446744073709551538"
+      ],
+      "depth": 4096,
+      "motivation": "B minimum density1/7 at32,96,160 and C plateau witnesses with these right halves. Hypotheses selected after seeing those data."
+    }
+  },
+  "candidates": [
+    {
+      "id": "p2-r1-pair2",
+      "round": 1,
+      "field": "2-adic dynamics",
+      "predicate": "pair2",
+      "statement": "For every r=1 mod4 and N>=1, E_N(r)=E_N(r xor2).",
+      "unlocks": "A seed quotient could reduce the finite-right induction; equality alone does not imply growth.",
+      "status": "killed",
+      "filter": {
+        "Rule90": "Paired same-seed Rule90 replay. A Rule90 survivor is inadmissible until a separate OR-specific proof is supplied.",
+        "zero": "Target is exactly alternating from centre0; identically zero target/right seed is excluded. Constants depend on the finite right seed h; no random-IC conclusion.",
+        "OR_mechanism": "Sideways inversion uses a=c_next xor(c OR d) and physical H=R1 composed R0. Event candidates additionally charge the verified NOR reset; other candidates still require an OR-specific derivation."
+      },
+      "kill_test": "python experiments/period2_candidates.py --verify queue/theory/candidates.json; predicate pair2",
+      "counterexample": {
+        "right": "5",
+        "depth": 256,
+        "completion_hex": "0xf31a8fc53c81015ce9a29b19ee452d84b82541091b157015a009f074eed1b656",
+        "weight": 115,
+        "evidence": {
+          "other": 7
+        }
+      }
+    },
+    {
+      "id": "p2-r1-pair8",
+      "round": 1,
+      "field": "2-adic dynamics",
+      "predicate": "pair8",
+      "statement": "For every r=2 mod8 and N>=1, E_N(r)=E_N(r xor8).",
+      "unlocks": "Test a second OR-shielded seed quotient before generalizing it.",
+      "status": "killed",
+      "filter": {
+        "Rule90": "Paired same-seed Rule90 replay. A Rule90 survivor is inadmissible until a separate OR-specific proof is supplied.",
+        "zero": "Target is exactly alternating from centre0; identically zero target/right seed is excluded. Constants depend on the finite right seed h; no random-IC conclusion.",
+        "OR_mechanism": "Sideways inversion uses a=c_next xor(c OR d) and physical H=R1 composed R0. Event candidates additionally charge the verified NOR reset; other candidates still require an OR-specific derivation."
+      },
+      "kill_test": "python experiments/period2_candidates.py --verify queue/theory/candidates.json; predicate pair8",
+      "counterexample": {
+        "right": "18",
+        "depth": 256,
+        "completion_hex": "0x452d84b82541091b157015a009f074eed1b6553ccda166919acf0bea9b98c325",
+        "weight": 116,
+        "evidence": {
+          "other": 26
+        }
+      }
+    },
+    {
+      "id": "p2-r1-odd-base",
+      "round": 1,
+      "field": "2-adic dynamics",
+      "predicate": "odd-base",
+      "statement": "For every odd finite r and N>=1, W_N(r)>=W_N(1)-bitlength(r).",
+      "unlocks": "Transfers a separately proved base-seed bound to odd seeds.",
+      "status": "killed",
+      "filter": {
+        "Rule90": "Paired same-seed Rule90 replay. A Rule90 survivor is inadmissible until a separate OR-specific proof is supplied.",
+        "zero": "Target is exactly alternating from centre0; identically zero target/right seed is excluded. Constants depend on the finite right seed h; no random-IC conclusion.",
+        "OR_mechanism": "Sideways inversion uses a=c_next xor(c OR d) and physical H=R1 composed R0. Event candidates additionally charge the verified NOR reset; other candidates still require an OR-specific derivation."
+      },
+      "kill_test": "python experiments/period2_candidates.py --verify queue/theory/candidates.json; predicate odd-base",
+      "counterexample": {
+        "right": "9",
+        "depth": 256,
+        "completion_hex": "0x64c993264c993264c993264c993264c993264c993264c993264c993264c99326",
+        "weight": 110,
+        "evidence": {
+          "baseline": 115,
+          "credit": 4
+        }
+      }
+    },
+    {
+      "id": "p2-r1-truncate",
+      "round": 1,
+      "field": "2-adic dynamics",
+      "predicate": "truncate",
+      "statement": "For every finite r,N>=1, |W_N(r)-W_N(r mod2^max(1,floor(h/2)))|<=2h, h=bitlength(r).",
+      "unlocks": "Would support induction on seed width; requires a separate base-seed theorem.",
+      "status": "killed",
+      "filter": {
+        "Rule90": "Paired same-seed Rule90 replay. A Rule90 survivor is inadmissible until a separate OR-specific proof is supplied.",
+        "zero": "Target is exactly alternating from centre0; identically zero target/right seed is excluded. Constants depend on the finite right seed h; no random-IC conclusion.",
+        "OR_mechanism": "Sideways inversion uses a=c_next xor(c OR d) and physical H=R1 composed R0. Event candidates additionally charge the verified NOR reset; other candidates still require an OR-specific derivation."
+      },
+      "kill_test": "python experiments/period2_candidates.py --verify queue/theory/candidates.json; predicate truncate",
+      "counterexample": {
+        "right": "2",
+        "depth": 256,
+        "completion_hex": "0xbb817c690d190e323aa2e2eb7955f50f1980fc5feeab3d7bf29be1a085fd1625",
+        "weight": 135,
+        "evidence": {
+          "credit": 4
+        }
+      }
+    },
+    {
+      "id": "p2-r1-reset-charge",
+      "round": 1,
+      "field": "transfer operators and renewal theory",
+      "predicate": "reset-charge",
+      "statement": "For every finite r,N>=1, 2W_N(r)>=sum_{k<ceil(N/2)} bit0(H^k(r))-2h.",
+      "unlocks": "Verified NOR return forbids00000: this charging inequality would imply positive density after finite seed credit.",
+      "status": "survived",
+      "filter": {
+        "Rule90": "Paired same-seed Rule90 replay. A Rule90 survivor is inadmissible until a separate OR-specific proof is supplied.",
+        "zero": "Target is exactly alternating from centre0; identically zero target/right seed is excluded. Constants depend on the finite right seed h; no random-IC conclusion.",
+        "OR_mechanism": "Sideways inversion uses a=c_next xor(c OR d) and physical H=R1 composed R0. Event candidates additionally charge the verified NOR reset; other candidates still require an OR-specific derivation."
+      },
+      "kill_test": "python experiments/period2_candidates.py --verify queue/theory/candidates.json; predicate reset-charge",
+      "scope": {
+        "seed_count": 64,
+        "depth": 256,
+        "meaning": "Passed only these bounded kill tests; no universal claim established."
+      },
+      "rule90_replay": {
+        "counterexample_right": null,
+        "meaning": "Filter unresolved: survives Rule90 too; do not promote"
+      }
+    },
+    {
+      "id": "p2-r1-reset-window",
+      "round": 1,
+      "field": "transfer operators and renewal theory",
+      "predicate": "reset-window",
+      "statement": "For every finite r and k>=h, if bit0(H^k(r))=1, at least one of e_(2k+1)..e_(2k+8) is1.",
+      "unlocks": "Bounded-overlap ordered event charging would imply a density lower bound using the NOR forbidden word.",
+      "status": "killed",
+      "filter": {
+        "Rule90": "Paired same-seed Rule90 replay. A Rule90 survivor is inadmissible until a separate OR-specific proof is supplied.",
+        "zero": "Target is exactly alternating from centre0; identically zero target/right seed is excluded. Constants depend on the finite right seed h; no random-IC conclusion.",
+        "OR_mechanism": "Sideways inversion uses a=c_next xor(c OR d) and physical H=R1 composed R0. Event candidates additionally charge the verified NOR reset; other candidates still require an OR-specific derivation."
+      },
+      "kill_test": "python experiments/period2_candidates.py --verify queue/theory/candidates.json; predicate reset-window",
+      "counterexample": {
+        "right": "15",
+        "depth": 256,
+        "completion_hex": "0xc63bf8ab9e7e4a4620a04023d67e59f190950b4cedc9eb2e93df40b1efb17116",
+        "weight": 129,
+        "evidence": {
+          "bad_macrotime": 83
+        }
+      }
+    },
+    {
+      "id": "p2-r1-gap3",
+      "round": 1,
+      "field": "transfer operators and renewal theory",
+      "predicate": "gap3",
+      "statement": "For every finite r,N, W_N(r)>=number of consecutive right-output1 gaps3 in first ceil(N/2) macrotimes-h.",
+      "unlocks": "If physical entry plus enough gap3 events is proved, transfers event count to left weight.",
+      "status": "survived",
+      "filter": {
+        "Rule90": "Paired same-seed Rule90 replay. A Rule90 survivor is inadmissible until a separate OR-specific proof is supplied.",
+        "zero": "Target is exactly alternating from centre0; identically zero target/right seed is excluded. Constants depend on the finite right seed h; no random-IC conclusion.",
+        "OR_mechanism": "Sideways inversion uses a=c_next xor(c OR d) and physical H=R1 composed R0. Event candidates additionally charge the verified NOR reset; other candidates still require an OR-specific derivation."
+      },
+      "kill_test": "python experiments/period2_candidates.py --verify queue/theory/candidates.json; predicate gap3",
+      "scope": {
+        "seed_count": 64,
+        "depth": 256,
+        "meaning": "Passed only these bounded kill tests; no universal claim established."
+      },
+      "rule90_replay": {
+        "counterexample_right": null,
+        "meaning": "Filter unresolved: survives Rule90 too; do not promote"
+      }
+    },
+    {
+      "id": "p2-r1-gap5",
+      "round": 1,
+      "field": "transfer operators and renewal theory",
+      "predicate": "gap5",
+      "statement": "For every finite r,N, W_N(r)>=number of consecutive right-output1 gaps5 in first ceil(N/2) macrotimes-h.",
+      "unlocks": "A complementary charge route; physical entry and positive gap5 density are separate obligations.",
+      "status": "survived",
+      "filter": {
+        "Rule90": "Paired same-seed Rule90 replay. A Rule90 survivor is inadmissible until a separate OR-specific proof is supplied.",
+        "zero": "Target is exactly alternating from centre0; identically zero target/right seed is excluded. Constants depend on the finite right seed h; no random-IC conclusion.",
+        "OR_mechanism": "Sideways inversion uses a=c_next xor(c OR d) and physical H=R1 composed R0. Event candidates additionally charge the verified NOR reset; other candidates still require an OR-specific derivation."
+      },
+      "kill_test": "python experiments/period2_candidates.py --verify queue/theory/candidates.json; predicate gap5",
+      "scope": {
+        "seed_count": 64,
+        "depth": 256,
+        "meaning": "Passed only these bounded kill tests; no universal claim established."
+      },
+      "rule90_replay": {
+        "counterexample_right": null,
+        "meaning": "Filter unresolved: survives Rule90 too; do not promote"
+      }
+    },
+    {
+      "id": "p2-r1-zero-run-4",
+      "round": 1,
+      "field": "automata and regular languages",
+      "predicate": "zero-run:4",
+      "statement": "For every finite r, no 0000 occurs in e_j for j>=2h+1.",
+      "unlocks": "A language exclusion would give density at least1/4, conditional on a genuine OR-based proof.",
+      "status": "killed",
+      "filter": {
+        "Rule90": "Paired same-seed Rule90 replay. A Rule90 survivor is inadmissible until a separate OR-specific proof is supplied.",
+        "zero": "Target is exactly alternating from centre0; identically zero target/right seed is excluded. Constants depend on the finite right seed h; no random-IC conclusion.",
+        "OR_mechanism": "Sideways inversion uses a=c_next xor(c OR d) and physical H=R1 composed R0. Event candidates additionally charge the verified NOR reset; other candidates still require an OR-specific derivation."
+      },
+      "kill_test": "python experiments/period2_candidates.py --verify queue/theory/candidates.json; predicate zero-run:4",
+      "counterexample": {
+        "right": "0",
+        "depth": 256,
+        "completion_hex": "0xbea9b98c32525421f11ec05a198ae94691626465e58e48ea49f090f783ec141",
+        "weight": 114,
+        "evidence": {
+          "forbidden_length": 4,
+          "bad_depth": 2
+        }
+      }
+    },
+    {
+      "id": "p2-r1-zero-run-8",
+      "round": 1,
+      "field": "automata and regular languages",
+      "predicate": "zero-run:8",
+      "statement": "For every finite r, no 00000000 occurs in e_j for j>=2h+1.",
+      "unlocks": "A weaker bounded-gap language gives density at least1/8.",
+      "status": "killed",
+      "filter": {
+        "Rule90": "Paired same-seed Rule90 replay. A Rule90 survivor is inadmissible until a separate OR-specific proof is supplied.",
+        "zero": "Target is exactly alternating from centre0; identically zero target/right seed is excluded. Constants depend on the finite right seed h; no random-IC conclusion.",
+        "OR_mechanism": "Sideways inversion uses a=c_next xor(c OR d) and physical H=R1 composed R0. Event candidates additionally charge the verified NOR reset; other candidates still require an OR-specific derivation."
+      },
+      "kill_test": "python experiments/period2_candidates.py --verify queue/theory/candidates.json; predicate zero-run:8",
+      "counterexample": {
+        "right": "1",
+        "depth": 256,
+        "completion_hex": "0xf31a8fc53c81015ce9a29b19ee452d84b82541091b157015a009f074eed1b656",
+        "weight": 115,
+        "evidence": {
+          "forbidden_length": 8,
+          "bad_depth": 53
+        }
+      }
+    },
+    {
+      "id": "p2-r1-pair-cover",
+      "round": 1,
+      "field": "automata and regular languages",
+      "predicate": "pair-cover",
+      "statement": "For every finite r,j>=2h+1, e_j+e_(j+1)>=1.",
+      "unlocks": "Tests whether the period-one checkerboard language survives in any tail form.",
+      "status": "killed",
+      "filter": {
+        "Rule90": "Paired same-seed Rule90 replay. A Rule90 survivor is inadmissible until a separate OR-specific proof is supplied.",
+        "zero": "Target is exactly alternating from centre0; identically zero target/right seed is excluded. Constants depend on the finite right seed h; no random-IC conclusion.",
+        "OR_mechanism": "Sideways inversion uses a=c_next xor(c OR d) and physical H=R1 composed R0. Event candidates additionally charge the verified NOR reset; other candidates still require an OR-specific derivation."
+      },
+      "kill_test": "python experiments/period2_candidates.py --verify queue/theory/candidates.json; predicate pair-cover",
+      "counterexample": {
+        "right": "0",
+        "depth": 256,
+        "completion_hex": "0xbea9b98c32525421f11ec05a198ae94691626465e58e48ea49f090f783ec141",
+        "weight": 114,
+        "evidence": {
+          "bad_depth": 2
+        }
+      }
+    },
+    {
+      "id": "p2-r1-odd-cover",
+      "round": 1,
+      "field": "automata and regular languages",
+      "predicate": "odd-cover",
+      "statement": "For every finite r,j>=2h+1, e_j+e_(j+2)>=1.",
+      "unlocks": "Tests a parity-separated local cover, giving a density lower bound if proved.",
+      "status": "killed",
+      "filter": {
+        "Rule90": "Paired same-seed Rule90 replay. A Rule90 survivor is inadmissible until a separate OR-specific proof is supplied.",
+        "zero": "Target is exactly alternating from centre0; identically zero target/right seed is excluded. Constants depend on the finite right seed h; no random-IC conclusion.",
+        "OR_mechanism": "Sideways inversion uses a=c_next xor(c OR d) and physical H=R1 composed R0. Event candidates additionally charge the verified NOR reset; other candidates still require an OR-specific derivation."
+      },
+      "kill_test": "python experiments/period2_candidates.py --verify queue/theory/candidates.json; predicate odd-cover",
+      "counterexample": {
+        "right": "0",
+        "depth": 256,
+        "completion_hex": "0xbea9b98c32525421f11ec05a198ae94691626465e58e48ea49f090f783ec141",
+        "weight": 114,
+        "evidence": {
+          "bad_depth": 2
+        }
+      }
+    },
+    {
+      "id": "p2-r1-prefix-3",
+      "round": 1,
+      "field": "potential or charge functions",
+      "predicate": "prefix:3",
+      "statement": "For every finite r,N>=1, 3W_N(r)>=N-3h.",
+      "unlocks": "An explicit seed-credit positive drift; numerical constant is a hypothesis, not fitted evidence.",
+      "status": "killed",
+      "filter": {
+        "Rule90": "Paired same-seed Rule90 replay. A Rule90 survivor is inadmissible until a separate OR-specific proof is supplied.",
+        "zero": "Target is exactly alternating from centre0; identically zero target/right seed is excluded. Constants depend on the finite right seed h; no random-IC conclusion.",
+        "OR_mechanism": "Sideways inversion uses a=c_next xor(c OR d) and physical H=R1 composed R0. Event candidates additionally charge the verified NOR reset; other candidates still require an OR-specific derivation."
+      },
+      "kill_test": "python experiments/period2_candidates.py --verify queue/theory/candidates.json; predicate prefix:3",
+      "counterexample": {
+        "right": "0",
+        "depth": 256,
+        "completion_hex": "0xbea9b98c32525421f11ec05a198ae94691626465e58e48ea49f090f783ec141",
+        "weight": 114,
+        "evidence": {
+          "denominator": 3,
+          "bad_N": 4,
+          "credit": 0
+        }
+      }
+    },
+    {
+      "id": "p2-r1-prefix-4",
+      "round": 1,
+      "field": "potential or charge functions",
+      "predicate": "prefix:4",
+      "statement": "For every finite r,N>=1, 4W_N(r)>=N-4h.",
+      "unlocks": "Weaker positive drift; exact prefix counterexample kills this stated pair only.",
+      "status": "killed",
+      "filter": {
+        "Rule90": "Paired same-seed Rule90 replay. A Rule90 survivor is inadmissible until a separate OR-specific proof is supplied.",
+        "zero": "Target is exactly alternating from centre0; identically zero target/right seed is excluded. Constants depend on the finite right seed h; no random-IC conclusion.",
+        "OR_mechanism": "Sideways inversion uses a=c_next xor(c OR d) and physical H=R1 composed R0. Event candidates additionally charge the verified NOR reset; other candidates still require an OR-specific derivation."
+      },
+      "kill_test": "python experiments/period2_candidates.py --verify queue/theory/candidates.json; predicate prefix:4",
+      "counterexample": {
+        "right": "0",
+        "depth": 256,
+        "completion_hex": "0xbea9b98c32525421f11ec05a198ae94691626465e58e48ea49f090f783ec141",
+        "weight": 114,
+        "evidence": {
+          "denominator": 4,
+          "bad_N": 5,
+          "credit": 0
+        }
+      }
+    },
+    {
+      "id": "p2-r1-annulus",
+      "round": 1,
+      "field": "potential or charge functions",
+      "predicate": "annulus",
+      "statement": "For every finite r,N>=1, 8(W_(2N)(r)-W_N(r))>=N-8h.",
+      "unlocks": "Dyadic charges imply density by summing annuli; avoids the refuted width3 cut histogram potential.",
+      "status": "killed",
+      "filter": {
+        "Rule90": "Paired same-seed Rule90 replay. A Rule90 survivor is inadmissible until a separate OR-specific proof is supplied.",
+        "zero": "Target is exactly alternating from centre0; identically zero target/right seed is excluded. Constants depend on the finite right seed h; no random-IC conclusion.",
+        "OR_mechanism": "Sideways inversion uses a=c_next xor(c OR d) and physical H=R1 composed R0. Event candidates additionally charge the verified NOR reset; other candidates still require an OR-specific derivation."
+      },
+      "kill_test": "python experiments/period2_candidates.py --verify queue/theory/candidates.json; predicate annulus",
+      "counterexample": {
+        "right": "0",
+        "depth": 256,
+        "completion_hex": "0xbea9b98c32525421f11ec05a198ae94691626465e58e48ea49f090f783ec141",
+        "weight": 114,
+        "evidence": {
+          "bad_N": 1,
+          "credit": 0,
+          "denominator": 8
+        }
+      }
+    },
+    {
+      "id": "p2-r1-gap-credit",
+      "round": 1,
+      "field": "potential or charge functions",
+      "predicate": "gap-credit",
+      "statement": "For every finite r,j>=2h+1, the next2h+8 completion bits contain a1.",
+      "unlocks": "Seed-dependent bounded gaps imply alpha(r)>=1/(2h+8), with a separately proved OR mechanism.",
+      "status": "survived",
+      "filter": {
+        "Rule90": "Paired same-seed Rule90 replay. A Rule90 survivor is inadmissible until a separate OR-specific proof is supplied.",
+        "zero": "Target is exactly alternating from centre0; identically zero target/right seed is excluded. Constants depend on the finite right seed h; no random-IC conclusion.",
+        "OR_mechanism": "Sideways inversion uses a=c_next xor(c OR d) and physical H=R1 composed R0. Event candidates additionally charge the verified NOR reset; other candidates still require an OR-specific derivation."
+      },
+      "kill_test": "python experiments/period2_candidates.py --verify queue/theory/candidates.json; predicate gap-credit",
+      "scope": {
+        "seed_count": 64,
+        "depth": 256,
+        "meaning": "Passed only these bounded kill tests; no universal claim established."
+      },
+      "rule90_replay": {
+        "counterexample_right": null,
+        "meaning": "Filter unresolved: survives Rule90 too; do not promote"
+      }
+    },
+    {
+      "id": "p2-r1-coverage-3",
+      "round": 1,
+      "field": "symbolic dynamics and entropy",
+      "predicate": "coverage:3",
+      "statement": "For every finite r,N>=max(64,4h+16), the tail e_(2h+1)..e_N contains all eight binary length3 words.",
+      "unlocks": "A recurrent language target; coverage alone is not support growth, and no entropy theorem follows.",
+      "status": "killed",
+      "filter": {
+        "Rule90": "Paired same-seed Rule90 replay. A Rule90 survivor is inadmissible until a separate OR-specific proof is supplied.",
+        "zero": "Target is exactly alternating from centre0; identically zero target/right seed is excluded. Constants depend on the finite right seed h; no random-IC conclusion.",
+        "OR_mechanism": "Sideways inversion uses a=c_next xor(c OR d) and physical H=R1 composed R0. Event candidates additionally charge the verified NOR reset; other candidates still require an OR-specific derivation."
+      },
+      "kill_test": "python experiments/period2_candidates.py --verify queue/theory/candidates.json; predicate coverage:3",
+      "counterexample": {
+        "right": "9",
+        "depth": 256,
+        "completion_hex": "0x64c993264c993264c993264c993264c993264c993264c993264c993264c99326",
+        "weight": 110,
+        "evidence": {
+          "block_length": 3,
+          "distinct": 5,
+          "required": 8
+        }
+      }
+    },
+    {
+      "id": "p2-r1-coverage-4",
+      "round": 1,
+      "field": "symbolic dynamics and entropy",
+      "predicate": "coverage:4",
+      "statement": "For every finite r,N>=max(64,4h+16), the tail e_(2h+1)..e_N contains all sixteen binary length4 words.",
+      "unlocks": "Sharper recurrent language test, stronger than needed and independently falsifiable.",
+      "status": "killed",
+      "filter": {
+        "Rule90": "Paired same-seed Rule90 replay. A Rule90 survivor is inadmissible until a separate OR-specific proof is supplied.",
+        "zero": "Target is exactly alternating from centre0; identically zero target/right seed is excluded. Constants depend on the finite right seed h; no random-IC conclusion.",
+        "OR_mechanism": "Sideways inversion uses a=c_next xor(c OR d) and physical H=R1 composed R0. Event candidates additionally charge the verified NOR reset; other candidates still require an OR-specific derivation."
+      },
+      "kill_test": "python experiments/period2_candidates.py --verify queue/theory/candidates.json; predicate coverage:4",
+      "counterexample": {
+        "right": "9",
+        "depth": 256,
+        "completion_hex": "0x64c993264c993264c993264c993264c993264c993264c993264c993264c99326",
+        "weight": 110,
+        "evidence": {
+          "block_length": 4,
+          "distinct": 6,
+          "required": 16
+        }
+      }
+    },
+    {
+      "id": "p2-r1-period4",
+      "round": 1,
+      "field": "symbolic dynamics and entropy",
+      "predicate": "period4",
+      "statement": "For every finite r,j>=2h+1, the length32 completion block at j is not4-periodic.",
+      "unlocks": "A finite window sufficient for aperiodic completion, stronger than needed; bounded findings only.",
+      "status": "survived",
+      "filter": {
+        "Rule90": "Paired same-seed Rule90 replay. A Rule90 survivor is inadmissible until a separate OR-specific proof is supplied.",
+        "zero": "Target is exactly alternating from centre0; identically zero target/right seed is excluded. Constants depend on the finite right seed h; no random-IC conclusion.",
+        "OR_mechanism": "Sideways inversion uses a=c_next xor(c OR d) and physical H=R1 composed R0. Event candidates additionally charge the verified NOR reset; other candidates still require an OR-specific derivation."
+      },
+      "kill_test": "python experiments/period2_candidates.py --verify queue/theory/candidates.json; predicate period4",
+      "scope": {
+        "seed_count": 64,
+        "depth": 256,
+        "meaning": "Passed only these bounded kill tests; no universal claim established."
+      },
+      "rule90_replay": {
+        "counterexample_right": null,
+        "meaning": "Filter unresolved: survives Rule90 too; do not promote"
+      }
+    },
+    {
+      "id": "p2-r1-period8",
+      "round": 1,
+      "field": "symbolic dynamics and entropy",
+      "predicate": "period8",
+      "statement": "For every finite r,j>=2h+1, the length32 completion block at j is not8-periodic.",
+      "unlocks": "Tests a larger periodic sublanguage; it cannot justify positive entropy from finite data.",
+      "status": "survived",
+      "filter": {
+        "Rule90": "Paired same-seed Rule90 replay. A Rule90 survivor is inadmissible until a separate OR-specific proof is supplied.",
+        "zero": "Target is exactly alternating from centre0; identically zero target/right seed is excluded. Constants depend on the finite right seed h; no random-IC conclusion.",
+        "OR_mechanism": "Sideways inversion uses a=c_next xor(c OR d) and physical H=R1 composed R0. Event candidates additionally charge the verified NOR reset; other candidates still require an OR-specific derivation."
+      },
+      "kill_test": "python experiments/period2_candidates.py --verify queue/theory/candidates.json; predicate period8",
+      "scope": {
+        "seed_count": 64,
+        "depth": 256,
+        "meaning": "Passed only these bounded kill tests; no universal claim established."
+      },
+      "rule90_replay": {
+        "counterexample_right": null,
+        "meaning": "Filter unresolved: survives Rule90 too; do not promote"
+      }
+    },
+    {
+      "id": "p2-r2-prefix-6",
+      "round": 2,
+      "field": "data-conditioned recombination",
+      "predicate": "prefix:6",
+      "statement": "For every finite r,N>=1, 6W_N(r)>=N-6h.",
+      "unlocks": "Test how1/7 slow rows constrain any universal density.",
+      "status": "killed",
+      "filter": {
+        "Rule90": "Paired same-seed Rule90 replay. A Rule90 survivor is inadmissible until a separate OR-specific proof is supplied.",
+        "zero": "Target is exactly alternating from centre0; identically zero target/right seed is excluded. Constants depend on the finite right seed h; no random-IC conclusion.",
+        "OR_mechanism": "Sideways inversion uses a=c_next xor(c OR d) and physical H=R1 composed R0. Event candidates additionally charge the verified NOR reset; other candidates still require an OR-specific derivation."
+      },
+      "kill_test": "python experiments/period2_candidates.py --verify queue/theory/candidates.json; predicate prefix:6",
+      "counterexample": {
+        "right": "32",
+        "depth": 4096,
+        "completion_hex": "0x8102040810204081020408102040810204081020408102040810204081020408102040810204081020408102040810204081020408102040810204081020408102040810204081020408102040810204081020408102040810204081020408102040810204081020408102040810204081020408102040810204081020408102040810204081020408102040810204081020408102040810204081020408102040810204081020408102040810204081020408102040810204081020408102040810204081020408102040810204081020408102040810204081020408102040810204081020408102040810204081020408102040810204081020408102040810204081020408102040810204081020408102040810204081020408102040810204081020408102040810204081020408102040810204081020408102040810204081020408102040810204081020408102040810204081020408102040810204081020408102040810204081020408102040810204081020408102040810204081020408102040810204081020408102040810204081020408102040810204081020408102040810204081020408102040810204081020408102040810204081020408102040810204081020408102040810204081020408102040810204081020408102040810204081020408102040810204081020408102040810204081",
+        "weight": 586,
+        "evidence": {
+          "denominator": 6,
+          "bad_N": 259,
+          "credit": 6
+        }
+      }
+    },
+    {
+      "id": "p2-r2-prefix-7",
+      "round": 2,
+      "field": "data-conditioned recombination",
+      "predicate": "prefix:7",
+      "statement": "For every finite r,N>=1, 7W_N(r)>=N-7h.",
+      "unlocks": "A candidate sharp uniform slope with seed-width credit; much stronger than existential seed-specific density.",
+      "status": "survived",
+      "filter": {
+        "Rule90": "Paired same-seed Rule90 replay. A Rule90 survivor is inadmissible until a separate OR-specific proof is supplied.",
+        "zero": "Target is exactly alternating from centre0; identically zero target/right seed is excluded. Constants depend on the finite right seed h; no random-IC conclusion.",
+        "OR_mechanism": "Sideways inversion uses a=c_next xor(c OR d) and physical H=R1 composed R0. Event candidates additionally charge the verified NOR reset; other candidates still require an OR-specific derivation."
+      },
+      "kill_test": "python experiments/period2_candidates.py --verify queue/theory/candidates.json; predicate prefix:7",
+      "scope": {
+        "seed_count": 321,
+        "depth": 4096,
+        "meaning": "Passed only these bounded kill tests; no universal claim established."
+      },
+      "rule90_replay": {
+        "counterexample_right": null,
+        "meaning": "Filter unresolved: survives Rule90 too; do not promote"
+      }
+    },
+    {
+      "id": "p2-r2-density7nocredit",
+      "round": 2,
+      "field": "data-conditioned recombination",
+      "predicate": "density7nocredit",
+      "statement": "For every finite r,N>=1, W_N(r)>=ceil(N/7).",
+      "unlocks": "Kill the tempting extrapolation of the exact minimum checkpoint curve without initial credit.",
+      "status": "killed",
+      "filter": {
+        "Rule90": "Paired same-seed Rule90 replay. A Rule90 survivor is inadmissible until a separate OR-specific proof is supplied.",
+        "zero": "Target is exactly alternating from centre0; identically zero target/right seed is excluded. Constants depend on the finite right seed h; no random-IC conclusion.",
+        "OR_mechanism": "Sideways inversion uses a=c_next xor(c OR d) and physical H=R1 composed R0. Event candidates additionally charge the verified NOR reset; other candidates still require an OR-specific derivation."
+      },
+      "kill_test": "python experiments/period2_candidates.py --verify queue/theory/candidates.json; predicate density7nocredit",
+      "counterexample": {
+        "right": "1",
+        "depth": 4096,
+        "completion_hex": "0x2213c6c64905ebb76a71dbd5d4ec9d4f1727c5fe010553438cc99a8d2bcf3324e48068fc5a97500afcb66176d0ae3a33a806425e6db3d3e356a32624c536ffc72062bd3f58a3196452478cfc961dc39f405d819aa760caf334e8a1f6b0348559333e78e7fef58bc49c577a65a9c330309ac76bc4b3fb8a68f11b84631e06aecf3247b81f7348633b162ee53ecd97f81244a474fa1db58b86f2cde7d2147a59b432be91b14c425959a551605a8ce3af3430b9451fa8428c6851404ad11860ed8fc6fb176322444d8d444b213d33c30da7837a7c5556d0097b0f1073595cce0a500b6cdc470ef5955523b169ea8d040b5abfd78b8040cd91707e0de5f9266df050ef687bfb1214c143ce519aa1948acf6c367e072cfa3ba513700586b11a6232dbaa6ec2ff0c1717fa10ca6c0fd26cd71349b1cd4b0bb2e14f5e0938fb4c2e3ed10f6fc2c74824773649337cc6a1243101ee2d6d1d2970947a8bb85ddf9e2cb7fa786fc68718189f85bc2c54ab8ab66a50741319a8b57905e59b37525243ec704962d9e0b4bd68d752b8d170fcbd991c8e532a7781927935053acae22633fb8c9f2eae1762318d95b54e27f0b27ea7936a5b6506f84ba1cde48ce0621779cb458c3aee83d1124cd43f92ff15edc97d2e3badf17dc24a098d15c48a27ee53824ea5f31a8fc53c81015ce9a29b19ee452d84b82541091b157015a009f074eed1b656",
+        "weight": 2013,
+        "evidence": {
+          "bad_N": 1,
+          "credit": 0
+        }
+      }
+    },
+    {
+      "id": "p2-r2-alias32",
+      "round": 2,
+      "field": "data-conditioned recombination",
+      "predicate": "alias32",
+      "statement": "For every finite r=32 mod64,N>=1, E_N(r)=E_N(32).",
+      "unlocks": "Test whether the observed slow seeds form a complete residue cylinder.",
+      "status": "killed",
+      "filter": {
+        "Rule90": "Paired same-seed Rule90 replay. A Rule90 survivor is inadmissible until a separate OR-specific proof is supplied.",
+        "zero": "Target is exactly alternating from centre0; identically zero target/right seed is excluded. Constants depend on the finite right seed h; no random-IC conclusion.",
+        "OR_mechanism": "Sideways inversion uses a=c_next xor(c OR d) and physical H=R1 composed R0. Event candidates additionally charge the verified NOR reset; other candidates still require an OR-specific derivation."
+      },
+      "kill_test": "python experiments/period2_candidates.py --verify queue/theory/candidates.json; predicate alias32",
+      "counterexample": {
+        "right": "224",
+        "depth": 4096,
+        "completion_hex": "0x6f73ab58bea3839feec00814e7d0149617632c6a7e62de4b29b98dc9336d89fc731f3476667c869e1ed59d6c46106da5cd060a153bd81de85a4ea04ad555950c8d595224a0e2210d4c3833a6ec17bf75b2d82eaa7043de60a7d9d17c83b4395c2ee9605d1d975decb5f78fc720e60bc329e10e2b9b533138c7792a82a89d444bbdd80401b15779469f2cc61c2f1959d1dc15b9e0cf95898101f5d302ef0b3d2cd1bba4b999d01b2c39d9379df6a1de8fef8694b59e1cf7c8c570b181bea7576b0ac957db9036b85d49db1b5b4d504cbedfcf7305b3fd9f08a6277c7e6dbd7f03559dde5aee1786065f7e27b255c38ea6bd55d2852379da0ca05719e0c228355bfd6494031580ee9853f27408bffa9b2141c491c3d59c446923938995e01b9bb479991ffc0bc988ac93afdb3b321029860067d35552a98a9ed2fe32f5f76fec4417388ba80ce2ae4c9598b3d2e78aa10e2c4d0e6583bee00406713b75989639666307dc85bbbdbee561a2dcfc2997fe6367c2c017665fdf17e8bb37a27fb8f410084e357e7a6e019fc9b059aca325c80a1243f9628cc2f4111e8bab3c99250c062d2a093a4acb27101cf80307e2b83393d7d42d4c5c9ee58cf2dac2ec0216949e3d69f24211b7ce02613699f816a65b1beca1e48a0a9e0d4096e879562d0a49d5c254806cc0e06d38e4aac6b358c8a09b45ef8ec2f7c2bbde1b865e2a45fe7c81",
+        "weight": 2032,
+        "evidence": {
+          "baseline_right": 32,
+          "required_residue": 32,
+          "modulus": 64
+        }
+      }
+    },
+    {
+      "id": "p2-r2-base32",
+      "round": 2,
+      "field": "data-conditioned recombination",
+      "predicate": "base32",
+      "statement": "For every finite r,N>=1, W_N(r)>=W_N(32)-h.",
+      "unlocks": "A minimum-seed comparison would reduce universal growth to the slow periodic completion plus finite credit.",
+      "status": "survived",
+      "filter": {
+        "Rule90": "Paired same-seed Rule90 replay. A Rule90 survivor is inadmissible until a separate OR-specific proof is supplied.",
+        "zero": "Target is exactly alternating from centre0; identically zero target/right seed is excluded. Constants depend on the finite right seed h; no random-IC conclusion.",
+        "OR_mechanism": "Sideways inversion uses a=c_next xor(c OR d) and physical H=R1 composed R0. Event candidates additionally charge the verified NOR reset; other candidates still require an OR-specific derivation."
+      },
+      "kill_test": "python experiments/period2_candidates.py --verify queue/theory/candidates.json; predicate base32",
+      "scope": {
+        "seed_count": 321,
+        "depth": 4096,
+        "meaning": "Passed only these bounded kill tests; no universal claim established."
+      },
+      "rule90_replay": {
+        "counterexample_right": "0",
+        "meaning": "Distinct finite control response"
+      }
+    },
+    {
+      "id": "p2-r2-zero-run-7",
+      "round": 2,
+      "field": "data-conditioned recombination",
+      "predicate": "zero-run:7",
+      "statement": "For every finite r, no0000000 occurs after depth2h.",
+      "unlocks": "Test a stronger bounded-gap explanation of the observed1/7 density.",
+      "status": "killed",
+      "filter": {
+        "Rule90": "Paired same-seed Rule90 replay. A Rule90 survivor is inadmissible until a separate OR-specific proof is supplied.",
+        "zero": "Target is exactly alternating from centre0; identically zero target/right seed is excluded. Constants depend on the finite right seed h; no random-IC conclusion.",
+        "OR_mechanism": "Sideways inversion uses a=c_next xor(c OR d) and physical H=R1 composed R0. Event candidates additionally charge the verified NOR reset; other candidates still require an OR-specific derivation."
+      },
+      "kill_test": "python experiments/period2_candidates.py --verify queue/theory/candidates.json; predicate zero-run:7",
+      "counterexample": {
+        "right": "0",
+        "depth": 4096,
+        "completion_hex": "0xca66fafa2895c6bbc7beeb638f8336308e7b4eda48963e272f45f1f8ac30c0a219ffa9b4ea8d8931b9d7c8d7531c87e6a0019161760b8b7e3c7e7ccf98badb4e7fcab670f2cc0419514df9b457eefdee24ef25eacd802b0bd9b2a5babfe295040be17216db0f2c23398d87cf1f00c009eafbac220b6847b2e406997d37fc779bd198725bbd9fcbde411a18b82f3b848a23190f71360e9dfb0b037b8a5971060fd1dc6608f991055f1553a4f1f9a71c0fd2859536a94b2fa965494753e97f75f6fae08d7d1194f5f62220c8c3e6fd2ecdfd87b955578928dd2d3fc0e8f02131892bb039909ad055567dd3c5b1f89920f1db572849003053bfb7f5a38517af09521ba986e08a50254c2165ea8063282d74bcdc90af6c871640e49601e407c80b06b1774adbf48d3b6a4031749b67af8d3d9ebef6209dd1a62d5a4672e0f91cb7889c1c274e2914d0c1440bc2fac8cfe5261a757538a8e4596b287234385c82bb716976fc4e5ff3384ec27962c731d7b164d93e5ea9d5689615ec0d51514b74d233cb05c9e2b41f8d51df6509c2b606432140b10e005173d896682a1117e6ddf9ed1aa13bccbf3055d62116d20cdb168bacec189772287ef5a32f7fcc8d739d96026a1c4b888a2f54b8676e637433b51c86aed3c34a2a45f654232ccda166919acf0bea9b98c32525421f11ec05a198ae94691626465e58e48ea49f090f783ec141",
+        "weight": 2028,
+        "evidence": {
+          "forbidden_length": 7,
+          "bad_depth": 164
+        }
+      }
+    },
+    {
+      "id": "p2-r2-exact7-32",
+      "round": 2,
+      "field": "data-conditioned recombination",
+      "predicate": "exact7:32",
+      "statement": "For every N>=1, e_j(32)=1 iff j=1 mod7 for1<=j<=N.",
+      "unlocks": "An exact seed-conditioned lemma, not a universal exclusion; needs a finite right grammar proof.",
+      "status": "survived",
+      "filter": {
+        "Rule90": "Paired same-seed Rule90 replay. A Rule90 survivor is inadmissible until a separate OR-specific proof is supplied.",
+        "zero": "Target is exactly alternating from centre0; identically zero target/right seed is excluded. Constants depend on the finite right seed h; no random-IC conclusion.",
+        "OR_mechanism": "Sideways inversion uses a=c_next xor(c OR d) and physical H=R1 composed R0. Event candidates additionally charge the verified NOR reset; other candidates still require an OR-specific derivation."
+      },
+      "kill_test": "python experiments/period2_candidates.py --verify queue/theory/candidates.json; predicate exact7:32",
+      "scope": {
+        "seed_count": 321,
+        "depth": 4096,
+        "meaning": "Passed only these bounded kill tests; no universal claim established."
+      },
+      "rule90_replay": {
+        "counterexample_right": "32",
+        "meaning": "Distinct finite control response"
+      }
+    },
+    {
+      "id": "p2-r2-right-alt-32",
+      "round": 2,
+      "field": "data-conditioned recombination",
+      "predicate": "right-alt:32",
+      "statement": "For every k>=0, bit0(H^k(32))=k mod2.",
+      "unlocks": "This explicit physical boundary lemma could couple the period7 left ring to the alternating centre and prove its exact infinite completion.",
+      "status": "survived",
+      "filter": {
+        "Rule90": "Paired same-seed Rule90 replay. A Rule90 survivor is inadmissible until a separate OR-specific proof is supplied.",
+        "zero": "Target is exactly alternating from centre0; identically zero target/right seed is excluded. Constants depend on the finite right seed h; no random-IC conclusion.",
+        "OR_mechanism": "Sideways inversion uses a=c_next xor(c OR d) and physical H=R1 composed R0. Event candidates additionally charge the verified NOR reset; other candidates still require an OR-specific derivation."
+      },
+      "kill_test": "python experiments/period2_candidates.py --verify queue/theory/candidates.json; predicate right-alt:32",
+      "scope": {
+        "seed_count": 321,
+        "depth": 4096,
+        "meaning": "Passed only these bounded kill tests; no universal claim established."
+      },
+      "rule90_replay": {
+        "counterexample_right": "32",
+        "meaning": "Distinct finite control response"
+      }
+    },
+    {
+      "id": "p2-r2-exact7-96",
+      "round": 2,
+      "field": "data-conditioned recombination",
+      "predicate": "exact7:96",
+      "statement": "For every N>=1, e_j(96)=1 iff j=1 mod7 for1<=j<=N.",
+      "unlocks": "An exact seed-conditioned lemma, not a universal exclusion; needs a finite right grammar proof.",
+      "status": "survived",
+      "filter": {
+        "Rule90": "Paired same-seed Rule90 replay. A Rule90 survivor is inadmissible until a separate OR-specific proof is supplied.",
+        "zero": "Target is exactly alternating from centre0; identically zero target/right seed is excluded. Constants depend on the finite right seed h; no random-IC conclusion.",
+        "OR_mechanism": "Sideways inversion uses a=c_next xor(c OR d) and physical H=R1 composed R0. Event candidates additionally charge the verified NOR reset; other candidates still require an OR-specific derivation."
+      },
+      "kill_test": "python experiments/period2_candidates.py --verify queue/theory/candidates.json; predicate exact7:96",
+      "scope": {
+        "seed_count": 321,
+        "depth": 4096,
+        "meaning": "Passed only these bounded kill tests; no universal claim established."
+      },
+      "rule90_replay": {
+        "counterexample_right": "96",
+        "meaning": "Distinct finite control response"
+      }
+    },
+    {
+      "id": "p2-r2-right-alt-96",
+      "round": 2,
+      "field": "data-conditioned recombination",
+      "predicate": "right-alt:96",
+      "statement": "For every k>=0, bit0(H^k(96))=k mod2.",
+      "unlocks": "This explicit physical boundary lemma could couple the period7 left ring to the alternating centre and prove its exact infinite completion.",
+      "status": "survived",
+      "filter": {
+        "Rule90": "Paired same-seed Rule90 replay. A Rule90 survivor is inadmissible until a separate OR-specific proof is supplied.",
+        "zero": "Target is exactly alternating from centre0; identically zero target/right seed is excluded. Constants depend on the finite right seed h; no random-IC conclusion.",
+        "OR_mechanism": "Sideways inversion uses a=c_next xor(c OR d) and physical H=R1 composed R0. Event candidates additionally charge the verified NOR reset; other candidates still require an OR-specific derivation."
+      },
+      "kill_test": "python experiments/period2_candidates.py --verify queue/theory/candidates.json; predicate right-alt:96",
+      "scope": {
+        "seed_count": 321,
+        "depth": 4096,
+        "meaning": "Passed only these bounded kill tests; no universal claim established."
+      },
+      "rule90_replay": {
+        "counterexample_right": "96",
+        "meaning": "Distinct finite control response"
+      }
+    },
+    {
+      "id": "p2-r2-exact7-160",
+      "round": 2,
+      "field": "data-conditioned recombination",
+      "predicate": "exact7:160",
+      "statement": "For every N>=1, e_j(160)=1 iff j=1 mod7 for1<=j<=N.",
+      "unlocks": "An exact seed-conditioned lemma, not a universal exclusion; needs a finite right grammar proof.",
+      "status": "survived",
+      "filter": {
+        "Rule90": "Paired same-seed Rule90 replay. A Rule90 survivor is inadmissible until a separate OR-specific proof is supplied.",
+        "zero": "Target is exactly alternating from centre0; identically zero target/right seed is excluded. Constants depend on the finite right seed h; no random-IC conclusion.",
+        "OR_mechanism": "Sideways inversion uses a=c_next xor(c OR d) and physical H=R1 composed R0. Event candidates additionally charge the verified NOR reset; other candidates still require an OR-specific derivation."
+      },
+      "kill_test": "python experiments/period2_candidates.py --verify queue/theory/candidates.json; predicate exact7:160",
+      "scope": {
+        "seed_count": 321,
+        "depth": 4096,
+        "meaning": "Passed only these bounded kill tests; no universal claim established."
+      },
+      "rule90_replay": {
+        "counterexample_right": "160",
+        "meaning": "Distinct finite control response"
+      }
+    },
+    {
+      "id": "p2-r2-right-alt-160",
+      "round": 2,
+      "field": "data-conditioned recombination",
+      "predicate": "right-alt:160",
+      "statement": "For every k>=0, bit0(H^k(160))=k mod2.",
+      "unlocks": "This explicit physical boundary lemma could couple the period7 left ring to the alternating centre and prove its exact infinite completion.",
+      "status": "survived",
+      "filter": {
+        "Rule90": "Paired same-seed Rule90 replay. A Rule90 survivor is inadmissible until a separate OR-specific proof is supplied.",
+        "zero": "Target is exactly alternating from centre0; identically zero target/right seed is excluded. Constants depend on the finite right seed h; no random-IC conclusion.",
+        "OR_mechanism": "Sideways inversion uses a=c_next xor(c OR d) and physical H=R1 composed R0. Event candidates additionally charge the verified NOR reset; other candidates still require an OR-specific derivation."
+      },
+      "kill_test": "python experiments/period2_candidates.py --verify queue/theory/candidates.json; predicate right-alt:160",
+      "scope": {
+        "seed_count": 321,
+        "depth": 4096,
+        "meaning": "Passed only these bounded kill tests; no universal claim established."
+      },
+      "rule90_replay": {
+        "counterexample_right": "160",
+        "meaning": "Distinct finite control response"
+      }
+    }
+  ],
+  "not_run": [
+    "infinite completion proof",
+    "positive entropy proof",
+    "recurrence or automaton fitting/no-fit search",
+    "outside-family audit"
+  ]
+}
