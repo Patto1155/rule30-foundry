@@ -8,8 +8,9 @@ the single prize seed or evidence about randomness/complexity.
 
 ## Exact scope and independent checks
 
-The centre is fixed to c(t)=t mod 2. The free bits are physical **right**
+The centre is fixed to c(t)=t mod 2. The free bits represent the **right**
 column u(s)=x(1,2s), chronological, with ceil(N/2) independent variables.
+They are not required to come from a physical Rule 30 right trajectory.
 Odd right-column bits can be zero representatives because the first OR latch
 erases them. Column j is x(-j,t); its length is N-j+1. The SAT gates encode
 
