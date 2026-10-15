@@ -18,7 +18,7 @@ and string literals cannot create fake declarations. Unsupported declaration
 names or namespaces fail closed. It rejects `sorry` warnings and `sorryAx`, and
 allows only `propext`, `Classical.choice`, and `Quot.sound`.
 
-Acceptance checked **47 declarations**: 41 in `Basic.lean`, six in
+Acceptance checked **50 declarations**: 44 in `Basic.lean`, six in
 `ColumnReduction.lean`. `checked-axioms.txt` contains the actual generated audit
 and version; rerun the verifier to check the current sources. Ten focused Python
 verifier tests passed. The integrated build uses Agent A's column module.
@@ -33,6 +33,7 @@ verifier tests passed. The integrated build uses Agent A's column module.
 | `constant_one_complete`, `leftOne_not_finite`, `finite_not_constant_one` | Entire constant-one fibre and its exclusion for finite rows (Condrey Theorem 3) |
 | `zeroLeft_update`, `zeroClass_centre`, `zeroClass_step`, `zeroClass_trace`, `zeroCompletion_class`, `zeroCompletion_trace` | Constant-zero construction when the first positive one is at `m`; the invariant class moves to `max 1 (m-1)` (Condrey Theorem 2 existence) |
 | `constant_zero_complete`, `zero_evolve`, `constant_zero_empty_right` | Completeness: the explicit left completion is forced; an empty nonnegative right half forces the zero row (Theorem 2) |
+| `step_nonzero`, `evolve_nonzero`, `finite_nonzero_not_eventually_constant` | Finite nonzero evolution and exclusion of both eventual constant phases at every onset (Condrey Corollary 5) |
 | `first_right_one`, `zeroClass_not_finite`, `finite_nonzero_not_constant_zero` | Constant-zero exclusion for finite **nonzero** rows, retaining the zero-row control |
 | `ring7_step0`–`ring7_step3`, `ring7_boundary` | Four-step seven-cell ring orbit and boundary bits |
 | `ringIndex7_left`, `ringIndex7_right`, `lift_step` | Ring-to-infinite-periodic lift with index `(-position) mod 7`; increasing ring indices point physically left. The lift commutes with the standard Rule 30 step |
@@ -44,10 +45,8 @@ excludes eventual period two. The ring lift is spatially periodic and does not
 supply a finite physical right half. Triangular uniqueness concerns the complete
 trace; a separate finite-prefix/light-cone theorem is not asserted here.
 
-The constant-fibre constructions and completeness are now checked. Extending
-the constant-trace exclusions to arbitrary eventual onsets still requires a
-finite-nonzero evolution lemma. Sharp prefix horizons and Condrey Corollary 5
-are not formalized. The no-`00000` constraint is not formalized in Lean.
+The constant-fibre constructions, completeness, and eventual-constant exclusion
+are checked. Sharp prefix horizons are not formalized. The no-`00000` constraint is not formalized in Lean.
 
 Rule 90 filter: the fibre constructions use the OR explicitly; triangular
 uniqueness, finiteness, and time shifts alone are infrastructure. Zero filter:
@@ -62,5 +61,5 @@ This acceptance run used the normal toolchain path without that shim.
 
 Not run by the formalization worker: full repository suite, SAT/DRAT, GPU,
 external lineage audit, period-two exclusion, physical-boundary/support-growth
-proof, eventual-constant extension, or sharp-horizon formalization. The lead
+proof, sharp-horizon formalization. The lead
 owns full integration validation.

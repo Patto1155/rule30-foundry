@@ -446,6 +446,57 @@ theorem finite_nonzero_not_constant_zero {x : Configuration}
     obtain ⟨i, hi⟩ := hn
     simp [heq] at hi
 
+/-- Finite nonzero rows cannot disappear in one step. -/
+theorem step_nonzero {x : Configuration} (hf : Finite x) (hn : Nonzero x) :
+    Nonzero (step x) := by
+  apply Classical.byContradiction
+  intro hzero
+  have hs : ∀ i : Int, step x i = false := by
+    intro i
+    cases hi : step x i with
+    | false => rfl
+    | true => exact False.elim (hzero ⟨i, hi⟩)
+  obtain ⟨R, hR⟩ := hf
+  have strip : ∀ n : Nat, ∀ i : Int, (R : Int)+1-(n : Int) ≤ i → x i = false := by
+    intro n
+    induction n with
+    | zero =>
+      intro i hi
+      exact hR i (by right; omega)
+    | succ n ih =>
+      intro i hi
+      by_cases hinner : (R : Int)+1-(n : Int) ≤ i
+      · exact ih i hinner
+      · have h1 := ih (i+1) (by omega)
+        have h2 := ih ((i+1)+1) (by omega)
+        have hstep := hs (i+1)
+        have hl : (i+1)-1 = i := by omega
+        simpa [step, hl, localRule, h1, h2] using hstep
+  obtain ⟨i, hi⟩ := hn
+  have hx := strip (R+1+i.natAbs) i (by omega)
+  simp [hx] at hi
+
+theorem evolve_nonzero {x : Configuration} (hf : Finite x) (hn : Nonzero x)
+    (t : Nat) : Nonzero (evolve x t) := by
+  induction t with
+  | zero => exact hn
+  | succ t ih => exact step_nonzero (evolve_finite hf t) ih
+
+/-- Condrey Corollary 5: neither eventual constant phase is possible for a
+finite nonzero row; the all-zero row is intentionally excluded. -/
+theorem finite_nonzero_not_eventually_constant {x : Configuration}
+    (hf : Finite x) (hn : Nonzero x) :
+    ¬ ∃ T : Nat, ∃ phase : Bool, ∀ n : Nat, trace x (T+n) = phase := by
+  intro ⟨T, phase, hc⟩
+  have hshift : ∀ n : Nat, trace (evolve x T) n = phase := by
+    intro n
+    rw [trace_shift]
+    exact hc n
+  cases phase with
+  | false =>
+    exact finite_nonzero_not_constant_zero (evolve_finite hf T) (evolve_nonzero hf hn T) hshift
+  | true => exact finite_not_constant_one (evolve_finite hf T) hshift
+
 /-- A finite-ring control, not a bridge to any finite physical right half. -/
 def ringStep7 (x : Fin 7 → Bool) (i : Fin 7) : Bool :=
   localRule (x (i+1)) (x i) (x (i-1))

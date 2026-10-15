@@ -12,7 +12,9 @@ Generated all-source axiom audit (final invocation):
 'Rule30.constant_zero_empty_right' depends on axioms: [propext, Quot.sound]
 'Rule30.evolve_add' depends on axioms: [propext]
 'Rule30.evolve_finite' depends on axioms: [propext, Quot.sound]
+'Rule30.evolve_nonzero' depends on axioms: [propext, Classical.choice, Quot.sound]
 'Rule30.finite_nonzero_not_constant_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Rule30.finite_nonzero_not_eventually_constant' depends on axioms: [propext, Classical.choice, Quot.sound]
 'Rule30.finite_not_constant_one' depends on axioms: [propext, Classical.choice, Quot.sound]
 'Rule30.first_right_one' depends on axioms: [propext, Quot.sound]
 'Rule30.leftOne_constant_trace' depends on axioms: [propext, Classical.choice, Quot.sound]
@@ -36,6 +38,7 @@ Generated all-source axiom audit (final invocation):
 'Rule30.ringIndex7_left' depends on axioms: [propext, Quot.sound]
 'Rule30.ringIndex7_right' depends on axioms: [propext, Quot.sound]
 'Rule30.step_finite' depends on axioms: [propext, Quot.sound]
+'Rule30.step_nonzero' depends on axioms: [propext, Classical.choice, Quot.sound]
 'Rule30.temporal_phase_slip' depends on axioms: [propext]
 'Rule30.trace_shift' depends on axioms: [propext]
 'Rule30.triangular_uniqueness' depends on axioms: [propext, Quot.sound]
@@ -48,4 +51,4 @@ Generated all-source axiom audit (final invocation):
 'Rule30.zeroLeft_update' depends on axioms: [propext, Classical.choice, Quot.sound]
 'Rule30.zero_evolve' depends on axioms: [propext, Quot.sound]
 'Rule30.zero_latch' does not depend on any axioms
-Lean: 47 theorem declarations built and axiom-audited
+Lean: 50 theorem declarations built and axiom-audited
