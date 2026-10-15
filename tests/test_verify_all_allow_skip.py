@@ -74,20 +74,24 @@ class TestSkipPermitted(unittest.TestCase):
 
 
 class TestLeanInputs(unittest.TestCase):
-    def test_installed_lean_does_not_trigger_network_fetch_for_missing_mathlib(self):
+    def test_installed_lean_runs_core_only_project_without_mathlib(self):
         with tempfile.TemporaryDirectory() as directory:
             root = pathlib.Path(directory)
             with patch.object(verify_all, 'REPO_ROOT', root), patch.object(
                     verify_all.shutil, 'which', return_value='/bin/true'):
                 stage = next(s for s in verify_all.build_stages() if s.name == 'lean')
-                self.assertIn('Mathlib sources absent', stage.skip_reason)
+                self.assertIsNone(stage.skip_reason)
+
+    def test_missing_lean_requires_explicit_skip_permission(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = pathlib.Path(directory)
+            with patch.object(verify_all, 'REPO_ROOT', root), patch.object(
+                    verify_all.shutil, 'which', return_value=None), patch.object(
+                    pathlib.Path, 'home', return_value=root):
+                stage = next(s for s in verify_all.build_stages() if s.name == 'lean')
+                self.assertIn('Lean toolchain absent', stage.skip_reason)
                 self.assertFalse(skip_permitted('lean', ('bitstream:*',)))
                 self.assertTrue(skip_permitted('lean', ('lean',)))
-                mathlib = root / 'formal/.lake/packages/mathlib/lakefile.lean'
-                mathlib.parent.mkdir(parents=True)
-                mathlib.write_text('-- available source input\n')
-                stage = next(s for s in verify_all.build_stages() if s.name == 'lean')
-                self.assertIsNone(stage.skip_reason)
 
 
 class TestWorkflowAllowlist(unittest.TestCase):
