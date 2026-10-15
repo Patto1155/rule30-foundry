@@ -103,6 +103,7 @@ def verify(ref):
     assert (physical & ((1 << 190) - 1)).bit_count() == 26
     u = '01' * 45 + '000101'
     assert allowed(u, 'L3')
+    assert u.find('0101000101') == 86
     relaxed = ref.completion_from_u(tuple(map(int, u)), 192)
     killed = first_transient(relaxed, 192)
     assert killed['zeros'] == 15 and killed['next_one'] == 192
@@ -122,7 +123,15 @@ def verify(ref):
     return {'physical': {'right_hex': hex(r), 'N': 190, 'W': 26, 'deficit': 8,
                          'transient': actual, 'forward_simulation': 'PASS'},
             'L3_counterexample': {'physically_forbidden_factor': '0101000101', 'u': u, 'N': 191, 'W': 26, 'deficit': 9,
-                                  'transient': killed, 'physical_realisability': 'unknown'},
+                                  'transient': killed, 'physical_realisability': 'impossible: C-certified forbidden factor',
+                                  'physical_exclusion_provenance': {
+                                      'factor': '0101000101', 'zero_based_offset': 86,
+                                      'source': 'runs/p2-u-language-2026-10-15/language.json',
+                                      'cnf': 'runs/p2-u-language-2026-10-15/factor-0101000101-rule30.cnf',
+                                      'drat': 'runs/p2-u-language-2026-10-15/factor-0101000101-rule30.drat',
+                                      'checker_log': 'runs/p2-u-language-2026-10-15/factor-0101000101-rule30.checker.log',
+                                      'scope': 'Rule30 alternating-centre local physical cone',
+                                      'replay': 'C certificate; not replayed by this script'}},
             'conditional_exact7': {'time_modulus': 4, 'columns_minus1_through7': cols,
                                    'returned_adjacent_pair': True},
             'controls': {'rule90_pair_return': False, 'rule30_zero_completion': 0,

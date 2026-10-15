@@ -103,8 +103,8 @@ all-`m` identity.
 ## Exhaustive scope and reproduction
 
 `runs/p2-transient-2026-10-15/results.json` contains every per-`m` maximum
-and censor count for `m=1,…,48`, all **12-bit tails**, and languages free,
-L1,L2,L3,L4. Membership is checked on the entire concatenation, including
+and global accepted-word and censor counts for `m=1,…,48`, all **12-bit
+tails**, and languages free, L1, L2, L3, L4. Membership is checked on the entire concatenation, including
 junction factors. The statistic is the first gap between successive ones
 that differs from seven; unobserved endpoints are explicitly censored.
 The largest **uncensored** zero runs in this family are respectively

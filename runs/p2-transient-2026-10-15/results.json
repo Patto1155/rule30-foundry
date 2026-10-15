@@ -30,7 +30,17 @@
         "zeros": 15,
         "censored": false
       },
-      "physical_realisability": "unknown"
+      "physical_realisability": "impossible: C-certified forbidden factor",
+      "physical_exclusion_provenance": {
+        "factor": "0101000101",
+        "zero_based_offset": 86,
+        "source": "runs/p2-u-language-2026-10-15/language.json",
+        "cnf": "runs/p2-u-language-2026-10-15/factor-0101000101-rule30.cnf",
+        "drat": "runs/p2-u-language-2026-10-15/factor-0101000101-rule30.drat",
+        "checker_log": "runs/p2-u-language-2026-10-15/factor-0101000101-rule30.checker.log",
+        "scope": "Rule30 alternating-centre local physical cone",
+        "replay": "C certificate; not replayed by this script"
+      }
     },
     "conditional_exact7": {
       "time_modulus": 4,
