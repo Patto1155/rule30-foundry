@@ -82,3 +82,14 @@ new certificate depends on LFS. The source push explicitly skipped LFS
 upload after the failed attempt, without inventing objects or marking the
 missing proofs as available. The review PR must remain draft pending the
 inherited delivery and a different-model-family audit.
+
+
+## CI checkout correction
+
+The first remote run38685763009 passed dependencies, SAT build and Lean,
+but failed worker-isolation tests when their nested worktrees attempted to
+smudge the known missing inherited LFS objects and received server404s.
+The workflow now exports `GIT_LFS_SKIP_SMUDGE=1` to Git subprocesses,
+matching the explicitly supported source-only checkout mode. This does not
+claim old proof availability or bypass any new certificate replay, checksum,
+DRAT self-test or Lean check. The missing48-object delivery blocker remains.
