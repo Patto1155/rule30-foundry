@@ -57,3 +57,28 @@ bounded potential, infinite physical seed32/96/160 exact7, Lean no00000,
 sharp horizons, unavailable inherited LFS proof replay, GPU/46M data, or
 cross-lineage audit. Publication and final verification outcomes are
 recorded below only after those operations complete.
+
+
+## Lead verification and delivery
+
+The final serialized command `python tools/verify_all.py --verbose
+--allow-skip bitstream:center_col_46M.bin` exited0:
+**11 passed,1 skipped (0 unexpected),0 failed**. It ran793 tests with6
+skips and no failures; the50-declaration Lean stage passed. Raw output,
+selected actual skip details, failed baseline evidence, component replays
+and the LFS failure are in `runs/p2-integration-2026-10-15`.
+
+The sole skipped stage is the absent gitignored46M stream. Unit skips are
+three46M bit-order subcases, two autocorrelation CuPy/cuFFT paths and one
+damage-velocity GPU path. They checked no unavailable data or hardware.
+The lead replayed71 free DRAT proofs and195 language/checkpoint proofs,
+all436 factor witnesses, and all7 physical records (3 UNKNOWN), including
+the genuine one-seed K0 DRAT control. Unknowns are not exclusions.
+
+GitHub API access recovered after the api.github.com environment-network
+addition was saved; PR50 was then confirmed OPEN. The source branch was
+pushed. The required LFS push failed for48 inherited missing objects; no
+new certificate depends on LFS. The source push explicitly skipped LFS
+upload after the failed attempt, without inventing objects or marking the
+missing proofs as available. The review PR must remain draft pending the
+inherited delivery and a different-model-family audit.

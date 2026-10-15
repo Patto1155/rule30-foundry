@@ -1,0 +1,17 @@
+{
+  "local_proofs_verified": 12,
+  "realized_factor_witnesses": 436,
+  "ladder_proofs_verified": 182,
+  "L1_N79_min10_verified": true,
+  "L4_queries_verified": [
+    {
+      "N": 191,
+      "status": "UNKNOWN"
+    },
+    {
+      "N": 300,
+      "status": "UNKNOWN"
+    }
+  ],
+  "scope": "exact factor sets only through length12; no all-length language claim"
+}

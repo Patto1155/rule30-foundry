@@ -37,8 +37,10 @@ Neither the conditional alternating-input ring return nor the finite-tail
 uncensored maximum14 supplies that theorem.
 
 The branch `research/period2-column-ladder` is based on the unmerged
-`research/period2-stepping-stones` tip. Final serialized validation and remote
-delivery are being completed. The inherited 48 LFS objects remain a separate
+`research/period2-stepping-stones` tip. Final serialized validation passed11 stages, skipped the absent46M stage,
+and failed0;793 tests ran with6 GPU/46M skips. Raw evidence is in
+`runs/p2-integration-2026-10-15/verification.json`. Source is pushed; the
+review PR remains draft for audit and inherited proof delivery. The inherited 48 LFS objects remain a separate
 base-branch delivery limitation; this session does not claim replay of absent
 proof bytes. Different-model-family audit is still required before merge.
 B3 (LSD n=56) is optional bounded work. The older A1 → A2 → C2

@@ -1,0 +1,14 @@
+test_lsb_decode_matches_oeis (tests.test_bitorder.CanonicalBitstreamTest.test_lsb_decode_matches_oeis) ... 
+  test_lsb_decode_matches_oeis (tests.test_bitorder.CanonicalBitstreamTest.test_lsb_decode_matches_oeis) (path='center_col_46M.bin') ... skipped 'data/center_col_46M.bin absent (not tracked in git; regenerate with gpu/rule30_sim.py)'
+test_msb_decode_is_exactly_the_per_byte_reversal (tests.test_bitorder.CanonicalBitstreamTest.test_msb_decode_is_exactly_the_per_byte_reversal) ... 
+  test_msb_decode_is_exactly_the_per_byte_reversal (tests.test_bitorder.CanonicalBitstreamTest.test_msb_decode_is_exactly_the_per_byte_reversal) (path='center_col_46M.bin') ... skipped 'data/center_col_46M.bin absent (not tracked in git; regenerate with gpu/rule30_sim.py)'
+test_the_two_decodes_disagree_on_about_half_the_positions (tests.test_bitorder.CanonicalBitstreamTest.test_the_two_decodes_disagree_on_about_half_the_positions) ... 
+  test_the_two_decodes_disagree_on_about_half_the_positions (tests.test_bitorder.CanonicalBitstreamTest.test_the_two_decodes_disagree_on_about_half_the_positions) (path='center_col_46M.bin') ... skipped 'data/center_col_46M.bin absent (not tracked in git; regenerate with gpu/rule30_sim.py)'
+test_gpu_path_skips_when_cupy_absent (tests.test_autocorrelation.GPUDispatchTest.test_gpu_path_skips_when_cupy_absent) ... skipped 'no cupy installed'
+test_gpu_result_agrees_with_cpu (tests.test_autocorrelation.GPUDispatchTest.test_gpu_result_agrees_with_cpu) ... skipped 'requires cupy/cuFFT for the GPU FFT path'
+test_gpu_path_agrees_with_cpu (tests.test_damage_velocity.MeasureGpuPathTest.test_gpu_path_agrees_with_cpu) ... skipped 'no GPU (cupy) available; CPU path already covered'
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.042s
+
+OK (skipped=6)

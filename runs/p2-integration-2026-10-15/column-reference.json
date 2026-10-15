@@ -1,0 +1,21 @@
+{
+  "result": "PASS",
+  "checkpoint_weights_witness_only": {
+    "free_N81": 9,
+    "L1_N79": 10
+  },
+  "physical": {
+    "right": "0x98f9d8a0",
+    "N": 190,
+    "W": 26,
+    "deficit": 8
+  },
+  "odd_erasure_random_rows": 200,
+  "random_horizon": 80,
+  "no11_no00000_right_integers": 65536,
+  "constraint_time_scope": [
+    0,
+    80
+  ],
+  "minimum_claims": "none; witnesses alone do not prove minima"
+}
