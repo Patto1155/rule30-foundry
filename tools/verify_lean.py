@@ -18,7 +18,7 @@ def lake_path():
 
 
 def audit_axioms(output, claimed):
-    audited = set(re.findall(r"'Rule30\.(\w+)' (?:depends on axioms:|does not depend on any axioms)", output))
+    audited = set(re.findall(r"'Rule30\.([^']+)' (?:depends on axioms:|does not depend on any axioms)", output))
     errors = []
     if claimed != audited:
         errors.append(f'Incomplete axiom audit: missing={claimed-audited}, extra={audited-claimed}')
@@ -27,6 +27,78 @@ def audit_axioms(output, claimed):
         if not dependencies <= STANDARD:
             errors.append(f'Rejected nonstandard axioms: {dependencies - STANDARD}')
     return errors
+
+
+def strip_lean_comments(source):
+    """Blank comments and string literals, preserving positions and newlines."""
+    out = list(source)
+    i, depth, string = 0, 0, False
+    while i < len(source):
+        if depth:
+            if source.startswith('/-', i):
+                out[i:i+2] = '  '; depth += 1; i += 2; continue
+            if source.startswith('-/', i):
+                out[i:i+2] = '  '; depth -= 1; i += 2; continue
+        elif string:
+            if source[i] == '\\':
+                out[i] = ' '
+                i += 1
+                if i < len(source) and source[i] != '\n':
+                    out[i] = ' '
+                i += 1; continue
+            if source[i] == '"':
+                string = False
+        elif source.startswith('--', i):
+            stop = source.find('\n', i)
+            if stop < 0: stop = len(source)
+            out[i:stop] = ' ' * (stop-i)
+            i = stop; continue
+        elif source.startswith('/-', i):
+            out[i:i+2] = '  '; depth = 1; i += 2; continue
+        elif source[i] == '"':
+            string = True
+        else:
+            i += 1; continue
+        if source[i] != '\n': out[i] = ' '
+        i += 1
+    if depth or string:
+        raise ValueError('Unterminated Lean comment or string')
+    return ''.join(out)
+
+
+def source_theorems(source):
+    """Collect declarations in every namespace; unsupported syntax fails closed."""
+    clean = strip_lean_comments(source)
+    commands = re.compile(
+        r'(?m)^\s*(namespace|section|end)\b([^\n]*)|\b(theorem|lemma)\s+([^\s:(]+)')
+    scopes, names = [], set()
+    identifier = re.compile(r"[A-Za-z_\u0080-\uffff][\w'.]*(?:\.[\w']+)*\Z")
+    for match in commands.finditer(clean):
+        command, rest, declaration, name = match.groups()
+        if command:
+            argument = rest.strip().split()
+            if command == 'end':
+                if scopes: scopes.pop()
+            else:
+                namespace = argument[0] if command == 'namespace' and argument else ''
+                if namespace and not identifier.fullmatch(namespace):
+                    raise ValueError(f'Unsupported namespace: {namespace}')
+                scopes.append(namespace)
+        else:
+            if '«' in name or '»' in name or not identifier.fullmatch(name):
+                raise ValueError(f'Unsupported theorem name: {name}')
+            prefix = '.'.join(scope for scope in scopes if scope)
+            qualified = f'{prefix}.{name}' if prefix else name
+            if qualified.startswith('_root_.'): qualified = qualified[7:]
+            if not qualified.startswith('Rule30.'):
+                raise ValueError(f'Theorem outside audited Rule30 namespace: {qualified}')
+            names.add(qualified.removeprefix('Rule30.'))
+    return names
+
+
+def lean_sources(formal):
+    return sorted(path for path in formal.rglob('*.lean')
+                  if '.lake' not in path.relative_to(formal).parts)
 
 
 def main():
@@ -45,20 +117,35 @@ def main():
                         '-o', str(shim), '-ldl'], check=True)
         env['LD_PRELOAD'] = str(shim) + (os.pathsep + env['LD_PRELOAD'] if env.get('LD_PRELOAD') else '')
         print('Lean: using /proc/self/exe compatibility shim (tools/lean_proc_path.c)')
-    for command in ([lake, 'build'], [lake, 'env', 'lean', 'Rule30/Basic.lean']):
-        p = subprocess.run(command, cwd=ROOT / 'formal', env=env,
-                           text=True, capture_output=True)
-        print(p.stdout, end='')
-        print(p.stderr, end='', file=sys.stderr)
-        if p.returncode:
-            return p.returncode
-        # Lean reports "declaration uses 'sorry'" on stdout, not stderr.
-        if 'sorryAx' in p.stdout or 'sorry' in p.stdout + p.stderr:
-            print('Rejected: admitted proof dependency or warning', file=sys.stderr)
-            return 1
-    # Modifiers must not hide a theorem from the audit; an unprinted one fails closed.
-    claimed = set(re.findall(r'^(?:(?:private|protected|noncomputable)\s+)*(?:theorem|lemma)\s+(\w+)',
-        (ROOT / 'formal/Rule30/Basic.lean').read_text(), re.MULTILINE))
+    formal = ROOT / 'formal'
+    sources = lean_sources(formal)
+    claimed = set()
+    for source in sources:
+        claimed.update(source_theorems(source.read_text()))
+    if not claimed:
+        print('Rejected: no theorem declarations found', file=sys.stderr)
+        return 1
+    commands = [[lake, 'build']] + [
+        [lake, 'env', 'lean', str(source.relative_to(formal))] for source in sources]
+    # Generate the audit independently of handwritten #print statements. Import
+    # every source module, so a new file cannot silently escape the audit.
+    with tempfile.TemporaryDirectory(prefix='rule30-lean-audit-') as temporary:
+        audit = Path(temporary) / 'Audit.lean'
+        modules = ['.'.join(source.relative_to(formal).with_suffix('').parts)
+                   for source in sources]
+        audit.write_text(''.join(f'import {module}\n' for module in modules) +
+                         ''.join(f'#print axioms Rule30.{name}\n' for name in sorted(claimed)))
+        commands.append([lake, 'env', 'lean', str(audit)])
+        for command in commands:
+            p = subprocess.run(command, cwd=formal, env=env,
+                               text=True, capture_output=True)
+            print(p.stdout, end='')
+            print(p.stderr, end='', file=sys.stderr)
+            if p.returncode:
+                return p.returncode
+            if 'sorryAx' in p.stdout or 'sorry' in p.stdout + p.stderr:
+                print('Rejected: admitted proof dependency or warning', file=sys.stderr)
+                return 1
     errors = audit_axioms(p.stdout, claimed)
     if errors:
         for error in errors:
