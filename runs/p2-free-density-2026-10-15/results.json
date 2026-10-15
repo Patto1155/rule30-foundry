@@ -1,0 +1,1476 @@
+{
+  "purpose": "exact-exclusion",
+  "asymptotic_density_status": "undecided",
+  "reference_sha256": "8b2d5b2ad8e96c622a0449c8f3ed4921aef6782c210faa74954184d446ff3503",
+  "tools": {
+    "/workspace/rule30-foundry/third_party/cadical": "38a7ed800bfc59206664fa3dc78ab704fa985b1de9ecfb317e4332235bfbe2ff",
+    "/workspace/rule30-foundry/third_party/drat-trim": "e790fe0b5dc86eb94dda718a195dd1a6904b8268b89dd719b95f22372bec0dcf"
+  },
+  "rows": [
+    {
+      "N": 4,
+      "free_input_bits": 2,
+      "class_size": "2^2",
+      "counting_scope": "exact-exclusion only; no complexity or randomness inference",
+      "queries": [
+        {
+          "bound": 0,
+          "status": "UNSAT",
+          "seconds": 0.007696553000073436,
+          "cnf": "runs/p2-free-density-2026-10-15/N0004_k0000.cnf",
+          "cnf_sha256": "3a8acfebe148308f687be8445af68374a064dc9ef93f90076f0fb591a02f473e",
+          "proof": "runs/p2-free-density-2026-10-15/N0004_k0000.drat",
+          "proof_sha256": "bbedfe6eeb2dfe06ff06ceea14eab0101d258deebfa6b5d3ecec2f46e5cf9037",
+          "drat_verified": true
+        }
+      ],
+      "best_witness": {
+        "u": "01",
+        "completion_hex": "0x1",
+        "weight": 1
+      },
+      "lower_bound": 1,
+      "upper_bound": 1,
+      "exact": true,
+      "density_interval": [
+        0.25,
+        0.25
+      ]
+    },
+    {
+      "N": 8,
+      "free_input_bits": 4,
+      "class_size": "2^4",
+      "counting_scope": "exact-exclusion only; no complexity or randomness inference",
+      "queries": [
+        {
+          "bound": 0,
+          "status": "UNSAT",
+          "seconds": 0.0032793929999570537,
+          "cnf": "runs/p2-free-density-2026-10-15/N0008_k0000.cnf",
+          "cnf_sha256": "9ffe39ce04e3ee8de45dc2612ac5c61bf76d9769fe7e1af44dd1618e1738e1e4",
+          "proof": "runs/p2-free-density-2026-10-15/N0008_k0000.drat",
+          "proof_sha256": "12dd87ba73a1336e8c01716859b191541f6c0f679cdde3788c2891fa587d7351",
+          "drat_verified": true
+        },
+        {
+          "bound": 1,
+          "status": "UNSAT",
+          "seconds": 0.007598934999919038,
+          "cnf": "runs/p2-free-density-2026-10-15/N0008_k0001.cnf",
+          "cnf_sha256": "3e8c51cc692cbae3ad656385a6d538b14b5d126eec201aa38b303e405c2f3b7d",
+          "proof": "runs/p2-free-density-2026-10-15/N0008_k0001.drat",
+          "proof_sha256": "ec1716379adbf146f15a1bcbb84f7b340ada7120146ba25f177b9cb915c3bc95",
+          "drat_verified": true
+        }
+      ],
+      "best_witness": {
+        "u": "0101",
+        "completion_hex": "0x81",
+        "weight": 2
+      },
+      "lower_bound": 2,
+      "upper_bound": 2,
+      "exact": true,
+      "density_interval": [
+        0.25,
+        0.25
+      ]
+    },
+    {
+      "N": 12,
+      "free_input_bits": 6,
+      "class_size": "2^6",
+      "counting_scope": "exact-exclusion only; no complexity or randomness inference",
+      "queries": [
+        {
+          "bound": 0,
+          "status": "UNSAT",
+          "seconds": 0.0038076780000437793,
+          "cnf": "runs/p2-free-density-2026-10-15/N0012_k0000.cnf",
+          "cnf_sha256": "7da407c5fc77e0a6cde39e2df6d6cafe451c8764dcd9dd8c6cfc7ec959ce7a26",
+          "proof": "runs/p2-free-density-2026-10-15/N0012_k0000.drat",
+          "proof_sha256": "28bac4ad61bb9a9abd85c25ee2b87306b5beb3b0a52a9d5722b0eefe43e5e510",
+          "drat_verified": true
+        },
+        {
+          "bound": 1,
+          "status": "UNSAT",
+          "seconds": 0.005140976000006958,
+          "cnf": "runs/p2-free-density-2026-10-15/N0012_k0001.cnf",
+          "cnf_sha256": "f54d48e24dd79493a7718f38abe873ad9c92fc31828b85dddd478ccdba9cfe6b",
+          "proof": "runs/p2-free-density-2026-10-15/N0012_k0001.drat",
+          "proof_sha256": "5b100243f2cf9b3e54c8cae87981397cb5b9018eb5052ac5707e2213468d9b1e",
+          "drat_verified": true
+        }
+      ],
+      "best_witness": {
+        "u": "010101",
+        "completion_hex": "0x81",
+        "weight": 2
+      },
+      "lower_bound": 2,
+      "upper_bound": 2,
+      "exact": true,
+      "density_interval": [
+        0.16666666666666666,
+        0.16666666666666666
+      ]
+    },
+    {
+      "N": 16,
+      "free_input_bits": 8,
+      "class_size": "2^8",
+      "counting_scope": "exact-exclusion only; no complexity or randomness inference",
+      "queries": [
+        {
+          "bound": 0,
+          "status": "UNSAT",
+          "seconds": 0.004153685999995105,
+          "cnf": "runs/p2-free-density-2026-10-15/N0016_k0000.cnf",
+          "cnf_sha256": "2acfb340c1d7015ec35226c87d24997024f43f52b0807a4838fe1376ead0eab0",
+          "proof": "runs/p2-free-density-2026-10-15/N0016_k0000.drat",
+          "proof_sha256": "67c2bb35e46387c1916dbcd95bc615cca0f79eebbed8fb9ce89ad0c223017791",
+          "drat_verified": true
+        },
+        {
+          "bound": 1,
+          "status": "UNSAT",
+          "seconds": 0.0053755019999925935,
+          "cnf": "runs/p2-free-density-2026-10-15/N0016_k0001.cnf",
+          "cnf_sha256": "85fe36b970a14b04d9dc5f75a12a8916e6187978a6e5a4bac8a1eee6c02cc4ce",
+          "proof": "runs/p2-free-density-2026-10-15/N0016_k0001.drat",
+          "proof_sha256": "b356e58c589056341bda18afe527995bb69cb06d152d20f9b5e3fb5890164c00",
+          "drat_verified": true
+        },
+        {
+          "bound": 2,
+          "status": "SAT",
+          "seconds": 0.0039544830000295406,
+          "cnf": "runs/p2-free-density-2026-10-15/N0016_k0002.cnf",
+          "cnf_sha256": "a8ac7a5cf8afe5a3cb6684794de7b3a7798288917e33cd70d4ad7c457a0cad26",
+          "u": "01010100",
+          "completion_hex": "0x81",
+          "weight": 2
+        }
+      ],
+      "best_witness": {
+        "u": "01010100",
+        "completion_hex": "0x81",
+        "weight": 2
+      },
+      "lower_bound": 2,
+      "upper_bound": 2,
+      "exact": true,
+      "density_interval": [
+        0.125,
+        0.125
+      ]
+    },
+    {
+      "N": 20,
+      "free_input_bits": 10,
+      "class_size": "2^10",
+      "counting_scope": "exact-exclusion only; no complexity or randomness inference",
+      "queries": [
+        {
+          "bound": 0,
+          "status": "UNSAT",
+          "seconds": 0.0032544409999673007,
+          "cnf": "runs/p2-free-density-2026-10-15/N0020_k0000.cnf",
+          "cnf_sha256": "4155235bbd63f88dea78eb0e26996fae55bf7bb086afb8b166126611ff6f0a0f",
+          "proof": "runs/p2-free-density-2026-10-15/N0020_k0000.drat",
+          "proof_sha256": "cd1fd86acdcad667add8c3c82f5ceda2ae97c717fbd0b89da046323e4916fd78",
+          "drat_verified": true
+        },
+        {
+          "bound": 1,
+          "status": "UNSAT",
+          "seconds": 0.005629800000065188,
+          "cnf": "runs/p2-free-density-2026-10-15/N0020_k0001.cnf",
+          "cnf_sha256": "8f1c508f05690d33e1ce59361e0557667d25aa6d8854f7f2d27283675064ac1b",
+          "proof": "runs/p2-free-density-2026-10-15/N0020_k0001.drat",
+          "proof_sha256": "fd5e8f63294bed83386157eb9998c26ceec942f80ac178e12da86645b5ac9ba4",
+          "drat_verified": true
+        },
+        {
+          "bound": 2,
+          "status": "UNSAT",
+          "seconds": 0.0040277129999140016,
+          "cnf": "runs/p2-free-density-2026-10-15/N0020_k0002.cnf",
+          "cnf_sha256": "faddf9b14e9efd7c06f82cf596cfe2d9c1767da8ccc6d936f3a2767159b2e0c0",
+          "proof": "runs/p2-free-density-2026-10-15/N0020_k0002.drat",
+          "proof_sha256": "0215453ee03af1ab2f2745c1861bd4c7dbbdb173d3e1cd15f2db960681ed7bd1",
+          "drat_verified": true
+        }
+      ],
+      "best_witness": {
+        "u": "0101010101",
+        "completion_hex": "0x4081",
+        "weight": 3
+      },
+      "lower_bound": 3,
+      "upper_bound": 3,
+      "exact": true,
+      "density_interval": [
+        0.15,
+        0.15
+      ]
+    },
+    {
+      "N": 24,
+      "free_input_bits": 12,
+      "class_size": "2^12",
+      "counting_scope": "exact-exclusion only; no complexity or randomness inference",
+      "queries": [
+        {
+          "bound": 0,
+          "status": "UNSAT",
+          "seconds": 0.004688309000016488,
+          "cnf": "runs/p2-free-density-2026-10-15/N0024_k0000.cnf",
+          "cnf_sha256": "2170475c3be63c55049a49997a4d6dbcfd5f9ad88af635eac00dc37a519b90e3",
+          "proof": "runs/p2-free-density-2026-10-15/N0024_k0000.drat",
+          "proof_sha256": "d7e49f3d2359231ecb5346b2d7838412ba632fe160e768d0911abd86f4f4c9ac",
+          "drat_verified": true
+        },
+        {
+          "bound": 2,
+          "status": "UNSAT",
+          "seconds": 0.011607102000084524,
+          "cnf": "runs/p2-free-density-2026-10-15/N0024_k0002.cnf",
+          "cnf_sha256": "d0b7a2ad2184720b80246df4fa9c616761d3d9aa9519269cdac88710be7f83ad",
+          "proof": "runs/p2-free-density-2026-10-15/N0024_k0002.drat",
+          "proof_sha256": "fa7d94064f1eb9cdc3e77d30c8d3d6fc19c59d39d4bd5187b17218283dbf8962",
+          "drat_verified": true
+        },
+        {
+          "bound": 3,
+          "status": "UNSAT",
+          "seconds": 0.00971091000008073,
+          "cnf": "runs/p2-free-density-2026-10-15/N0024_k0003.cnf",
+          "cnf_sha256": "4a14c27701304183f07b0178389f05a783c6767c4d445b8c39724856d9389632",
+          "proof": "runs/p2-free-density-2026-10-15/N0024_k0003.drat",
+          "proof_sha256": "b74c81e81c757c58715ced0c67c43aa7c8e5bea11b16ee5a53bf418dd115bed5",
+          "drat_verified": true
+        }
+      ],
+      "best_witness": {
+        "u": "010101010101",
+        "completion_hex": "0x204081",
+        "weight": 4
+      },
+      "lower_bound": 4,
+      "upper_bound": 4,
+      "exact": true,
+      "density_interval": [
+        0.16666666666666666,
+        0.16666666666666666
+      ]
+    },
+    {
+      "N": 28,
+      "free_input_bits": 14,
+      "class_size": "2^14",
+      "counting_scope": "exact-exclusion only; no complexity or randomness inference",
+      "queries": [
+        {
+          "bound": 0,
+          "status": "UNSAT",
+          "seconds": 0.00488058300004468,
+          "cnf": "runs/p2-free-density-2026-10-15/N0028_k0000.cnf",
+          "cnf_sha256": "501699730958af762360518655da7371ac324967814b0a5e4c9577b0ea53e105",
+          "proof": "runs/p2-free-density-2026-10-15/N0028_k0000.drat",
+          "proof_sha256": "11b02f66554515fb51c270686018dc21e0fc665ec279d34efbb27f9e0083538b",
+          "drat_verified": true
+        },
+        {
+          "bound": 2,
+          "status": "UNSAT",
+          "seconds": 0.007220594999921559,
+          "cnf": "runs/p2-free-density-2026-10-15/N0028_k0002.cnf",
+          "cnf_sha256": "11d87bb194bb3172852b7f054d652d423ea2508638bd3fcdce5465383a5348f7",
+          "proof": "runs/p2-free-density-2026-10-15/N0028_k0002.drat",
+          "proof_sha256": "54cb631525033c042de3dd103ba1d480cb01a869898e0329170c2710bc434417",
+          "drat_verified": true
+        },
+        {
+          "bound": 3,
+          "status": "UNSAT",
+          "seconds": 0.0098801959999264,
+          "cnf": "runs/p2-free-density-2026-10-15/N0028_k0003.cnf",
+          "cnf_sha256": "ce708215757939e4ebc8ee867a6875687a7728693c6e12586e2f0077ede9d51d",
+          "proof": "runs/p2-free-density-2026-10-15/N0028_k0003.drat",
+          "proof_sha256": "1cd7f9b93998b048e12758db7e1cddefa1f3dde97400335402a58db42961874d",
+          "drat_verified": true
+        }
+      ],
+      "best_witness": {
+        "u": "01010101010101",
+        "completion_hex": "0x204081",
+        "weight": 4
+      },
+      "lower_bound": 4,
+      "upper_bound": 4,
+      "exact": true,
+      "density_interval": [
+        0.14285714285714285,
+        0.14285714285714285
+      ]
+    },
+    {
+      "N": 32,
+      "free_input_bits": 16,
+      "class_size": "2^16",
+      "counting_scope": "exact-exclusion only; no complexity or randomness inference",
+      "queries": [
+        {
+          "bound": 0,
+          "status": "UNSAT",
+          "seconds": 0.008928749999995489,
+          "cnf": "runs/p2-free-density-2026-10-15/N0032_k0000.cnf",
+          "cnf_sha256": "76d4156ffe6bfcdcc248fe03217dd9e3a9df280f449db7eba49c3ed4a6c4c23a",
+          "proof": "runs/p2-free-density-2026-10-15/N0032_k0000.drat",
+          "proof_sha256": "ec93180a2d656f69b2ca286ac5701c88eba60ce608364f9cd6fab71bc1fb26d9",
+          "drat_verified": true
+        },
+        {
+          "bound": 2,
+          "status": "UNSAT",
+          "seconds": 0.008929959000056442,
+          "cnf": "runs/p2-free-density-2026-10-15/N0032_k0002.cnf",
+          "cnf_sha256": "c6485b0faa24c1a3ba36fe89c50f67e23c18a4667929b165de2324bde6dd0783",
+          "proof": "runs/p2-free-density-2026-10-15/N0032_k0002.drat",
+          "proof_sha256": "a336a9a642c981f9369b715e0c09e97e62301602de478c4a2d99294d95c8c51d",
+          "drat_verified": true
+        },
+        {
+          "bound": 3,
+          "status": "UNSAT",
+          "seconds": 0.015493287000026612,
+          "cnf": "runs/p2-free-density-2026-10-15/N0032_k0003.cnf",
+          "cnf_sha256": "561adc670c930a40328eccd18a5f762d16d45ce9a92dd5de6e2de3dc9a0c960e",
+          "proof": "runs/p2-free-density-2026-10-15/N0032_k0003.drat",
+          "proof_sha256": "49ad4d73ad881385a87a0500b5325323ecaa79b3bc87cb2bf013baa0be2a659f",
+          "drat_verified": true
+        },
+        {
+          "bound": 4,
+          "status": "SAT",
+          "seconds": 0.015367169000001013,
+          "cnf": "runs/p2-free-density-2026-10-15/N0032_k0004.cnf",
+          "cnf_sha256": "0dda47fa65d1bd42851cb7f61089746cfac7b60a40cd047e192dcad9c3995be7",
+          "u": "0101010101111100",
+          "completion_hex": "0x104081",
+          "weight": 4
+        }
+      ],
+      "best_witness": {
+        "u": "0101010101111100",
+        "completion_hex": "0x104081",
+        "weight": 4
+      },
+      "lower_bound": 4,
+      "upper_bound": 4,
+      "exact": true,
+      "density_interval": [
+        0.125,
+        0.125
+      ]
+    },
+    {
+      "N": 36,
+      "free_input_bits": 18,
+      "class_size": "2^18",
+      "counting_scope": "exact-exclusion only; no complexity or randomness inference",
+      "queries": [
+        {
+          "bound": 0,
+          "status": "UNSAT",
+          "seconds": 0.008278763000021172,
+          "cnf": "runs/p2-free-density-2026-10-15/N0036_k0000.cnf",
+          "cnf_sha256": "53fb4fb3eeb93edc210089e745c7fccdd00a38af49a234758fb612d74498567d",
+          "proof": "runs/p2-free-density-2026-10-15/N0036_k0000.drat",
+          "proof_sha256": "961cd0638e0d6637be9c6d4072df9a5b86dfb73f092bf95c6f15e66c98b83a9a",
+          "drat_verified": true
+        },
+        {
+          "bound": 3,
+          "status": "UNSAT",
+          "seconds": 0.02283791000002111,
+          "cnf": "runs/p2-free-density-2026-10-15/N0036_k0003.cnf",
+          "cnf_sha256": "98d548023ccabf657d3488951bf65a156e81dc40853b14f36971db1d24d66954",
+          "proof": "runs/p2-free-density-2026-10-15/N0036_k0003.drat",
+          "proof_sha256": "00c1fff83b6b30df095a8cd5386550c6dfcd39362b7944f361f5f75844987798",
+          "drat_verified": true
+        },
+        {
+          "bound": 4,
+          "status": "UNSAT",
+          "seconds": 0.014166486000021905,
+          "cnf": "runs/p2-free-density-2026-10-15/N0036_k0004.cnf",
+          "cnf_sha256": "f8e589e44b6ec752f925c178b3466d8f58239f53d4a0775f4d404f9b84ccab9d",
+          "proof": "runs/p2-free-density-2026-10-15/N0036_k0004.drat",
+          "proof_sha256": "0db4c2bb36b56ab6a120d1c2a8bb9ea86b0f6b03bd68cdb93fa4d4e71b6689de",
+          "drat_verified": true
+        },
+        {
+          "bound": 5,
+          "status": "SAT",
+          "seconds": 0.032982997999965846,
+          "cnf": "runs/p2-free-density-2026-10-15/N0036_k0005.cnf",
+          "cnf_sha256": "0af070594ff7cb86baf57e6fa09ec6bb5eb1fda5b0918d5558f61d08bc52c39e",
+          "u": "010101010101011010",
+          "completion_hex": "0x40204081",
+          "weight": 5
+        }
+      ],
+      "best_witness": {
+        "u": "010101010101011010",
+        "completion_hex": "0x40204081",
+        "weight": 5
+      },
+      "lower_bound": 5,
+      "upper_bound": 5,
+      "exact": true,
+      "density_interval": [
+        0.1388888888888889,
+        0.1388888888888889
+      ]
+    },
+    {
+      "N": 40,
+      "free_input_bits": 20,
+      "class_size": "2^20",
+      "counting_scope": "exact-exclusion only; no complexity or randomness inference",
+      "queries": [
+        {
+          "bound": 0,
+          "status": "UNSAT",
+          "seconds": 0.007302096999978858,
+          "cnf": "runs/p2-free-density-2026-10-15/N0040_k0000.cnf",
+          "cnf_sha256": "6d589606282cca868cdbb8f085f11d0a1e38ed40b278b97d3d89f27d6164671c",
+          "proof": "runs/p2-free-density-2026-10-15/N0040_k0000.drat",
+          "proof_sha256": "0c56950f5877b30ecf2dc9053bc492cac7e49b9e23d88ddcba6eba53be0e7475",
+          "drat_verified": true
+        },
+        {
+          "bound": 3,
+          "status": "UNSAT",
+          "seconds": 0.012487781999993786,
+          "cnf": "runs/p2-free-density-2026-10-15/N0040_k0003.cnf",
+          "cnf_sha256": "5c6b91cd62eaf584c63fec49d44980131196ace5d0025e5283923348778f19df",
+          "proof": "runs/p2-free-density-2026-10-15/N0040_k0003.drat",
+          "proof_sha256": "bca1f8c563e7df5580181847aa196e3672bfc293d8465a956d99a11589984f29",
+          "drat_verified": true
+        },
+        {
+          "bound": 4,
+          "status": "UNSAT",
+          "seconds": 0.020797352000045066,
+          "cnf": "runs/p2-free-density-2026-10-15/N0040_k0004.cnf",
+          "cnf_sha256": "fdfc18b01a2a00f6ba6221b01f3b18192ae01f728bc5622c1bcc70389fc11747",
+          "proof": "runs/p2-free-density-2026-10-15/N0040_k0004.drat",
+          "proof_sha256": "8eabdc45ba4bf16553fc53601a563290f315ad50eb436f592d08cfcd089bb312",
+          "drat_verified": true
+        },
+        {
+          "bound": 5,
+          "status": "UNSAT",
+          "seconds": 0.05520931700004894,
+          "cnf": "runs/p2-free-density-2026-10-15/N0040_k0005.cnf",
+          "cnf_sha256": "9da571476c486ed77a0824bc271e6084b4dfa268310ba0036fc780bae75ffa2e",
+          "proof": "runs/p2-free-density-2026-10-15/N0040_k0005.drat",
+          "proof_sha256": "9ee6850a8d826865f0c64652aa3232388fde5fd43a30e62909284e6dbebc8d54",
+          "drat_verified": true
+        }
+      ],
+      "best_witness": {
+        "u": "01010101010101010101",
+        "completion_hex": "0x810204081",
+        "weight": 6
+      },
+      "lower_bound": 6,
+      "upper_bound": 6,
+      "exact": true,
+      "density_interval": [
+        0.15,
+        0.15
+      ]
+    },
+    {
+      "N": 44,
+      "free_input_bits": 22,
+      "class_size": "2^22",
+      "counting_scope": "exact-exclusion only; no complexity or randomness inference",
+      "queries": [
+        {
+          "bound": 0,
+          "status": "UNSAT",
+          "seconds": 0.007820825999942826,
+          "cnf": "runs/p2-free-density-2026-10-15/N0044_k0000.cnf",
+          "cnf_sha256": "f72652446e01d0146dcaafa80d4b64b5b880e2a15bf26a3bb5cfd19cd7c88a05",
+          "proof": "runs/p2-free-density-2026-10-15/N0044_k0000.drat",
+          "proof_sha256": "cdc02fa1b8797fcf3a1b7f0dacbf3bdf8e79e6eac27e8411a11c145bfe20c559",
+          "drat_verified": true
+        },
+        {
+          "bound": 3,
+          "status": "UNSAT",
+          "seconds": 0.019292361999987406,
+          "cnf": "runs/p2-free-density-2026-10-15/N0044_k0003.cnf",
+          "cnf_sha256": "fa77937e24ced5dd40404201adf20f9ec937a5f717b5945ecc1a95688ac98273",
+          "proof": "runs/p2-free-density-2026-10-15/N0044_k0003.drat",
+          "proof_sha256": "837abe2089d63bd6fe3adfcca76e1560badcd2e818fafbb91482205580a155d3",
+          "drat_verified": true
+        },
+        {
+          "bound": 5,
+          "status": "UNSAT",
+          "seconds": 0.06422007799994844,
+          "cnf": "runs/p2-free-density-2026-10-15/N0044_k0005.cnf",
+          "cnf_sha256": "5ec70a954deeeb7bc87da640450e05ae56f6b59cdfeb6b57af3dbcb81087ec3d",
+          "proof": "runs/p2-free-density-2026-10-15/N0044_k0005.drat",
+          "proof_sha256": "0e0c7b036ed8ba328e39277b02dae9d500116d12ae802811ffbbf0bda76b6b14",
+          "drat_verified": true
+        },
+        {
+          "bound": 6,
+          "status": "SAT",
+          "seconds": 0.02223626299996795,
+          "cnf": "runs/p2-free-density-2026-10-15/N0044_k0006.cnf",
+          "cnf_sha256": "0c93108e2087f4b0f40f44020093e9e8c7fe9b5e932a9a2f2b000d5d0540acec",
+          "u": "0101010011010110001001",
+          "completion_hex": "0x2020a0081",
+          "weight": 6
+        }
+      ],
+      "best_witness": {
+        "u": "0101010011010110001001",
+        "completion_hex": "0x2020a0081",
+        "weight": 6
+      },
+      "lower_bound": 6,
+      "upper_bound": 6,
+      "exact": true,
+      "density_interval": [
+        0.13636363636363635,
+        0.13636363636363635
+      ]
+    },
+    {
+      "N": 48,
+      "free_input_bits": 24,
+      "class_size": "2^24",
+      "counting_scope": "exact-exclusion only; no complexity or randomness inference",
+      "queries": [
+        {
+          "bound": 0,
+          "status": "UNSAT",
+          "seconds": 0.00972729900001923,
+          "cnf": "runs/p2-free-density-2026-10-15/N0048_k0000.cnf",
+          "cnf_sha256": "71c2e1342e5bdc88f366103dfa2099b07339c8d78327efd2a0b04f440fd30d9f",
+          "proof": "runs/p2-free-density-2026-10-15/N0048_k0000.drat",
+          "proof_sha256": "e7bd66bf243eccb762167c2740700d65ff6bd7f0691b8143b20631849a654579",
+          "drat_verified": true
+        },
+        {
+          "bound": 3,
+          "status": "UNSAT",
+          "seconds": 0.015972495999903913,
+          "cnf": "runs/p2-free-density-2026-10-15/N0048_k0003.cnf",
+          "cnf_sha256": "5695aca08ec729d50ed3887d83fb6583ddca9e5541290dec2fdb0902330159c8",
+          "proof": "runs/p2-free-density-2026-10-15/N0048_k0003.drat",
+          "proof_sha256": "ce0c01a824a9b6abfecfbf2aca377d0cd86de7028d694fed71a8877a6bb0671c",
+          "drat_verified": true
+        },
+        {
+          "bound": 5,
+          "status": "UNSAT",
+          "seconds": 0.056434813000009854,
+          "cnf": "runs/p2-free-density-2026-10-15/N0048_k0005.cnf",
+          "cnf_sha256": "93569e67f708c92f0054fccd793fc29eb731effad1ee0d74a54596fb4d2ad43a",
+          "proof": "runs/p2-free-density-2026-10-15/N0048_k0005.drat",
+          "proof_sha256": "2417de9fb631bd676caf051b05771d64ba361336af7ff84a516c411b76494ceb",
+          "drat_verified": true
+        },
+        {
+          "bound": 6,
+          "status": "SAT",
+          "seconds": 0.6621640100000832,
+          "cnf": "runs/p2-free-density-2026-10-15/N0048_k0006.cnf",
+          "cnf_sha256": "e42cf07cda3b4ec7b83e8718b75919ce71e148afb96e9ba84f1ccb23d2d3526c",
+          "u": "010101001101011011010100",
+          "completion_hex": "0x1020a0081",
+          "weight": 6
+        }
+      ],
+      "best_witness": {
+        "u": "010101001101011011010100",
+        "completion_hex": "0x1020a0081",
+        "weight": 6
+      },
+      "lower_bound": 6,
+      "upper_bound": 6,
+      "exact": true,
+      "density_interval": [
+        0.125,
+        0.125
+      ]
+    },
+    {
+      "N": 52,
+      "free_input_bits": 26,
+      "class_size": "2^26",
+      "counting_scope": "exact-exclusion only; no complexity or randomness inference",
+      "queries": [
+        {
+          "bound": 0,
+          "status": "UNSAT",
+          "seconds": 0.025876369999991766,
+          "cnf": "runs/p2-free-density-2026-10-15/N0052_k0000.cnf",
+          "cnf_sha256": "1bbe1a10e244806efb5ebfdc0dd4d0da4c284496777436caadd8dc108401abaf",
+          "proof": "runs/p2-free-density-2026-10-15/N0052_k0000.drat",
+          "proof_sha256": "24151f009621c4281afc058e0f825b970713344ca655f21821e378fc487c8561",
+          "drat_verified": true
+        },
+        {
+          "bound": 4,
+          "status": "UNSAT",
+          "seconds": 0.044271483999978045,
+          "cnf": "runs/p2-free-density-2026-10-15/N0052_k0004.cnf",
+          "cnf_sha256": "682a330d2b134957f35256b791aabb040386eceef0a63882c52b99cc7f3aef76",
+          "proof": "runs/p2-free-density-2026-10-15/N0052_k0004.drat",
+          "proof_sha256": "472632d668b592e8aca19da61267a75908fc3d63f0affa15f79b5bd9b4194417",
+          "drat_verified": true
+        },
+        {
+          "bound": 6,
+          "status": "SAT",
+          "seconds": 0.10267051200003152,
+          "cnf": "runs/p2-free-density-2026-10-15/N0052_k0006.cnf",
+          "cnf_sha256": "cd10fbb3443f005e9b9b657c45dc8d2ad7d9afd327c3ea3df3df0a822a28fa71",
+          "u": "01010100110101101101010011",
+          "completion_hex": "0x1020a0081",
+          "weight": 6
+        },
+        {
+          "bound": 5,
+          "status": "UNSAT",
+          "seconds": 0.14454828199995973,
+          "cnf": "runs/p2-free-density-2026-10-15/N0052_k0005.cnf",
+          "cnf_sha256": "9d892be8fd0d73b15ca6848bc22e9da30296cf5dd1eec7f53c12085b4ddac5c0",
+          "proof": "runs/p2-free-density-2026-10-15/N0052_k0005.drat",
+          "proof_sha256": "108d4c572f3348aa563b5b3222a3fdb79918ce1be9105ec5f8c80860fb061297",
+          "drat_verified": true
+        }
+      ],
+      "best_witness": {
+        "u": "01010100110101101101010011",
+        "completion_hex": "0x1020a0081",
+        "weight": 6
+      },
+      "lower_bound": 6,
+      "upper_bound": 6,
+      "exact": true,
+      "density_interval": [
+        0.11538461538461539,
+        0.11538461538461539
+      ]
+    },
+    {
+      "N": 56,
+      "free_input_bits": 28,
+      "class_size": "2^28",
+      "counting_scope": "exact-exclusion only; no complexity or randomness inference",
+      "queries": [
+        {
+          "bound": 0,
+          "status": "UNSAT",
+          "seconds": 0.02611631499996747,
+          "cnf": "runs/p2-free-density-2026-10-15/N0056_k0000.cnf",
+          "cnf_sha256": "7ca7516a56866c4eb35ebf129a6113d954ca44313a5f62ba45f3c6ff5b2a3e56",
+          "proof": "runs/p2-free-density-2026-10-15/N0056_k0000.drat",
+          "proof_sha256": "aacd79ed13d667eefea6f9db9bb30edb77b569651d6061c2e3c30f403bcbf2be",
+          "drat_verified": true
+        },
+        {
+          "bound": 4,
+          "status": "UNSAT",
+          "seconds": 0.07993602800002009,
+          "cnf": "runs/p2-free-density-2026-10-15/N0056_k0004.cnf",
+          "cnf_sha256": "2456bf23e1cb7bec618750281edb7083fb9e185fbf42cd15c97463fa0ff9cbbf",
+          "proof": "runs/p2-free-density-2026-10-15/N0056_k0004.drat",
+          "proof_sha256": "a1cde80fc8cabc720078cdf2f65f221da6c7e26b6b91c2e9d79c88a878ada536",
+          "drat_verified": true
+        },
+        {
+          "bound": 6,
+          "status": "UNSAT",
+          "seconds": 0.3753301400000737,
+          "cnf": "runs/p2-free-density-2026-10-15/N0056_k0006.cnf",
+          "cnf_sha256": "dbe2500d000b4b1a1a8da1ec3e53577a197087a8b85a04fe285ea5ce12493926",
+          "proof": "runs/p2-free-density-2026-10-15/N0056_k0006.drat",
+          "proof_sha256": "a25c396d0154b9e7e572ed12e2782a171f923653d13a9d5e76535816430593f1",
+          "drat_verified": true
+        },
+        {
+          "bound": 7,
+          "status": "SAT",
+          "seconds": 1.5834323240000003,
+          "cnf": "runs/p2-free-density-2026-10-15/N0056_k0007.cnf",
+          "cnf_sha256": "8aeda561f5a92b67222c5d3e0fe2d7d38ad790c152d9f29c19955184bd636261",
+          "u": "0101010011010110110101001100",
+          "completion_hex": "0x100001020a0081",
+          "weight": 7
+        }
+      ],
+      "best_witness": {
+        "u": "0101010011010110110101001100",
+        "completion_hex": "0x100001020a0081",
+        "weight": 7
+      },
+      "lower_bound": 7,
+      "upper_bound": 7,
+      "exact": true,
+      "density_interval": [
+        0.125,
+        0.125
+      ]
+    },
+    {
+      "N": 60,
+      "free_input_bits": 30,
+      "class_size": "2^30",
+      "counting_scope": "exact-exclusion only; no complexity or randomness inference",
+      "queries": [
+        {
+          "bound": 0,
+          "status": "UNSAT",
+          "seconds": 0.0417867109999861,
+          "cnf": "runs/p2-free-density-2026-10-15/N0060_k0000.cnf",
+          "cnf_sha256": "105795727322b56f12d68ff9936ec70fcdfed8ca7c70e7fd71a71d53b4734984",
+          "proof": "runs/p2-free-density-2026-10-15/N0060_k0000.drat",
+          "proof_sha256": "5671e6fc5ec8095d5cf365bbb32a2d352387731ccb2b5980123e4f7ab803d7ed",
+          "drat_verified": true
+        },
+        {
+          "bound": 4,
+          "status": "UNSAT",
+          "seconds": 0.09510924500000328,
+          "cnf": "runs/p2-free-density-2026-10-15/N0060_k0004.cnf",
+          "cnf_sha256": "7b49c2690bf0ea2917172677bec32c5e319ece7c7b74a93e466cd41f09e7b4f2",
+          "proof": "runs/p2-free-density-2026-10-15/N0060_k0004.drat",
+          "proof_sha256": "4d0848c22479fc395c9592be18e4d74f203d6d19ce6c063fe9b30cfa6488c275",
+          "drat_verified": true
+        },
+        {
+          "bound": 6,
+          "status": "UNSAT",
+          "seconds": 0.8764825329999439,
+          "cnf": "runs/p2-free-density-2026-10-15/N0060_k0006.cnf",
+          "cnf_sha256": "a02704d35b9244ba6cf2d6e079404c132b7df1e03cd8d713af8c98c46602c0dc",
+          "proof": "runs/p2-free-density-2026-10-15/N0060_k0006.drat",
+          "proof_sha256": "33b5b4d547e1a6097afc3f6b94324fc75276ea4f25e04483568514d972b4b1e0",
+          "drat_verified": true
+        },
+        {
+          "bound": 7,
+          "status": "UNSAT",
+          "seconds": 2.641610963000062,
+          "cnf": "runs/p2-free-density-2026-10-15/N0060_k0007.cnf",
+          "cnf_sha256": "61ff6f8c1d258737cd1c3af76765f18bd7829d4d61aad91f6632fc26956b1946",
+          "proof": "runs/p2-free-density-2026-10-15/N0060_k0007.drat",
+          "proof_sha256": "9584abc4a781e44616db59121089ae5d3355b00de7008c981690d79054ff24f2",
+          "drat_verified": true
+        },
+        {
+          "bound": 8,
+          "status": "SAT",
+          "seconds": 0.5321139479999601,
+          "cnf": "runs/p2-free-density-2026-10-15/N0060_k0008.cnf",
+          "cnf_sha256": "4664438f25e7f06002168beeaf304f037e4da8ed0a1eed59c293b0effad421e3",
+          "u": "010101001101011011010100100100",
+          "completion_hex": "0x140001020a0081",
+          "weight": 8
+        }
+      ],
+      "best_witness": {
+        "u": "010101001101011011010100100100",
+        "completion_hex": "0x140001020a0081",
+        "weight": 8
+      },
+      "lower_bound": 8,
+      "upper_bound": 8,
+      "exact": true,
+      "density_interval": [
+        0.13333333333333333,
+        0.13333333333333333
+      ]
+    },
+    {
+      "N": 64,
+      "free_input_bits": 32,
+      "class_size": "2^32",
+      "counting_scope": "exact-exclusion only; no complexity or randomness inference",
+      "queries": [
+        {
+          "bound": 0,
+          "status": "UNSAT",
+          "seconds": 0.022592062000057922,
+          "cnf": "runs/p2-free-density-2026-10-15/N0064_k0000.cnf",
+          "cnf_sha256": "b761392d74faebffdfa594d9d4faa2fb6ead0e3a4c819bf7115d0b2d85da0f75",
+          "proof": "runs/p2-free-density-2026-10-15/N0064_k0000.drat",
+          "proof_sha256": "6afbb5d89f4d29defc97a48596018e5bb172a9b5e0307bd4007f8b3fcbefda29",
+          "drat_verified": true
+        },
+        {
+          "bound": 5,
+          "status": "UNSAT",
+          "seconds": 0.052619104999962474,
+          "cnf": "runs/p2-free-density-2026-10-15/N0064_k0005.cnf",
+          "cnf_sha256": "ee908504ae9fd9da445128fddde825fc8a8f43b6a329d1e5a283426f877b49d2",
+          "proof": "runs/p2-free-density-2026-10-15/N0064_k0005.drat",
+          "proof_sha256": "1e42b24d72686403338af025662e6a169e383c2bcf2308e82879641374479a9b",
+          "drat_verified": true
+        },
+        {
+          "bound": 7,
+          "status": "UNSAT",
+          "seconds": 0.5418968909999649,
+          "cnf": "runs/p2-free-density-2026-10-15/N0064_k0007.cnf",
+          "cnf_sha256": "dbed63f90a6e1ab0795b0a9d056baa0bf4b0ed7d6c1c0fce471188c9cba46bd8",
+          "proof": "runs/p2-free-density-2026-10-15/N0064_k0007.drat",
+          "proof_sha256": "b1fecca7a1c4b5d6206aea508f32e77e615411aaf98679e2403fa5140157a384",
+          "drat_verified": true
+        },
+        {
+          "bound": 8,
+          "status": "UNSAT",
+          "seconds": 2.0144768410000324,
+          "cnf": "runs/p2-free-density-2026-10-15/N0064_k0008.cnf",
+          "cnf_sha256": "3c75431825a7e0af1eba2a253db6e3060b0ffe08d53824a28636dce56a6810fa",
+          "proof": "runs/p2-free-density-2026-10-15/N0064_k0008.drat",
+          "proof_sha256": "27f8c07278af3ae3c33339e54b686b093345179c04f69c4e346b2f6d960f6734",
+          "drat_verified": true
+        },
+        {
+          "bound": 9,
+          "status": "SAT",
+          "seconds": 1.5276468540000678,
+          "cnf": "runs/p2-free-density-2026-10-15/N0064_k0009.cnf",
+          "cnf_sha256": "03b12c0021994bb201da2513b1f34fa609d82c6a275f0e06e93b7457e7a96b5d",
+          "u": "01010100110101101101010010010011",
+          "completion_hex": "0x20140001020a0081",
+          "weight": 9
+        }
+      ],
+      "best_witness": {
+        "u": "01010100110101101101010010010011",
+        "completion_hex": "0x20140001020a0081",
+        "weight": 9
+      },
+      "lower_bound": 9,
+      "upper_bound": 9,
+      "exact": true,
+      "density_interval": [
+        0.140625,
+        0.140625
+      ]
+    },
+    {
+      "N": 68,
+      "free_input_bits": 34,
+      "class_size": "2^34",
+      "counting_scope": "exact-exclusion only; no complexity or randomness inference",
+      "queries": [
+        {
+          "bound": 0,
+          "status": "UNSAT",
+          "seconds": 0.014453694000053474,
+          "cnf": "runs/p2-free-density-2026-10-15/N0068_k0000.cnf",
+          "cnf_sha256": "65b822feb32e53f65e3e527b396d3746cb7dee45e210d2e06b85b740e934de2e",
+          "proof": "runs/p2-free-density-2026-10-15/N0068_k0000.drat",
+          "proof_sha256": "d59fcbf22ef4724073f09a6c5142adaa562cb96d37daf2458c94f048adc9048d",
+          "drat_verified": true
+        },
+        {
+          "bound": 5,
+          "status": "UNSAT",
+          "seconds": 0.06731987700004538,
+          "cnf": "runs/p2-free-density-2026-10-15/N0068_k0005.cnf",
+          "cnf_sha256": "8161610d14879465223239fa5008a80826e1da7f8f8af0bd4df5355762e97369",
+          "proof": "runs/p2-free-density-2026-10-15/N0068_k0005.drat",
+          "proof_sha256": "7a5a12838232ccff5e406ddbedf175301a5982c6d60f950c54cbc8774fece164",
+          "drat_verified": true
+        },
+        {
+          "bound": 7,
+          "status": "UNSAT",
+          "seconds": 0.9322549370000388,
+          "cnf": "runs/p2-free-density-2026-10-15/N0068_k0007.cnf",
+          "cnf_sha256": "96e62e749235931fd1b1d030f57ea9af6b5474ea1a9b43dd7a5caaa25a6c96d4",
+          "proof": "runs/p2-free-density-2026-10-15/N0068_k0007.drat",
+          "proof_sha256": "27cf85e9ac5bbede6a69d978726b97866589dc74dcdb6649bee6c0f42b0a209f",
+          "drat_verified": true
+        },
+        {
+          "bound": 8,
+          "status": "UNSAT",
+          "seconds": 2.014727068999946,
+          "cnf": "runs/p2-free-density-2026-10-15/N0068_k0008.cnf",
+          "cnf_sha256": "d1f65d2affbcc8b3bc651b7b87124f389f66e6c4e11fd73677c2ae45d34d1ce3",
+          "proof": "runs/p2-free-density-2026-10-15/N0068_k0008.drat",
+          "proof_sha256": "35502d312330062a473ea8cc6034d9cda552383a7aa192559c22d5a37da42a0c",
+          "drat_verified": true
+        },
+        {
+          "bound": 9,
+          "status": "SAT",
+          "seconds": 1.8606227120000085,
+          "cnf": "runs/p2-free-density-2026-10-15/N0068_k0009.cnf",
+          "cnf_sha256": "9eb193bebf63bc91a37cd1ffadf302ed2a32daa9cfe070f37164ed15ebcebea6",
+          "u": "0101010011010110110101001100000000",
+          "completion_hex": "0xa100001020a0081",
+          "weight": 9
+        }
+      ],
+      "best_witness": {
+        "u": "0101010011010110110101001100000000",
+        "completion_hex": "0xa100001020a0081",
+        "weight": 9
+      },
+      "lower_bound": 9,
+      "upper_bound": 9,
+      "exact": true,
+      "density_interval": [
+        0.1323529411764706,
+        0.1323529411764706
+      ]
+    },
+    {
+      "N": 72,
+      "free_input_bits": 36,
+      "class_size": "2^36",
+      "counting_scope": "exact-exclusion only; no complexity or randomness inference",
+      "queries": [
+        {
+          "bound": 0,
+          "status": "UNSAT",
+          "seconds": 0.011418951999985438,
+          "cnf": "runs/p2-free-density-2026-10-15/N0072_k0000.cnf",
+          "cnf_sha256": "236bad7e4faf6e6e29df66a9bbc8d934a0a55bfdb470f4020c3839ab76ca0780",
+          "proof": "runs/p2-free-density-2026-10-15/N0072_k0000.drat",
+          "proof_sha256": "4d64dbb8ba3273fb82ed4c059cda0666fc771000f4ff2d59b4249246a65d462b",
+          "drat_verified": true
+        },
+        {
+          "bound": 5,
+          "status": "UNSAT",
+          "seconds": 0.06875782100007655,
+          "cnf": "runs/p2-free-density-2026-10-15/N0072_k0005.cnf",
+          "cnf_sha256": "f87a0d2768c46c5855d0071108e5a1da833cdf41a4844d8b709c2252d690f007",
+          "proof": "runs/p2-free-density-2026-10-15/N0072_k0005.drat",
+          "proof_sha256": "8594e9822c4c15795539f88ed2ebfe63d10bc549313a49972094db941ffdc867",
+          "drat_verified": true
+        },
+        {
+          "bound": 8,
+          "status": "UNSAT",
+          "seconds": 1.9408685690000311,
+          "cnf": "runs/p2-free-density-2026-10-15/N0072_k0008.cnf",
+          "cnf_sha256": "4e3de5988c1d141925c88f47d4b5d72db625f94e7f9bdcd89598133a632e506f",
+          "proof": "runs/p2-free-density-2026-10-15/N0072_k0008.drat",
+          "proof_sha256": "8e17342cbe6f1b2e8c30bd87bfdd38fb07b154d8e66bbe2feb402e01bdf00ef2",
+          "drat_verified": true
+        },
+        {
+          "bound": 9,
+          "status": "SAT",
+          "seconds": 1.4475622449999719,
+          "cnf": "runs/p2-free-density-2026-10-15/N0072_k0009.cnf",
+          "cnf_sha256": "a4a24ba17e7b88d02a5e8b7f8ec624a1b47ed2dd3af281d7a73bf6444f4e1d9a",
+          "u": "010101001101011011010100110000000010",
+          "completion_hex": "0xa100001020a0081",
+          "weight": 9
+        }
+      ],
+      "best_witness": {
+        "u": "010101001101011011010100110000000010",
+        "completion_hex": "0xa100001020a0081",
+        "weight": 9
+      },
+      "lower_bound": 9,
+      "upper_bound": 9,
+      "exact": true,
+      "density_interval": [
+        0.125,
+        0.125
+      ]
+    },
+    {
+      "N": 76,
+      "free_input_bits": 38,
+      "class_size": "2^38",
+      "counting_scope": "exact-exclusion only; no complexity or randomness inference",
+      "queries": [
+        {
+          "bound": 0,
+          "status": "UNSAT",
+          "seconds": 0.012998964999951568,
+          "cnf": "runs/p2-free-density-2026-10-15/N0076_k0000.cnf",
+          "cnf_sha256": "af289e266b18b9fd40fa10b87e1b06454961d91d52896496e84d927f1865fe4a",
+          "proof": "runs/p2-free-density-2026-10-15/N0076_k0000.drat",
+          "proof_sha256": "ffeecc1ed0ec8b55aa7728b7e1e73306829a896cbf420bec970d3da7396f82c3",
+          "drat_verified": true
+        },
+        {
+          "bound": 5,
+          "status": "UNSAT",
+          "seconds": 0.21451397099997394,
+          "cnf": "runs/p2-free-density-2026-10-15/N0076_k0005.cnf",
+          "cnf_sha256": "d53300fc97afeeb99f7dee31454ac68a4e2f0a6a1d823e9af7c52058f21abe0e",
+          "proof": "runs/p2-free-density-2026-10-15/N0076_k0005.drat",
+          "proof_sha256": "3e969988bb5fc0c65a51bee0e430ac368a0fdc1806c6dae6e6ee78eff4f84201",
+          "drat_verified": true
+        },
+        {
+          "bound": 8,
+          "status": "UNSAT",
+          "seconds": 4.833115046999978,
+          "cnf": "runs/p2-free-density-2026-10-15/N0076_k0008.cnf",
+          "cnf_sha256": "04bc012b3741b4ec1e7027f45c5a1de94944e97fb06daad9240c99735ecefc04",
+          "proof": "runs/p2-free-density-2026-10-15/N0076_k0008.drat",
+          "proof_sha256": "ea06448f0733d67f1b46dab3033125aa96de2fb5c617f966f5c7f205584d872c",
+          "drat_verified": true
+        },
+        {
+          "bound": 9,
+          "status": "SAT",
+          "seconds": 1.6733008869999821,
+          "cnf": "runs/p2-free-density-2026-10-15/N0076_k0009.cnf",
+          "cnf_sha256": "29fc3fc98c256af4c1c9021488e9fa0841c8d00fb361ef3be73a0160f044fc66",
+          "u": "01010100110101101101010010010001100100",
+          "completion_hex": "0x10140001020a0081",
+          "weight": 9
+        }
+      ],
+      "best_witness": {
+        "u": "01010100110101101101010010010001100100",
+        "completion_hex": "0x10140001020a0081",
+        "weight": 9
+      },
+      "lower_bound": 9,
+      "upper_bound": 9,
+      "exact": true,
+      "density_interval": [
+        0.11842105263157894,
+        0.11842105263157894
+      ]
+    },
+    {
+      "N": 80,
+      "free_input_bits": 40,
+      "class_size": "2^40",
+      "counting_scope": "exact-exclusion only; no complexity or randomness inference",
+      "queries": [
+        {
+          "bound": 0,
+          "status": "UNSAT",
+          "seconds": 0.012134811999999329,
+          "cnf": "runs/p2-free-density-2026-10-15/N0080_k0000.cnf",
+          "cnf_sha256": "6e1d975c5b51aa1acb94cfad8df40a22e08754233db5a927299358055867fcbc",
+          "proof": "runs/p2-free-density-2026-10-15/N0080_k0000.drat",
+          "proof_sha256": "72eb54cb564daad231abea9d0db2463ed4df5a59afcff69158f511bbab57fa35",
+          "drat_verified": true
+        },
+        {
+          "bound": 6,
+          "status": "UNSAT",
+          "seconds": 0.2682703399999582,
+          "cnf": "runs/p2-free-density-2026-10-15/N0080_k0006.cnf",
+          "cnf_sha256": "7639f36563b84ceec52cb384d860780ac316c40b159daf79039d93df4c49e115",
+          "proof": "runs/p2-free-density-2026-10-15/N0080_k0006.drat",
+          "proof_sha256": "1a18696698187549c394c0738d745c661bac6585e84ab7e0309ac52dad7aab26",
+          "drat_verified": true
+        },
+        {
+          "bound": 9,
+          "status": "SAT",
+          "seconds": 4.119788741000093,
+          "cnf": "runs/p2-free-density-2026-10-15/N0080_k0009.cnf",
+          "cnf_sha256": "3785e622e0993698bc86ee06a387a206ba2d38eb6e1a002e674f3e475d9a84d8",
+          "u": "0101010011010110110101001001000110010001",
+          "completion_hex": "0x10140001020a0081",
+          "weight": 9
+        },
+        {
+          "bound": 7,
+          "status": "UNSAT",
+          "seconds": 0.7408124199999975,
+          "cnf": "runs/p2-free-density-2026-10-15/N0080_k0007.cnf",
+          "cnf_sha256": "d4719ad5012d8ff978a1997e7c90344a985f3fc68d8ee8aa76656193b9fe4bb5",
+          "proof": "runs/p2-free-density-2026-10-15/N0080_k0007.drat",
+          "proof_sha256": "170b99f66b8d971db161ac7e83c69b4d9d269f6b847c7cc3135502deada33ea8",
+          "drat_verified": true
+        },
+        {
+          "bound": 8,
+          "status": "UNSAT",
+          "seconds": 1.9225570539999808,
+          "cnf": "runs/p2-free-density-2026-10-15/N0080_k0008.cnf",
+          "cnf_sha256": "7212136527308cc207e63b469f51642cc2e1c95895b1d107dea5c36b5362aef8",
+          "proof": "runs/p2-free-density-2026-10-15/N0080_k0008.drat",
+          "proof_sha256": "ac4b20f2fcf65efd9952675c63a87c9293860927184373c5efdf884958f72bac",
+          "drat_verified": true
+        }
+      ],
+      "best_witness": {
+        "u": "0101010011010110110101001001000110010001",
+        "completion_hex": "0x10140001020a0081",
+        "weight": 9
+      },
+      "lower_bound": 9,
+      "upper_bound": 9,
+      "exact": true,
+      "density_interval": [
+        0.1125,
+        0.1125
+      ]
+    },
+    {
+      "N": 84,
+      "free_input_bits": 42,
+      "class_size": "2^42",
+      "counting_scope": "exact-exclusion only; no complexity or randomness inference",
+      "queries": [
+        {
+          "bound": 0,
+          "status": "UNSAT",
+          "seconds": 0.013782591999984106,
+          "cnf": "runs/p2-free-density-2026-10-15/N0084_k0000.cnf",
+          "cnf_sha256": "d6dbc61a4c15a627802a2dee46a58920aa076271539626ef6f1a9b869fdfccac",
+          "proof": "runs/p2-free-density-2026-10-15/N0084_k0000.drat",
+          "proof_sha256": "4a926c71ce2983cc09f525982376125c6cbee6a01c4b73cc39244da05b5a450e",
+          "drat_verified": true
+        },
+        {
+          "bound": 6,
+          "status": "UNSAT",
+          "seconds": 0.2359458700000232,
+          "cnf": "runs/p2-free-density-2026-10-15/N0084_k0006.cnf",
+          "cnf_sha256": "9ab2e87ce918f3289b24937f80de92f6226741d56335f764fd706c0957094c78",
+          "proof": "runs/p2-free-density-2026-10-15/N0084_k0006.drat",
+          "proof_sha256": "d862109084b2e175041cdd1057fb3c4c7535a945cd2da499a9c03bd544696c43",
+          "drat_verified": true
+        },
+        {
+          "bound": 9,
+          "status": "UNKNOWN",
+          "seconds": 8.016267931000016,
+          "cnf": "runs/p2-free-density-2026-10-15/N0084_k0009.cnf",
+          "cnf_sha256": "eeb9e8f0d0819ca257ff77ebe51e87b915aa589347f4e1e5306bd1a1c2e454ab"
+        }
+      ],
+      "best_witness": {
+        "u": "010101001101011011010100100100011001000100",
+        "completion_hex": "0xa000010140001020a0081",
+        "weight": 11
+      },
+      "lower_bound": 9,
+      "upper_bound": 11,
+      "exact": false,
+      "density_interval": [
+        0.10714285714285714,
+        0.13095238095238096
+      ],
+      "prefix_lower_bound_from_N": 64
+    },
+    {
+      "N": 100,
+      "free_input_bits": 50,
+      "class_size": "2^50",
+      "counting_scope": "exact-exclusion only; no complexity or randomness inference",
+      "queries": [
+        {
+          "bound": 0,
+          "status": "UNSAT",
+          "seconds": 0.06752387699998508,
+          "cnf": "runs/p2-free-density-2026-10-15/N0100_k0000.cnf",
+          "cnf_sha256": "99f1642963898dbb745f6c26bd13407a7345db7204cf9a3cece2ceaece116ca6",
+          "proof": "runs/p2-free-density-2026-10-15/N0100_k0000.drat",
+          "proof_sha256": "3c0b102e4a0306c9f7a6ff24052a7a930143cebd02a6fb3bbe92a02524adcdd4",
+          "drat_verified": true
+        },
+        {
+          "bound": 7,
+          "status": "UNSAT",
+          "seconds": 2.7118044490000557,
+          "cnf": "runs/p2-free-density-2026-10-15/N0100_k0007.cnf",
+          "cnf_sha256": "d8d7bf3e2ea6e2a92b2133142608ba5fd5bb3c5f13cc7df6561939d806f9b0ed",
+          "proof": "runs/p2-free-density-2026-10-15/N0100_k0007.drat",
+          "proof_sha256": "13d664e5b0f9a5d766918cb305185f471c5530514ec122c10887bb7aef2a0429",
+          "drat_verified": true
+        },
+        {
+          "bound": 11,
+          "status": "UNKNOWN",
+          "seconds": 8.005346090999979,
+          "cnf": "runs/p2-free-density-2026-10-15/N0100_k0011.cnf",
+          "cnf_sha256": "89d562aede40d0294f1caa54e225a608ca1d60a110202f4606d835a8ab11abfb"
+        }
+      ],
+      "best_witness": {
+        "u": "01010101010101010101010101010101010101010101010101",
+        "completion_hex": "0x4081020408102040810204081",
+        "weight": 15
+      },
+      "lower_bound": 9,
+      "upper_bound": 15,
+      "exact": false,
+      "density_interval": [
+        0.09,
+        0.15
+      ],
+      "prefix_lower_bound_from_N": 64
+    },
+    {
+      "N": 117,
+      "free_input_bits": 59,
+      "class_size": "2^59",
+      "counting_scope": "exact-exclusion only; no complexity or randomness inference",
+      "queries": [
+        {
+          "bound": 0,
+          "status": "UNSAT",
+          "seconds": 0.20892532300001676,
+          "cnf": "runs/p2-free-density-2026-10-15/N0117_k0000.cnf",
+          "cnf_sha256": "f5c3356450506097c953cfc1ca176a94827581529d0c3e622bbbe40b000b198e",
+          "proof": "runs/p2-free-density-2026-10-15/N0117_k0000.drat",
+          "proof_sha256": "bf8f51fab8d4beb4fea9ddc458a95fa660220192d56da38434c4f3f0ffd65bb5",
+          "drat_verified": true
+        },
+        {
+          "bound": 8,
+          "status": "UNSAT",
+          "seconds": 4.911585172000059,
+          "cnf": "runs/p2-free-density-2026-10-15/N0117_k0008.cnf",
+          "cnf_sha256": "0062e41b3f17f2882b1be4f2da9dd94dc2fa081a0edd6aca780c99deb1978691",
+          "proof": "runs/p2-free-density-2026-10-15/N0117_k0008.drat",
+          "proof_sha256": "50cbd1ea4cbaf37799be15fa4fd922960daa7a3a43500dc75b90ac96ca0e2a2b",
+          "drat_verified": true
+        },
+        {
+          "bound": 12,
+          "status": "UNKNOWN",
+          "seconds": 8.007546250000019,
+          "cnf": "runs/p2-free-density-2026-10-15/N0117_k0012.cnf",
+          "cnf_sha256": "4c07c941d4dad5e0f268eb2b80649b78c7ea92e59eb908cb1f8a46dd2e7b05ec"
+        }
+      ],
+      "best_witness": {
+        "u": "01010101010101010101010101010101010101010101010101010101010",
+        "completion_hex": "0x10204081020408102040810204081",
+        "weight": 17
+      },
+      "lower_bound": 9,
+      "upper_bound": 17,
+      "exact": false,
+      "density_interval": [
+        0.07692307692307693,
+        0.1452991452991453
+      ]
+    },
+    {
+      "N": 126,
+      "free_input_bits": 63,
+      "class_size": "2^63",
+      "counting_scope": "exact-exclusion only; no complexity or randomness inference",
+      "queries": [
+        {
+          "bound": 0,
+          "status": "UNSAT",
+          "seconds": 0.031071277999899394,
+          "cnf": "runs/p2-free-density-2026-10-15/N0126_k0000.cnf",
+          "cnf_sha256": "22f613024e3d13f14433f0d13c5a29d016ad33d1c87e4f173acd2333fc84c37a",
+          "proof": "runs/p2-free-density-2026-10-15/N0126_k0000.drat",
+          "proof_sha256": "fefd21442c0c585c6ed8f2236400c4facd4d1f10b246adab5300c629c19a6f30",
+          "drat_verified": true
+        },
+        {
+          "bound": 9,
+          "status": "UNKNOWN",
+          "seconds": 8.013103381000064,
+          "cnf": "runs/p2-free-density-2026-10-15/N0126_k0009.cnf",
+          "cnf_sha256": "6e3268aa2fe9383d77d569eb01dc098211b2358d9d4070e88bad90206a0b80ad"
+        }
+      ],
+      "best_witness": {
+        "u": "010101010101010101010101010101010101010101010101010101010101010",
+        "completion_hex": "0x810204081020408102040810204081",
+        "weight": 18
+      },
+      "lower_bound": 9,
+      "upper_bound": 18,
+      "exact": false,
+      "density_interval": [
+        0.07142857142857142,
+        0.14285714285714285
+      ],
+      "prefix_lower_bound_from_N": 64
+    },
+    {
+      "N": 190,
+      "free_input_bits": 95,
+      "class_size": "2^95",
+      "counting_scope": "exact-exclusion only; no complexity or randomness inference",
+      "queries": [
+        {
+          "bound": 0,
+          "status": "UNSAT",
+          "seconds": 0.05976938599997084,
+          "cnf": "runs/p2-free-density-2026-10-15/N0190_k0000.cnf",
+          "cnf_sha256": "89bd37c9c29dbdb1dfea92d3d49c8d476d60cfa234cb1f6f0ea756d3b84ce5ec",
+          "proof": "runs/p2-free-density-2026-10-15/N0190_k0000.drat",
+          "proof_sha256": "12f61414c257108ea0d70ca794ff29bc42dffbba2cb9e032d37db4e4ce87b0c9",
+          "drat_verified": true
+        },
+        {
+          "bound": 14,
+          "status": "UNKNOWN",
+          "seconds": 8.007566277000024,
+          "cnf": "runs/p2-free-density-2026-10-15/N0190_k0014.cnf",
+          "cnf_sha256": "c09354b9027ecd474499738541b573e681a20bd480a3c323aeb2c02ece968a90"
+        }
+      ],
+      "best_witness": {
+        "u": "01010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010",
+        "completion_hex": "0x204081020408102040810204081020408102040810204081",
+        "weight": 28
+      },
+      "lower_bound": 9,
+      "upper_bound": 28,
+      "exact": false,
+      "density_interval": [
+        0.04736842105263158,
+        0.14736842105263157
+      ],
+      "prefix_lower_bound_from_N": 64
+    },
+    {
+      "N": 300,
+      "free_input_bits": 150,
+      "class_size": "2^150",
+      "counting_scope": "exact-exclusion only; no complexity or randomness inference",
+      "queries": [
+        {
+          "bound": 0,
+          "status": "UNSAT",
+          "seconds": 0.12559315499993318,
+          "cnf": "runs/p2-free-density-2026-10-15/N0300_k0000.cnf",
+          "cnf_sha256": "40b4777e406e2ca663182af3b500fd5254ec67642f0bb9ee093541135f3f484e",
+          "proof": "runs/p2-free-density-2026-10-15/N0300_k0000.drat",
+          "proof_sha256": "27958c8d05b7b8d4fdf0638602ee252c3ee32cc694d2c6e551bd5bbfcc867826",
+          "drat_verified": true
+        },
+        {
+          "bound": 21,
+          "status": "UNKNOWN",
+          "seconds": 8.014793454999904,
+          "cnf": "runs/p2-free-density-2026-10-15/N0300_k0021.cnf",
+          "cnf_sha256": "2b7ff6dd763ac7646e134f741bc2daeab0273afdbd401b26026f91e5a14eb18c"
+        }
+      ],
+      "best_witness": {
+        "u": "010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101",
+        "completion_hex": "0x40810204081020408102040810204081020408102040810204081020408102040810204081",
+        "weight": 43
+      },
+      "lower_bound": 9,
+      "upper_bound": 43,
+      "exact": false,
+      "density_interval": [
+        0.03,
+        0.14333333333333334
+      ],
+      "prefix_lower_bound_from_N": 64
+    },
+    {
+      "N": 400,
+      "free_input_bits": 200,
+      "class_size": "2^200",
+      "counting_scope": "exact-exclusion only; no complexity or randomness inference",
+      "queries": [
+        {
+          "bound": 0,
+          "status": "UNSAT",
+          "seconds": 0.4504946030000383,
+          "cnf": "runs/p2-free-density-2026-10-15/N0400_k0000.cnf",
+          "cnf_sha256": "a5bd52367042e098eb41e545ffa0e1717c7ee82d9ad3ed62bd7c51eef64c41cc",
+          "proof": "runs/p2-free-density-2026-10-15/N0400_k0000.drat",
+          "proof_sha256": "3cd5f9fa451c1f26fa6310dcc1fcd6332a4349da81b9982ba007e39552ecb784",
+          "drat_verified": true
+        },
+        {
+          "bound": 29,
+          "status": "UNKNOWN",
+          "seconds": 8.009655166000016,
+          "cnf": "runs/p2-free-density-2026-10-15/N0400_k0029.cnf",
+          "cnf_sha256": "58f277fd4f44d40d895ce25cf46b39a7ac8bf8762dccb629f00835afbabc44e3"
+        }
+      ],
+      "best_witness": {
+        "u": "01010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101",
+        "completion_hex": "0x8102040810204081020408102040810204081020408102040810204081020408102040810204081020408102040810204081",
+        "weight": 58
+      },
+      "lower_bound": 9,
+      "upper_bound": 58,
+      "exact": false,
+      "density_interval": [
+        0.0225,
+        0.145
+      ],
+      "prefix_lower_bound_from_N": 64
+    },
+    {
+      "N": 500,
+      "free_input_bits": 250,
+      "class_size": "2^250",
+      "counting_scope": "exact-exclusion only; no complexity or randomness inference",
+      "queries": [
+        {
+          "bound": 0,
+          "status": "UNSAT",
+          "seconds": 0.6998241439999902,
+          "cnf": "runs/p2-free-density-2026-10-15/N0500_k0000.cnf",
+          "cnf_sha256": "c329342349a1e0caba2a7597fd06398df350c786c2c1e9340e1457933b584cb6",
+          "proof": "runs/p2-free-density-2026-10-15/N0500_k0000.drat",
+          "proof_sha256": "f7f6050ce334ce9db1ad89202fee86197c83890739eba567a75cbc0faf0efbf2",
+          "drat_verified": true
+        },
+        {
+          "bound": 36,
+          "status": "UNKNOWN",
+          "seconds": 8.046768100999998,
+          "cnf": "runs/p2-free-density-2026-10-15/N0500_k0036.cnf",
+          "cnf_sha256": "21640eebc044c2b3be2bfa2adaec52bb89b1df05c31a65f4dfa2e61b90ad172f"
+        }
+      ],
+      "best_witness": {
+        "u": "0101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101",
+        "completion_hex": "0x20408102040810204081020408102040810204081020408102040810204081020408102040810204081020408102040810204081020408102040810204081",
+        "weight": 72
+      },
+      "lower_bound": 9,
+      "upper_bound": 72,
+      "exact": false,
+      "density_interval": [
+        0.018,
+        0.144
+      ],
+      "prefix_lower_bound_from_N": 64
+    }
+  ],
+  "elapsed_seconds": 148.99363323299997,
+  "postprocess": "Replay all SAT words and checkpoint N81, padded/truncated; inherit certified smaller-prefix lower bounds."
+}
