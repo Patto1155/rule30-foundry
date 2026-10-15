@@ -1,0 +1,36 @@
+{
+  "language": "L4",
+  "forbidden": [
+    "11",
+    "00000",
+    "101001",
+    "0100101",
+    "010010001",
+    "0101000101",
+    "0101010000",
+    "01010001001",
+    "10010001001",
+    "010010000101",
+    "010100010001",
+    "100100010000"
+  ],
+  "threshold": "N-7W_N>8",
+  "rows": [
+    {
+      "bound": 26,
+      "status": "UNKNOWN",
+      "seconds": 10.004306632999942,
+      "cnf": "runs/p2-u-language-2026-10-15/l4-targeted/N191.cnf",
+      "cnf_sha256": "4aa8a1c0e11d158a75e9bb1e2b4adae15a84116e91e6adb0792b1e98ff7d5040",
+      "N": 191
+    },
+    {
+      "bound": 41,
+      "status": "UNKNOWN",
+      "seconds": 10.012518129,
+      "cnf": "runs/p2-u-language-2026-10-15/l4-targeted/N300.cnf",
+      "cnf_sha256": "fae74b729720ede926a1d1fa9afc94921c6dbbeb9c328fccfe21281df2d7ff69",
+      "N": 300
+    }
+  ]
+}

@@ -1,0 +1,144 @@
+c --- [ banner ] -------------------------------------------------------------
+c
+c CaDiCaL SAT Solver
+c Copyright (c) 2016-2026
+c A. Biere, M. Fleury, N. Froleyks, K. Fazekas, F. Pollitt, T. Faller
+c JKU Linz, University of Freiburg, TU Wien
+c
+c Version 3.0.1 c60730422e758ef1cebe7aeddf2dda31c996bf04
+c g++ (Debian 14.2.0-19) 14.2.0 -Wall -Wextra -O3 -DNDEBUG
+c Thu Oct 15 04:53:46 UTC 2026 Linux ccc53ced1a86 6.18.44 x86_64
+c
+c --- [ limit ] --------------------------------------------------------------
+c
+c setting time limit to 10 seconds real time (due to '-t 10')
+c
+c --- [ proof tracing ] ------------------------------------------------------
+c
+c opening file to write 'runs/p2-u-language-2026-10-15/factor-100100010000-rule30.drat'
+c writing non-binary proof trace to 'runs/p2-u-language-2026-10-15/factor-100100010000-rule30.drat'
+c
+c --- [ parsing input ] ------------------------------------------------------
+c
+c reading DIMACS file from 'runs/p2-u-language-2026-10-15/factor-100100010000-rule30.cnf'
+c opening file to read 'runs/p2-u-language-2026-10-15/factor-100100010000-rule30.cnf'
+c found 'p cnf 276 1948' header
+c parsed 1948 clauses in 0.00 seconds process time
+c
+c --- [ options ] ------------------------------------------------------------
+c
+c   --binary=false                 (different from default 'true')
+c
+c --- [ solving ] ------------------------------------------------------------
+c
+c time measured in process time since initialization
+c
+c  seconds  reduction conflicts       size tier2     variables
+c         MB    restarts   redundant    glue  trail      remaining
+c          level     rate       size/glu tier1 irredundant
+c
+c *  0.00  3  0 0   0  0    0    0 0.0 0 0 2 6  0% 1936 264 96%
+c )  0.00  3  0 0   0  0    1    0 0.0 1 0 2 6  6% 1935 263 95%
+c {  0.00  3  0 0   0  0    1    0 0.0 1 0 2 6  6% 1935 263 95%
+c i  0.00  3  0 0   0  0    1    0 0.0 1 0 2 6  6% 1935 263 95%
+c i  0.00  3  2 0   0  1    4    1 2.0 2 1 2 6  7% 1934 262 95%
+c i  0.00  3  2 0   0  1   19    5 1.6 3 2 2 6  9% 1927 261 95%
+c i  0.00  3 22 0   2  2  103   48 3.5 10 3 2 6 56% 1915 260 94%
+c i  0.00  3 21 0   2  2  105   49 3.6 10 3 2 6 56% 1915 257 93%
+c i  0.00  3 20 0   6  2  121   51 3.0 10 3 2 6 54% 1909 253 92%
+c i  0.00  3 17 0  11  2  143   58 2.7 9 3 2 6 48% 1907 246 89%
+c i  0.00  3 17 0  11  2  150   59 2.7 8 3 2 6 48% 1904 245 89%
+c i  0.00  3 17 0  11  2  155   60 2.7 8 3 2 6 47% 1902 244 88%
+c i  0.00  3 16 0  15  2  196   79 2.5 9 4 2 6 46% 1887 242 88%
+c i  0.00  3 16 0  16  2  199   80 2.5 9 4 2 6 46% 1887 232 84%
+c i  0.00  3 15 0  21  2  223   90 2.4 9 4 2 6 45% 1879 231 84%
+c i  0.00  3 15 0  22  2  224   90 2.4 9 4 2 6 45% 1879 228 83%
+c i  0.00  3 15 0  22  2  227   90 2.4 9 4 2 6 44% 1878 227 82%
+c i  0.00  3 14 0  22  2  260  102 2.4 8 3 2 6 43% 1868 225 82%
+c i  0.00  3 13 0  22  2  289  107 2.4 8 3 2 6 44% 1851 224 81%
+c -  0.00  3 14 1  22  2  300   76 2.5 8 3 2 6 46% 1453 224 81%
+c
+c  seconds  reduction conflicts       size   tier2     variables
+c         MB    restarts   redundant     glue   trail      remaining
+c          level     rate       size/glue  tier1 irredundant
+c
+c i  0.01  3 14 1  88  1  575  101 1.2 13 10 2 6 68% 1450 221 80%
+c i  0.01  3 14 1  88  1  583  104 1.2 13 10 2 6 68% 1450 219 79%
+c i  0.01  3 14 1  88  1  587  106 1.2 13 10 2 6 68% 1449 170 62%
+c i  0.01  3 14 1  88  1  588  106 1.2 13 10 2 6 67% 1449 169 61%
+c i  0.01  3 14 1  88  1  589  106 1.2 12 10 2 6 67% 1449 164 59%
+c i  0.01  3 14 1  88  1  590  106 1.2 12 10 2 6 67% 1449 147 53%
+c }  0.01  3 14 1  88  1  606  109 1.2 12 10 2 6 68% 1447 146 53%
+c 0  0.01  3 14 1  88  1  606  109 1.2 12 10 2 6 68% 1447 146 53%
+c
+c --- [ closing proof ] ------------------------------------------------------
+c
+c DRAT proof file 'runs/p2-u-language-2026-10-15/factor-100100010000-rule30.drat' closed
+c DRAT 823 added clauses 43.16%
+c DRAT 1084 deleted clauses 56.84%
+c DRAT 60595 bytes (0.06 MB)
+c
+c --- [ result ] -------------------------------------------------------------
+c
+s UNSATISFIABLE
+c
+c --- [ run-time profiling ] -------------------------------------------------
+c
+c process time taken by individual solving procedures
+c (percentage relative to process time for solving)
+c
+c         0.01   97.50% search
+c         0.01   95.66% unstable
+c         0.00   13.05% parse
+c         0.00    1.46% lucky
+c         0.00    0.00% simplify
+c   =================================
+c         0.01   85.48% solve
+c
+c last line shows process time for solving
+c (percentage relative to total process time)
+c
+c --- [ statistics ] ---------------------------------------------------------
+c
+c chronological:                74        12.21 %  of conflicts
+c conflicts:                   606    110463.00    per second
+c decisions:                   788    143638.35    per second
+c fixed:                       130        47.10 %  of all variables
+c learned:                     430        70.96 %  per conflict
+c learned_lits:               6756       100.00 %  learned literals
+c minimized:                     0         0.00 %  learned literals
+c shrunken:                   1383        20.47 %  learned literals
+c minishrunken:                 36         0.53 %  learned literals
+c otfs:                        265        43.73 %  of conflict
+c propagations:              15265         2.78 M  per second
+c reduced:                       3         0.50 %  per conflict
+c restarts:                     88         6.89    interval
+c subsumed:                    443        18.92 %  of all clauses
+c strengthened:                173         7.39 %  of all clauses
+c ticks:                     90686         5.94    propagation
+c
+c seconds are measured in process time for solving
+c
+c --- [ glue usage ] ---------------------------------------------------------
+c
+c focused glue 13 used 26 clauses 5.627% accumulated 53.46% tier1
+c focused glue 14 used 55 clauses 11.90% accumulated 65.36%
+c focused glue 15 used 70 clauses 15.15% accumulated 80.51%
+c focused glue 16 used 55 clauses 11.90% accumulated 92.42% tier2
+c
+c stable glue 2 used 0 clauses 0.000% accumulated 0.000% tier1
+c stable glue 3 used 0 clauses 0.000% accumulated 0.000%
+c stable glue 4 used 0 clauses 0.000% accumulated 0.000%
+c stable glue 5 used 0 clauses 0.000% accumulated 0.000%
+c stable glue 6 used 0 clauses 0.000% accumulated 0.000% tier2
+c
+c
+c --- [ resources ] ----------------------------------------------------------
+c
+c total process time since initialization:         0.01    seconds
+c total real time since initialization:            0.01    seconds
+c maximum resident set size of process:           22.32    MB
+c
+c --- [ shutting down ] ------------------------------------------------------
+c
+c exit 20

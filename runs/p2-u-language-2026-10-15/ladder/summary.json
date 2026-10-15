@@ -1,0 +1,38 @@
+{
+  "threshold": "N-7W_N > 8",
+  "languages": {
+    "L1": {
+      "max_N_queried": 300,
+      "status_counts": {
+        "UNKNOWN": 242,
+        "UNSAT": 58
+      },
+      "all_N_verified_through": 51,
+      "explicit_counterexample_N": 191,
+      "explicit_counterexample_deficit": 9,
+      "scope": "UNKNOWN is unresolved; relaxed-language counterexample is not physical"
+    },
+    "L2": {
+      "max_N_queried": 300,
+      "status_counts": {
+        "UNKNOWN": 237,
+        "UNSAT": 63
+      },
+      "all_N_verified_through": 60,
+      "explicit_counterexample_N": 191,
+      "explicit_counterexample_deficit": 9,
+      "scope": "UNKNOWN is unresolved; relaxed-language counterexample is not physical"
+    },
+    "L3": {
+      "max_N_queried": 300,
+      "status_counts": {
+        "UNKNOWN": 239,
+        "UNSAT": 61
+      },
+      "all_N_verified_through": 54,
+      "explicit_counterexample_N": 191,
+      "explicit_counterexample_deficit": 9,
+      "scope": "UNKNOWN is unresolved; relaxed-language counterexample is not physical"
+    }
+  }
+}

@@ -1,0 +1,118 @@
+c --- [ banner ] -------------------------------------------------------------
+c
+c CaDiCaL SAT Solver
+c Copyright (c) 2016-2026
+c A. Biere, M. Fleury, N. Froleyks, K. Fazekas, F. Pollitt, T. Faller
+c JKU Linz, University of Freiburg, TU Wien
+c
+c Version 3.0.1 c60730422e758ef1cebe7aeddf2dda31c996bf04
+c g++ (Debian 14.2.0-19) 14.2.0 -Wall -Wextra -O3 -DNDEBUG
+c Thu Oct 15 04:53:46 UTC 2026 Linux ccc53ced1a86 6.18.44 x86_64
+c
+c --- [ limit ] --------------------------------------------------------------
+c
+c setting time limit to 10 seconds real time (due to '-t 10')
+c
+c --- [ proof tracing ] ------------------------------------------------------
+c
+c opening file to write 'runs/p2-u-language-2026-10-15/factor-101001-rule30.drat'
+c writing non-binary proof trace to 'runs/p2-u-language-2026-10-15/factor-101001-rule30.drat'
+c
+c --- [ parsing input ] ------------------------------------------------------
+c
+c reading DIMACS file from 'runs/p2-u-language-2026-10-15/factor-101001-rule30.cnf'
+c opening file to read 'runs/p2-u-language-2026-10-15/factor-101001-rule30.cnf'
+c found 'p cnf 66 406' header
+c parsed 406 clauses in 0.00 seconds process time
+c
+c --- [ options ] ------------------------------------------------------------
+c
+c   --binary=false                 (different from default 'true')
+c
+c --- [ solving ] ------------------------------------------------------------
+c
+c time measured in process time since initialization
+c
+c  seconds  reduction conflicts       size tier2     variables
+c         MB    restarts   redundant    glue  trail      remaining
+c          level     rate       size/glu tier1 irredundant
+c
+c *  0.00  3  0 0   0  0    0    0 0.0 0 0 2 6  0%  400  60 91%
+c )  0.00  3  0 0   0  0    0    0 0.0 1 0 2 6 12%  400  56 85%
+c {  0.00  3  0 0   0  0    0    0 0.0 1 0 2 6 12%  400  56 85%
+c i  0.00  3  0 0   0  0    0    0 0.0 1 0 2 6 12%  400  56 85%
+c i  0.00  3  2 0   0  2    2    0 0.0 1 0 2 6 26%  399  55 83%
+c i  0.00  3  4 0   0  2   11    5 3.1 4 1 2 6 44%  397  51 77%
+c i  0.00  3  4 0   0  1   41   11 2.3 4 2 2 6 56%  384  50 76%
+c i  0.00  3  4 0   0  1   42   11 2.3 4 2 2 6 55%  384  49 74%
+c i  0.00  3  3 0   0  1   44   12 2.3 3 1 2 6 56%  384  46 70%
+c }  0.00  3  3 0   0  1   48   13 2.4 3 1 2 6 55%  383  37 56%
+c 0  0.00  3  3 0   0  1   48   13 2.4 3 1 2 6 55%  383  37 56%
+c
+c --- [ closing proof ] ------------------------------------------------------
+c
+c DRAT proof file 'runs/p2-u-language-2026-10-15/factor-101001-rule30.drat' closed
+c DRAT 65 added clauses 59.09%
+c DRAT 45 deleted clauses 40.91%
+c DRAT 1527 bytes (0.00 MB)
+c
+c --- [ result ] -------------------------------------------------------------
+c
+s UNSATISFIABLE
+c
+c --- [ run-time profiling ] -------------------------------------------------
+c
+c process time taken by individual solving procedures
+c (percentage relative to process time for solving)
+c
+c         0.00   71.52% search
+c         0.00   41.14% unstable
+c         0.00   27.80% lucky
+c         0.00   21.08% parse
+c         0.00    0.00% simplify
+c   =================================
+c         0.00   60.72% solve
+c
+c last line shows process time for solving
+c (percentage relative to total process time)
+c
+c --- [ statistics ] ---------------------------------------------------------
+c
+c chronological:                12        25.00 %  of conflicts
+c conflicts:                    48     53811.66    per second
+c decisions:                    41     45964.13    per second
+c fixed:                        29        43.94 %  of all variables
+c learned:                      21        43.75 %  per conflict
+c learned_lits:                 75       100.00 %  learned literals
+c minimized:                     0         0.00 %  learned literals
+c shrunken:                      8        10.67 %  learned literals
+c minishrunken:                  1         1.33 %  learned literals
+c otfs:                         44        91.67 %  of conflict
+c propagations:                245         0.27 M  per second
+c subsumed:                     35         8.45 %  of all clauses
+c strengthened:                 27         6.52 %  of all clauses
+c ticks:                      1908         7.79    propagation
+c
+c seconds are measured in process time for solving
+c
+c --- [ glue usage ] ---------------------------------------------------------
+c
+c focused glue 1 used 9 clauses 64.28% accumulated 64.28% tier1
+c focused glue 2 used 3 clauses 21.42% accumulated 85.71% tier2
+c
+c stable glue 2 used 0 clauses 0.000% accumulated 0.000% tier1
+c stable glue 3 used 0 clauses 0.000% accumulated 0.000%
+c stable glue 4 used 0 clauses 0.000% accumulated 0.000%
+c stable glue 5 used 0 clauses 0.000% accumulated 0.000%
+c stable glue 6 used 0 clauses 0.000% accumulated 0.000% tier2
+c
+c
+c --- [ resources ] ----------------------------------------------------------
+c
+c total process time since initialization:         0.00    seconds
+c total real time since initialization:            0.00    seconds
+c maximum resident set size of process:           51.53    MB
+c
+c --- [ shutting down ] ------------------------------------------------------
+c
+c exit 20
