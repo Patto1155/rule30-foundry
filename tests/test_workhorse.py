@@ -13,6 +13,7 @@ import subprocess
 import sys
 import tempfile
 import unittest
+from unittest.mock import patch
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parent.parent
@@ -131,7 +132,8 @@ class TestDryRun(unittest.TestCase):
 
     def test_codex_agent_without_codex_on_path_fails_clearly(self):
         p = write_manifest(self.tmp, name="t-codex")
-        r = workhorse("run", str(p), "--dry-run", "--agent", "codex")
+        with patch.dict("os.environ", {"CODEX_BIN": str(self.tmp / "missing-codex")}):
+            r = workhorse("run", str(p), "--dry-run", "--agent", "codex")
         self.assertEqual(r.returncode, 1)
         self.assertIn("codex", r.stderr.lower())
 
