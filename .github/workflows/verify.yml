@@ -27,6 +27,13 @@ concurrency:
 permissions:
   contents: read
 
+# Source-verification tests create nested worktrees/clones. Keep optional
+# historical proof bundles as pointers there too; checkout's lfs:false does
+# not propagate to those Git subprocesses. Missing old LFS bytes remain a
+# separate delivery blocker, never a successful proof replay.
+env:
+  GIT_LFS_SKIP_SMUDGE: '1'
+
 jobs:
   verify:
     name: verify_all (CPU)

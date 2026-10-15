@@ -6,35 +6,43 @@ lives here. Overwrite this file in place; git history keeps the old versions.
 No other file may carry a "current state as of" section —
 `tools/lint_ledger.py` enforces it.
 
-Updated: 2026-10-14 · Newest log: `docs/experiment-logs/2026-10-14-period2-stepping-stones.md`
+Updated: 2026-10-15 · Newest log: `docs/experiment-logs/2026-10-15-column-reduction-and-language-ladder.md`
 
 ## Where the three prize problems stand
 
 | # | Problem | Best current result | Grade |
 |---|---|---|---|
-| 1 | Does the center column repeat? | Period one is excluded by Condrey's analytic argument (unrefereed preprint), audited here and held at Proof candidate until refereed or machine-checked; period two remains open. No period `p <= 5,000,000` in the first 10M bits — **decided exactly**, all 9,999,936 candidates, 0 survivors. Cannot resolve the problem: eventual periodicity is asymptotic. | Proof candidate (external, audited) + Certificate |
+| 1 | Does the center column repeat? | Period one is excluded by checked Lean constant-fibre completeness and finite nonzero evolution at every onset. Period two remains open. Exact finite period search still excludes p<=5,000,000 in the first10M bits. | Theorem + Certificate (finite period search) |
 | 2 | Are 0s and 1s equidistributed? | Bias < 0.05% over 10M bits. Uniform Bernoulli(1/2) is invariant (proved, left-permutivity) — which is *not* the same as the single seed's limiting frequency, the actual question. | Theorem + Observation |
 | 3 | Is there a shortcut for the nth bit? | None found. Base-2 minimal-DFAO size is now certified through MSD `s*(64)=15` (LSD remains certified through n=48). No GF(2) annihilator of degree `<= 3` over windows to 64 bits, nor degree `<= 4` to 32 bits. ML routes (I/K/L) are scoped down. A published shortcut claim is under audit, separating warm query from cold `n -> c_n` cost. | Certificate (s*(n)) |
 
 ## Open work, ranked
 
-The period-two stepping-stone session has built 19 Lean-checked foundations,
-an exact support-completion instrument, 32 tested candidates, and a replay of
-the recovered renewal certificates. Period two remains open; full Condrey
-uniqueness and exclusion remain unfinished. Recombination is recorded in
-`docs/theory/period2_recombination.md`; final verification gives11PASS,
-1SKIP (absent46M),0FAIL, with759 tests and6 named GPU/46M skips. The smallest long measured density is 1/7;
-its sparse completion is in the exceptional Q component on checked prefixes,
-so a K-only renewal argument does not cover the observed hard cases.
-Combined phase-zero radii are exact through L66 (L65 by interpolation),
-phase one through L63; L96 brackets are [54,82] and [54,83]. Next:
-attack the precise all-r/all-N bound `7W_N(r)>=N-7bitlength(r)` with
-prefix-slack adversarial search, then an ordered OR-specific proof. The
-19 checked foundations do not prove this bound or complete period one.
-The draft branch `research/period2-stepping-stones` awaits cross-lineage
-audit and authenticated upload of48 new LFS objects. Those actual bytes are
-preserved in the portable proof bundle; fresh GitHub clones cannot yet
-replay new proofs from the pointers alone.
+The column-reduction session checked 50 Lean declarations, including full
+triangular uniqueness, complete Condrey constant fibres and eventual-period-one
+exclusion. The free-input curve has 20 exact minima through N80, with derived
+N81 minimum9 and certified no-11 N79 minimum10; positive/zero asymptotic
+density remains undecided. Physical factor sets are exact through length12,
+with twelve minimal forbidden factors. The first three language relaxations
+fail at N191, while all-twelve-factor L4 N191/N300 queries remain UNKNOWN.
+Physical widths64/128/256 at all prefixes through300 also remain UNKNOWN.
+The physical all-r/all-N deficit-eight and support-growth obligations stay open.
+
+Next is the precise L4 conjecture in
+`docs/theory/period2_column_ladder.md`: for every N and every length-ceil(N/2)
+word avoiding the twelve bans, 7W_N>=N-8. Resume the retained N191 UNKNOWN
+query, then N300, with a larger explicit budget; one replayed word kills only
+this relaxation. A proof still needs ordered state and endpoint credit.
+Neither the conditional alternating-input ring return nor the finite-tail
+uncensored maximum14 supplies that theorem.
+
+The branch `research/period2-column-ladder` is based on the unmerged
+`research/period2-stepping-stones` tip. Final serialized validation passed11 stages, skipped the absent46M stage,
+and failed0;793 tests ran with6 GPU/46M skips. Raw evidence is in
+`runs/p2-integration-2026-10-15/verification.json`. Source is pushed; the
+review PR remains draft for audit and inherited proof delivery. The inherited 48 LFS objects remain a separate
+base-branch delivery limitation; this session does not claim replay of absent
+proof bytes. Different-model-family audit is still required before merge.
 B3 (LSD n=56) is optional bounded work. The older A1 → A2 → C2
 sequence is complete; the two former next items were B3 and T1 (see their rows).
 

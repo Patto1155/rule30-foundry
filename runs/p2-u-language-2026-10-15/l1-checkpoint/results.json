@@ -1,0 +1,16 @@
+{
+  "bound": 9,
+  "status": "UNSAT",
+  "seconds": 1.42925668700002,
+  "cnf": "runs/p2-u-language-2026-10-15/l1-checkpoint/N079-k9.cnf",
+  "cnf_sha256": "7a9c41102dd6976bb561d2e2b5cdab71ded4861e02b1aeeed3686968e84f6370",
+  "proof": "runs/p2-u-language-2026-10-15/l1-checkpoint/N079-k9.drat",
+  "proof_sha256": "367ee76e7418a0a04fdebf3e96e7db69b3bebb1a4d43ef7ab4591e13a7bb735d",
+  "drat_verified": true,
+  "N": 79,
+  "forbidden": [
+    "11"
+  ],
+  "claimed_minimum": 10,
+  "upper_witness_u": "0101010101010101010101010101010101000000"
+}

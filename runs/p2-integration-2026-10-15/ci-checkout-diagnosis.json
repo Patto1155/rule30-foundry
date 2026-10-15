@@ -1,0 +1,9 @@
+{
+  "run": "https://github.com/Patto1155/rule30-foundry/actions/runs/38685763009",
+  "initial_jobs": "both failed in unittest",
+  "diagnosis": "Nested git worktree add smudged missing inherited LFS archive; remote404 before worker task execution.",
+  "affected_example": "runs/period2-horizon-L96-2026-10-14/certificates.tar.xz",
+  "fix": "Workflow env GIT_LFS_SKIP_SMUDGE=1 propagates source-only checkout policy to nested Git operations.",
+  "does_not_establish": "Availability or verification of any missing inherited proof object.",
+  "focused_workflow_tests": 11
+}

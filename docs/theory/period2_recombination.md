@@ -1,5 +1,10 @@
 # Period two: the smallest remaining bridges
 
+The formal gaps and language targets recorded in this earlier report are
+superseded where stated by `docs/theory/period2_column_ladder.md`: complete
+constant fibres and triangular uniqueness are now Lean checked. Its period-two
+support-growth gap remains open.
+
 This is a recombination and bounded kill-test report, **not a period-two
 proof**. The spatial-depth-seven mechanism is recovered work from
 `44d11eebaab4e8486c195dee1e5c61a36860851f`,

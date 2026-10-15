@@ -1,0 +1,134 @@
+c --- [ banner ] -------------------------------------------------------------
+c
+c CaDiCaL SAT Solver
+c Copyright (c) 2016-2026
+c A. Biere, M. Fleury, N. Froleyks, K. Fazekas, F. Pollitt, T. Faller
+c JKU Linz, University of Freiburg, TU Wien
+c
+c Version 3.0.1 c60730422e758ef1cebe7aeddf2dda31c996bf04
+c g++ (Debian 14.2.0-19) 14.2.0 -Wall -Wextra -O3 -DNDEBUG
+c Thu Oct 15 04:53:46 UTC 2026 Linux ccc53ced1a86 6.18.44 x86_64
+c
+c --- [ limit ] --------------------------------------------------------------
+c
+c setting time limit to 10 seconds real time (due to '-t 10')
+c
+c --- [ proof tracing ] ------------------------------------------------------
+c
+c opening file to write 'runs/p2-u-language-2026-10-15/factor-01010001001-rule30.drat'
+c writing non-binary proof trace to 'runs/p2-u-language-2026-10-15/factor-01010001001-rule30.drat'
+c
+c --- [ parsing input ] ------------------------------------------------------
+c
+c reading DIMACS file from 'runs/p2-u-language-2026-10-15/factor-01010001001-rule30.cnf'
+c opening file to read 'runs/p2-u-language-2026-10-15/factor-01010001001-rule30.cnf'
+c found 'p cnf 231 1611' header
+c parsed 1611 clauses in 0.00 seconds process time
+c
+c --- [ options ] ------------------------------------------------------------
+c
+c   --binary=false                 (different from default 'true')
+c
+c --- [ solving ] ------------------------------------------------------------
+c
+c time measured in process time since initialization
+c
+c  seconds  reduction conflicts       size tier2     variables
+c         MB    restarts   redundant    glue  trail      remaining
+c          level     rate       size/glu tier1 irredundant
+c
+c *  0.00  3  0 0   0  0    0    0 0.0 0 0 2 6  0% 1600 220 95%
+c )  0.00  3  0 0   0  0    0    0 0.0 1 0 2 6  7% 1600 212 92%
+c {  0.00  3  0 0   0  0    0    0 0.0 1 0 2 6  7% 1600 212 92%
+c i  0.00  3  0 0   0  0    0    0 0.0 1 0 2 6  7% 1600 212 92%
+c i  0.00  3  1 0   0  2    2    1 2.3 2 1 2 6 10% 1600 211 91%
+c i  0.00  3  4 0   0  2   11    6 2.6 4 1 2 6 15% 1598 207 90%
+c i  0.00  3  5 0   0  1   40   17 2.4 5 2 2 6 21% 1589 206 89%
+c i  0.00  3  6 0   0  2   49   21 2.8 6 2 2 6 25% 1589 202 87%
+c i  0.00  3 12 0   9  2  122   53 2.8 9 3 2 6 45% 1571 200 87%
+c i  0.00  3 12 0   9  2  123   53 2.8 9 3 2 6 45% 1571 192 83%
+c i  0.00  3 11 0  13  2  140   59 2.6 8 3 2 6 44% 1566 189 82%
+c i  0.00  3 11 0  14  2  142   59 2.6 8 3 2 6 44% 1565 188 81%
+c i  0.00  3 11 0  14  2  143   59 2.6 8 3 2 6 44% 1565 180 78%
+c i  0.00  3  9 0  20  2  213   94 2.5 7 3 2 6 45% 1552 174 75%
+c i  0.00  3  9 0  20  2  260  112 2.3 7 3 2 6 43% 1540 173 75%
+c i  0.00  3  8 0  20  2  266  115 2.3 7 3 2 6 43% 1540 172 74%
+c i  0.00  3  8 0  20  2  275  116 2.3 7 3 2 6 43% 1537 171 74%
+c i  0.00  3  8 0  20  2  279  118 2.3 7 3 2 6 43% 1537 160 69%
+c i  0.00  3  8 0  20  2  287  119 2.3 7 3 2 6 43% 1533 150 65%
+c }  0.00  3  8 0  20  2  289  119 2.3 6 3 2 6 43% 1533 145 63%
+c
+c  seconds  reduction conflicts       size tier2     variables
+c         MB    restarts   redundant    glue  trail      remaining
+c          level     rate       size/glu tier1 irredundant
+c
+c 0  0.00  3  8 0  20  2  289  119 2.3 6 3 2 6 43% 1533 145 63%
+c
+c --- [ closing proof ] ------------------------------------------------------
+c
+c DRAT proof file 'runs/p2-u-language-2026-10-15/factor-01010001001-rule30.drat' closed
+c DRAT 348 added clauses 61.27%
+c DRAT 220 deleted clauses 38.73%
+c DRAT 13080 bytes (0.01 MB)
+c
+c --- [ result ] -------------------------------------------------------------
+c
+s UNSATISFIABLE
+c
+c --- [ run-time profiling ] -------------------------------------------------
+c
+c process time taken by individual solving procedures
+c (percentage relative to process time for solving)
+c
+c         0.00   96.02% search
+c         0.00   87.53% unstable
+c         0.00   20.75% parse
+c         0.00    7.96% lucky
+c         0.00    0.00% simplify
+c   =================================
+c         0.00   77.97% solve
+c
+c last line shows process time for solving
+c (percentage relative to total process time)
+c
+c --- [ statistics ] ---------------------------------------------------------
+c
+c chronological:                59        20.42 %  of conflicts
+c conflicts:                   289    118539.79    per second
+c decisions:                   431    176784.25    per second
+c fixed:                        86        37.23 %  of all variables
+c learned:                     169        58.48 %  per conflict
+c learned_lits:               1328       100.00 %  learned literals
+c minimized:                     0         0.00 %  learned literals
+c shrunken:                    160        12.05 %  learned literals
+c minishrunken:                 72         5.42 %  learned literals
+c otfs:                        189        65.40 %  of conflict
+c propagations:               5398         2.21 M  per second
+c restarts:                     20        14.45    interval
+c subsumed:                    167         9.54 %  of all clauses
+c strengthened:                121         6.91 %  of all clauses
+c ticks:                     39402         7.30    propagation
+c
+c seconds are measured in process time for solving
+c
+c --- [ glue usage ] ---------------------------------------------------------
+c
+c focused glue 2 used 61 clauses 30.19% accumulated 59.90% tier1
+c focused glue 3 used 34 clauses 16.83% accumulated 76.73% tier2
+c
+c stable glue 2 used 0 clauses 0.000% accumulated 0.000% tier1
+c stable glue 3 used 0 clauses 0.000% accumulated 0.000%
+c stable glue 4 used 0 clauses 0.000% accumulated 0.000%
+c stable glue 5 used 0 clauses 0.000% accumulated 0.000%
+c stable glue 6 used 0 clauses 0.000% accumulated 0.000% tier2
+c
+c
+c --- [ resources ] ----------------------------------------------------------
+c
+c total process time since initialization:         0.00    seconds
+c total real time since initialization:            0.00    seconds
+c maximum resident set size of process:           22.20    MB
+c
+c --- [ shutting down ] ------------------------------------------------------
+c
+c exit 20

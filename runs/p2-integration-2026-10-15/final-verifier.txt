@@ -1,0 +1,274 @@
+
+=== clone-integrity ===
+clone-integrity: OK (173 tracked files, no LF->CRLF checkout corruption)
+PASS  clone-integrity                  0.2s
+
+=== golden-self-test ===
+self-test OK: naive == packed over 4096 bits, OEIS prefix matches
+PASS  golden-self-test                 0.2s
+
+=== manifest+golden ===
+MISS  data/center_col_46M.bin
+manifest: 173 verified, 1 absent, OK
+golden: data/golden/center_col_golden_1M.bin OK (1,000,000 bits)
+golden: data/golden/center_col_golden_10M.bin OK (10,000,000 bits)
+golden: independent check reaches 10,000,000 bits
+PASS  manifest+golden                  0.2s
+
+=== manifest-current ===
+manifest: up to date
+PASS  manifest-current                 0.1s
+
+=== bitstream:center_col_10M.bin ===
+bitstream: center_col_10M.bin (bit-packed, LSB-first) agrees with center_col_golden_10M.bin over 10,000,000 bits  OK
+PASS  bitstream:center_col_10M.bin     0.2s
+
+=== bitstream:center_col_46M.bin ===
+SKIP  bitstream:center_col_46M.bin  not present (gitignored; regenerate with gpu/rule30_sim.py)
+
+=== drat-toolchain ===
+solver  /workspace/rule30-foundry/third_party/cadical  (3.0.1)
+checker /workspace/rule30-foundry/third_party/drat-trim
+  [PASS] thue-morse n=64 s=2 msd is SAT  (SAT)
+  [PASS] center n=16 s=4 msd is UNSAT  (UNSAT)
+  [PASS] its DRAT proof verifies  (VERIFIED)
+  [PASS] drat-trim rejects a truncated proof  (rejected)
+  [PASS] drat-trim rejects refuting a satisfiable formula  (rejected)
+self-test OK
+PASS  drat-toolchain                   0.3s
+
+=== gates-trap ===
+{
+  "artifact_type": "rule30.gates.preflight",
+  "name": "TRAP-vacuous-dfao-24",
+  "verdict": "FAIL",
+  "gates": [
+    {
+      "gate": "schema",
+      "status": "PASS",
+      "reason": "all required fields present; purpose 'prize-claim'"
+    },
+    {
+      "gate": "seed",
+      "status": "PASS",
+      "reason": "single-black-cell (purpose 'prize-claim')"
+    },
+    {
+      "gate": "theory-gate",
+      "status": "PASS",
+      "reason": "OPEN"
+    },
+    {
+      "gate": "counting-bound",
+      "status": "FAIL",
+      "reason": "NOT DISCRIMINATING: log2|M| = 244.1 < n = 10000 for 24-state base-2 DFAO (expected fits 2^-9755.9). A uniform random string would almost certainly give the same negative, so this measures |M|, not Rule 30. If the search is exhaustive, the exclusion is still true: declare purpose 'exact-exclusion' with `\"exhaustive\": true` and record it as a bounded finding rather than as evidence."
+    },
+    {
+      "gate": "light-cone",
+      "status": "SKIP",
+      "reason": "not a simulation"
+    },
+    {
+      "gate": "script",
+      "status": "PASS",
+      "reason": "experiments/counting_bound.py"
+    },
+    {
+      "gate": "bitorder-lint",
+      "status": "SKIP",
+      "reason": "does not read a packed bitstream"
+    },
+    {
+      "gate": "golden-self-test",
+      "status": "SKIP",
+      "reason": "does not read a packed bitstream"
+    },
+    {
+      "gate": "verify-all",
+      "status": "SKIP",
+      "reason": "external checks disabled"
+    }
+  ]
+}
+PASS  gates-trap                       0.1s
+
+=== lean ===
+ℹ [2/5] Replayed Rule30.Basic
+info: ././././Rule30/Basic.lean:551:0: 'Rule30.temporal_phase_slip' depends on axioms: [propext]
+info: ././././Rule30/Basic.lean:553:0: 'Rule30.ringIndex7_left' depends on axioms: [propext, Quot.sound]
+info: ././././Rule30/Basic.lean:554:0: 'Rule30.ringIndex7_right' depends on axioms: [propext, Quot.sound]
+info: ././././Rule30/Basic.lean:555:0: 'Rule30.lift_step' depends on axioms: [propext, Quot.sound]
+info: ././././Rule30/Basic.lean:556:0: 'Rule30.ring7_boundary' depends on axioms: [propext]
+info: ././././Rule30/Basic.lean:557:0: 'Rule30.ring7_step0' depends on axioms: [propext]
+info: ././././Rule30/Basic.lean:558:0: 'Rule30.ring7_step1' depends on axioms: [propext]
+info: ././././Rule30/Basic.lean:559:0: 'Rule30.ring7_step2' depends on axioms: [propext]
+info: ././././Rule30/Basic.lean:560:0: 'Rule30.ring7_step3' depends on axioms: [propext]
+info: ././././Rule30/Basic.lean:562:0: 'Rule30.oneCompletion_left' depends on axioms: [propext, Quot.sound]
+info: ././././Rule30/Basic.lean:563:0: 'Rule30.constant_one_complete' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ././././Rule30/Basic.lean:564:0: 'Rule30.finite_not_constant_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ././././Rule30/Basic.lean:565:0: 'Rule30.leftOne_step' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ././././Rule30/Basic.lean:566:0: 'Rule30.leftOne_evolve' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ././././Rule30/Basic.lean:567:0: 'Rule30.leftOne_constant_trace' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ././././Rule30/Basic.lean:568:0: 'Rule30.leftOne_not_finite' depends on axioms: [propext, Quot.sound]
+info: ././././Rule30/Basic.lean:570:0: 'Rule30.zero_latch' does not depend on any axioms
+info: ././././Rule30/Basic.lean:571:0: 'Rule30.alternating_return' does not depend on any axioms
+info: ././././Rule30/Basic.lean:572:0: 'Rule30.step_finite' depends on axioms: [propext, Quot.sound]
+info: ././././Rule30/Basic.lean:573:0: 'Rule30.evolve_finite' depends on axioms: [propext, Quot.sound]
+info: ././././Rule30/Basic.lean:574:0: 'Rule30.evolve_add' depends on axioms: [propext]
+info: ././././Rule30/Basic.lean:575:0: 'Rule30.trace_shift' depends on axioms: [propext]
+info: ././././Rule30/Basic.lean:576:0: 'Rule30.onset_reduction_evolve' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ././././Rule30/Basic.lean:577:0: 'Rule30.localRule_left_injective' depends on axioms: [propext]
+info: ././././Rule30/Basic.lean:578:0: 'Rule30.right_half_evolve_unique' depends on axioms: [propext, Quot.sound]
+info: ././././Rule30/Basic.lean:579:0: 'Rule30.triangular_uniqueness' depends on axioms: [propext, Quot.sound]
+info: ././././Rule30/Basic.lean:580:0: 'Rule30.onset_reduction' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ././././Rule30/Basic.lean:581:0: 'Rule30.oneLeft_adjacent' depends on axioms: [propext, Quot.sound]
+info: ././././Rule30/Basic.lean:582:0: 'Rule30.oneLeft_invariant' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3/5] Replayed Rule30.ColumnReduction
+info: ././././Rule30/ColumnReduction.lean:59:0: 'Rule30.alternating_odd_left' depends on axioms: [propext]
+info: ././././Rule30/ColumnReduction.lean:60:0: 'Rule30.alternating_u_no11' depends on axioms: [propext, Quot.sound]
+info: ././././Rule30/ColumnReduction.lean:61:0: 'Rule30.column_left_inversion' does not depend on any axioms
+info: ././././Rule30/ColumnReduction.lean:62:0: 'Rule30.odd_left_latch' depends on axioms: [propext]
+info: ././././Rule30/ColumnReduction.lean:63:0: 'Rule30.column_right_return' does not depend on any axioms
+info: ././././Rule30/ColumnReduction.lean:64:0: 'Rule30.column_no11' does not depend on any axioms
+Build completed successfully.
+'Rule30.temporal_phase_slip' depends on axioms: [propext]
+'Rule30.ringIndex7_left' depends on axioms: [propext, Quot.sound]
+'Rule30.ringIndex7_right' depends on axioms: [propext, Quot.sound]
+'Rule30.lift_step' depends on axioms: [propext, Quot.sound]
+'Rule30.ring7_boundary' depends on axioms: [propext]
+'Rule30.ring7_step0' depends on axioms: [propext]
+'Rule30.ring7_step1' depends on axioms: [propext]
+'Rule30.ring7_step2' depends on axioms: [propext]
+'Rule30.ring7_step3' depends on axioms: [propext]
+'Rule30.oneCompletion_left' depends on axioms: [propext, Quot.sound]
+'Rule30.constant_one_complete' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Rule30.finite_not_constant_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Rule30.leftOne_step' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Rule30.leftOne_evolve' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Rule30.leftOne_constant_trace' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Rule30.leftOne_not_finite' depends on axioms: [propext, Quot.sound]
+'Rule30.zero_latch' does not depend on any axioms
+'Rule30.alternating_return' does not depend on any axioms
+'Rule30.step_finite' depends on axioms: [propext, Quot.sound]
+'Rule30.evolve_finite' depends on axioms: [propext, Quot.sound]
+'Rule30.evolve_add' depends on axioms: [propext]
+'Rule30.trace_shift' depends on axioms: [propext]
+'Rule30.onset_reduction_evolve' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Rule30.localRule_left_injective' depends on axioms: [propext]
+'Rule30.right_half_evolve_unique' depends on axioms: [propext, Quot.sound]
+'Rule30.triangular_uniqueness' depends on axioms: [propext, Quot.sound]
+'Rule30.onset_reduction' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Rule30.oneLeft_adjacent' depends on axioms: [propext, Quot.sound]
+'Rule30.oneLeft_invariant' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Rule30.alternating_odd_left' depends on axioms: [propext]
+'Rule30.alternating_u_no11' depends on axioms: [propext, Quot.sound]
+'Rule30.column_left_inversion' does not depend on any axioms
+'Rule30.odd_left_latch' depends on axioms: [propext]
+'Rule30.column_right_return' does not depend on any axioms
+'Rule30.column_no11' does not depend on any axioms
+'Rule30.alternating_odd_left' depends on axioms: [propext]
+'Rule30.alternating_return' does not depend on any axioms
+'Rule30.alternating_u_no11' depends on axioms: [propext, Quot.sound]
+'Rule30.column_left_inversion' does not depend on any axioms
+'Rule30.column_no11' does not depend on any axioms
+'Rule30.column_right_return' does not depend on any axioms
+'Rule30.constant_one_complete' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Rule30.constant_zero_complete' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Rule30.constant_zero_empty_right' depends on axioms: [propext, Quot.sound]
+'Rule30.evolve_add' depends on axioms: [propext]
+'Rule30.evolve_finite' depends on axioms: [propext, Quot.sound]
+'Rule30.evolve_nonzero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Rule30.finite_nonzero_not_constant_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Rule30.finite_nonzero_not_eventually_constant' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Rule30.finite_not_constant_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Rule30.first_right_one' depends on axioms: [propext, Quot.sound]
+'Rule30.leftOne_constant_trace' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Rule30.leftOne_evolve' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Rule30.leftOne_not_finite' depends on axioms: [propext, Quot.sound]
+'Rule30.leftOne_step' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Rule30.lift_step' depends on axioms: [propext, Quot.sound]
+'Rule30.localRule_left_injective' depends on axioms: [propext]
+'Rule30.odd_left_latch' depends on axioms: [propext]
+'Rule30.oneCompletion_left' depends on axioms: [propext, Quot.sound]
+'Rule30.oneLeft_adjacent' depends on axioms: [propext, Quot.sound]
+'Rule30.oneLeft_invariant' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Rule30.onset_reduction' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Rule30.onset_reduction_evolve' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Rule30.right_half_evolve_unique' depends on axioms: [propext, Quot.sound]
+'Rule30.ring7_boundary' depends on axioms: [propext]
+'Rule30.ring7_step0' depends on axioms: [propext]
+'Rule30.ring7_step1' depends on axioms: [propext]
+'Rule30.ring7_step2' depends on axioms: [propext]
+'Rule30.ring7_step3' depends on axioms: [propext]
+'Rule30.ringIndex7_left' depends on axioms: [propext, Quot.sound]
+'Rule30.ringIndex7_right' depends on axioms: [propext, Quot.sound]
+'Rule30.step_finite' depends on axioms: [propext, Quot.sound]
+'Rule30.step_nonzero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Rule30.temporal_phase_slip' depends on axioms: [propext]
+'Rule30.trace_shift' depends on axioms: [propext]
+'Rule30.triangular_uniqueness' depends on axioms: [propext, Quot.sound]
+'Rule30.zeroClass_centre' depends on axioms: [propext, Quot.sound]
+'Rule30.zeroClass_not_finite' depends on axioms: [propext, Quot.sound]
+'Rule30.zeroClass_step' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Rule30.zeroClass_trace' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Rule30.zeroCompletion_class' depends on axioms: [propext, Quot.sound]
+'Rule30.zeroCompletion_trace' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Rule30.zeroLeft_update' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Rule30.zero_evolve' depends on axioms: [propext, Quot.sound]
+'Rule30.zero_latch' does not depend on any axioms
+Lean: 50 theorem declarations built and axiom-audited
+PASS  lean                            10.9s
+
+=== lint-bitorder ===
+lint_bitorder: 110 files scanned, no bare packbits/unpackbits
+PASS  lint-bitorder                    1.0s
+
+=== lint-ledger ===
+lint_ledger: 57 ledger rows, 60 experiment logs, all cited paths present
+PASS  lint-ledger                      0.1s
+
+=== unittest ===
+..................................................................note: center_col_golden_10M.bin verified over its first 512 bits; 3,584 beyond that are unchecked
+.note: center_col_golden_10M.bin verified over its first 512 bits; 3,584 beyond that are unchecked
+................................................ss....sss.................................................................................................................................................s.............................................................................................................................................................stopped at step 250 of 3,000; re-run the same command to continue
+resuming from /tmp/tmpfv1fnrx_/cut250.npz at step 250 of 3,000
+stopped at step 1,100 of 3,000; re-run the same command to continue
+resuming from /tmp/tmpfv1fnrx_/cut1100.npz at step 1,100 of 3,000
+stopped at step 2,999 of 3,000; re-run the same command to continue
+resuming from /tmp/tmpfv1fnrx_/cut2999.npz at step 2,999 of 3,000
+..stopped at step 300 of 3,000; re-run the same command to continue
+resuming from /tmp/tmp6hrmrebm/chain.npz at step 300 of 3,000
+stopped at step 600 of 3,000; re-run the same command to continue
+resuming from /tmp/tmp6hrmrebm/chain.npz at step 600 of 3,000
+stopped at step 900 of 3,000; re-run the same command to continue
+resuming from /tmp/tmp6hrmrebm/chain.npz at step 900 of 3,000
+stopped at step 1,200 of 3,000; re-run the same command to continue
+resuming from /tmp/tmp6hrmrebm/chain.npz at step 1,200 of 3,000
+stopped at step 1,500 of 3,000; re-run the same command to continue
+resuming from /tmp/tmp6hrmrebm/chain.npz at step 1,500 of 3,000
+stopped at step 1,800 of 3,000; re-run the same command to continue
+resuming from /tmp/tmp6hrmrebm/chain.npz at step 1,800 of 3,000
+stopped at step 2,100 of 3,000; re-run the same command to continue
+resuming from /tmp/tmp6hrmrebm/chain.npz at step 2,100 of 3,000
+stopped at step 2,400 of 3,000; re-run the same command to continue
+resuming from /tmp/tmp6hrmrebm/chain.npz at step 2,400 of 3,000
+stopped at step 2,700 of 3,000; re-run the same command to continue
+resuming from /tmp/tmp6hrmrebm/chain.npz at step 2,700 of 3,000
+resuming from /tmp/tmp6hrmrebm/chain.npz at step 3,000 of 3,000
+resuming from /tmp/tmp6hrmrebm/chain.npz at step 3,000 of 3,000
+....resuming from /tmp/tmphc0eanlf/r.ckpt.npz at step 2,500 of 2,500
+...............................................control-tm64-s2: SAT verified=True
+control-center16-s4: UNSAT verified=True
+control-tm64-s2: UNKNOWN verified=False
+.........................................................................................................................................................................................................................................................................................................................
+----------------------------------------------------------------------
+Ran 793 tests in 139.480s
+
+OK (skipped=6)
+PASS  unittest                       141.9s
+--------------------------------------------------
+
+verify_all: 11 passed, 1 skipped (0 unexpected), 0 failed  OK
+  Note: skipped stages checked nothing. The canonical bitstreams are
+  the artifacts the prize-facing claims rest on; run this on a machine
+  that has them before treating the repo as verified.

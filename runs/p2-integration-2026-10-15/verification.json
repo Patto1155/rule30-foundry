@@ -1,0 +1,45 @@
+{
+  "verified_source_commit": "f03daeb",
+  "full_verifier": {
+    "passed_stages": 11,
+    "skipped_stages": 1,
+    "failed_stages": 0,
+    "skip": "bitstream:center_col_46M.bin absent (gitignored)",
+    "unittest_run": 793,
+    "unittest_skipped": 6,
+    "unittest_failed": 0
+  },
+  "lean_declarations": 50,
+  "free_replay": {
+    "result": "PASS",
+    "rows": 28,
+    "DRAT_checks": 71
+  },
+  "language_replay": {
+    "local_proofs_verified": 12,
+    "realized_factor_witnesses": 436,
+    "ladder_proofs_verified": 182,
+    "L1_N79_min10_verified": true,
+    "L4_queries_verified": [
+      {
+        "N": 191,
+        "status": "UNKNOWN"
+      },
+      {
+        "N": 300,
+        "status": "UNKNOWN"
+      }
+    ],
+    "scope": "exact factor sets only through length12; no all-length language claim"
+  },
+  "physical_replay": {
+    "verified_queries": 7,
+    "UNKNOWN": 3
+  },
+  "inherited_missing_lfs_objects": 48,
+  "cross_lineage_audit": "not run",
+  "period_two_exclusion": "open",
+  "free_asymptotic_density": "undecided",
+  "L4_all_horizon_bound": "open",
+  "notes": "Subsequent changes record evidence and correct documentation only; runtime sources are those checked by the full verifier."
+}

@@ -1,56 +1,65 @@
 # Checked Rule 30 foundations
 
-Pinned Lean 4.19.0. These proofs import Lean core only, so the project has no
-Mathlib dependency and builds in seconds once the toolchain is installed. Add
-Mathlib back to `lakefile.toml` (and run `lake update`) only when a proof
-imports it.
+Pinned Lean 4.19.0, importing Lean core only (no Mathlib dependency).
 
 ```sh
 cd formal
 lake update
 lake build
-lake env lean Rule30/Basic.lean
 # Or, from repository root:
 python tools/verify_lean.py
 ```
 
-The verifier builds, rechecks the source, requires an axiom printout for every
-theorem declaration, rejects `sorryAx`, and permits only `propext`,
-`Classical.choice`, and `Quot.sound`. All 19 declarations were checked locally; `checked-axioms.txt` records the
-actual build/recheck printouts (not a substitute for rerunning the verifier).
+The verifier builds the project, rechecks every project `.lean` source outside
+`.lake`, discovers every `theorem`/`lemma` declaration (including nested
+namespaces and modifiers), and generates an independent axiom audit importing
+all project modules. Handwritten `#print` lines are not required. Nested comments
+and string literals cannot create fake declarations. Unsupported declaration
+names or namespaces fail closed. It rejects `sorry` warnings and `sorryAx`, and
+allows only `propext`, `Classical.choice`, and `Quot.sound`.
+
+Acceptance checked **50 declarations**: 44 in `Basic.lean`, six in
+`ColumnReduction.lean`. `checked-axioms.txt` contains the actual generated audit
+and version; rerun the verifier to check the current sources. Ten focused Python
+verifier tests passed. The integrated build uses Agent A's column module.
 
 | Lemmas | Exact scope |
 |---|---|
-| `zero_latch`, `alternating_return` | Rule 30 OR identities, checked by Boolean case analysis |
-| `step_finite`, `evolve_finite` | Finite support stays finite |
-| `evolve_add`, `trace_shift` | Semigroup/time-shift identities |
-| `onset_reduction` | Either phase of an eventually alternating trace yields a finite, nonzero row with trace `n mod 2` from onset zero |
-| `oneLeft_adjacent`, `oneLeft_invariant` | Constant-one checkerboard's local invariant |
-| `leftOne_step`, `leftOne_evolve`, `leftOne_constant_trace`, `leftOne_not_finite` | Condrey Theorem 3's **construction half** and its infinite support; no fiber-completeness claim |
-| `temporal_phase_slip` | Recovered depth-seven Boolean/integer coboundary under adjacent-11-free triple hypotheses; algebra only, no spatial transport |
-| `ring7_step0`–`ring7_step3`, `ring7_boundary` | Four-step orbit on a seven-cell ring, plus boundary bits; no claim of a compatible finite physical right half |
+| `zero_latch`, `alternating_return` | Rule 30 OR identities by Boolean case analysis |
+| `step_finite`, `evolve_finite`, `evolve_add`, `trace_shift` | Finite-support and time-shift infrastructure |
+| `onset_reduction_evolve`, `onset_reduction` | An alternating tail gives a finite nonzero row with normalized trace; the stronger form records `T` and `y = evolve x T`, preserving the original interface |
+| `localRule_left_injective`, `right_half_evolve_unique`, `triangular_uniqueness` | Same initial nonnegative half and complete centre trace force equality of entire rows, without a finiteness assumption (Condrey Lemma 1) |
+| `oneLeft_adjacent`, `oneLeft_invariant`, `leftOne_step`, `leftOne_evolve`, `leftOne_constant_trace`, `oneCompletion_left` | Constant-one checkerboard construction |
+| `constant_one_complete`, `leftOne_not_finite`, `finite_not_constant_one` | Entire constant-one fibre and its exclusion for finite rows (Condrey Theorem 3) |
+| `zeroLeft_update`, `zeroClass_centre`, `zeroClass_step`, `zeroClass_trace`, `zeroCompletion_class`, `zeroCompletion_trace` | Constant-zero construction when the first positive one is at `m`; the invariant class moves to `max 1 (m-1)` (Condrey Theorem 2 existence) |
+| `constant_zero_complete`, `zero_evolve`, `constant_zero_empty_right` | Completeness: the explicit left completion is forced; an empty nonnegative right half forces the zero row (Theorem 2) |
+| `step_nonzero`, `evolve_nonzero`, `finite_nonzero_not_eventually_constant` | Finite nonzero evolution and exclusion of both eventual constant phases at every onset (Condrey Corollary 5) |
+| `first_right_one`, `zeroClass_not_finite`, `finite_nonzero_not_constant_zero` | Constant-zero exclusion for finite **nonzero** rows, retaining the zero-row control |
+| `ring7_step0`–`ring7_step3`, `ring7_boundary` | Four-step seven-cell ring orbit and boundary bits |
+| `ringIndex7_left`, `ringIndex7_right`, `lift_step` | Ring-to-infinite-periodic lift with index `(-position) mod 7`; increasing ring indices point physically left. The lift commutes with the standard Rule 30 step |
+| `temporal_phase_slip` | Exact Boolean/integer temporal coboundary under adjacent-11-free hypotheses; no spatial transport conclusion |
+| `column_left_inversion`, `odd_left_latch`, `column_right_return`, `column_no11`, `alternating_odd_left`, `alternating_u_no11` | Agent A's local column identities, odd-time **left** latch, and physical no-adjacent-11 even right output |
 
-`AlternatingTail` explicitly asserts the alternating formula with either
-phase. A generic recurrence-only definition of eventual period two is not
-formalized here. No theorem claims exclusion of eventual period one or two.
-Condrey Theorem 2, Theorem 3's uniqueness/completeness half, and Corollaries
-4–5 remain unformalized. The checkerboard results cannot exclude arbitrary
-constant traces without triangular uniqueness.
+`AlternatingTail` asserts an alternating formula with either phase. No theorem
+excludes eventual period two. The ring lift is spatially periodic and does not
+supply a finite physical right half. Triangular uniqueness concerns the complete
+trace; a separate finite-prefix/light-cone theorem is not asserted here.
 
-The nonlinear identities and checkerboard evolution use OR explicitly
-(Rule 90 filter). The onset hypothesis excludes the zero orbit; the
-checkerboard has arbitrarily distant ones (zero filter). Finiteness/time-shift
-identities are general infrastructure rather than period-exclusion arguments.
+The constant-fibre constructions, completeness, and eventual-constant exclusion
+are checked. Sharp prefix horizons are not formalized. The no-`00000` constraint is not formalized in Lean.
 
-On this sandbox Lean asks for `/proc/<pid>/exe`, which is absent even though
-`/proc/self/exe` exists. `verify_lean.py` detects that exact startup error,
-compiles `tools/lean_proc_path.c`, and retries with a readlink compatibility
-shim. This changes executable-path discovery only, not Lean's kernel or
-proof evaluation. Normal machines use the unmodified path. Local acceptance
-used this shim. The CI `drat` job installs elan and runs this stage, so the
-machine-checked grades are re-checked on every PR; only the CPU job skips it.
+Rule 90 filter: the fibre constructions use the OR explicitly; triangular
+uniqueness, finiteness, and time shifts alone are infrastructure. Zero filter:
+`finite_nonzero_not_constant_zero` explicitly requires nonzero, while the empty
+right-half theorem retains the zero configuration. Normalized alternating tails
+exclude zero by their trace hypothesis.
 
-Not run: full Condrey formalization, global exclusion/support-growth proof,
-external lineage audit,
-GPU jobs. Full repository verification is owned by the lead after integration;
-this agent runs only focused tests while repository suites are serialized.
+On sandboxes lacking `/proc/<pid>/exe`, the verifier detects the exact Lean
+startup error and compiles `tools/lean_proc_path.c` to redirect executable-path
+discovery to `/proc/self/exe`. It changes no proof evaluation or kernel logic.
+This acceptance run used the normal toolchain path without that shim.
+
+Not run by the formalization worker: full repository suite, SAT/DRAT, GPU,
+external lineage audit, period-two exclusion, physical-boundary/support-growth
+proof, sharp-horizon formalization. The lead
+owns full integration validation.

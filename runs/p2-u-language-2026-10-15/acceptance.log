@@ -1,0 +1,12 @@
+test_cone_against_all_small_truth_tables (tests.test_u_language.ULanguageTests.test_cone_against_all_small_truth_tables) ... ok
+test_known_cones_and_controls (tests.test_u_language.ULanguageTests.test_known_cones_and_controls) ... ok
+test_language_count_and_clauses (tests.test_u_language.ULanguageTests.test_language_count_and_clauses) ... ok
+test_minimal_absence_is_finite_scope (tests.test_u_language.ULanguageTests.test_minimal_absence_is_finite_scope) ... ok
+test_numpy_enumeration_matches_python (tests.test_u_language.ULanguageTests.test_numpy_enumeration_matches_python) ... ok
+test_packed_against_naive_boundary (tests.test_u_language.ULanguageTests.test_packed_against_naive_boundary) ... ok
+test_saved_verifier_rejects_tampered_horizon_and_witness (tests.test_u_language.ULanguageTests.test_saved_verifier_rejects_tampered_horizon_and_witness) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.064s
+
+OK

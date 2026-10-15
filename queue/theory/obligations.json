@@ -6,7 +6,8 @@
     "The period-16 conjecture is refuted by a measured period-32 diagonal. Unboundedness and period(d) ~ 2*log2(d) remain observational conjectures, not settled theorems.",
     "GF(2) linear complexity L(n)=n/2 is maximal; no LFSR shortcut.",
     "Uniform Bernoulli is invariant, so Prize 2 is trivial for random ICs and its difficulty is entirely in the single seed.",
-    "Algebraic complexity over F_2(x) is maximal on the center column to N=1024, inside the 7-seed random band at 4 of 4 lengths. Finite prefix; not a proof of non-automaticity."
+    "Algebraic complexity over F_2(x) is maximal on the center column to N=1024, inside the 7-seed random band at 4 of 4 lengths. Finite prefix; not a proof of non-automaticity.",
+    "2026-10-15: Lean checks complete constant fibres, triangular uniqueness and no eventual constant centre trace for any finite nonzero Rule30 row; period two remains open."
   ],
   "obligations": [
     {
@@ -21,13 +22,13 @@
         "finite-exclusion-as-asymptotic": "The finite SAT curve proves only bounded minima. The proposed inequality quantifies over every N and remains entirely unproved, not an extrapolated grade."
       },
       "status": "open",
-      "progress": "2026-10-14: Condrey period-one argument audited in-session (Proof candidate); its monotone latch becomes s_next=(1-s)(1-u)(1-v) under alternation. Right seeds1 and7 have the same leading one but force different left bits at depth9. Existing transfer/renewal work credited; density bound entirely unproved. docs/theory/period2_attempt.md."
+      "progress": "2026-10-15: Lean now checks constant-fibre completeness, triangular uniqueness, normalized onset and eventual period-one exclusion. Column reduction and twelve exact local factor bans leave the all-horizon support-growth bridge open. docs/theory/period2_column_ladder.md."
     },
     {
       "id": "period2-uniform-deficit",
       "prize": "1",
-      "lemma": "For every finite positive-half seed r>=0 and every N>=1, 7*W_N(r) >= N-8, where W_N(r)=sum_{j<=N} e_j(r) is the forced negative completion for c_t=t mod 2.",
-      "implication": "Uniform in r: forced left weight has density at least 1/7 up to a bounded deficit. Implies the support-growth lemma with alpha=1/7, C=8/7, hence excludes a finite alternating trace and, by onset reduction, eventual period two for every nonzero finite row including the seed. Implies the PR #50 bound 7W_N>=N-7bitlength(r).",
+      "lemma": "For every finite positive-half seed r>=0 and N>=1, 7*W_N(r)>=N-8, where e(r) is the unique forced negative completion for c_t=t mod2 and u_s is the physically coupled right output x_1(2s), not an independently chosen boundary word.",
+      "implication": "Uniform physical bound implies alpha=1/7,C=8/7 support growth, hence excludes finite alternating traces and eventual period two. It gives width-credit P7 directly only for bitlength(r)>=2; r=0,1 need separate checks.",
       "refutation": "One r and N with N-7W_N(r) >= 9, re-verified by direct forward simulation of the finite row. Largest deficit found by the 2026-10-14 cross-lineage audit: 8 at r=0x98f9d8a0, N=190 (W=26); never above 4 for r<2^24.",
       "mechanism_check": {
         "ensemble-not-orbit": "Quantifies over finite rows, each with its own physical forced completion; the seed is one instance.",
@@ -35,9 +36,27 @@
       },
       "status": "open",
       "priority_rank_within_period2_candidates": 1,
-      "progress": "2026-10-14 cross-lineage audit of PR #50: independent diagonal-recursion reimplementation agrees with every stored completion; no violation of N-7W_N<=8 found. The 1/7 density matches the seven-cell alternating ring orbit formalized in formal/Rule30/Basic.lean.",
+      "progress": "2026-10-15: physical deficit8 witness r=0x98f9d8a0,N190,W26 independently replayed. K64/128/256 queries for some N<=300 deficit>=9 all UNKNOWN. L1/L2/L3 are insufficient by a relaxed deficit9 word atN191; all-twelve-factor L4 remains a stronger separate conjecture. No physical counterexample or universal proof.",
       "proof_filters": {
         "rule90_and_zero": "Unresolved: the argument must use the OR latch; check the paired Rule90 completion before any proof attempt. Alternating centre excludes the all-zero trace."
+      }
+    },
+    {
+      "id": "period2-l4-deficit",
+      "prize": "1",
+      "lemma": "For every N>=1 and every binary word u of length ceil(N/2) avoiding the twelve certified minimal factors through length12, 7*weight(completion_from_u(u,N))>=N-8. The bans are 11,00000,101001,0100101,010010001,0101000101,0101010000,01010001001,10010001001,010010000101,010100010001,100100010000.",
+      "implication": "A stronger relaxed-language conjecture would imply the physical uniform-deficit bound because all physical even right-output factors obey these local bans. Exact factor coverage through12 does not establish all-length physical language equality.",
+      "refutation": "One replayed L4 free-boundary word with N-7W_N>=9. Resume retained UNKNOWN N191 orN300 CNF with a bounded larger budget. Such a word rejects L4 sufficiency; a physical kill additionally needs causal-cone coupling.",
+      "mechanism_check": {
+        "ensemble-not-orbit": "Universal necessary language conditions would cover every physical finite right seed, including the prize orbit; no ensemble average is interpreted as prize progress.",
+        "finite-exclusion-as-asymptotic": "Twelve local bans are certified and the first three relaxations have an explicit counterexample; L4 queries atN191/N300 are UNKNOWN. No all-N or finite-state characterization follows.",
+        "partial-map-assumed-total": "Any potential must retain ordered temporal predecessor state and prove spatial endpoint bounds; the finite tail table does not close this obligation."
+      },
+      "status": "open",
+      "priority_rank_within_period2_candidates": 1,
+      "progress": "2026-10-15: all12 local cone bans DRAT checked; L3 deficit9 witness is physically impossible because it contains0101000101. L4 finite-tail uncensored max14 is bounded/censored evidence only. docs/theory/period2_column_ladder.md.",
+      "proof_filters": {
+        "rule90_and_zero": "The bans come from Rule30 OR gates with alternating centre; Rule90 realizes11 and zero-centre Rule30 realizes00000. Infrastructure alone is not an exclusion mechanism."
       }
     },
     {
