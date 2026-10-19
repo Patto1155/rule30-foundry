@@ -80,9 +80,42 @@ MECHANISMS = {
         "A negative on a finite prefix is being read as an asymptotic claim. "
         "s*(64)=15 says nothing about bit 65. State what makes this extend, or "
         "record it as a bounded finding."),
+    "prize-restatement": (
+        "The lemma is the prize written differently, so proving it is the whole "
+        "problem and nothing has been reduced. Prize 1 is already known to be "
+        "equivalent to irrationality of sum c_n x^n over F_2(x) and to 'a "
+        "right-special factor at every length'. The subtler form is equivalence "
+        "RELATIVE to a theorem already in hand: a lemma of the shape "
+        "'P implies Q' where a known theorem forbids P and Q together is "
+        "equivalent to not-P the moment that theorem is admitted, because "
+        "not-P implies it vacuously. Such a lemma is admissible as a "
+        "reformulation and must be graded at equal strength; it is not a "
+        "reduction, and it must not be ranked as though it were easier than "
+        "the prize. Name the theorem your bridge uses and check whether the "
+        "prize follows from it and your lemma in BOTH directions."),
 }
 
+# Mechanisms every obligation targeting a given prize must answer, whatever
+# else it names. A card may plausibly escape most mechanisms; it may not
+# decline to say whether it is the prize restated. This is enforced for the
+# prizes where the repo already holds equivalent reformulations -- Prize 1 has
+# three of them on record -- and it exists because a portfolio pilot ranked a
+# relative restatement first, three cycles running, through a gate that had no
+# rule against it and a selector that judges no mathematics.
+MANDATORY_BY_PRIZE = {"1": ("prize-restatement",)}
+
 REQUIRED = ("id", "lemma", "prize", "implication", "refutation", "mechanism_check")
+
+# Optional, and the reason they exist is repeated decisions. The selector ranks
+# attention, so a second call on the same queue is worth making only if the
+# state it sees has changed. REQUIRED alone cannot change between cycles -- a
+# lemma and its implication are fixed by what the card IS -- so a loop that
+# re-ranks after every finding was re-ranking an identical payload. These carry
+# what a finding actually moves: whether the bridge closes, what is still
+# missing, what the falsifier costs, when to stop, and what the last cycle
+# learned. A card may omit any of them; supplying one empty is a queue error,
+# not a silently ignored field.
+OPTIONAL = ("bridge", "missing_lemma", "falsifier_cost", "stop", "progress")
 
 
 def load_queue(path):
@@ -107,6 +140,10 @@ def load_queue(path):
                 continue
             if not isinstance(o.get(field), str) or not o[field].strip():
                 raise ValueError(f"{o['id']}: {field} is required and must be non-empty")
+        for field in OPTIONAL:
+            if field in o and (not isinstance(o[field], str) or not o[field].strip()):
+                raise ValueError(f"{o['id']}: optional field {field} must be a "
+                                 f"non-empty string when present")
         # "none" is deliberate, not a loophole: structural work with no prize
         # bridge should be recorded honestly as such rather than given a prize
         # label it cannot support. It is ranked below prize-linked work.
@@ -146,6 +183,16 @@ def mechanism_gate(obligation):
     if thin:
         return {"verdict": "FAIL",
                 "reason": f"mechanism(s) named without a substantive rebuttal: {thin}"}
+    required = MANDATORY_BY_PRIZE.get(obligation.get("prize"), ())
+    absent = sorted(m for m in required if m not in checks)
+    if absent:
+        return {"verdict": "FAIL",
+                "reason": f"prize {obligation.get('prize')} obligations must address "
+                          f"{absent}: this repo already holds equivalent "
+                          f"reformulations of that prize, so a card that does not "
+                          f"say whether it is one has not been checked against the "
+                          f"failure this gate exists for",
+                "known": sorted(MECHANISMS)}
 
     # Where the obligation supplies numbers, check the arithmetic instead of
     # believing the prose. Prose can assert a search is fine; log2|M| against n
@@ -270,10 +317,17 @@ def jev_rank(data, obligations, directory, api_key, timeout, threshold, provider
                                 "a new lemma is needed.")
     request = {"model": model, "state": {
         "goal": data.get("goal", ""),
-        "obligations": [{k: o[k] for k in REQUIRED if k in o} for o in obligations],
+        "obligations": [{k: o[k] for k in REQUIRED + OPTIONAL if k in o}
+                        for o in obligations],
         "settled": data.get("settled", []),
         "limits": "An obligation with prize 'none' has no prize bridge and ranks "
                   "below any prize-linked obligation. "
+                  "Where an obligation supplies 'bridge', it states whether the "
+                  "implication closes for ALL lengths or periods or is explicitly "
+                  "missing a step; a partial bridge is worth less than a complete "
+                  "one at equal cost. 'missing_lemma' is what is actually unproved, "
+                  "'falsifier_cost' what a refutation attempt costs, 'stop' when to "
+                  "abandon it, and 'progress' what previous cycles established. "
                   "Rank by expected proof value per unit of lead-agent attention. "
                   "A finite-prefix exclusion is not an asymptotic result. Controls "
                   "and nulls are not prize objects. Prefer an obligation whose "

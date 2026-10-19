@@ -1,0 +1,696 @@
+{
+  "steps": 60000,
+  "self_test": {
+    "random_rows": 8,
+    "steps": 60,
+    "mismatches": 0
+  },
+  "identity": {
+    "positions": 60000,
+    "violations": 0,
+    "pinned_positions": 30093,
+    "pinned_fraction": 0.50155
+  },
+  "monotone_latch_orbit": {
+    "zero_phase_steps": 29907,
+    "drops": 0,
+    "closed_form_violations": 0
+  },
+  "monotone_latch_exhaustive": [
+    {
+      "radius": 1,
+      "configurations": 7,
+      "drops": 0
+    },
+    {
+      "radius": 2,
+      "configurations": 31,
+      "drops": 0
+    },
+    {
+      "radius": 3,
+      "configurations": 127,
+      "drops": 0
+    },
+    {
+      "radius": 4,
+      "configurations": 511,
+      "drops": 0
+    },
+    {
+      "radius": 5,
+      "configurations": 2047,
+      "drops": 0
+    }
+  ],
+  "residue_window_collisions": [
+    {
+      "window_bits": 1,
+      "half_width": 1,
+      "zero_phase_positions": 29907,
+      "distinct_windows": 1,
+      "repeated_windows": 29906,
+      "collisions": 14880,
+      "witnesses": [
+        {
+          "t1": 2,
+          "t2": 10,
+          "window": "0",
+          "r_at_t1": 0,
+          "r_at_t2": 1
+        },
+        {
+          "t1": 2,
+          "t2": 11,
+          "window": "0",
+          "r_at_t1": 0,
+          "r_at_t2": 1
+        },
+        {
+          "t1": 2,
+          "t2": 12,
+          "window": "0",
+          "r_at_t1": 0,
+          "r_at_t2": 1
+        }
+      ],
+      "informative": true,
+      "verdict": "REFUTES any function of the 1-bit window"
+    },
+    {
+      "window_bits": 5,
+      "half_width": 3,
+      "zero_phase_positions": 29907,
+      "distinct_windows": 16,
+      "repeated_windows": 29891,
+      "collisions": 9946,
+      "witnesses": [
+        {
+          "t1": 7,
+          "t2": 21,
+          "window": "10011",
+          "r_at_t1": 0,
+          "r_at_t2": 1
+        },
+        {
+          "t1": 14,
+          "t2": 27,
+          "window": "01011",
+          "r_at_t1": 0,
+          "r_at_t2": 1
+        },
+        {
+          "t1": 7,
+          "t2": 32,
+          "window": "10011",
+          "r_at_t1": 0,
+          "r_at_t2": 1
+        }
+      ],
+      "informative": true,
+      "verdict": "REFUTES any function of the 5-bit window"
+    },
+    {
+      "window_bits": 9,
+      "half_width": 5,
+      "zero_phase_positions": 29905,
+      "distinct_windows": 256,
+      "repeated_windows": 29649,
+      "collisions": 8717,
+      "witnesses": [
+        {
+          "t1": 38,
+          "t2": 59,
+          "window": "110101011",
+          "r_at_t1": 1,
+          "r_at_t2": 0
+        },
+        {
+          "t1": 88,
+          "t2": 213,
+          "window": "110000010",
+          "r_at_t1": 1,
+          "r_at_t2": 0
+        },
+        {
+          "t1": 106,
+          "t2": 222,
+          "window": "110001101",
+          "r_at_t1": 0,
+          "r_at_t2": 1
+        }
+      ],
+      "informative": true,
+      "verdict": "REFUTES any function of the 9-bit window"
+    },
+    {
+      "window_bits": 13,
+      "half_width": 7,
+      "zero_phase_positions": 29905,
+      "distinct_windows": 4093,
+      "repeated_windows": 25812,
+      "collisions": 7146,
+      "witnesses": [
+        {
+          "t1": 289,
+          "t2": 439,
+          "window": "1101100010000",
+          "r_at_t1": 0,
+          "r_at_t2": 1
+        },
+        {
+          "t1": 21,
+          "t2": 819,
+          "window": "1100100111010",
+          "r_at_t1": 1,
+          "r_at_t2": 0
+        },
+        {
+          "t1": 510,
+          "t2": 826,
+          "window": "1110100001001",
+          "r_at_t1": 0,
+          "r_at_t2": 1
+        }
+      ],
+      "informative": true,
+      "verdict": "REFUTES any function of the 13-bit window"
+    },
+    {
+      "window_bits": 17,
+      "half_width": 9,
+      "zero_phase_positions": 29902,
+      "distinct_windows": 23827,
+      "repeated_windows": 6075,
+      "collisions": 1523,
+      "witnesses": [
+        {
+          "t1": 214,
+          "t2": 1981,
+          "window": "10111000001011000",
+          "r_at_t1": 0,
+          "r_at_t2": 1
+        },
+        {
+          "t1": 1864,
+          "t2": 2012,
+          "window": "00000100001011010",
+          "r_at_t1": 1,
+          "r_at_t2": 0
+        },
+        {
+          "t1": 2180,
+          "t2": 2222,
+          "window": "00000100000111011",
+          "r_at_t1": 0,
+          "r_at_t2": 1
+        }
+      ],
+      "informative": true,
+      "verdict": "REFUTES any function of the 17-bit window"
+    },
+    {
+      "window_bits": 21,
+      "half_width": 11,
+      "zero_phase_positions": 29900,
+      "distinct_windows": 29450,
+      "repeated_windows": 450,
+      "collisions": 103,
+      "witnesses": [
+        {
+          "t1": 2813,
+          "t2": 4185,
+          "window": "010001011100100100011",
+          "r_at_t1": 0,
+          "r_at_t2": 1
+        },
+        {
+          "t1": 4017,
+          "t2": 4517,
+          "window": "011001010100110011010",
+          "r_at_t1": 1,
+          "r_at_t2": 0
+        },
+        {
+          "t1": 4018,
+          "t2": 4518,
+          "window": "110010101001100110101",
+          "r_at_t1": 1,
+          "r_at_t2": 0
+        }
+      ],
+      "informative": true,
+      "verdict": "REFUTES any function of the 21-bit window"
+    },
+    {
+      "window_bits": 25,
+      "half_width": 13,
+      "zero_phase_positions": 29897,
+      "distinct_windows": 29878,
+      "repeated_windows": 19,
+      "collisions": 6,
+      "witnesses": [
+        {
+          "t1": 3189,
+          "t2": 28768,
+          "window": "0110010101010101111101011",
+          "r_at_t1": 0,
+          "r_at_t2": 1
+        },
+        {
+          "t1": 19326,
+          "t2": 30703,
+          "window": "1010100011100010101110000",
+          "r_at_t1": 1,
+          "r_at_t2": 0
+        },
+        {
+          "t1": 5098,
+          "t2": 38191,
+          "window": "1011010000110100000100011",
+          "r_at_t1": 0,
+          "r_at_t2": 1
+        }
+      ],
+      "informative": true,
+      "verdict": "REFUTES any function of the 25-bit window"
+    }
+  ],
+  "controls": {
+    "positive_control_width1": [
+      {
+        "window_bits": 1,
+        "half_width": 1,
+        "zero_phase_positions": 29971,
+        "distinct_windows": 1,
+        "repeated_windows": 29970,
+        "collisions": 0,
+        "witnesses": [],
+        "informative": true,
+        "verdict": "no collision at this width (informative)"
+      },
+      {
+        "window_bits": 5,
+        "half_width": 3,
+        "zero_phase_positions": 29969,
+        "distinct_windows": 16,
+        "repeated_windows": 29953,
+        "collisions": 0,
+        "witnesses": [],
+        "informative": true,
+        "verdict": "no collision at this width (informative)"
+      },
+      {
+        "window_bits": 9,
+        "half_width": 5,
+        "zero_phase_positions": 29967,
+        "distinct_windows": 256,
+        "repeated_windows": 29711,
+        "collisions": 0,
+        "witnesses": [],
+        "informative": true,
+        "verdict": "no collision at this width (informative)"
+      },
+      {
+        "window_bits": 13,
+        "half_width": 7,
+        "zero_phase_positions": 29965,
+        "distinct_windows": 4092,
+        "repeated_windows": 25873,
+        "collisions": 0,
+        "witnesses": [],
+        "informative": true,
+        "verdict": "no collision at this width (informative)"
+      },
+      {
+        "window_bits": 17,
+        "half_width": 9,
+        "zero_phase_positions": 29962,
+        "distinct_windows": 24043,
+        "repeated_windows": 5919,
+        "collisions": 0,
+        "witnesses": [],
+        "informative": true,
+        "verdict": "no collision at this width (informative)"
+      },
+      {
+        "window_bits": 21,
+        "half_width": 11,
+        "zero_phase_positions": 29962,
+        "distinct_windows": 29541,
+        "repeated_windows": 421,
+        "collisions": 0,
+        "witnesses": [],
+        "informative": true,
+        "verdict": "no collision at this width (informative)"
+      },
+      {
+        "window_bits": 25,
+        "half_width": 13,
+        "zero_phase_positions": 29960,
+        "distinct_windows": 29938,
+        "repeated_windows": 22,
+        "collisions": 0,
+        "witnesses": [],
+        "informative": true,
+        "verdict": "no collision at this width (informative)"
+      }
+    ],
+    "positive_control_width3": [
+      {
+        "window_bits": 1,
+        "half_width": 1,
+        "zero_phase_positions": 29971,
+        "distinct_windows": 1,
+        "repeated_windows": 29970,
+        "collisions": 14998,
+        "witnesses": [
+          {
+            "t1": 1,
+            "t2": 7,
+            "window": "0",
+            "r_at_t1": 0,
+            "r_at_t2": 1
+          },
+          {
+            "t1": 1,
+            "t2": 10,
+            "window": "0",
+            "r_at_t1": 0,
+            "r_at_t2": 1
+          },
+          {
+            "t1": 1,
+            "t2": 16,
+            "window": "0",
+            "r_at_t1": 0,
+            "r_at_t2": 1
+          }
+        ],
+        "informative": true,
+        "verdict": "REFUTES any function of the 1-bit window"
+      },
+      {
+        "window_bits": 5,
+        "half_width": 3,
+        "zero_phase_positions": 29969,
+        "distinct_windows": 16,
+        "repeated_windows": 29953,
+        "collisions": 0,
+        "witnesses": [],
+        "informative": true,
+        "verdict": "no collision at this width (informative)"
+      },
+      {
+        "window_bits": 9,
+        "half_width": 5,
+        "zero_phase_positions": 29967,
+        "distinct_windows": 256,
+        "repeated_windows": 29711,
+        "collisions": 0,
+        "witnesses": [],
+        "informative": true,
+        "verdict": "no collision at this width (informative)"
+      },
+      {
+        "window_bits": 13,
+        "half_width": 7,
+        "zero_phase_positions": 29965,
+        "distinct_windows": 4092,
+        "repeated_windows": 25873,
+        "collisions": 0,
+        "witnesses": [],
+        "informative": true,
+        "verdict": "no collision at this width (informative)"
+      },
+      {
+        "window_bits": 17,
+        "half_width": 9,
+        "zero_phase_positions": 29962,
+        "distinct_windows": 24043,
+        "repeated_windows": 5919,
+        "collisions": 0,
+        "witnesses": [],
+        "informative": true,
+        "verdict": "no collision at this width (informative)"
+      },
+      {
+        "window_bits": 21,
+        "half_width": 11,
+        "zero_phase_positions": 29962,
+        "distinct_windows": 29541,
+        "repeated_windows": 421,
+        "collisions": 0,
+        "witnesses": [],
+        "informative": true,
+        "verdict": "no collision at this width (informative)"
+      },
+      {
+        "window_bits": 25,
+        "half_width": 13,
+        "zero_phase_positions": 29960,
+        "distinct_windows": 29938,
+        "repeated_windows": 22,
+        "collisions": 0,
+        "witnesses": [],
+        "informative": true,
+        "verdict": "no collision at this width (informative)"
+      }
+    ],
+    "random_null": [
+      {
+        "window_bits": 1,
+        "half_width": 1,
+        "zero_phase_positions": 29971,
+        "distinct_windows": 1,
+        "repeated_windows": 29970,
+        "collisions": 14852,
+        "witnesses": [
+          {
+            "t1": 1,
+            "t2": 3,
+            "window": "0",
+            "r_at_t1": 0,
+            "r_at_t2": 1
+          },
+          {
+            "t1": 1,
+            "t2": 4,
+            "window": "0",
+            "r_at_t1": 0,
+            "r_at_t2": 1
+          },
+          {
+            "t1": 1,
+            "t2": 16,
+            "window": "0",
+            "r_at_t1": 0,
+            "r_at_t2": 1
+          }
+        ],
+        "informative": true,
+        "verdict": "REFUTES any function of the 1-bit window"
+      },
+      {
+        "window_bits": 5,
+        "half_width": 3,
+        "zero_phase_positions": 29969,
+        "distinct_windows": 16,
+        "repeated_windows": 29953,
+        "collisions": 14936,
+        "witnesses": [
+          {
+            "t1": 3,
+            "t2": 5,
+            "window": "00000",
+            "r_at_t1": 1,
+            "r_at_t2": 0
+          },
+          {
+            "t1": 10,
+            "t2": 28,
+            "window": "11011",
+            "r_at_t1": 0,
+            "r_at_t2": 1
+          },
+          {
+            "t1": 10,
+            "t2": 38,
+            "window": "11011",
+            "r_at_t1": 0,
+            "r_at_t2": 1
+          }
+        ],
+        "informative": true,
+        "verdict": "REFUTES any function of the 5-bit window"
+      },
+      {
+        "window_bits": 9,
+        "half_width": 5,
+        "zero_phase_positions": 29967,
+        "distinct_windows": 256,
+        "repeated_windows": 29711,
+        "collisions": 14920,
+        "witnesses": [
+          {
+            "t1": 10,
+            "t2": 104,
+            "window": "001101111",
+            "r_at_t1": 0,
+            "r_at_t2": 1
+          },
+          {
+            "t1": 43,
+            "t2": 112,
+            "window": "110000101",
+            "r_at_t1": 0,
+            "r_at_t2": 1
+          },
+          {
+            "t1": 89,
+            "t2": 115,
+            "window": "000101010",
+            "r_at_t1": 0,
+            "r_at_t2": 1
+          }
+        ],
+        "informative": true,
+        "verdict": "REFUTES any function of the 9-bit window"
+      },
+      {
+        "window_bits": 13,
+        "half_width": 7,
+        "zero_phase_positions": 29965,
+        "distinct_windows": 4092,
+        "repeated_windows": 25873,
+        "collisions": 12973,
+        "witnesses": [
+          {
+            "t1": 203,
+            "t2": 252,
+            "window": "1001010110001",
+            "r_at_t1": 1,
+            "r_at_t2": 0
+          },
+          {
+            "t1": 286,
+            "t2": 295,
+            "window": "0101110010101",
+            "r_at_t1": 1,
+            "r_at_t2": 0
+          },
+          {
+            "t1": 158,
+            "t2": 346,
+            "window": "1011010110010",
+            "r_at_t1": 1,
+            "r_at_t2": 0
+          }
+        ],
+        "informative": true,
+        "verdict": "REFUTES any function of the 13-bit window"
+      },
+      {
+        "window_bits": 17,
+        "half_width": 9,
+        "zero_phase_positions": 29962,
+        "distinct_windows": 24043,
+        "repeated_windows": 5919,
+        "collisions": 2976,
+        "witnesses": [
+          {
+            "t1": 505,
+            "t2": 1161,
+            "window": "11100010010001100",
+            "r_at_t1": 0,
+            "r_at_t2": 1
+          },
+          {
+            "t1": 1056,
+            "t2": 1207,
+            "window": "11111010001111001",
+            "r_at_t1": 1,
+            "r_at_t2": 0
+          },
+          {
+            "t1": 855,
+            "t2": 1728,
+            "window": "11000011000011001",
+            "r_at_t1": 0,
+            "r_at_t2": 1
+          }
+        ],
+        "informative": true,
+        "verdict": "REFUTES any function of the 17-bit window"
+      },
+      {
+        "window_bits": 21,
+        "half_width": 11,
+        "zero_phase_positions": 29962,
+        "distinct_windows": 29541,
+        "repeated_windows": 421,
+        "collisions": 210,
+        "witnesses": [
+          {
+            "t1": 855,
+            "t2": 1728,
+            "window": "101100001100001100101",
+            "r_at_t1": 0,
+            "r_at_t2": 1
+          },
+          {
+            "t1": 856,
+            "t2": 1729,
+            "window": "011000011000011001011",
+            "r_at_t1": 1,
+            "r_at_t2": 0
+          },
+          {
+            "t1": 857,
+            "t2": 1730,
+            "window": "110000110000110010110",
+            "r_at_t1": 1,
+            "r_at_t2": 0
+          }
+        ],
+        "informative": true,
+        "verdict": "REFUTES any function of the 21-bit window"
+      },
+      {
+        "window_bits": 25,
+        "half_width": 13,
+        "zero_phase_positions": 29960,
+        "distinct_windows": 29938,
+        "repeated_windows": 22,
+        "collisions": 10,
+        "witnesses": [
+          {
+            "t1": 4229,
+            "t2": 18754,
+            "window": "1110000010100100111111110",
+            "r_at_t1": 0,
+            "r_at_t2": 1
+          },
+          {
+            "t1": 10723,
+            "t2": 29741,
+            "window": "1110111110000011111011000",
+            "r_at_t1": 1,
+            "r_at_t2": 0
+          },
+          {
+            "t1": 10699,
+            "t2": 34979,
+            "window": "1000001111100000101111111",
+            "r_at_t1": 1,
+            "r_at_t2": 0
+          }
+        ],
+        "informative": true,
+        "verdict": "REFUTES any function of the 25-bit window"
+      }
+    ]
+  },
+  "repeated_factor_ceiling_bits": 31.7,
+  "claim_limit": "A collision PROVES, constructively, that no function of that window exists -- on this prefix, for the single seed, for that predictor shape. The absence of a collision proves nothing once the windows stop repeating, and the probe marks those rows uninformative. Neither outcome is an asymptotic statement, and neither excludes local proof strategies in general: the lemma's hypothesis is a periodic centre column, which is not the object measured here."
+}

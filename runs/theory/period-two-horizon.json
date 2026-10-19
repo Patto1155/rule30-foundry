@@ -1,0 +1,500 @@
+{
+  "steps": 60,
+  "self_test": {
+    "rows_checked": 4,
+    "steps": 20,
+    "mismatches": 0
+  },
+  "positive_control_reproduces_published_p1_table": true,
+  "rows": [
+    {
+      "radius": 1,
+      "constant": {
+        "H0": {
+          "max_index": 2,
+          "count": 1,
+          "saturated": false
+        },
+        "H1": {
+          "max_index": 1,
+          "count": 2,
+          "saturated": false
+        }
+      },
+      "period_two": {
+        "period_dividing_two": {
+          "max_index": 6,
+          "prefix_length": 7,
+          "count": 1,
+          "saturated": false
+        },
+        "alternating": {
+          "max_index": 6,
+          "prefix_length": 7,
+          "count": 1,
+          "saturated": false
+        }
+      },
+      "published_p1_match": true,
+      "published_p1_expected": [
+        2,
+        1,
+        1,
+        2
+      ],
+      "published_p1_observed": [
+        2,
+        1,
+        1,
+        2
+      ]
+    },
+    {
+      "radius": 2,
+      "constant": {
+        "H0": {
+          "max_index": 2,
+          "count": 3,
+          "saturated": false
+        },
+        "H1": {
+          "max_index": 3,
+          "count": 4,
+          "saturated": false
+        }
+      },
+      "period_two": {
+        "period_dividing_two": {
+          "max_index": 6,
+          "prefix_length": 7,
+          "count": 1,
+          "saturated": false
+        },
+        "alternating": {
+          "max_index": 6,
+          "prefix_length": 7,
+          "count": 1,
+          "saturated": false
+        }
+      },
+      "published_p1_match": true,
+      "published_p1_expected": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "published_p1_observed": [
+        2,
+        3,
+        3,
+        4
+      ]
+    },
+    {
+      "radius": 3,
+      "constant": {
+        "H0": {
+          "max_index": 4,
+          "count": 7,
+          "saturated": false
+        },
+        "H1": {
+          "max_index": 3,
+          "count": 8,
+          "saturated": false
+        }
+      },
+      "period_two": {
+        "period_dividing_two": {
+          "max_index": 6,
+          "prefix_length": 7,
+          "count": 1,
+          "saturated": false
+        },
+        "alternating": {
+          "max_index": 6,
+          "prefix_length": 7,
+          "count": 1,
+          "saturated": false
+        }
+      },
+      "published_p1_match": true,
+      "published_p1_expected": [
+        4,
+        7,
+        3,
+        8
+      ],
+      "published_p1_observed": [
+        4,
+        7,
+        3,
+        8
+      ]
+    },
+    {
+      "radius": 4,
+      "constant": {
+        "H0": {
+          "max_index": 4,
+          "count": 15,
+          "saturated": false
+        },
+        "H1": {
+          "max_index": 5,
+          "count": 16,
+          "saturated": false
+        }
+      },
+      "period_two": {
+        "period_dividing_two": {
+          "max_index": 6,
+          "prefix_length": 7,
+          "count": 2,
+          "saturated": false
+        },
+        "alternating": {
+          "max_index": 6,
+          "prefix_length": 7,
+          "count": 2,
+          "saturated": false
+        }
+      },
+      "published_p1_match": true,
+      "published_p1_expected": [
+        4,
+        15,
+        5,
+        16
+      ],
+      "published_p1_observed": [
+        4,
+        15,
+        5,
+        16
+      ]
+    },
+    {
+      "radius": 5,
+      "constant": {
+        "H0": {
+          "max_index": 6,
+          "count": 31,
+          "saturated": false
+        },
+        "H1": {
+          "max_index": 5,
+          "count": 32,
+          "saturated": false
+        }
+      },
+      "period_two": {
+        "period_dividing_two": {
+          "max_index": 8,
+          "prefix_length": 9,
+          "count": 7,
+          "saturated": false
+        },
+        "alternating": {
+          "max_index": 8,
+          "prefix_length": 9,
+          "count": 7,
+          "saturated": false
+        }
+      },
+      "published_p1_match": true,
+      "published_p1_expected": [
+        6,
+        31,
+        5,
+        32
+      ],
+      "published_p1_observed": [
+        6,
+        31,
+        5,
+        32
+      ]
+    },
+    {
+      "radius": 6,
+      "constant": {
+        "H0": {
+          "max_index": 6,
+          "count": 63,
+          "saturated": false
+        },
+        "H1": {
+          "max_index": 7,
+          "count": 64,
+          "saturated": false
+        }
+      },
+      "period_two": {
+        "period_dividing_two": {
+          "max_index": 9,
+          "prefix_length": 10,
+          "count": 11,
+          "saturated": false
+        },
+        "alternating": {
+          "max_index": 9,
+          "prefix_length": 10,
+          "count": 11,
+          "saturated": false
+        }
+      },
+      "published_p1_match": true,
+      "published_p1_expected": [
+        6,
+        63,
+        7,
+        64
+      ],
+      "published_p1_observed": [
+        6,
+        63,
+        7,
+        64
+      ]
+    },
+    {
+      "radius": 7,
+      "constant": {
+        "H0": {
+          "max_index": 8,
+          "count": 127,
+          "saturated": false
+        },
+        "H1": {
+          "max_index": 7,
+          "count": 128,
+          "saturated": false
+        }
+      },
+      "period_two": {
+        "period_dividing_two": {
+          "max_index": 9,
+          "prefix_length": 10,
+          "count": 67,
+          "saturated": false
+        },
+        "alternating": {
+          "max_index": 9,
+          "prefix_length": 10,
+          "count": 67,
+          "saturated": false
+        }
+      },
+      "published_p1_match": true,
+      "published_p1_expected": [
+        8,
+        127,
+        7,
+        128
+      ],
+      "published_p1_observed": [
+        8,
+        127,
+        7,
+        128
+      ]
+    },
+    {
+      "radius": 8,
+      "constant": {
+        "H0": {
+          "max_index": 8,
+          "count": 255,
+          "saturated": false
+        },
+        "H1": {
+          "max_index": 9,
+          "count": 256,
+          "saturated": false
+        }
+      },
+      "period_two": {
+        "period_dividing_two": {
+          "max_index": 14,
+          "prefix_length": 15,
+          "count": 3,
+          "saturated": false
+        },
+        "alternating": {
+          "max_index": 14,
+          "prefix_length": 15,
+          "count": 3,
+          "saturated": false
+        }
+      }
+    },
+    {
+      "radius": 9,
+      "constant": {
+        "H0": {
+          "max_index": 10,
+          "count": 511,
+          "saturated": false
+        },
+        "H1": {
+          "max_index": 9,
+          "count": 512,
+          "saturated": false
+        }
+      },
+      "period_two": {
+        "period_dividing_two": {
+          "max_index": 16,
+          "prefix_length": 17,
+          "count": 1,
+          "saturated": false
+        },
+        "alternating": {
+          "max_index": 16,
+          "prefix_length": 17,
+          "count": 1,
+          "saturated": false
+        }
+      }
+    },
+    {
+      "radius": 10,
+      "constant": {
+        "H0": {
+          "max_index": 10,
+          "count": 1023,
+          "saturated": false
+        },
+        "H1": {
+          "max_index": 11,
+          "count": 1024,
+          "saturated": false
+        }
+      },
+      "period_two": {
+        "period_dividing_two": {
+          "max_index": 16,
+          "prefix_length": 17,
+          "count": 2,
+          "saturated": false
+        },
+        "alternating": {
+          "max_index": 16,
+          "prefix_length": 17,
+          "count": 2,
+          "saturated": false
+        }
+      }
+    }
+  ],
+  "alternating_prefix_length_by_radius": [
+    [
+      1,
+      7
+    ],
+    [
+      2,
+      7
+    ],
+    [
+      3,
+      7
+    ],
+    [
+      4,
+      7
+    ],
+    [
+      5,
+      9
+    ],
+    [
+      6,
+      10
+    ],
+    [
+      7,
+      10
+    ],
+    [
+      8,
+      15
+    ],
+    [
+      9,
+      17
+    ],
+    [
+      10,
+      17
+    ]
+  ],
+  "alternating_non_decreasing_in_radius": true,
+  "alternating_vs_p1_prefix": [
+    [
+      1,
+      7,
+      3,
+      2.333
+    ],
+    [
+      2,
+      7,
+      4,
+      1.75
+    ],
+    [
+      3,
+      7,
+      5,
+      1.4
+    ],
+    [
+      4,
+      7,
+      6,
+      1.167
+    ],
+    [
+      5,
+      9,
+      7,
+      1.286
+    ],
+    [
+      6,
+      10,
+      8,
+      1.25
+    ],
+    [
+      7,
+      10,
+      9,
+      1.111
+    ],
+    [
+      8,
+      15,
+      10,
+      1.5
+    ],
+    [
+      9,
+      17,
+      11,
+      1.545
+    ],
+    [
+      10,
+      17,
+      12,
+      1.417
+    ]
+  ],
+  "saturated_radii": [],
+  "verdict": "THE HORIZON ROUTE TO PERIOD TWO IS NOT CLOSED, and the growth of H(2, w) does not close it. The published p=1 law H(1, w) = w + 2 is itself linear in w, so 'H(2, w) >= w' -- the reason given for the method failing -- is satisfied by the case the method DOES settle and separates nothing. Every radius measured here has a FINITE alternating horizon, which is the same shape as the p=1 law at a different slope. What would actually close the method is a finite row with an infinite alternating trace; none was found.",
+  "claim_limit": "This prices a method; it proves nothing about the prize. Excluding eventual period 2 would still leave every p >= 3 open, and Prize 1 needs all periods. Reproducing the published p=1 table is a check on this implementation, not new evidence about period two. A horizon that saturates at the step budget is reported as saturated and is a lower bound, not a measured maximum."
+}
