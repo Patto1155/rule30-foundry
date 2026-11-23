@@ -14,7 +14,7 @@ Nobody knows. Wolfram is offering **$30,000 in prizes for 3 problems** to find o
 
 | # | Problem | This Project's Result |
 |---|---------|----------------------|
-| 1 | Does the center column ever **repeat** (become periodic)? | No period `p <= 5,000,000` in the first 10M bits — **decided exactly**, all 9,999,936 candidates, 0 survivors |
+| 1 | Does the center column ever **repeat** (become periodic)? | No eventual period `(k, p)` with `k + p <= 9,999,976` in the first 10M bits, any preperiod — **decided exactly** |
 | 2 | Is there a **faster algorithm** than running Rule 30 step by step? | No linear or Markov shortcut found |
 | 3 | Are 0s and 1s **equally distributed** in the long run? | Bias < 0.05% over 10M bits — consistent with yes |
 
