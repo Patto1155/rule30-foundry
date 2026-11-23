@@ -118,7 +118,7 @@ one-period composite is either constant (⇒ period `p`) or `x ↦ x ⊕ c` (⇒
 **Corollary.** `D_0 ≡ 1` and `D_1 ≡ 1` (t≥1) come straight from the rule at the
 cone edge, so by induction **every left diagonal is eventually periodic.**
 
-**Conjecture (period-16), open.** Every left diagonal is eventually periodic with
+**Conjecture (period-16) — REFUTED 2026-08-19** (diagonal d=87867 has minimal period 32; the period is unbounded, see section 4 and the ledger). Kept as history; the "16-bit word" language below holds only for `d < 87866`. Original text: Every left diagonal is eventually periodic with
 period **dividing 16**. Verified over `d = 0..11997` at `T = 40000`: max period
 16, zero exceptions. Proving it requires bounding how often the lemma's
 period-doubling branch (predecessor eventually all-zero over a full period) can

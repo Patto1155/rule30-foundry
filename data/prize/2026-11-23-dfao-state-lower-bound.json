@@ -1,0 +1,400 @@
+{
+  "artifact_type": "rule30.dfao_state_lower_bound",
+  "artifact_version": 1,
+  "claim_level": "Certificate (bounded exact exclusion; lower bound only)",
+  "purpose": "exact-exclusion",
+  "created_at": "2026-11-23T23:40:07Z",
+  "elapsed_s": 66.67,
+  "statement": "No base-2 DFAO (repo digit convention, no leading zeros) with fewer than the listed number of states generates the first n single-seed centre-column bits. Myhill-Nerode distinguishability over fully defined prefix positions; lower bound on s*(n) only.",
+  "not_evidence_of_complexity": "A uniform random string gets the same bound (random_band). The class at the bound is far smaller than 2^n only relative to labelled tables; see log2_class_at_bound vs n.",
+  "self_test": {
+    "passed": true,
+    "checks": [
+      {
+        "check": "bound never exceeds the generating automaton's state count",
+        "passed": true,
+        "detail": "1200 cases, 0 violations, 225 tight"
+      },
+      {
+        "check": "Thue-Morse bound is exactly 2 at n=65536, both directions",
+        "passed": true,
+        "detail": "msd 2, lsd 2"
+      },
+      {
+        "check": "bound <= certified s*_msd(56) = 13",
+        "passed": true,
+        "detail": "lower bound 13"
+      },
+      {
+        "check": "bound <= certified s*_msd(64) = 15",
+        "passed": true,
+        "detail": "lower bound 15"
+      },
+      {
+        "check": "random 65536-bit string exceeds 1000 states, both directions",
+        "passed": true,
+        "detail": "msd 7254, lsd 3825"
+      }
+    ]
+  },
+  "source": {
+    "bitstream": "center_col_10M.bin",
+    "bits": 10000000,
+    "bitorder": "little",
+    "sha256_prefix_bits": "6f8670b4a89826c8228d6a165047792e91551dedfb2853b8f12572d466b7547e",
+    "naive_prefix_checked_bits": 4096
+  },
+  "control_seeds": [
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36
+  ],
+  "table": [
+    {
+      "n": 8,
+      "msd_lower_bound": 3,
+      "msd_J": 1,
+      "lsd_lower_bound": 2,
+      "lsd_J": 1,
+      "msd_log2_class_at_bound": 12.5,
+      "lsd_log2_class_at_bound": 6.0,
+      "msd_random_band": [
+        1,
+        3
+      ],
+      "msd_vs_band": "inside",
+      "lsd_random_band": [
+        1,
+        2
+      ],
+      "lsd_vs_band": "inside"
+    },
+    {
+      "n": 16,
+      "msd_lower_bound": 5,
+      "msd_J": 1,
+      "lsd_lower_bound": 4,
+      "lsd_J": 2,
+      "msd_log2_class_at_bound": 28.2,
+      "lsd_log2_class_at_bound": 20.0,
+      "msd_random_band": [
+        4,
+        6
+      ],
+      "msd_vs_band": "inside",
+      "lsd_random_band": [
+        3,
+        4
+      ],
+      "lsd_vs_band": "inside"
+    },
+    {
+      "n": 24,
+      "msd_lower_bound": 7,
+      "msd_J": 1,
+      "lsd_lower_bound": 4,
+      "lsd_J": 2,
+      "msd_log2_class_at_bound": 46.3,
+      "lsd_log2_class_at_bound": 20.0,
+      "msd_random_band": [
+        5,
+        7
+      ],
+      "msd_vs_band": "inside",
+      "lsd_random_band": [
+        3,
+        4
+      ],
+      "lsd_vs_band": "inside"
+    },
+    {
+      "n": 32,
+      "msd_lower_bound": 8,
+      "msd_J": 1,
+      "lsd_lower_bound": 7,
+      "lsd_J": 3,
+      "msd_log2_class_at_bound": 56.0,
+      "lsd_log2_class_at_bound": 46.3,
+      "msd_random_band": [
+        6,
+        8
+      ],
+      "msd_vs_band": "inside",
+      "lsd_random_band": [
+        3,
+        6
+      ],
+      "lsd_vs_band": "above"
+    },
+    {
+      "n": 40,
+      "msd_lower_bound": 9,
+      "msd_J": 2,
+      "lsd_lower_bound": 8,
+      "lsd_J": 3,
+      "msd_log2_class_at_bound": 66.1,
+      "lsd_log2_class_at_bound": 56.0,
+      "msd_random_band": [
+        8,
+        9
+      ],
+      "msd_vs_band": "inside",
+      "lsd_random_band": [
+        5,
+        8
+      ],
+      "lsd_vs_band": "inside"
+    },
+    {
+      "n": 48,
+      "msd_lower_bound": 11,
+      "msd_J": 2,
+      "lsd_lower_bound": 8,
+      "lsd_J": 3,
+      "msd_log2_class_at_bound": 87.1,
+      "lsd_log2_class_at_bound": 56.0,
+      "msd_random_band": [
+        10,
+        11
+      ],
+      "msd_vs_band": "inside",
+      "lsd_random_band": [
+        7,
+        8
+      ],
+      "lsd_vs_band": "inside"
+    },
+    {
+      "n": 56,
+      "msd_lower_bound": 13,
+      "msd_J": 2,
+      "lsd_lower_bound": 8,
+      "lsd_J": 3,
+      "msd_log2_class_at_bound": 109.2,
+      "lsd_log2_class_at_bound": 56.0,
+      "msd_random_band": [
+        11,
+        13
+      ],
+      "msd_vs_band": "inside",
+      "lsd_random_band": [
+        7,
+        8
+      ],
+      "lsd_vs_band": "inside"
+    },
+    {
+      "n": 64,
+      "msd_lower_bound": 15,
+      "msd_J": 2,
+      "lsd_lower_bound": 8,
+      "lsd_J": 3,
+      "msd_log2_class_at_bound": 132.2,
+      "lsd_log2_class_at_bound": 56.0,
+      "msd_random_band": [
+        12,
+        15
+      ],
+      "msd_vs_band": "inside",
+      "lsd_random_band": [
+        7,
+        8
+      ],
+      "lsd_vs_band": "inside"
+    },
+    {
+      "n": 128,
+      "msd_lower_bound": 30,
+      "msd_J": 2,
+      "lsd_lower_bound": 16,
+      "lsd_J": 4,
+      "msd_log2_class_at_bound": 324.4,
+      "lsd_log2_class_at_bound": 144.0,
+      "msd_random_band": [
+        25,
+        29
+      ],
+      "msd_vs_band": "above",
+      "lsd_random_band": [
+        11,
+        16
+      ],
+      "lsd_vs_band": "inside"
+    },
+    {
+      "n": 256,
+      "msd_lower_bound": 53,
+      "msd_J": 2,
+      "lsd_lower_bound": 29,
+      "lsd_J": 5,
+      "msd_log2_class_at_bound": 660.2,
+      "lsd_log2_class_at_bound": 310.8,
+      "msd_random_band": [
+        46,
+        53
+      ],
+      "msd_vs_band": "inside",
+      "lsd_random_band": [
+        24,
+        31
+      ],
+      "lsd_vs_band": "inside"
+    },
+    {
+      "n": 1024,
+      "msd_lower_bound": 127,
+      "msd_J": 3,
+      "lsd_lower_bound": 76,
+      "lsd_J": 7,
+      "msd_log2_class_at_bound": 1902.1,
+      "lsd_log2_class_at_bound": 1025.7,
+      "msd_random_band": [
+        125,
+        127
+      ],
+      "msd_vs_band": "inside",
+      "lsd_random_band": [
+        74,
+        83
+      ],
+      "lsd_vs_band": "inside"
+    },
+    {
+      "n": 4096,
+      "msd_lower_bound": 510,
+      "msd_J": 3,
+      "lsd_lower_bound": 255,
+      "lsd_J": 8,
+      "msd_log2_class_at_bound": 9684.2,
+      "lsd_log2_class_at_bound": 4332.1,
+      "msd_random_band": [
+        504,
+        510
+      ],
+      "msd_vs_band": "inside",
+      "lsd_random_band": [
+        254,
+        256
+      ],
+      "lsd_vs_band": "inside"
+    },
+    {
+      "n": 16384,
+      "msd_lower_bound": 1990,
+      "msd_J": 3,
+      "lsd_lower_bound": 1011,
+      "lsd_J": 10,
+      "msd_log2_class_at_bound": 45605.0,
+      "lsd_log2_class_at_bound": 21193.7,
+      "msd_random_band": [
+        1976,
+        1996
+      ],
+      "msd_vs_band": "inside",
+      "lsd_random_band": [
+        1006,
+        1013
+      ],
+      "lsd_vs_band": "inside"
+    },
+    {
+      "n": 65536,
+      "msd_lower_bound": 7274,
+      "msd_J": 3,
+      "lsd_lower_bound": 3858,
+      "lsd_J": 12,
+      "msd_log2_class_at_bound": 193903.5,
+      "lsd_log2_class_at_bound": 95783.6,
+      "msd_random_band": [
+        7221,
+        7277
+      ],
+      "msd_vs_band": "inside",
+      "lsd_random_band": [
+        3823,
+        3862
+      ],
+      "lsd_vs_band": "inside"
+    },
+    {
+      "n": 262144,
+      "msd_lower_bound": 20743,
+      "msd_J": 3,
+      "lsd_lower_bound": 12896,
+      "lsd_J": 14,
+      "msd_log2_class_at_bound": 615666.2,
+      "lsd_log2_class_at_bound": 365076.4,
+      "msd_random_band": [
+        20675,
+        20763
+      ],
+      "msd_vs_band": "inside",
+      "lsd_random_band": [
+        12839,
+        12950
+      ],
+      "lsd_vs_band": "inside"
+    },
+    {
+      "n": 1000000,
+      "msd_lower_bound": 62499,
+      "msd_J": 4,
+      "lsd_lower_bound": 32767,
+      "lsd_J": 15,
+      "msd_log2_class_at_bound": 2053910.3,
+      "lsd_log2_class_at_bound": 1015774.1,
+      "msd_random_band": [
+        62498,
+        62499
+      ],
+      "msd_vs_band": "inside",
+      "lsd_random_band": [
+        32765,
+        32768
+      ],
+      "lsd_vs_band": "inside"
+    },
+    {
+      "n": 4000000,
+      "msd_lower_bound": 249989,
+      "msd_J": 4,
+      "lsd_lower_bound": 131056,
+      "lsd_J": 17,
+      "msd_log2_class_at_bound": 9215347.1,
+      "lsd_log2_class_at_bound": 4586913.8,
+      "msd_random_band": [
+        249979,
+        249989
+      ],
+      "msd_vs_band": "inside",
+      "lsd_random_band": [
+        131054,
+        131061
+      ],
+      "lsd_vs_band": "inside"
+    },
+    {
+      "n": 10000000,
+      "msd_lower_bound": 624927,
+      "msd_J": 4,
+      "lsd_lower_bound": 262144,
+      "lsd_J": 18,
+      "msd_log2_class_at_bound": 24688776.2,
+      "lsd_log2_class_at_bound": 9699328.0,
+      "msd_random_band": [
+        624897,
+        624918
+      ],
+      "msd_vs_band": "above",
+      "lsd_random_band": [
+        262142,
+        262144
+      ],
+      "lsd_vs_band": "inside"
+    }
+  ]
+}
