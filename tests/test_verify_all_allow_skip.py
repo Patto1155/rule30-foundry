@@ -85,7 +85,9 @@ class TestWorkflowAllowlist(unittest.TestCase):
     WORKFLOW = REPO_ROOT / ".github" / "workflows" / "verify.yml"
 
     # Parsed rather than hardcoded: --allow-skip 'glob' or --allow-skip glob.
-    PATTERN = re.compile(r"--allow-skip\s+'([^']+)'|--allow-skip\s+(\S+)")
+    # argparse also accepts --allow-skip=glob, so the separator is [\s=].
+    PATTERN = re.compile(
+        r"--allow-skip[\s=]+'([^']+)'|--allow-skip[\s=]+(\S+)")
 
     @classmethod
     def skippable_stages(cls) -> set:

@@ -214,6 +214,50 @@ def longest_self_overlap(bits: np.ndarray, *, narrow: int = 16,
     }
 
 
+def find_eventual_periods(bits: np.ndarray, width: int, *,
+                          max_checks: int = 100_000) -> dict:
+    """Tail-anchored test: every eventual period (k, p), any preperiod k.
+
+    ``find_periods`` anchors at position 0, so it decides *pure* periodicity
+    only: a stream that is exactly periodic after a one-bit transient gives it
+    zero survivors. Prize 1 asks about *eventual* periodicity, so anchor at the
+    end instead. For each ``p`` let ``T[p]`` be how many trailing positions
+    satisfy ``S[i] == S[i+p]``; the minimal preperiod consistent with the prefix
+    is ``k(p) = n - p - T[p]``. Reversing the stream turns ``T`` into the
+    forward ``Z`` of the reversed stream, so the same window machinery applies.
+
+    A ``p`` with ``T[p] < width`` cannot be an eventual period confirmed by
+    ``width`` or more positions; such ``p`` are rejected in one vectorised pass.
+    """
+    n = bits.size
+    rev = np.ascontiguousarray(bits[::-1])
+    win = windows(rev, width)
+    survivors = np.flatnonzero(win == win[0])
+    survivors = survivors[survivors >= 1]
+    found: list[dict] = []
+    truncated = survivors.size > max_checks
+    for p_ in survivors[:max_checks].tolist():
+        t = overlap_length(rev, p_)
+        found.append({"period": p_, "preperiod": n - p_ - t,
+                      "confirming_positions": t})
+    found.sort(key=lambda c: (c["preperiod"] + c["period"], c["period"]))
+    tail = longest_self_overlap(rev)
+    return {
+        "n_bits": n,
+        "window_bits": width,
+        "periods_tested": int(max(0, n - width)),
+        "eventual_periods_confirmed_by_window": found,
+        "candidate_check_truncated": bool(truncated),
+        "longest_tail_agreement_bits": tail["longest_self_overlap_bits"],
+        "longest_tail_agreement_at_shift": tail["longest_self_overlap_at_shift"],
+        "tail_scan_truncated": tail["truncated"],
+        "excludes": (
+            "every eventual period (k, p) with k + p <= n - T_max - 1, where "
+            "T_max = longest_tail_agreement_bits, provided tail_scan_truncated "
+            "is false"),
+    }
+
+
 def gate(bits: np.ndarray, width: int) -> dict:
     """Detection power: the method must FIND a period that is really there."""
     checks: list[dict] = []
@@ -239,7 +283,23 @@ def gate(bits: np.ndarray, width: int) -> dict:
            not res["confirmed_periods_up_to_half"],
            f"{len(res['confirmed_periods_up_to_half'])} confirmed")
 
-    # 3. The bitstream must decode to OEIS A051023, i.e. LSB-first was used.
+    # 3. An EVENTUALLY periodic stream must be found by the tail test, with
+    #    its preperiod. The position-0 test misses it entirely; that is why
+    #    the tail test exists, and this check pins the blind spot.
+    eventual = np.resize(bits[:1000], 2_000_000).copy()
+    eventual[:7] ^= 1
+    head = find_periods(eventual, width, stop_at_first=True)
+    tail = find_eventual_periods(eventual, width)
+    hits = tail["eventual_periods_confirmed_by_window"]
+    record("eventual period (preperiod <= 7, p = 1000) is found by tail test",
+           bool(hits) and hits[0]["period"] == 1000
+           and hits[0]["preperiod"] <= 7,
+           f"best = {hits[0] if hits else None}")
+    record("position-0 test is blind to it (documents the scope)",
+           not head["confirmed_periods"],
+           f"{len(head['confirmed_periods'])} confirmed")
+
+    # 4. The bitstream must decode to OEIS A051023, i.e. LSB-first was used.
     oeis = [1, 1, 0, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0]
     record("bitstream decodes LSB-first to OEIS A051023",
            bits[:len(oeis)].tolist() == oeis, "".join(map(str, bits[:15])))
@@ -296,6 +356,13 @@ def main() -> int:
     log(f"  candidates surviving a {args.window}-bit window: "
         f"{center['candidates_surviving_window']}")
     log(f"  confirmed periods: {len(center['confirmed_periods'])}")
+    eventual = find_eventual_periods(bits, args.window)
+    center["eventual"] = eventual
+    log(f"  eventual periods (any preperiod) surviving a {args.window}-bit "
+        f"trailing window: "
+        f"{len(eventual['eventual_periods_confirmed_by_window'])}; longest "
+        f"tail agreement {eventual['longest_tail_agreement_bits']} bits at "
+        f"shift {eventual['longest_tail_agreement_at_shift']:,}")
     center_overlap = longest_self_overlap(bits)
     center["overlap"] = center_overlap
     log(f"  longest self-overlap: {center_overlap['longest_self_overlap_bits']} "

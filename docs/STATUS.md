@@ -6,15 +6,15 @@ lives here. Overwrite this file in place; git history keeps the old versions.
 No other file may carry a "current state as of" section —
 `tools/lint_ledger.py` enforces it.
 
-Updated: 2026-10-14 · Newest log: `docs/experiment-logs/2026-10-14-period-ladder.md`
+Updated: 2026-11-23 · Newest log: `docs/experiment-logs/2026-11-23-repo-audit-and-dfao-lower-bound.md`
 
 ## Where the three prize problems stand
 
 | # | Problem | Best current result | Grade |
 |---|---|---|---|
-| 1 | Does the center column repeat? | Period one is excluded by Condrey's analytic argument (unrefereed preprint), audited here and held at Proof candidate until refereed or machine-checked; period two remains open. No period `p <= 5,000,000` in the first 10M bits — **decided exactly**, all 9,999,936 candidates, 0 survivors. Cannot resolve the problem: eventual periodicity is asymptotic. | Proof candidate (external, audited) + Certificate |
+| 1 | Does the center column repeat? | Period one is excluded by Condrey's analytic argument (unrefereed preprint), audited here and held at Proof candidate until refereed or machine-checked; period two remains open. No eventual period `(k, p)` with `k + p <= 9,999,976` fits the first 10M bits, any preperiod — **decided exactly** (2026-11-23; the earlier search tested only preperiod 0). Cannot resolve the problem: eventual periodicity is asymptotic. | Proof candidate (external, audited) + Certificate |
 | 2 | Are 0s and 1s equidistributed? | Bias < 0.05% over 10M bits. Uniform Bernoulli(1/2) is invariant (proved, left-permutivity) — which is *not* the same as the single seed's limiting frequency, the actual question. | Theorem + Observation |
-| 3 | Is there a shortcut for the nth bit? | None found. Base-2 minimal-DFAO size is now certified through MSD `s*(64)=15` (LSD remains certified through n=48). No GF(2) annihilator of degree `<= 3` over windows to 64 bits, nor degree `<= 4` to 32 bits. ML routes (I/K/L) are scoped down. A published shortcut claim is under audit, separating warm query from cold `n -> c_n` cost. | Certificate (s*(n)) |
+| 3 | Is there a shortcut for the nth bit? | None found. Any base-2 DFAO for the first 10M bits needs >= 624,927 states MSD / >= 262,144 LSD (exact Myhill-Nerode lower bound, 2026-11-23; same as a random string). Base-2 minimal-DFAO size is certified exactly through MSD `s*(64)=15` (LSD remains certified through n=48). No GF(2) annihilator of degree `<= 3` over windows to 64 bits, nor degree `<= 4` to 32 bits. ML routes (I/K/L) are scoped down. A published shortcut claim is under audit, separating warm query from cold `n -> c_n` cost. | Certificate (s*(n)) |
 
 ## Open work, ranked
 
@@ -25,6 +25,8 @@ sequence is complete; the two former next items were B3 and T1 (see their rows).
 
 | # | Work | Kind | Cost | Blocks |
 |---|---|---|---|---|
+| V1 | **Wire every Certificate verifier into `verify_all`.** The 2026-11-23 audit found the period and diagonal-recursion verifiers run nowhere, two branch-selector tests that cannot fail, lint holes (`lint_bitorder` aliases, `lint_ledger` level/pipe parsing), untested bitstream loaders and an unpinned skip count. List with surviving mutants: `docs/experiment-logs/2026-11-23-repo-audit-and-dfao-lower-bound.md` | Infra | ~1 day | trust in every Certificate row |
+| T2 | **Rebuild `C*(N)` on the Frobenius basis `f^(2^i)`** with a positive-control ladder of random minimal DFAOs; the dense-power instrument is blind past ~4 states and its row is scoped down | Research | ~1 day | — |
 | A3 | **46M remains absent.** Canonical10M is restored from the tracked MSB golden file by `python tools/convert_golden_bitstream.py`, with the exact manifest hash and all-bit verification. The 46M retrieval/generation blocker remains. | Infra | Hardware/data dependent | B2 |
 | C2c | **Annihilators over non-consecutive bit selections** — every window searched so far is a run of adjacent bits, so long-lag structure (the I/K/L blind spot) is untested | Research | Days | — |
 | C2d | **Multi-word window codes**, lifting `w` past the `uint64` cap of 64 | Research | ~½ day | — |
