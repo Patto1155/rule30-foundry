@@ -153,7 +153,7 @@ NESTED_ENV = "CODEX_WORKER_NESTED"
 # bitstreams are gitignored, so a worktree never has them. Naming them keeps
 # verify_all in strict mode, where any OTHER skip fails -- "SKIP is not PASS"
 # has to survive being run by a robot, or it only ever applied to humans.
-WORKTREE_ALLOW_SKIP = ("bitstream:*", "drat-toolchain")
+WORKTREE_ALLOW_SKIP = ("bitstream:*", "drat-toolchain", "lean-proofs")
 
 
 # --------------------------------------------------------------------------

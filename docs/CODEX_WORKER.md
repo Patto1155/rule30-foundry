@@ -230,7 +230,7 @@ through it.
 ```
 READY-FOR-REVIEW  [implement · remote · 60.1s]
   branch      codex/implement-add-a-list-roles-flag-to-tools-council-p-28cffb56
-  verify ok   python tools/verify_all.py --allow-skip=bitstream:* --allow-skip=drat-toolchain
+  verify ok   python tools/verify_all.py --allow-skip=bitstream:* --allow-skip=drat-toolchain --allow-skip=lean-proofs
   verify ok   python tools/council.py --list-roles
   verify ok   python -m unittest tests.test_council
   uncertainty Only tools/council.py was supplied, so the test was added as a
