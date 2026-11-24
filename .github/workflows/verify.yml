@@ -51,7 +51,8 @@ jobs:
         run: |
           python tools/verify_all.py --verbose \
             --allow-skip 'bitstream:*' \
-            --allow-skip drat-toolchain
+            --allow-skip drat-toolchain \
+            --allow-skip lean-proofs
 
   drat:
     name: verify_all + DRAT toolchain
@@ -89,4 +90,32 @@ jobs:
       - name: verify_all
         run: |
           python tools/verify_all.py --verbose \
-            --allow-skip 'bitstream:*'
+            --allow-skip 'bitstream:*' \
+            --allow-skip lean-proofs
+
+  # Machine-checked proofs. The other two jobs may skip `lean-proofs`; this
+  # one installs the pinned toolchain and runs the verifier directly, so a
+  # proof that stops checking fails the build here. Exit code 2 (toolchain
+  # absent) is a failure in this job by construction.
+  lean:
+    name: Lean proofs
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Lean 4.19.0 (pinned release, checksum verified)
+        run: |
+          curl -sSL -o lean.tar.zst \
+            https://github.com/leanprover/lean4/releases/download/v4.19.0/lean-4.19.0-linux.tar.zst
+          echo "6fe3ce97a58f44e2b3567d455b994eacec5bfe9ae7774f2a573444480ba813fe  lean.tar.zst" | sha256sum -c -
+          mkdir -p "$RUNNER_TEMP/lean"
+          tar --zstd -xf lean.tar.zst -C "$RUNNER_TEMP/lean"
+          echo "LEAN=$RUNNER_TEMP/lean/lean-4.19.0-linux/bin/lean" >> "$GITHUB_ENV"
+
+      - name: verify_lean
+        run: python tools/verify_lean.py

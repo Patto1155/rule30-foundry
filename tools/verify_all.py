@@ -39,6 +39,8 @@ from __future__ import annotations
 
 import argparse
 import fnmatch
+import os
+import shutil
 import subprocess
 import sys
 import time
@@ -96,6 +98,13 @@ def build_stages() -> list[Stage]:
          "--no-external", "--expect-fail"],
         skip_reason=None if trap.exists() else
         "queue/trap-vacuous-dfao.json absent"))
+    # Machine-checked proofs. Absent toolchain is a SKIP, and CI has a job
+    # that installs Lean so this stage is not allowed to skip there.
+    lean = os.environ.get("LEAN") or shutil.which("lean")
+    stages.append(Stage(
+        "lean-proofs", [py, "tools/verify_lean.py"],
+        skip_reason=None if lean else
+        "lean not found (Lean 4.19.0; set LEAN=/path/to/bin/lean)"))
     stages += [
         Stage("lint-bitorder", [py, "tools/lint_bitorder.py"]),
         Stage("lint-ledger", [py, "tools/lint_ledger.py"]),

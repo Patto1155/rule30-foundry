@@ -6,13 +6,13 @@ lives here. Overwrite this file in place; git history keeps the old versions.
 No other file may carry a "current state as of" section —
 `tools/lint_ledger.py` enforces it.
 
-Updated: 2026-11-23 · Newest log: `docs/experiment-logs/2026-11-23-repo-audit-and-dfao-lower-bound.md`
+Updated: 2026-11-24 · Newest log: `docs/experiment-logs/2026-11-24-period-one-machine-checked.md`
 
 ## Where the three prize problems stand
 
 | # | Problem | Best current result | Grade |
 |---|---|---|---|
-| 1 | Does the center column repeat? | Period one is excluded by Condrey's analytic argument (unrefereed preprint), audited here and held at Proof candidate until refereed or machine-checked; period two remains open. No eventual period `(k, p)` with `k + p <= 9,999,976` fits the first 10M bits, any preperiod — **decided exactly** (2026-11-23; the earlier search tested only preperiod 0). Cannot resolve the problem: eventual periodicity is asymptotic. | Proof candidate (external, audited) + Certificate |
+| 1 | Does the center column repeat? | Period one is excluded for every nonzero finite configuration, **machine-checked in Lean** (2026-11-24), with an explicit window: both colours occur in every `[T, 4T+2]`; period two remains open. No eventual period `(k, p)` with `k + p <= 9,999,976` fits the first 10M bits, any preperiod — **decided exactly** (2026-11-23; the earlier search tested only preperiod 0). Cannot resolve the problem: eventual periodicity is asymptotic. | Theorem (machine-checked) + Certificate |
 | 2 | Are 0s and 1s equidistributed? | Bias < 0.05% over 10M bits. Uniform Bernoulli(1/2) is invariant (proved, left-permutivity) — which is *not* the same as the single seed's limiting frequency, the actual question. | Theorem + Observation |
 | 3 | Is there a shortcut for the nth bit? | None found. Any base-2 DFAO for the first 10M bits needs >= 624,927 states MSD / >= 262,144 LSD (exact Myhill-Nerode lower bound, 2026-11-23; same as a random string). Base-2 minimal-DFAO size is certified exactly through MSD `s*(64)=15` (LSD remains certified through n=48). No GF(2) annihilator of degree `<= 3` over windows to 64 bits, nor degree `<= 4` to 32 bits. ML routes (I/K/L) are scoped down. A published shortcut claim is under audit, separating warm query from cold `n -> c_n` cost. | Certificate (s*(n)) |
 
