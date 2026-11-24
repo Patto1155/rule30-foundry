@@ -99,6 +99,7 @@ class TestWorkflowAllowlist(unittest.TestCase):
         names = {f"bitstream:{pathlib.Path(rel).name}"
                  for rel in verify_all.BITSTREAMS}
         names.add("drat-toolchain")
+        names.add("lean-proofs")
         return names
 
     def workflow_globs(self) -> list:
